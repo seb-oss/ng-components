@@ -6,7 +6,7 @@ import {MenuItem} from '../../interfaces/menu-item';
 @Component({
   selector: 'app-example-wrapper',
   templateUrl: './example-wrapper.component.html',
-  styleUrls: ['./example-wrapper.component.sass']
+  styleUrls: ['./example-wrapper.component.scss']
 })
 export class ExampleWrapperComponent implements OnInit {
   public $menuItems: ReplaySubject<Array<MenuItem>> = new ReplaySubject(0);

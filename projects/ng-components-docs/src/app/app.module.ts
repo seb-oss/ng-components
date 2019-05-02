@@ -21,6 +21,7 @@ import {ExampleComponentComponent, ExampleDirective} from './components/example-
 import {faCode} from '@fortawesome/pro-light-svg-icons/faCode';
 import {faHome} from '@fortawesome/pro-light-svg-icons/faHome';
 import {faCubes} from '@fortawesome/pro-light-svg-icons/faCubes';
+import {ExemplifyModule} from 'angular-exemplify';
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import {faCubes} from '@fortawesome/pro-light-svg-icons/faCubes';
     BrowserAnimationsModule,
     AppRoutingModule,
     FontAwesomeModule,
+    ExemplifyModule,
     DocsModule
   ],
   providers: [],

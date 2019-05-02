@@ -39,6 +39,7 @@ import {Component, Input, OnInit} from '@angular/core';
       </div>
     </div>
     <div class="bg-light p-3">
+      <!--<exemplify [sources]="component.sources"></exemplify>-->
       <ng-template example-host></ng-template>
     </div>
   `,

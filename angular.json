@@ -196,7 +196,9 @@
             "styles": [
               "projects/ng-components-docs/src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/prismjs/prism.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -251,7 +253,7 @@
             "tsConfig": "projects/ng-components-docs/tsconfig.spec.json",
             "karmaConfig": "projects/ng-components-docs/karma.conf.js",
             "styles": [
-              "projects/ng-components-docs/src/styles.css"
+              "projects/ng-components-docs/src/styles.scss"
             ],
             "scripts": [],
             "assets": [

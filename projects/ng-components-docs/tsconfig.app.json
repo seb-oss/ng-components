@@ -2,7 +2,9 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/app",
-    "types": [],
+    "types": [
+      "node"
+    ],
     "paths": {
       "@sebgroup/ng-components": [
         "lib/src/button"

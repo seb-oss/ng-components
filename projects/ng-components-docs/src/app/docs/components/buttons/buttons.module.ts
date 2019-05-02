@@ -6,9 +6,21 @@ import {ModalComponent} from '../modal/examples/modal/modal.component';
 import {SebButtonModule} from '@sebgroup/ng-components';
 import {ExamplePageComponent} from '../../../components/example-page/example-page.component';
 
+
 const examples = [{
   title: 'Button directive',
-  component: ButtonsComponent
+  component: ButtonsComponent,
+  sources: [{
+    name: 'form.component.html',
+    // @ts-ignore
+    // src: require('!raw-loader!app/components/example-component/example-component.component.scss'),
+    src: '<div class="foo">some snippet</div>',
+    lang: 'markup'
+  }, {
+    name: 'form.component.ts',
+    src: 'https://raw.githubusercontent.com/hjalmers/angular-markup-example/master/src/app/components/sources/form.component.ts',
+    lang: 'typescript'
+  }]
 }, {
   title: 'Another button example',
   component: ModalComponent
