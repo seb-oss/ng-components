@@ -1,0 +1,7 @@
+<ng-container *ngIf="$content | async as examples">
+  <div *ngFor="let example of examples" class="example">
+    <app-example-component [component]="example"></app-example-component>
+  </div>
+</ng-container>
+
+

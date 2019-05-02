@@ -1,14 +1,14 @@
 {
-  "extends": "../tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../out-tsc/app",
+    "outDir": "../../out-tsc/app",
     "types": [],
     "paths": {
       "@sebgroup/ng-components": [
-        "dist/sebgroup/ng-components"
+        "lib/src/button"
       ],
       "@sebgroup/ng-components/*": [
-        "dist/sebgroup/ng-components/*"
+        "lib/src/button/*"
       ]
     }
   },

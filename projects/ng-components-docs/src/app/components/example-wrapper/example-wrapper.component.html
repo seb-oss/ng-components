@@ -1,0 +1,12 @@
+<h2 class="text-capitalize mt-3 mt-lg-4">{{$heading | async}}</h2>
+<section class="card mt-2 mt-lg-3 mx-n3 mx-sm-0">
+  <div class="card-body">
+    <ul class="nav nav-tabs my-3">
+      <li *ngFor="let menuItem of $menuItems | async" class="nav-item">
+        <a class="nav-link text-capitalize" [routerLink]="menuItem.path" [routerLinkActive]="'active'">{{menuItem.path}}</a>
+      </li>
+    </ul>
+    <router-outlet></router-outlet>
+  </div>
+</section>
+

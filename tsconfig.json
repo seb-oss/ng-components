@@ -17,14 +17,6 @@
     "lib": [
       "es2018",
       "dom"
-    ],
-    "paths": {
-      "@sebgroup/ng-components": [
-        "dist/sebgroup/ng-components"
-      ],
-      "@sebgroup/ng-components/*": [
-        "dist/sebgroup/ng-components/*"
-      ]
-    }
+    ]
   }
 }
