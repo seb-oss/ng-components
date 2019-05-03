@@ -1,11 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {ROUTES as BUTTONS_ROUTES} from './docs/components/buttons/buttons.module';
-import {ROUTES as MODAL_ROUTES} from './docs/components/modal/modal.module';
+import {ROUTES as BUTTONS_ROUTES} from './examples/components/buttons/buttons.module';
+import {ROUTES as MODAL_ROUTES} from './examples/components/modal/modal.module';
+import {InstallationComponent} from './components/installation/installation.component';
 
 
 const routes: Routes = [
-  { path: 'get-started',
+  {
+    path: 'get-started',
     data: {
       icon: 'home'
     },
@@ -15,9 +17,10 @@ const routes: Routes = [
       pathMatch: 'full'
     }, {
       path: 'installation',
-      children: BUTTONS_ROUTES
+      component: InstallationComponent
     }]
-  }, { path: 'components',
+  }, {
+    path: 'components',
     data: {
       icon: 'cubes'
     },

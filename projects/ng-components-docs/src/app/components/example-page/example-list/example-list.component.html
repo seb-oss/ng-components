@@ -1,0 +1,12 @@
+<ng-container *ngIf="$content | async as examples">
+  <ng-container *ngIf="!($showOutlet | async)">
+    <div *ngFor="let example of examples" class="example">
+      <app-example-template [example]="example"></app-example-template>
+    </div>
+  </ng-container>
+  <div [hidden]="!$showOutlet | async">
+    <router-outlet
+      (activate)="onActivate($event)"
+      (deactivate)="onDeactivate($event)"></router-outlet>
+  </div>
+</ng-container>

@@ -3,6 +3,9 @@ import { FaIconService } from '@fortawesome/angular-fontawesome';
 import { environment } from '../environments/environment';
 import {Route, Router} from '@angular/router';
 import {MenuService} from './components/menu/menu.service';
+import {share} from 'rxjs/operators';
+import {ExampleQuery} from './components/example-page/example-list/example-template/example.query';
+import {Observable} from 'rxjs';
 
 
 @Component({
@@ -12,6 +15,7 @@ import {MenuService} from './components/menu/menu.service';
 })
 export class AppComponent implements OnInit {
   scrollPosition: number;
+  $isFullscreen: Observable<boolean>;
   travis_build_number: string = environment.travis_build_number;
   version: string = (environment.version === '0.0.0-semantically-released' || environment.version === 'n/a') ?
     'unreleased dev version' : environment.version;
@@ -20,7 +24,8 @@ export class AppComponent implements OnInit {
 
   constructor(private faIconService: FaIconService,
               private router: Router,
-              private menuService: MenuService) {
+              private menuService: MenuService,
+              private exampleQuery: ExampleQuery) {
     this.faIconService.defaultPrefix = 'fal';
   }
 
@@ -41,6 +46,10 @@ export class AppComponent implements OnInit {
       return [...prev, {...menuGroup}];
     }, []);
     this.menuService.updateMenuItems(menuItems);
+    this.$isFullscreen = this.exampleQuery.$isFullscreen
+      .pipe(
+        share()
+      );
   }
 
   scroll($event) {

@@ -1,26 +1,33 @@
-import {Component, ComponentFactoryResolver, Inject, Injector, OnInit, TemplateRef, Type, ViewChild} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {DOCUMENT} from '@angular/common';
+import {Observable, ReplaySubject} from 'rxjs';
+import {MenuItem} from '../../interfaces/menu-item';
+import {ExampleQuery} from './example-list/example-template/example.query';
+import {share} from 'rxjs/operators';
 
 @Component({
-  selector: 'app-example-page',
   templateUrl: './example-page.component.html',
   styleUrls: ['./example-page.component.scss']
 })
 export class ExamplePageComponent implements OnInit {
+  public $menuItems: ReplaySubject<Array<MenuItem>> = new ReplaySubject(0);
+  public $heading: ReplaySubject<string> = new ReplaySubject(0);
+  $isFullscreen: Observable<boolean>;
 
-  $content: Observable<any>;
-  constructor(private route: ActivatedRoute,
-              private resolver: ComponentFactoryResolver,
-              private injector: Injector,
-              @Inject(DOCUMENT) private document: Document
-  ) { }
+  constructor(private route: ActivatedRoute, private exampleQuery: ExampleQuery) { }
 
   ngOnInit() {
-    this.$content = this.route.data.pipe(
-      map(data => Object.keys(data).map( key => data[key]))
-    );
+    const menuItems = this.route.routeConfig.children.map(route => {
+      return {
+        text: route.path,
+        path: route.path
+      };
+    });
+    this.$isFullscreen = this.exampleQuery.$isFullscreen
+      .pipe(
+        share()
+      );
+    this.$heading.next(this.route.parent.routeConfig.path);
+    this.$menuItems.next(menuItems);
   }
 }

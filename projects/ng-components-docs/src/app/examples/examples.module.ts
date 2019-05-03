@@ -11,4 +11,4 @@ import { ModalModule } from './components/modal/modal.module';
     ModalModule
   ]
 })
-export class DocsModule { }
+export class ExamplesModule { }
