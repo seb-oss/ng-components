@@ -3,17 +3,21 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {SebButtonModule} from '@sebgroup/ng-components';
+import {SebButtonModule, SebModalModule} from '@sebgroup/ng-components';
+import {ExampleModal} from './components/example-modal';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ExampleModal
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SebButtonModule
+    SebButtonModule,
+    SebModalModule
   ],
+  entryComponents: [ExampleModal],
   providers: [],
   bootstrap: [AppComponent]
 })
