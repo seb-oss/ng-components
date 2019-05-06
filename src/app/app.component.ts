@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {SebModalService, SebModalType} from '@sebgroup/ng-components';
+import {SebModalService, SebModalType, SebModalRef} from '@sebgroup/ng-components';
 import {ExampleModal} from './components/example-modal';
 
 @Component({
@@ -13,8 +13,13 @@ export class AppComponent {
   constructor(private modal: SebModalService) { }
 
   openModal(type: SebModalType = null) {
-    this.modal.open(ExampleModal, {type: type, data: {test: 'test'}});
+    const modal: SebModalRef = this.modal.open(ExampleModal, {type: type, data: {
+      id: 1234,
+      property: 'Something dynamic'
+    }});
+    modal.onClose$
+      .subscribe(reason => {
+        if (reason) {alert(reason); }
+      });
   }
-
-
 }

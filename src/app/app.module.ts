@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {SebButtonModule, SebModalModule} from '@sebgroup/ng-components';
 import {ExampleModal} from './components/example-modal';
+import {SebModalModule} from '../../lib/src/modal';
+import {SebButtonModule} from '../../lib/src/button';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,9 @@ import {ExampleModal} from './components/example-modal';
     BrowserModule,
     AppRoutingModule,
     SebButtonModule,
-    SebModalModule
+    SebModalModule,
+    SebModalModule,
+    SebButtonModule
   ],
   entryComponents: [ExampleModal],
   providers: [],

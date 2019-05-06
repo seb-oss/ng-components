@@ -50,6 +50,7 @@ export class SebModalService {
     this._attachToView(backdropCmpRef);
 
     const renderer: Renderer2 = this._getRenderer();
+    renderer.addClass(cmpRef.location.nativeElement, 'modal-content');
     renderer.setStyle(this.document.body, 'overflow', 'hidden');
     renderer.addClass(this.document.body, 'modal-open');
 
