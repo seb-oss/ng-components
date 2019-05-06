@@ -12,8 +12,8 @@ export class AppComponent {
 
   constructor(private modal: SebModalService) { }
 
-  openModal(type: SebModalType = null) {
-    const modal: SebModalRef = this.modal.open(ExampleModal, {type: type, data: {
+  openModal(type: SebModalType = null, closable: boolean = true) {
+    const modal: SebModalRef = this.modal.open(ExampleModal, {type: type, closable, data: {
       id: 1234,
       property: 'Something dynamic'
     }});
