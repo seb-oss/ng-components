@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {SebModalService, SebModalType, SebModalRef} from '@sebgroup/ng-components';
+import {SebModalService, SebModalType, SebModalSize, SebModalRef} from '@sebgroup/ng-components';
 import {ExampleModal} from './components/example-modal';
 
 @Component({
@@ -12,8 +12,8 @@ export class AppComponent {
 
   constructor(private modal: SebModalService) { }
 
-  openModal(type: SebModalType = null, closable: boolean = true) {
-    const modal: SebModalRef = this.modal.open(ExampleModal, {type: type, closable, data: {
+  openModal(type: SebModalType = null, size: SebModalSize, closable: boolean = true) {
+    const modal: SebModalRef = this.modal.open(ExampleModal, {type: type, size: size, closable, data: {
       id: 1234,
       property: 'Something dynamic'
     }});

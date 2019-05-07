@@ -14,7 +14,9 @@
   <button seb-btn class="ml-2" (click)="openModal('aside-left')">Aside left</button>
   <button seb-btn class="ml-2" (click)="openModal('aside-right')">Aside right</button>
   <button seb-btn class="ml-2" (click)="openModal('fullscreen')">Fullscreen</button>
-  <button seb-btn class="ml-2" (click)="openModal(null, false)">Disable backdrop and esc key</button>
+  <button seb-btn class="ml-2" (click)="openModal(null, null, false)">Disable backdrop and esc key</button>
+  <button seb-btn class="ml-2" (click)="openModal(null, 'modal-sm')">Small</button>
+  <button seb-btn class="ml-2" (click)="openModal(null, 'modal-lg')">Large</button>
 </section>
 
 <router-outlet></router-outlet>

@@ -1,17 +1,13 @@
-import {Component, ElementRef, HostListener, Inject, OnDestroy, OnInit} from '@angular/core';
-import {SebModalRef} from './modal.ref';
-import {DOCUMENT} from '@angular/common';
-import {FocusTrap, FocusTrapFactory} from '../core/focus/focus.trap';
+import { Component, ElementRef, HostListener, Inject, OnDestroy, OnInit } from '@angular/core';
+import { SebModalRef } from './modal.ref';
+import { DOCUMENT } from '@angular/common';
+import { FocusTrap, FocusTrapFactory } from '../core/focus/focus.trap';
 
 
 @Component({
   templateUrl: 'modal.html',
   host: {
-    '[class]': '"modal fade show d-block"',
-    '[class.modal-fullscreen]': 'modalRef?.config?.type === "fullscreen"',
-    '[class.modal-aside]': 'modalRef?.config?.type === "aside-left" || modalRef?.config?.type === "aside-right"',
-    '[class.modal-aside-left]': 'modalRef?.config?.type === "aside-left"',
-    '[class.modal-aside-right]': 'modalRef?.config?.type === "aside-right"',
+    '[class]': '"modal fade show d-block " + _setConfigType()',
     'tabindex': '-1',
     'role': 'dialog'
   }
@@ -20,6 +16,12 @@ export class SebModal implements OnInit, OnDestroy {
 
   private focusTrap: FocusTrap;
   public modalRef: SebModalRef;
+
+  positionClass = {
+    fullscreen: 'modal-fullscreen',
+    'aside-right': 'modal-aside modal-aside-right',
+    'aside-left': 'modal-aside modal-aside-left'
+  };
 
   constructor(
     private elementRef: ElementRef,
@@ -35,6 +37,11 @@ export class SebModal implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.focusTrap
       = this.focusTrapFactory.trapFocus(this.elementRef.nativeElement);
+
+  }
+
+  private _setConfigType(): string {
+    return this.modalRef.config.type ? `${this.positionClass[this.modalRef.config.type]}` : '';
   }
 
   private _close() {
@@ -42,7 +49,7 @@ export class SebModal implements OnInit, OnDestroy {
       this.modalRef &&
       this.modalRef.config &&
       this.modalRef.config.closable) {
-        this.modalRef.close();
+      this.modalRef.close();
     }
   }
 
