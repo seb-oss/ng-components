@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {SebModalService, SebModalType, SebModalRef} from '@sebgroup/ng-components';
 import {ExampleModal} from './components/example-modal';
 
