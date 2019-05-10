@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {SebButtonModule} from '@sebgroup/ng-components';
+import {SebButtonModule, SebDropdownModule} from '@sebgroup/ng-components';
 
 @NgModule({
   declarations: [
@@ -12,7 +12,8 @@ import {SebButtonModule} from '@sebgroup/ng-components';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SebButtonModule
+    SebButtonModule,
+    SebDropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]
