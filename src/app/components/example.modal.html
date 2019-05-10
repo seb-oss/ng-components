@@ -1,0 +1,12 @@
+<div sebModalHeader>
+  <h3 sebModalTitle>Example Modal</h3>
+</div>
+<div sebModalBody>
+  <code>
+    {{data | json}}
+  </code>
+</div>
+<div sebModalFooter>
+  <button seb-btn="secondary" outline (click)="modal.dismiss('Dismissed')">Dismiss</button>
+  <button seb-btn (click)="modal.close()" class="ml-auto" sebAutoFocus>Close</button>
+</div>
