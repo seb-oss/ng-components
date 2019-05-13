@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {SebButtonModule, SebModalModule, SebDropdownModule} from '@sebgroup/ng-components';
 import {ExampleModal} from './components/example-modal';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {ExampleModal} from './components/example-modal';
     AppRoutingModule,
     SebButtonModule,
     SebModalModule,
-    SebDropdownModule
+    SebDropdownModule,
+    ReactiveFormsModule
   ],
   entryComponents: [ExampleModal],
   providers: [],

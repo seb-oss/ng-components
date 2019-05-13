@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SebDropdown, SebDropdownItem} from './dropdown';
-import {SebDropdownToggle} from './dropdown.toggle';
+import {SebDropdown, SebDropdownItem, SebDropdownToggle} from './dropdown';
 
 @NgModule({
   imports: [CommonModule],
