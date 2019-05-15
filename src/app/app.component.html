@@ -3,7 +3,8 @@
   <h1>
     Welcome to {{ title }}!
   </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+  <img width="300" alt="Angular Logo"
+    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
 </div>
 <h2>Here are some links to help you start: </h2>
 <ul>
@@ -25,5 +26,29 @@
 <button seb-btn size="sm">Primary</button>
 <button seb-btn size="sm" disabled="true">Disabled</button>
 
+<div class="row col-12">
+  <label class="col-2"><input type="radio" value="solid" [(ngModel)]="border.style">Solid</label>
+
+  <label class="col-2"><input type="radio" value="dashed" [(ngModel)]="border.style">Dashed</label>
+
+  <label class="col-2"><input type="radio" value="dotted" [(ngModel)]="border.style">Dotted</label>
+
+</div>
+<div class="col-12">
+  <label>Size : <input type="number" [(ngModel)]="size"/></label>
+</div>
+
+<lib-loader toggle="true" [fullscreen]="false" className="loader-cmp" [border]="border" [width]="setSize()" [height]="setSize()"></lib-loader>
+
+
+<button seb-btn (click)="loadMe()">
+  <div class="row">
+    <div class="col">Add</div>
+    <div class="col">
+      <lib-loader [toggle]="innerLoader" [fullscreen]="false" [border]="innerLoaderBorder" width="2px" height="2px"
+        padding="7px"></lib-loader>
+    </div>
+  </div>
+</button>
 
 <router-outlet></router-outlet>

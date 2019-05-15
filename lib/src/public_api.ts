@@ -3,3 +3,4 @@
  */
 
 export * from './button/index';
+export * from './loader/index';

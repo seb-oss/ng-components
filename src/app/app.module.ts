@@ -1,9 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {SebButtonModule} from '@sebgroup/ng-components';
+import {SebButtonModule, SebLoaderModule} from '@sebgroup/ng-components';
 
 @NgModule({
   declarations: [
@@ -11,8 +12,10 @@ import {SebButtonModule} from '@sebgroup/ng-components';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
-    SebButtonModule
+    SebButtonModule,
+    SebLoaderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
