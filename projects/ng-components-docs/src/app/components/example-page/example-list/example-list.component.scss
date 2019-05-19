@@ -7,3 +7,12 @@
   margin-top: map_get($spacers,3);
   padding-top: map_get($spacers,3);
 }
+
+/* use same style for buttons in tabs as normal links (anchor tags)*/
+::ng-deep button.nav-link {
+  font-weight: $link-weight;
+  outline: none;
+  &:not(.active) {
+    color: $link-color;
+  }
+}

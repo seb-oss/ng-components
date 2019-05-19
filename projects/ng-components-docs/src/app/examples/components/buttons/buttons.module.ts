@@ -24,12 +24,10 @@ export const ROUTES: Array<Route> = [
             description: 'Additional description for example (optional)',
             sources: [{
               name: 'buttons.component.html',
-              // @ts-ignore
               src: require('!raw-loader!./examples/buttons/buttons.component.html'),
               lang: 'markup'
             }, {
               name: 'buttons.component.ts',
-              // @ts-ignore
               src: require('!raw-loader!./examples/buttons/buttons.component.ts'),
               lang: 'ts'
             }]
@@ -39,7 +37,8 @@ export const ROUTES: Array<Route> = [
           component: ButtonsComponent,
           data: {
             title: 'Another button example (same component)',
-            description: `Same component used for the sake of showing how multiple examples can be set up. It's also possible to add html like a <a href="http://www.seb.se" target="blank">link</a>.`,
+            description: `Same component used for the sake of showing how multiple examples can be set up.
+                          It's also possible to add html like a <a href="http://www.seb.se" target="blank">link</a>.`,
             sources: [{
               name: 'buttons.component.html',
               src: `<div>Some other <strong class="fancy-class">inline</strong> example markup</div>`,
@@ -61,11 +60,16 @@ export const ROUTES: Array<Route> = [
             }]
           }
         }]},
-      { path: 'api', component: ApiListComponent }
+      {
+        path: 'api',
+        component: ApiListComponent,
+        data: {
+          source: require('!raw-loader!../../../../../../../lib/src/button/button.ts')
+        }
+      }
     ]
   }
 ];
-
 
 
 @NgModule({

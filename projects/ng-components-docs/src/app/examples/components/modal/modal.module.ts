@@ -32,7 +32,10 @@ export const ROUTES = [
             }]
           }
         }]},
-      { path: 'api', component: ApiListComponent }
+      { path: 'api', component: ApiListComponent, data: {
+          source: require('!raw-loader!../../../../../../../lib/src/button/parse-source-example/parse-source-example.component.ts')
+        }
+      }
     ]
   }
 ];

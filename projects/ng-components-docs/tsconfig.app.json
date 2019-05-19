@@ -11,6 +11,15 @@
       ],
       "@sebgroup/ng-components/*": [
         "lib/src/button/*"
+      ],
+      "fs": [
+        "lib/src/button/*"
+      ],
+      "os": [
+        "lib/src/button/*"
+      ],
+      "path": [
+        "lib/src/button/*"
       ]
     }
   },
