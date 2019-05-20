@@ -1,0 +1,11 @@
+@import "../variables";
+@import '~@sebgroup/bootstrap/scss/styles/functions';
+@import '~@sebgroup/bootstrap/scss/variables';
+@import '~@sebgroup/bootstrap/scss/mixins/mixins';
+
+@include media-breakpoint-up(lg) {
+  .content {
+    margin-left: $ngseb-docs-menu-width;
+  }
+}
+

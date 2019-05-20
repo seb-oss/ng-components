@@ -1,0 +1,12 @@
+
+<h2 class="text-capitalize mt-3 mt-lg-4" *ngIf="!($isFullscreen | async)">{{$heading | async}}</h2>
+<section class="mt-2 mt-lg-3" [ngClass]="{'card mx-n3 mx-sm-0': !($isFullscreen | async)}">
+  <div [ngClass]="{'card-body': !($isFullscreen | async)}">
+    <ul class="nav nav-tabs my-3" *ngIf="!($isFullscreen | async)">
+      <li *ngFor="let menuItem of $menuItems | async" class="nav-item">
+        <a class="nav-link text-capitalize" [routerLink]="menuItem.path" [routerLinkActive]="'active'">{{menuItem.path}}</a>
+      </li>
+    </ul>
+    <router-outlet></router-outlet>
+  </div>
+</section>

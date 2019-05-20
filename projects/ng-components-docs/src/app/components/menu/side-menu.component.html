@@ -1,0 +1,23 @@
+<aside class="side-nav bg-dark" [ngClass]="{'active': $isActive | async}">
+  <div class="row no-gutters mb-3">
+    <div class="col-auto">
+      <app-logo></app-logo>
+    </div>
+    <div class="col align-self-center pl-3">
+      <h5 class="text-white mb-0">ng-components</h5>
+    </div>
+    <div class="col-auto align-self-center px-3 d-lg-none" (click)="toggleMenu()">
+      <i class="fal fa-times fa-lg text-white"></i>
+      <fa-icon icon="times" class="text-white" size="lg"></fa-icon>
+    </div>
+  </div>
+  <ng-container *ngFor="let menuGroup of $menuGroups | async">
+    <label class="text-capitalize small text-muted ml-3"><fa-icon [icon]="menuGroup.icon" class="mr-2"></fa-icon>{{menuGroup.text}}</label>
+    <ul class="nav flex-column mb-3">
+      <li *ngFor="let menuItem of menuGroup.children" class="nav-item">
+        <a class="text-capitalize nav-link" [routerLink]="menuItem.path" [routerLinkActive]="'active'">{{menuItem.text}}</a>
+      </li>
+    </ul>
+  </ng-container>
+</aside>
+

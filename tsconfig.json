@@ -1,6 +1,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
@@ -11,20 +12,15 @@
     "experimentalDecorators": true,
     "importHelpers": true,
     "target": "es5",
+    "types": [
+      "node"
+    ],
     "typeRoots": [
       "node_modules/@types"
     ],
     "lib": [
       "es2018",
       "dom"
-    ],
-    "paths": {
-      "@sebgroup/ng-components": [
-        "dist/sebgroup/ng-components"
-      ],
-      "@sebgroup/ng-components/*": [
-        "dist/sebgroup/ng-components/*"
-      ]
-    }
+    ]
   }
 }

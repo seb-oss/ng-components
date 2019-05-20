@@ -1,0 +1,10 @@
+/* You can add global styles to this file, and also import other style files */
+@import "variables";
+@import "~@sebgroup/bootstrap/scss/bootstrap";
+$exemplify-font-family: $font-family-monospace;
+$exemplify-stripe-color: $light;
+@import "~angular-exemplify/scss/prism-exemplify";
+pre[class*="language-"] {
+  border: none;
+}
+
