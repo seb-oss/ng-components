@@ -12,6 +12,7 @@
 ::ng-deep button.nav-link {
   font-weight: $link-weight;
   outline: none;
+  background: none;
   &:not(.active) {
     color: $link-color;
   }

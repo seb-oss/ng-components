@@ -21,13 +21,14 @@ export class ApiListComponent implements OnInit {
 
   parseSourceFile(source: string) {
     const inputs = this.extractInputs(source);
+    const outputs = this.extractOutputs(source);
     const tsParser = new TypescriptParser();
     tsParser.parseSource(source).then(
-      res => this.$content.next(this.parse(res, inputs))
+      res => this.$content.next(this.parse(res, inputs, outputs))
     );
   }
 
-  parse(file: ParsedFile, inputs: any): Array<ApiSection> {
+  parse(file: ParsedFile, inputs: any, outputs: any): Array<ApiSection> {
 
     return file.declarations
       .filter(declaration => declaration.constructor.name === 'ClassDeclaration')
@@ -38,7 +39,7 @@ export class ApiListComponent implements OnInit {
         // @ts-ignore
         inputs: this.parseInputs(declaration.accessors, inputs),
         // @ts-ignore
-        outputs: this.parseOutputs(declaration.properties),
+        outputs: this.parseOutputs(declaration.properties, outputs),
         // @ts-ignore
         properties: this.parseProperties(declaration.properties),
         // @ts-ignore
@@ -50,9 +51,9 @@ export class ApiListComponent implements OnInit {
   }
 
   extractInputs(sourceCode: string) {
-    const regex = /(?<decorator>\@Input)(?:\((?:'|"?))(?<alias>.*?)(?:'|"?)(?:\))(?:[^].*?)(?<accessor>set|get?)(?:[^].*?)(?<name>[^\(]+)/g;
+    const regex = /(?:\/\*\*(?<comment>[\W\w]*?)\*\/[\W][^@]+|)(?<decorator>\@Input)\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\))(?:[\W]+)(?<accessor>get|set|){1}(?:\W)?(?<name>[^\(]+)/g;
     let input = regex.exec(sourceCode);
-    let inputs = {[input.groups.name] : input.groups};
+    let inputs = input ? {[input.groups.name] : input.groups} : {};
     while (input !== null) {
       input = regex.exec(sourceCode);
       if (input) {
@@ -60,6 +61,19 @@ export class ApiListComponent implements OnInit {
       }
     }
     return inputs;
+  }
+
+  extractOutputs(sourceCode: string) {
+    const regex = /(?:\/\*\*(?<comment>[\s\S][^@]+)\*\/[^@]+|)(?<decorator>\@Output)\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\))(?:\W)?(?<name>[^\:]+)/g;
+    let output = regex.exec(sourceCode);
+    let outputs = output ? {[output.groups.name] : output.groups} : {};
+    while (output !== null) {
+      output = regex.exec(sourceCode);
+      if (output) {
+        outputs = {...outputs, [output.groups.name] : output.groups};
+      }
+    }
+    return outputs;
   }
 
   parseInputs(accessors: Array<any>, inputs: any): Array<any> {
@@ -71,13 +85,23 @@ export class ApiListComponent implements OnInit {
           input.type = current.type;
           return [...previous];
         }
-        return [...previous, {...current, alias: inputs[current.name].alias}];
+        return [...previous, {
+          ...current,
+          alias: inputs[current.name].alias,
+          description: this.parseComment(inputs[current.name].comment)
+        }];
       }, []);
   }
 
-  parseOutputs(properties: Array<any>): Array<any> {
+  parseOutputs(properties: Array<any>, outputs: any): Array<any> {
+    console.log(outputs)
     return properties
-      .filter(property => property.type && property.type.indexOf('EventEmitter') !== -1);
+      .filter(property => property.type && property.type.indexOf('EventEmitter') !== -1)
+        .map(property => {
+          return {
+            ...property, description: this.parseComment(outputs[property.name].comment)
+          }
+        });
   }
 
   parseProperties(properties: Array<any>): Array<any> {
@@ -100,6 +124,10 @@ export class ApiListComponent implements OnInit {
               param.type).toString().replace(/,/g, ', ') + ')'
         };
       });
+  }
+
+  parseComment(comment: string) {
+    return comment ? comment.replace(/\*\s+|[\t\r\n]/g,'') : 'n/a';
   }
 
   sortInputs(a, b) {

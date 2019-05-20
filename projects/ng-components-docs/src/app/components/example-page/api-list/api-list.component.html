@@ -2,11 +2,14 @@
   <h2>{{section.name}}</h2>
   <ng-container *ngIf="section.inputs.length > 0">
     <h3>Inputs</h3>
-    <table class="table">
+    <table class="table mb-4 mt-3">
       <tr *ngFor="let item of section.inputs">
-        <td><code>{{item.alias || item.name}}</code></td>
+        <td><code>{{item?.alias || item.name}}</code></td>
         <td>
           <div class="row">
+            <div class="col-12">
+              <p [innerHTML]="item.description" class="mb-2"></p>
+            </div>
             <div class="col-12 col-sm-auto">
               <i>type: <code>{{item?.type}}</code></i>
             </div>
@@ -20,13 +23,16 @@
   </ng-container>
   <ng-container *ngIf="section.outputs.length > 0">
     <h3>Outputs</h3>
-    <table class="table">
+    <table class="table mb-4 mt-3">
       <tr *ngFor="let item of section.outputs">
         <td>
           <code>{{item.name}}</code>
         </td>
         <td>
           <div class="row">
+            <div class="col-12">
+              <p [innerHTML]="item.description" class="mb-2"></p>
+            </div>
             <div class="col-12 col-sm-auto">
               <i>type: <code>{{item?.type}}</code></i>
             </div>
@@ -37,7 +43,7 @@
   </ng-container>
   <ng-container *ngIf="section.properties.length > 0">
     <h3>Properties</h3>
-    <table class="table">
+    <table class="table mb-4 mt-3">
       <tr *ngFor="let item of section.properties">
         <td>
           <code>{{item.name}}</code>
@@ -48,13 +54,16 @@
   </ng-container>
   <ng-container *ngIf="section.methods.length > 0">
     <h3>Methods</h3>
-    <table class="table">
+    <table class="table mb-4 mt-3">
       <tr *ngFor="let item of section.methods">
         <td>
           <code>{{item.name}}</code>
         </td>
         <td>
           <div class="row">
+            <div class="col-12">
+              <p [innerHTML]="item.description" class="mb-2"></p>
+            </div>
             <div class="col-12 col-sm-auto">
               <i>function: <code>{{item.functionCall}}: {{item?.type}}</code></i>
             </div>
