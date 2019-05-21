@@ -16,5 +16,47 @@
   <button seb-btn class="ml-2" (click)="openModal('fullscreen')">Fullscreen</button>
   <button seb-btn class="ml-2" (click)="openModal(null, false)">Disable backdrop and esc key</button>
 </section>
+<section class="p-3">
+  <h2>Dropdown</h2>
+  <form [formGroup]="dropdownForm">
+    <seb-dropdown formControlName="single">
+      <button seb-btn sebDropdownToggle>{{!dropdownForm.get('single')?.value ? 'Select fruit' : dropdownForm.get('single')?.value?.name}}</button>
+      <seb-dropdown-item *ngFor="let fruit of fruits" [value]="fruit">{{fruit.name}}</seb-dropdown-item>
+    </seb-dropdown>
+    <seb-dropdown multiple formControlName="multi" class="ml-2">
+      <button seb-btn sebDropdownToggle>
+        <ng-container [ngSwitch]="!!dropdownForm.get('multi')?.value?.length">
+          <ng-container *ngSwitchCase="false">Select fruits</ng-container>
+          <ng-container *ngSwitchCase="true">
+            {{ dropdownForm.get('multi')?.value?.length > 1 ?
+               dropdownForm.get('multi')?.value[0].name + ' + ' + (dropdownForm.get('multi')?.value?.length - 1) :
+               dropdownForm.get('multi')?.value[0].name }}
+          </ng-container>
+        </ng-container>
+      </button>
+      <seb-dropdown-item *ngFor="let fruit of fruits" [value]="fruit">{{fruit.name}}</seb-dropdown-item>
+    </seb-dropdown>
+    <seb-dropdown multiple formControlName="preMulti" class="ml-2">
+      <button seb-btn size="sm" sebDropdownToggle>
+        <ng-container [ngSwitch]="!!dropdownForm.get('preMulti')?.value?.length">
+          <ng-container *ngSwitchCase="false">Select fruits</ng-container>
+          <ng-container *ngSwitchCase="true">
+            {{ dropdownForm.get('preMulti')?.value?.length > 1 ?
+            dropdownForm.get('preMulti')?.value[0]?.name + ' + ' + (dropdownForm.get('preMulti')?.value?.length - 1) :
+            dropdownForm.get('preMulti')?.value[0]?.name }}
+          </ng-container>
+        </ng-container>
+      </button>
+      <seb-dropdown-item *ngFor="let fruit of fruits" [value]="fruit">{{fruit.name}}</seb-dropdown-item>
+    </seb-dropdown>
+    <seb-dropdown class="ml-2" (onSelectionChange)="handleOnSelectionChange($event)">
+      <button seb-btn size="lg" sebDropdownToggle>{{!selected ? 'Select with no form' : selected?.name}}</button>
+      <seb-dropdown-item *ngFor="let fruit of fruits" [value]="fruit">{{fruit.name}}</seb-dropdown-item>
+    </seb-dropdown>
+    <seb-dropdown class="ml-2" (onSelectionChange)="handleOnSelectionChange($event)">
+      <button seb-btn sebDropdownToggle>No options</button>
+    </seb-dropdown>
+  </form>
+</section>
 
 <router-outlet></router-outlet>

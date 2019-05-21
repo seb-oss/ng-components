@@ -8,7 +8,9 @@ import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
 import { environment } from '../environments/environment';
 import {SebButtonModule, SebModalModule} from '@sebgroup/ng-components';
+import {SebButtonModule, SebModalModule, SebDropdownModule} from '@sebgroup/ng-components';
 import {ExampleModal} from './components/example-modal';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import {ExampleModal} from './components/example-modal';
         [] :
         [ AkitaNgDevtools.forRoot(), AkitaNgRouterStoreModule.forRoot() ]
     SebButtonModule,
-    SebModalModule
+    SebModalModule,
+    SebDropdownModule,
+    ReactiveFormsModule
   ],
   entryComponents: [ExampleModal],
   providers: [],
