@@ -14,7 +14,9 @@
     "travis-deploy-once": "travis-deploy-once --pro",
     "semantic-release": "semantic-release",
     "add-fa-config": "npm config set '@fortawesome:registry' https://npm.fontawesome.com/ && npm config set '//npm.fontawesome.com/:_authToken' $FA_TOKEN",
-    "package-lock-sanitizer": "package-lock-sanitizer"
+    "package-lock-sanitizer": "package-lock-sanitizer && git add package-lock.json",
+    "format:fix": "pretty-quick --staged",
+    "format:check": "pretty-quick --check --verbose"
   },
   "private": true,
   "repository": {
@@ -37,7 +39,7 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint --edit",
-      "pre-commit": "npm run package-lock-sanitizer && git add package-lock.json"
+      "pre-commit": "run-s format:fix package-lock-sanitizer"
     }
   },
   "publishConfig": {
@@ -82,7 +84,7 @@
     "commitizen": "^3.1.1",
     "copyfiles": "^2.1.0",
     "cz-conventional-changelog": "^2.1.0",
-    "husky": "^2.1.0",
+    "husky": "^2.3.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~3.1.1",
@@ -92,6 +94,9 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "ng-packagr": "^4.7.0",
     "package-lock-sanitizer": "^1.0.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.17.1",
+    "pretty-quick": "^1.11.0",
     "protractor": "~5.4.0",
     "raw-loader": "^1.0.0",
     "semantic-release": "^16.0.0-beta.18",
@@ -99,6 +104,7 @@
     "ts-node": "~7.0.0",
     "tsickle": ">=0.34.3",
     "tslint": "~5.11.0",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "~3.2.2"
   }
 }
