@@ -7,10 +7,13 @@ import {SebButtonModule} from '@sebgroup/ng-components';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
 import { environment } from '../environments/environment';
+import {SebButtonModule, SebModalModule} from '@sebgroup/ng-components';
+import {ExampleModal} from './components/example-modal';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ExampleModal
   ],
   imports: [
     BrowserModule,
@@ -19,7 +22,10 @@ import { environment } from '../environments/environment';
     environment.production ?
         [] :
         [ AkitaNgDevtools.forRoot(), AkitaNgRouterStoreModule.forRoot() ]
+    SebButtonModule,
+    SebModalModule
   ],
+  entryComponents: [ExampleModal],
   providers: [],
   bootstrap: [AppComponent]
 })
