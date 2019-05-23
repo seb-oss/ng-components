@@ -28,7 +28,7 @@ export class ParseSourceExampleComponent implements OnInit {
     this._time = value;
   }
   /**
-   * Food for the component ex. `banana` <a href="https://www.google.se/search?q=banana" target="_blank">show banana</a>
+   * Food for the component ex. `banana` [show banana](https://www.google.se/search?q=banana)
    */
   @Input() get food(): any {
     return this._food;
