@@ -64,7 +64,7 @@ export const ROUTES: Array<Route> = [
         path: 'api',
         component: ApiListComponent,
         data: {
-          source: require('!raw-loader!../../../../../../../lib/src/button/button.ts')
+          sources: [require('!raw-loader!../../../../../../../lib/src/button/button.ts')]
         }
       }
     ]

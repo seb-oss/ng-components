@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {ReplaySubject} from 'rxjs';
+import {from, merge, Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {Declaration, TypescriptParser} from 'typescript-parser';
 import {File as ParsedFile} from 'typescript-parser/resources/File';
 import {ApiSection} from '../../../interfaces/api-section';
 import marked from 'marked';
+import {map, reduce, tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-api-list',
@@ -13,19 +14,25 @@ import marked from 'marked';
 })
 export class ApiListComponent implements OnInit {
 
-  $content: ReplaySubject<any> = new ReplaySubject(1);
+  $content: Observable<any>;
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.parseSourceFile(this.route.routeConfig.data.source);
+    const sources = this.route.routeConfig.data.sources;
+    const obs = sources.reduce((previous, current) => {
+      return [...previous, this.parseSourceFile(current)];
+    }, []);
+    this.$content = merge(...obs).pipe(
+        reduce((previous, current) => [...previous, ...current],[]),
+    );
   }
 
-  parseSourceFile(source: string) {
+  parseSourceFile(source: string): Observable<ApiSection[]> {
     const inputs = ApiListComponent.extractInputs(source);
     const outputs = ApiListComponent.extractOutputs(source);
     const tsParser = new TypescriptParser();
-    tsParser.parseSource(source).then(
-      res => this.$content.next(this.parse(res, inputs, outputs))
+    return from(tsParser.parseSource(source)).pipe(
+        map(res => this.parse(res, inputs, outputs))
     );
   }
 
@@ -46,7 +53,10 @@ export class ApiListComponent implements OnInit {
         // @ts-ignore
         methods: ApiListComponent.parseMethods(declaration.methods)
       };
-      return [...previous, section];
+      const isEmpty = !Object.entries(section)
+          .filter(key => Array.isArray(key[1]))
+          .some(key => { console.log(key[1]); return key[1].length > 0});
+      return isEmpty ? [...previous] : [...previous, section];
       }, []
     );
   }
@@ -95,7 +105,6 @@ export class ApiListComponent implements OnInit {
   }
 
   parseOutputs(properties: Array<any>, outputs: any): Array<any> {
-    console.log(outputs)
     return properties
       .filter(property => property.type && property.type.indexOf('EventEmitter') !== -1)
         .map(property => {

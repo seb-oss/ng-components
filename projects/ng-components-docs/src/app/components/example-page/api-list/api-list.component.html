@@ -1,5 +1,6 @@
 <ng-container *ngFor="let section of $content | async">
   <h2>{{section.name}}</h2>
+  <p>Lorem ipsum dolar sit amet description.</p>
   <ng-container *ngIf="section.inputs.length > 0">
     <h3>Inputs</h3>
     <table class="table mb-4 mt-3">
