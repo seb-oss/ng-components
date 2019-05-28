@@ -1,6 +1,6 @@
 <ng-container *ngFor="let section of $content | async">
   <h2>{{section.name}}</h2>
-  <p>Lorem ipsum dolar sit amet description.</p>
+  <p [innerHTML]="section.description"></p>
   <ng-container *ngIf="section.inputs.length > 0">
     <h3>Inputs</h3>
     <table class="table mb-4 mt-3">
@@ -49,7 +49,19 @@
         <td>
           <code>{{item.name}}</code>
         </td>
-        <td></td>
+        <td>
+          <div class="row">
+            <div class="col-12">
+              <p [innerHTML]="item.description" class="mb-2"></p>
+            </div>
+            <div *ngIf="item?.type" class="col-12 col-sm-auto">
+              <i>type: <code>{{item?.type}}</code></i>
+            </div>
+            <div *ngIf="item?.default" class="col-12 col-sm-auto">
+              <i>default value: <code>{{item?.default}}</code></i>
+            </div>
+          </div>
+        </td>
       </tr>
     </table>
   </ng-container>
