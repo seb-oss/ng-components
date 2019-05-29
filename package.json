@@ -6,6 +6,7 @@
     "start": "ng serve",
     "docs": "ng serve ng-components-docs",
     "build": "ng build",
+    "build-lib": "ng build ng-components",
     "build-docs": "ng build ng-components-docs --base-href https://sebgroup.github.io/ng-components/ && copyfiles -f projects/ng-components-docs/src/404.html dist/ng-components-docs",
     "test": "ng test",
     "lint": "ng lint",
@@ -22,7 +23,7 @@
     "url": "https://github.com/sebgroup/ng-components.git"
   },
   "release": {
-    "pkgRoot": "dist/lib"
+    "pkgRoot": "dist/sebgroup/ng-components"
   },
   "config": {
     "commitizen": {
