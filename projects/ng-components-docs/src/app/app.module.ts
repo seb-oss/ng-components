@@ -39,7 +39,7 @@ import { InstallationComponent } from './components/installation/installation.co
     CodeExampleDirective,
     ExampleTemplateComponent,
     ApiListComponent,
-    InstallationComponent
+    InstallationComponent,
   ],
   imports: [
     BrowserModule,

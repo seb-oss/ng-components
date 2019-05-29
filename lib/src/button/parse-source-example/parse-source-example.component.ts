@@ -1,6 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Observable} from 'rxjs';
 
+/**
+ * Some description for the component
+ */
 @Component({
   selector: 'lib-doc-parse',
   template: `
@@ -28,7 +31,7 @@ export class ParseSourceExampleComponent implements OnInit {
     this._time = value;
   }
   /**
-   * Food for the component ex. `banana` <a href="https://www.google.se/search?q=banana" target="_blank">show banana</a>
+   * Food for the component ex. `banana` [show banana](https://www.google.se/search?q=banana)
    */
   @Input() get food(): any {
     return this._food;
@@ -40,8 +43,8 @@ export class ParseSourceExampleComponent implements OnInit {
    * Lorem ipsum dolar sit event
    */
   @Output() event: EventEmitter<any> = new EventEmitter();
-  someValue: string = 'hello';
-  $anotherValue: Observable<boolean>;
+  someValue: string = 'hello'; // holds some value for the component
+  $anotherValue: Observable<boolean>; // observable for another value
   private _time: string = 'time';
   private _food: any = 'burger';
   private _date: number;

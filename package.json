@@ -6,6 +6,7 @@
     "start": "ng serve",
     "docs": "ng serve ng-components-docs",
     "build": "ng build",
+    "build-lib": "ng build ng-components",
     "build-docs": "ng build ng-components-docs --base-href https://sebgroup.github.io/ng-components/ && copyfiles -f projects/ng-components-docs/src/404.html dist/ng-components-docs",
     "test": "ng test",
     "lint": "ng lint",
@@ -22,7 +23,7 @@
     "url": "https://github.com/sebgroup/ng-components.git"
   },
   "release": {
-    "pkgRoot": "dist/lib"
+    "pkgRoot": "dist/sebgroup/ng-components"
   },
   "config": {
     "commitizen": {
@@ -54,7 +55,9 @@
     "@angular/router": "~7.2.0",
     "@datorama/akita": "^3.9.2",
     "@sebgroup/bootstrap": "^3.4.0",
+    "@types/marked": "^0.6.5",
     "core-js": "^2.5.4",
+    "marked": "^0.6.2",
     "prismjs": "^1.16.0",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
