@@ -1,0 +1,14 @@
+<div class="seb-spinner-wrapper" *ngIf="toggle" [ngClass]="className" [class.fullscreen]='fullScreen'>
+    <div class="seb-spinner" [ngClass]="size | sizeClassPipe : sizeClassName">
+        <div class="seb-spinner-container">
+            <div class="seb-spinner-rotator">
+                <div class="seb-spinner-left">
+                    <div class="seb-spinner-circle" [ngClass]="theme"></div>
+                </div>
+                <div class="seb-spinner-right">
+                    <div class="seb-spinner-circle" [ngClass]="theme"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
