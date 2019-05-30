@@ -1,1 +1,1 @@
-export { SebLoaderModule } from './loader.module';
+export * from './loader.module';

@@ -7,8 +7,7 @@ import { ExampleLoader } from './components/loader/example.loader';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
 import { environment } from '../environments/environment';
-import { SebButtonModule, SebModalModule, SebDropdownModule } from '@sebgroup/ng-components';
-import { SebLoaderModule } from '../../lib/src/loader/loader.module';
+import { SebButtonModule, SebModalModule, SebDropdownModule, SebLoaderModule } from '@sebgroup/ng-components';
 import { ExampleModal } from './components/example-modal';
 import { ReactiveFormsModule } from '@angular/forms';
 
