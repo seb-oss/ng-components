@@ -1,41 +1,47 @@
-<div class="d-flex">
+<div class="d-flex flex-row flex-wrap">
     <div class="m-2">
         <button seb-btn size="sm">
-            <div class="d-flex flex-row">
-                <div class="button">
-                    button sm
-                </div>
-                <div class="ml-2">
-                    <seb-loader [toggle]="true" [fullScreen]="false" theme="light">
-                    </seb-loader>
-                </div>
-            </div>
+            <span class="button">
+                primary btn sm
+            </span>
+            <seb-loader [toggle]="true" [fullScreen]="false">
+            </seb-loader>
         </button>
     </div>
     <div class="m-2">
-        <button seb-btn>
-            <div class="d-flex flex-row">
-                <div class="button">
-                    button default
-                </div>
-                <div class="ml-2">
-                    <seb-loader [toggle]="true" [fullScreen]="false" theme="dark">
-                    </seb-loader>
-                </div>
-            </div>
+        <button seb-btn outline>
+            <span class="button">
+                outline btn default
+            </span>
+            <seb-loader [toggle]="true" [fullScreen]="false">
+            </seb-loader>
         </button>
     </div>
     <div class="m-2">
-        <button seb-btn size="lg">
-            <div class="d-flex flex-row">
-                <div class="button">
-                    button lg
-                </div>
-                <div class="ml-2">
-                    <seb-loader [toggle]="true" [fullScreen]="false">
-                    </seb-loader>
-                </div>
-            </div>
+        <button seb-btn="light">
+            <span class="button">
+                light btn default
+            </span>
+            <seb-loader [toggle]="true" [fullScreen]="false">
+            </seb-loader>
+        </button>
+    </div>
+    <div class="m-2">
+        <button seb-btn="link">
+            <span class="button">
+                link btn default
+            </span>
+            <seb-loader [toggle]="true" [fullScreen]="false">
+            </seb-loader>
+        </button>
+    </div>
+    <div class="m-2">
+        <button seb-btn="secondary" size="lg">
+            <span class="button">
+                secondary btn lg
+            </span>
+            <seb-loader [toggle]="true" [fullScreen]="false">
+            </seb-loader>
         </button>
     </div>
 </div>
