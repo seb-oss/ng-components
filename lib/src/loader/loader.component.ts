@@ -14,7 +14,6 @@ export class LoaderComponent {
     private _sizeClassName?: string;
     private _toggle = false;
     private _fullScreen = false;
-    private _theme: Theme = 'default';
 
     @Input()
     get size(): Size {
@@ -23,16 +22,6 @@ export class LoaderComponent {
     set size(value: Size) {
         if (this._size !== value) {
             this._size = value;
-        }
-    }
-
-    @Input()
-    get theme(): Theme {
-        return this._theme;
-    }
-    set theme(value: Theme) {
-        if (this._theme !== value) {
-            this._theme = value;
         }
     }
 

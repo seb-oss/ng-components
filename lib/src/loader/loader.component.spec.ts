@@ -1,4 +1,5 @@
 import { LoaderComponent } from './loader.component';
+import { SizeClassPipe } from './loader.pipe';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
@@ -10,7 +11,7 @@ describe('Component: LoaderComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [CommonModule],
-            declarations: [LoaderComponent],
+            declarations: [LoaderComponent, SizeClassPipe],
             providers: [],
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(LoaderComponent);
@@ -25,7 +26,7 @@ describe('Component: LoaderComponent', () => {
         expect(component).toBeTruthy();
     }));
 
-    it('should render and receive the correct className', async(() => {
+    it('should render and receive the correct parameters', async(() => {
         component.toggle = true;
         component.className = 'test-loader';
         fixture.detectChanges();
@@ -33,12 +34,37 @@ describe('Component: LoaderComponent', () => {
         expect(fixture.debugElement.query(By.css('.wrongClass'))).toBeFalsy();
     }));
 
-    it('should not render loader when toggle is false', async(() => {
+    it('should only render when toggle is true', async(() => {
+        component.toggle = false;
+        component.className = 'test-loader';
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('.loader'))).toBeFalsy();
+        expect(fixture.debugElement.query(By.css('.seb-spinner'))).toBeFalsy();
         component.toggle = true;
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('.loader'))).toBeTruthy();
+        expect(fixture.debugElement.query(By.css('.seb-spinner'))).toBeTruthy();
+    }));
+
+    it('should render loader on fulscreen mode when fullScreen is true', async(() => {
+        component.toggle = true;
+        component.fullScreen = false;
+        component.className = 'test-loader';
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('.test-loader.fullscreen'))).toBeFalsy();
+        component.fullScreen = true;
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('.test-loader.fullscreen'))).toBeTruthy();
+    }));
+
+    it('should be able to set sizes by sizeClass or size parameter', async(() => {
+        component.toggle = true;
+        component.fullScreen = false;
+        component.sizeClassName = 'spinner-sm';
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('.seb-spinner.spinner-sm'))).toBeTruthy();
+        component.sizeClassName = null;
+        component.size = "large";
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css('.seb-spinner.spinner-lg'))).toBeTruthy();
     }));
 
 });

@@ -1,6 +1,8 @@
 $transparent-black: rgba(0, 0, 0, 0.4);
+$black: #000;
 $white: #fff;
 $green: #60cd18;
+$blue: #0092E1;
 
 $spinner-xs-size : 40px;
 $spinner-sm-size: 80px;
@@ -15,6 +17,7 @@ $btn-lg-size: 25px;
 $btn-xl-size: 30px;
 
 
+//mixins 
 @mixin setLoaderSize() {
     &.spinner-xs {
         width: $spinner-xs-size;
@@ -72,15 +75,6 @@ $btn-xl-size: 30px;
                 height: 100%;
                 border-style: solid;
                 border-color: $green $green transparent;
-
-                &.light {
-                    border-color: $white $white transparent;
-                }
-
-                &.dark {
-                    border-color: $transparent-black $transparent-black transparent;
-                }
-
                 border-radius: 50%;
                 border-width: 6px;
             }
@@ -93,12 +87,6 @@ $btn-xl-size: 30px;
                 left: 0;
                 right: -100%;
                 border-right-color: transparent;
-
-                &.dark,
-                &.light {
-                    border-right-color: transparent;
-                }
-
                 @include animation(seb-spinner-left-spin 1333ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both);
             }
         }
@@ -110,12 +98,6 @@ $btn-xl-size: 30px;
                 left: -100%;
                 right: 0;
                 border-left-color: transparent;
-
-                &.dark,
-                &.light {
-                    border-left-color: transparent;
-                }
-
                 @include animation(seb-right-spin 1333ms cubic-bezier(0.4, 0.0, 0.2, 1) infinite both);
             }
         }
@@ -123,27 +105,18 @@ $btn-xl-size: 30px;
     }
 }
 
-.btn,
-.dropdown {
-
-    &:not(.btn-lg),
-    &:not(.btn-md),
-    &:not(.btn-sm),
-    &:not(.btn-xs),
-    &:not(.btn-xl) {
+@mixin setButtonLoaderTheme($color, $hoverColor) {
+    &:hover {
         .seb-spinner-wrapper {
             .seb-spinner {
-                top: 3.5px;
-                width: 15px;
-                height: 15px;
-
                 .seb-spinner-container {
                     >.seb-spinner-rotator {
 
                         >.seb-spinner-left,
                         >.seb-spinner-right {
                             >.seb-spinner-circle {
-                                border-width: 3px;
+                                border-color: $hoverColor $hoverColor transparent;
+                                border-right-color: transparent;
                             }
                         }
                     }
@@ -152,50 +125,147 @@ $btn-xl-size: 30px;
         }
     }
 
-    &.btn-lg {
-        .seb-spinner-wrapper {
-            .seb-spinner {
-                top: 2.5px;
-                width: $btn-lg-size;
-                height: $btn-lg-size;
+    .seb-spinner-wrapper {
+        .seb-spinner {
+            .seb-spinner-container {
+                >.seb-spinner-rotator {
+
+                    >.seb-spinner-left,
+                    >.seb-spinner-right {
+                        >.seb-spinner-circle {
+                            border-color: $color $color transparent;
+                            border-right-color: transparent;
+                        }
+                    }
+                }
             }
         }
     }
+}
 
-    &.btn-xs {
-        .seb-spinner-wrapper {
-            .seb-spinner {
-                width: $btn-xs-size;
-                height: $btn-xs-size;
-            }
+button,
+input {
+    &.btn-primary {
+        &.btn {
+            @include setButtonLoaderTheme($white, $white);
         }
     }
 
-    &.btn-xl {
-        .seb-spinner-wrapper {
-            .seb-spinner {
-                width: $btn-xl-size;
-                height: $btn-xl-size;
-            }
+    &.btn-outline-primary {
+        &.btn {
+            @include setButtonLoaderTheme($blue, $white);
         }
     }
 
-    &.btn-sm {
-        .seb-spinner-wrapper {
-            .seb-spinner {
-                top: 2px;
-                width: $btn-sm-size;
-                height: $btn-sm-size;
-            }
+    &.btn-secondary {
+        &.btn {
+            @include setButtonLoaderTheme($blue, $white);
         }
     }
 
-    &.btn-md {
-        .seb-spinner-wrapper {
-            .seb-spinner {
-                top: 2px;
-                width: $btn-md-size;
-                height: $spinner-md-size;
+    &.btn-link {
+        &.btn {
+            @include setButtonLoaderTheme($blue, $blue);
+        }
+    }
+
+    &.btn-light {
+        &.btn {
+            @include setButtonLoaderTheme($blue, $black);
+        }
+    }
+
+
+    &.btn,
+    &.input-field {
+
+        &.btn-lg,
+        &.btn-md,
+        &.btn-sm,
+        &.btn-xs,
+        &.btn-xl {
+            .seb-spinner-wrapper {
+                margin-left: 10px;
+                height: 100%;
+                display: inline-block;
+                text-align: right;
+                vertical-align: middle;
+            }
+        }
+
+        &:not(.btn-lg),
+        &:not(.btn-md),
+        &:not(.btn-sm),
+        &:not(.btn-xs),
+        &:not(.btn-xl) {
+            .seb-spinner-wrapper {
+                margin-left: 10px;
+                height: 100%;
+                display: inline-block;
+                text-align: right;
+                vertical-align: baseline;
+
+                .seb-spinner {
+                    width: 15px;
+                    height: 15px;
+
+                    .seb-spinner-container {
+                        >.seb-spinner-rotator {
+
+                            >.seb-spinner-left,
+                            >.seb-spinner-right {
+                                >.seb-spinner-circle {
+                                    border-width: 3px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &.btn-lg {
+            .seb-spinner-wrapper {
+                .seb-spinner {
+                    width: $btn-lg-size;
+                    height: $btn-lg-size;
+                }
+            }
+        }
+
+        &.btn-xs {
+            .seb-spinner-wrapper {
+                .seb-spinner {
+                    width: $btn-xs-size;
+                    height: $btn-xs-size;
+                }
+            }
+        }
+
+        &.btn-xl {
+            .seb-spinner-wrapper {
+                .seb-spinner {
+                    width: $btn-xl-size;
+                    height: $btn-xl-size;
+                }
+            }
+        }
+
+        &.btn-sm {
+            .seb-spinner-wrapper {
+                .seb-spinner {
+                    width: $btn-sm-size;
+                    height: $btn-sm-size;
+                }
+            }
+        }
+
+        &.btn-md {
+            .seb-spinner-wrapper {
+                .seb-spinner {
+                    width: $btn-md-size;
+                    height: $spinner-md-size;
+                }
             }
         }
     }

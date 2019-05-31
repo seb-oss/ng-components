@@ -1,7 +1,7 @@
 <div class="row">
     <form [formGroup]="dropdownForm" class="col-10">
-        <div class="row">
-            <div class="col">
+        <div class="d-flex flex-row flex-wrap">
+            <div class="m-2">
                 <seb-dropdown formControlName="sizeControl">
                     <button seb-btn
                         sebDropdownToggle>{{!dropdownForm.get('sizeControl')?.value?.key ? 'Select Size' : dropdownForm.get('sizeControl')?.value?.name}}</button>
@@ -9,14 +9,14 @@
                 </seb-dropdown>
             </div>
 
-            <div class="col">
+            <div class="m-2">
                 <seb-dropdown>
                     <button seb-btn sebDropdownToggle size="sm">
                         <div [ngStyle]="{ 'display': 'inline-block'}">
                             <div [ngStyle]="{ 'display': 'inline-block'}">
                                 drop
                             </div>
-                            <div class="ml-2" [ngStyle]="{ 'display': 'inline-block'}">
+                            <div [ngStyle]="{ 'display': 'inline-block'}">
                                 <seb-loader [toggle]="!!selectedSize" [fullScreen]="false" className="loader-cmp">
                                 </seb-loader>
                             </div>
@@ -24,53 +24,56 @@
                     </button>
                 </seb-dropdown>
             </div>
-
-            <div class="col">
+            <div class="m-2">
                 <button seb-btn size="sm">
-                    <div class="d-flex flex-row">
-                        <div class="button">
-                            button sm
-                        </div>
-                        <div class="ml-2">
-                            <seb-loader [toggle]="!!selectedSize" [fullScreen]="false" className="loader-cmp" theme="light">
-                            </seb-loader>
-                        </div>
-                    </div>
+                    <span class="button">
+                        primary btn sm
+                    </span>
+                    <seb-loader [toggle]="true" [fullScreen]="false">
+                    </seb-loader>
+                </button>
+            </div>
+            <div class="m-2">
+                <button seb-btn outline>
+                    <span class="button">
+                        outline btn default
+                    </span>
+                    <seb-loader [toggle]="true" [fullScreen]="false">
+                    </seb-loader>
+                </button>
+            </div>
+            <div class="m-2">
+                <button seb-btn="light">
+                    <span class="button">
+                        light btn default
+                    </span>
+                    <seb-loader [toggle]="true" [fullScreen]="false">
+                    </seb-loader>
+                </button>
+            </div>
+            <div class="m-2">
+                <button seb-btn="link">
+                    <span class="button">
+                        link btn default
+                    </span>
+                    <seb-loader [toggle]="true" [fullScreen]="false">
+                    </seb-loader>
+                </button>
+            </div>
+            <div class="m-2">
+                <button seb-btn="secondary" size="lg">
+                    <span class="button">
+                        secondary btn lg
+                    </span>
+                    <seb-loader [toggle]="true" [fullScreen]="false">
+                    </seb-loader>
                 </button>
             </div>
 
-            <div class="col">
-                <button seb-btn>
-                    <div class="d-flex flex-row">
-                        <div class="button">
-                            button default
-                        </div>
-                        <div class="ml-2">
-                            <seb-loader [toggle]="!!selectedSize" [fullScreen]="false" className="loader-cmp" theme="dark">
-                            </seb-loader>
-                        </div>
-                    </div>
-                </button>
-            </div>
-
-            <div class="col">
-                <button seb-btn size="lg">
-                    <div class="d-flex flex-row">
-                        <div class="button">
-                            button lg
-                        </div>
-                        <div class="ml-2">
-                            <seb-loader [toggle]="!!selectedSize" [fullScreen]="false" className="loader-cmp"
-                                [size]="selectedSize">
-                            </seb-loader>
-                        </div>
-                    </div>
-                </button>
-            </div>
         </div>
     </form>
     <div class="col-2">
-        <seb-loader [toggle]="!!selectedSize" [fullScreen]="true" className="loader-cmp" [size]="selectedSize">
+        <seb-loader [toggle]="!!selectedSize" [fullScreen]="false" className="loader-cmp" [size]="selectedSize">
         </seb-loader>
     </div>
 </div>
