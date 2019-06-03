@@ -17,7 +17,8 @@
     "add-fa-config": "npm config set '@fortawesome:registry' https://npm.fontawesome.com/ && npm config set '//npm.fontawesome.com/:_authToken' $FA_TOKEN",
     "package-lock-sanitizer": "package-lock-sanitizer && git add package-lock.json",
     "format:fix": "pretty-quick --staged",
-    "format:check": "pretty-quick --check --verbose"
+    "format:check": "pretty-quick --check --verbose",
+    "format:all": "prettier --write \"**/*.{ts,json,scss,md}\""
   },
   "private": true,
   "repository": {
