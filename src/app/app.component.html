@@ -20,7 +20,8 @@
   <h2>Dropdown</h2>
   <form [formGroup]="dropdownForm">
     <seb-dropdown formControlName="single">
-      <button seb-btn sebDropdownToggle>{{!dropdownForm.get('single')?.value ? 'Select fruit' : dropdownForm.get('single')?.value?.name}}</button>
+      <button seb-btn
+        sebDropdownToggle>{{!dropdownForm.get('single')?.value ? 'Select fruit' : dropdownForm.get('single')?.value?.name}}</button>
       <seb-dropdown-item *ngFor="let fruit of fruits" [value]="fruit">{{fruit.name}}</seb-dropdown-item>
     </seb-dropdown>
     <seb-dropdown multiple formControlName="multi" class="ml-2">
@@ -57,6 +58,11 @@
       <button seb-btn sebDropdownToggle>No options</button>
     </seb-dropdown>
   </form>
+</section>
+
+<section class="p-3">
+  <h2>Loader</h2>
+  <example-loader></example-loader>
 </section>
 
 <router-outlet></router-outlet>

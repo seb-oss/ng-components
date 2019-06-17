@@ -3,27 +3,30 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ExampleLoader } from './components/loader/example.loader';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
 import { environment } from '../environments/environment';
-import {SebButtonModule, SebModalModule, SebDropdownModule} from '@sebgroup/ng-components';
-import {ExampleModal} from './components/example-modal';
-import {ReactiveFormsModule} from '@angular/forms';
+import { SebButtonModule, SebModalModule, SebDropdownModule, SebLoaderModule } from '@sebgroup/ng-components';
+import { ExampleModal } from './components/example-modal';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ExampleModal
+    ExampleModal,
+    ExampleLoader
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     environment.production ?
-        [] :
-        [ AkitaNgDevtools.forRoot(), AkitaNgRouterStoreModule.forRoot() ],
+      [] :
+      [AkitaNgDevtools.forRoot(), AkitaNgRouterStoreModule.forRoot()],
     SebButtonModule,
     SebModalModule,
     SebDropdownModule,
+    SebLoaderModule,
     ReactiveFormsModule
   ],
   entryComponents: [ExampleModal],
