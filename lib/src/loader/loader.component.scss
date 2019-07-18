@@ -273,6 +273,9 @@ input {
 
 .seb-spinner-wrapper {
     position: relative;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
 
     &:not(.fullscreen) {
         display: -webkit-box;
@@ -301,7 +304,6 @@ input {
 
         .seb-spinner {
             position: relative;
-            z-index: 999;
             pointer-events: none;
             @include setLoaderSize();
 
@@ -315,7 +317,6 @@ input {
 
     .seb-spinner {
         position: relative;
-        z-index: 999;
         pointer-events: none;
         @include setLoaderSize();
 
