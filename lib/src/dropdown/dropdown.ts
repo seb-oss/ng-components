@@ -130,8 +130,8 @@ export class SebDropdown implements ControlValueAccessor, OnInit, AfterContentIn
 
   public readonly stateChanges: Subject<void> = new Subject<void>();
 
-  @ViewChild('dropdownMenu') dropdownMenu: ElementRef;
-  @ContentChild(SebDropdownToggle) dropdownToggle: SebDropdownToggle;
+  @ViewChild('dropdownMenu', { static: true }) dropdownMenu: ElementRef;
+  @ContentChild(SebDropdownToggle, {static: true }) dropdownToggle: SebDropdownToggle;
   @ContentChildren(SebDropdownItem, { descendants: true }) items: QueryList<SebDropdownItem>;
 
   @HostListener('document:click', ['$event'])
