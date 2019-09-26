@@ -45,7 +45,7 @@ export class ExampleTemplateComponent implements OnInit, OnDestroy {
   }
 
   componentRef: ComponentRef<any>;
-  @ViewChild(CodeExampleDirective) exampleHost: CodeExampleDirective;
+  @ViewChild(CodeExampleDirective, { static: true }) exampleHost: CodeExampleDirective;
 
   private _example: any;
   public showCodeExample = false;
