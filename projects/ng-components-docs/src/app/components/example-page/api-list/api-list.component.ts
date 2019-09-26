@@ -5,7 +5,7 @@ import { Declaration, TypescriptParser } from 'typescript-parser';
 import { File as ParsedFile } from 'typescript-parser/resources/File';
 import { ApiSection } from '../../../interfaces/api-section';
 import marked from 'marked';
-import { map, reduce, tap } from 'rxjs/operators';
+import { map, reduce } from 'rxjs/operators';
 
 @Component({
   selector: 'app-api-list',
@@ -65,6 +65,7 @@ export class ApiListComponent implements OnInit {
           outputs: this.parseOutputs(declaration.properties, outputs),
           // @ts-ignore
           properties: ApiListComponent.parseProperties(
+            // @ts-ignore
             declaration.properties,
             properties
           ),
