@@ -10,6 +10,9 @@ install:
 cache:
   directories:
     - $HOME/.npm
+    
+before_script:
+  - export NODE_OPTIONS=–max_old_space_size=8192
 
 script:
   - npm run build-lib && npm run build-docs
