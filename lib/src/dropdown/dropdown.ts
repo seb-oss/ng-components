@@ -2,68 +2,77 @@ import {
   AfterContentInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component, ContentChild, ContentChildren, Directive,
+  Component,
+  ContentChild,
+  ContentChildren,
+  Directive,
   ElementRef,
   EventEmitter,
-  Host, HostBinding,
+  Host,
+  HostBinding,
   HostListener,
   Inject,
-  Input, OnDestroy,
-  OnInit, Optional,
-  Output, QueryList, Self,
+  Input,
+  OnDestroy,
+  OnInit,
+  Optional,
+  Output,
+  QueryList,
+  Self,
   ViewChild,
 } from '@angular/core';
-import {ControlValueAccessor, NgControl} from '@angular/forms';
-import {merge, Subject} from 'rxjs';
-import {DOCUMENT} from '@angular/common';
-import {startWith, takeUntil} from 'rxjs/operators';
-import {Selection, SelectionChange} from '../core/selection/selection';
-
+import { ControlValueAccessor, NgControl } from '@angular/forms';
+import { merge, Subject } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
+import { startWith, takeUntil } from 'rxjs/operators';
+import { Selection, SelectionChange } from '../core/selection/selection';
 
 @Directive({
-  selector: 'button[sebDropdownToggle], a[sebDropdownToggle]'
+  selector: 'button[sebDropdownToggle], a[sebDropdownToggle]',
 })
 export class SebDropdownToggle {
-
   @HostBinding('disabled') disabled: boolean = false;
   @HostBinding('class.dropdown-toggle') toggleClass: boolean = true;
 
   @HostListener('click')
-  handleClick() { this.dropdown.toggle(); }
+  handleClick() {
+    this.dropdown.toggle();
+  }
 
-  constructor(@Host() private dropdown: SebDropdown, public elementRef: ElementRef, private _changeDetectorRef: ChangeDetectorRef) {
-
-    this.dropdown.stateChanges
-      .subscribe(() => {
-        this.disabled = this._disabled();
-        this._changeDetectorRef.markForCheck();
-      });
-
+  constructor(
+    @Host() private dropdown: SebDropdown,
+    public elementRef: ElementRef,
+    private _changeDetectorRef: ChangeDetectorRef
+  ) {
+    this.dropdown.stateChanges.subscribe(() => {
+      this.disabled = this._disabled();
+      this._changeDetectorRef.markForCheck();
+    });
   }
 
   private _disabled() {
-    return (this.dropdown.items && !this.dropdown.items.length) || this.dropdown.disabled;
+    return (
+      (this.dropdown.items && !this.dropdown.items.length) ||
+      this.dropdown.disabled
+    );
   }
 }
-
 
 @Component({
   selector: 'seb-dropdown-item',
   templateUrl: 'dropdown-item.html',
   host: {
-    'class': 'dropdown-item',
+    class: 'dropdown-item',
     '[class.active]': 'selected',
-    '[class.disabled]': 'disabled'
+    '[class.disabled]': 'disabled',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SebDropdownItem {
-
   @Output() readonly changes = new EventEmitter<SebDropdownItem>();
 
   @HostListener('click', ['$event'])
   handleClick(event) {
-
     event.stopPropagation();
     event.preventDefault();
 
@@ -78,21 +87,35 @@ export class SebDropdownItem {
   }
 
   @Input()
-  set selected(value) { this._selected = value; }
-  get selected(): boolean { return this._selected; }
+  set selected(value) {
+    this._selected = value;
+  }
+  get selected(): boolean {
+    return this._selected;
+  }
   private _selected: boolean = false;
 
   @Input()
-  get value() { return this._value; }
-  set value(value) { this._value = value; }
+  get value() {
+    return this._value;
+  }
+  set value(value) {
+    this._value = value;
+  }
   private _value = null;
 
   @Input()
-  get disabled(): boolean { return this._disabled; }
-  set disabled(value: boolean) { this._disabled = value != null && `${value}` !== 'false'; }
+  get disabled(): boolean {
+    return this._disabled;
+  }
+  set disabled(value: boolean) {
+    this._disabled = value != null && `${value}` !== 'false';
+  }
   private _disabled: boolean = false;
 
-  get multiple(): boolean { return this.dropdown && this.dropdown.multiple; }
+  get multiple(): boolean {
+    return this.dropdown && this.dropdown.multiple;
+  }
 
   public select() {
     if (!this.selected) {
@@ -106,23 +129,20 @@ export class SebDropdownItem {
     }
   }
 
-  constructor(@Host() private dropdown: SebDropdown) { }
-
+  constructor(@Host() private dropdown: SebDropdown) {}
 }
-
-
 
 @Component({
   selector: 'seb-dropdown',
   templateUrl: 'dropdown.html',
   styleUrls: ['dropdown.scss'],
   host: {
-    'class': 'dropdown'
+    class: 'dropdown',
   },
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SebDropdown implements ControlValueAccessor, OnInit, AfterContentInit, OnDestroy {
-
+export class SebDropdown
+  implements ControlValueAccessor, OnInit, AfterContentInit, OnDestroy {
   private _selection: Selection<SebDropdownItem>;
   private _ngOnDestroy$ = new Subject<void>();
   private _onTouched: () => any = () => {};
@@ -130,38 +150,54 @@ export class SebDropdown implements ControlValueAccessor, OnInit, AfterContentIn
 
   public readonly stateChanges: Subject<void> = new Subject<void>();
 
-  @ViewChild('dropdownMenu') dropdownMenu: ElementRef;
-  @ContentChild(SebDropdownToggle) dropdownToggle: SebDropdownToggle;
-  @ContentChildren(SebDropdownItem, { descendants: true }) items: QueryList<SebDropdownItem>;
+  @ViewChild('dropdownMenu', { static: true }) dropdownMenu: ElementRef;
+  @ContentChild(SebDropdownToggle, { static: true })
+  dropdownToggle: SebDropdownToggle;
+  @ContentChildren(SebDropdownItem, { descendants: true }) items: QueryList<
+    SebDropdownItem
+  >;
 
   @HostListener('document:click', ['$event'])
   handleMouseClick(event: MouseEvent) {
-    if (event.button === 2) { return false; }
+    if (event.button === 2) {
+      return false;
+    }
     if (!this.dropdownMenu.nativeElement.contains(event.target)) {
-
-      if(!this.dropdownToggle.elementRef.nativeElement.contains(event.target)){
+      if (
+        !this.dropdownToggle.elementRef.nativeElement.contains(event.target)
+      ) {
         this.closeMenu();
       }
     }
   }
 
   @HostListener('document:keydown.escape')
-  handleKeyboardEscKey() { this.closeMenu(); }
+  handleKeyboardEscKey() {
+    this.closeMenu();
+  }
 
   @Input()
-  get multiple(): boolean { return this._multiple; }
-  set multiple(value: boolean) { this._multiple = value != null && `${value}` !== 'false'; }
+  get multiple(): boolean {
+    return this._multiple;
+  }
+  set multiple(value: boolean) {
+    this._multiple = value != null && `${value}` !== 'false';
+  }
   private _multiple: boolean = false;
 
-
   @Input()
-  set open(value) { this._open = `${value}` === 'true' }
-  get open() { return this._open }
+  set open(value) {
+    this._open = `${value}` === 'true';
+  }
+  get open() {
+    return this._open;
+  }
   private _open: boolean = false;
 
-
   @Input()
-  get disabled(): boolean { return this._disabled; }
+  get disabled(): boolean {
+    return this._disabled;
+  }
   set disabled(value: boolean) {
     this._disabled = value != null && `${value}` !== 'false';
     this.stateChanges.next();
@@ -173,8 +209,8 @@ export class SebDropdown implements ControlValueAccessor, OnInit, AfterContentIn
   constructor(
     private _changeDetectorRef: ChangeDetectorRef,
     @Self() @Optional() private ngControl: NgControl,
-    @Inject(DOCUMENT) private _document) {
-
+    @Inject(DOCUMENT) private _document
+  ) {
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
@@ -205,35 +241,36 @@ export class SebDropdown implements ControlValueAccessor, OnInit, AfterContentIn
   }
 
   ngAfterContentInit(): void {
-
-    this._selection.changed.pipe(
-      takeUntil(this._ngOnDestroy$)
-    ).subscribe((event: SelectionChange<SebDropdownItem>) => {
-      event.added.forEach((item: SebDropdownItem) => item.select());
-      event.removed.forEach((item: SebDropdownItem) => item.deselect());
-    });
-
-    this.items.changes.pipe(
-      startWith(null),
-      takeUntil(this._ngOnDestroy$)
-    ).subscribe(() => {
-
-      merge(...this.items.map(item => item.changes)).pipe(
-        takeUntil(merge(this.items.changes, this._ngOnDestroy$))
-      ).subscribe((item: SebDropdownItem) => {
-        item.selected ? this._selection.select(item) : this._selection.deselect(item);
-        const value = this.multiple ? this._getSelected() : item.value;
-        this._controlValueAccessorChangeFn(value);
-        this.onSelectionChange.emit(value);
+    this._selection.changed
+      .pipe(takeUntil(this._ngOnDestroy$))
+      .subscribe((event: SelectionChange<SebDropdownItem>) => {
+        event.added.forEach((item: SebDropdownItem) => item.select());
+        event.removed.forEach((item: SebDropdownItem) => item.deselect());
       });
 
-      Promise.resolve().then(() => {
-        this._setSelection(this.ngControl ? this.ngControl.value : null);
-        this.stateChanges.next();
+    this.items.changes
+      .pipe(
+        startWith(null),
+        takeUntil(this._ngOnDestroy$)
+      )
+      .subscribe(() => {
+        merge(...this.items.map(item => item.changes))
+          .pipe(takeUntil(merge(this.items.changes, this._ngOnDestroy$)))
+          .subscribe((item: SebDropdownItem) => {
+            item.selected
+              ? this._selection.select(item)
+              : this._selection.deselect(item);
+            const value = this.multiple ? this._getSelected() : item.value;
+            this._controlValueAccessorChangeFn(value);
+            this.onSelectionChange.emit(value);
+          });
+
+        Promise.resolve().then(() => {
+          this._setSelection(this.ngControl ? this.ngControl.value : null);
+          this.stateChanges.next();
+        });
       });
-    });
   }
-
 
   private _getSelected() {
     return this._selection.selected.map((item: SebDropdownItem) => item.value);
@@ -250,21 +287,35 @@ export class SebDropdown implements ControlValueAccessor, OnInit, AfterContentIn
   }
 
   private _select(value) {
-    const item: SebDropdownItem = this.items.find(item => item.value !== null && item.value === value);
-    if (item) { this._selection.select(item) }
+    const item: SebDropdownItem = this.items.find(
+      item => item.value !== null && item.value === value
+    );
+    if (item) {
+      this._selection.select(item);
+    }
   }
 
   private _assertArray(value) {
     if (!Array.isArray(value)) {
-      throw new Error('SebDropdown has attribute multiple but initial form control value is not an array');
+      throw new Error(
+        'SebDropdown has attribute multiple but initial form control value is not an array'
+      );
     }
   }
 
-  registerOnChange(fn: any): void { this._controlValueAccessorChangeFn = fn; }
-  registerOnTouched(fn: any): void { this._onTouched = fn; }
-  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
+  registerOnChange(fn: any): void {
+    this._controlValueAccessorChangeFn = fn;
+  }
+  registerOnTouched(fn: any): void {
+    this._onTouched = fn;
+  }
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
   writeValue(obj: any): void {
-    if (this.items) {this._setSelection(obj); }
+    if (this.items) {
+      this._setSelection(obj);
+    }
   }
 
   ngOnDestroy(): void {
@@ -273,4 +324,3 @@ export class SebDropdown implements ControlValueAccessor, OnInit, AfterContentIn
     this.stateChanges.complete();
   }
 }
-

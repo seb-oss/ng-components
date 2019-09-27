@@ -1,7 +1,8 @@
 dist: trusty
 sudo: false
 language: node_js
-node_js: lts/*
+node_js:
+  - '12'
 
 install:
   - npm run add-fa-config
@@ -10,7 +11,7 @@ install:
 cache:
   directories:
     - $HOME/.npm
-    
+
 before_script:
   - export NODE_OPTIONS=–max_old_space_size=8192
 
