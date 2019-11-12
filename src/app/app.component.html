@@ -11,52 +11,167 @@
 <section class="p-3">
   <h2>Modal</h2>
   <button seb-btn (click)="openModal()">Default</button>
-  <button seb-btn class="ml-2" (click)="openModal('aside-left')">Aside left</button>
-  <button seb-btn class="ml-2" (click)="openModal('aside-right')">Aside right</button>
-  <button seb-btn class="ml-2" (click)="openModal('fullscreen')">Fullscreen</button>
-  <button seb-btn class="ml-2" (click)="openModal(null, false)">Disable backdrop and esc key</button>
+  <button seb-btn class="ml-2" (click)="openModal('aside-left')">
+    Aside left
+  </button>
+  <button seb-btn class="ml-2" (click)="openModal('aside-right')">
+    Aside right
+  </button>
+  <button seb-btn class="ml-2" (click)="openModal('fullscreen')">
+    Fullscreen
+  </button>
+  <button seb-btn class="ml-2" (click)="openModal(null, false)">
+    Disable backdrop and esc key
+  </button>
 </section>
 <section class="p-3">
   <h2>Dropdown</h2>
   <form [formGroup]="dropdownForm">
     <seb-dropdown formControlName="single">
-      <button seb-btn sebDropdownToggle>{{!dropdownForm.get('single')?.value ? 'Select fruit' : dropdownForm.get('single')?.value?.name}}</button>
-      <seb-dropdown-item *ngFor="let fruit of fruits" [value]="fruit">{{fruit.name}}</seb-dropdown-item>
+      <button seb-btn sebDropdownToggle>
+        {{
+          !dropdownForm.get('single')?.value
+            ? 'Select fruit'
+            : dropdownForm.get('single')?.value?.name
+        }}
+      </button>
+      <seb-dropdown-item *ngFor="let fruit of fruits" [value]="fruit">{{
+        fruit.name
+      }}</seb-dropdown-item>
     </seb-dropdown>
     <seb-dropdown multiple formControlName="multi" class="ml-2">
       <button seb-btn sebDropdownToggle>
         <ng-container [ngSwitch]="!!dropdownForm.get('multi')?.value?.length">
           <ng-container *ngSwitchCase="false">Select fruits</ng-container>
           <ng-container *ngSwitchCase="true">
-            {{ dropdownForm.get('multi')?.value?.length > 1 ?
-               dropdownForm.get('multi')?.value[0].name + ' + ' + (dropdownForm.get('multi')?.value?.length - 1) :
-               dropdownForm.get('multi')?.value[0].name }}
+            {{
+              dropdownForm.get('multi')?.value?.length > 1
+                ? (dropdownForm.get('multi')?.value)[0].name +
+                  ' + ' +
+                  (dropdownForm.get('multi')?.value?.length - 1)
+                : (dropdownForm.get('multi')?.value)[0].name
+            }}
           </ng-container>
         </ng-container>
       </button>
-      <seb-dropdown-item *ngFor="let fruit of fruits" [value]="fruit">{{fruit.name}}</seb-dropdown-item>
+      <seb-dropdown-item *ngFor="let fruit of fruits" [value]="fruit">{{
+        fruit.name
+      }}</seb-dropdown-item>
     </seb-dropdown>
     <seb-dropdown multiple formControlName="preMulti" class="ml-2">
       <button seb-btn size="sm" sebDropdownToggle>
-        <ng-container [ngSwitch]="!!dropdownForm.get('preMulti')?.value?.length">
+        <ng-container
+          [ngSwitch]="!!dropdownForm.get('preMulti')?.value?.length"
+        >
           <ng-container *ngSwitchCase="false">Select fruits</ng-container>
           <ng-container *ngSwitchCase="true">
-            {{ dropdownForm.get('preMulti')?.value?.length > 1 ?
-            dropdownForm.get('preMulti')?.value[0]?.name + ' + ' + (dropdownForm.get('preMulti')?.value?.length - 1) :
-            dropdownForm.get('preMulti')?.value[0]?.name }}
+            {{
+              dropdownForm.get('preMulti')?.value?.length > 1
+                ? (dropdownForm.get('preMulti')?.value)[0]?.name +
+                  ' + ' +
+                  (dropdownForm.get('preMulti')?.value?.length - 1)
+                : (dropdownForm.get('preMulti')?.value)[0]?.name
+            }}
           </ng-container>
         </ng-container>
       </button>
-      <seb-dropdown-item *ngFor="let fruit of fruits" [value]="fruit">{{fruit.name}}</seb-dropdown-item>
+      <seb-dropdown-item *ngFor="let fruit of fruits" [value]="fruit">{{
+        fruit.name
+      }}</seb-dropdown-item>
     </seb-dropdown>
-    <seb-dropdown class="ml-2" (onSelectionChange)="handleOnSelectionChange($event)">
-      <button seb-btn size="lg" sebDropdownToggle>{{!selected ? 'Select with no form' : selected?.name}}</button>
-      <seb-dropdown-item *ngFor="let fruit of fruits" [value]="fruit">{{fruit.name}}</seb-dropdown-item>
+    <seb-dropdown
+      class="ml-2"
+      (onSelectionChange)="handleOnSelectionChange($event)"
+    >
+      <button seb-btn size="lg" sebDropdownToggle>
+        {{ !selected ? 'Select with no form' : selected?.name }}
+      </button>
+      <seb-dropdown-item *ngFor="let fruit of fruits" [value]="fruit">{{
+        fruit.name
+      }}</seb-dropdown-item>
     </seb-dropdown>
-    <seb-dropdown class="ml-2" (onSelectionChange)="handleOnSelectionChange($event)">
+    <seb-dropdown
+      class="ml-2"
+      (onSelectionChange)="handleOnSelectionChange($event)"
+    >
       <button seb-btn sebDropdownToggle>No options</button>
     </seb-dropdown>
   </form>
 </section>
-
+<section class="p-3 w-100" style="height: 600px;">
+  <h2>Wizard</h2>
+  <seb-wizard stepWise [hideNavigation]="wizard.selectedIndex === 3" #wizard>
+    <ng-template sebWizardTitle>Wizard Title</ng-template>
+    <seb-wizard-step>
+      <ng-template sebWizardStepLabel
+        >Step 1
+        <ng-container *sebWizardStepLabelDesc="let wizard">
+          Displaying {{ wizard.currentStep }} of {{ wizard.totalSteps }}
+        </ng-container>
+      </ng-template>
+      <div class="d-flex flex-column h-100">
+        Headline
+        <h2>Content of step 1</h2>
+        <div class="mt-auto d-flex flex-row">
+          <button seb-btn outline (click)="wizard.next()" class="ml-auto">
+            Next
+          </button>
+        </div>
+      </div>
+    </seb-wizard-step>
+    <seb-wizard-step>
+      <ng-template sebWizardStepLabel
+        >Step 2
+        <ng-container *sebWizardStepLabelDesc="let wizard">
+          Displaying {{ wizard.currentStep }} of {{ wizard.totalSteps }}
+        </ng-container>
+      </ng-template>
+      <div class="d-flex flex-column h-100">
+        Headline
+        <h2>Content of step 2</h2>
+        <div class="mt-auto d-flex flex-row">
+          <button seb-btn outline (click)="wizard.previous()">Previous</button>
+          <button seb-btn outline (click)="wizard.next()" class="ml-auto">
+            Next
+          </button>
+        </div>
+      </div>
+    </seb-wizard-step>
+    <seb-wizard-step>
+      <ng-template sebWizardStepLabel
+        >Step 3
+        <ng-container *sebWizardStepLabelDesc="let wizard">
+          Displaying {{ wizard.currentStep }} of {{ wizard.totalSteps }}
+        </ng-container>
+      </ng-template>
+      <div class="d-flex flex-column h-100">
+        Headline
+        <h2>Content of step 3</h2>
+        <div class="mt-auto d-flex flex-row">
+          <button seb-btn outline (click)="wizard.previous()">Previous</button>
+          <button seb-btn outline (click)="wizard.next()" class="ml-auto">
+            Next
+          </button>
+        </div>
+      </div>
+    </seb-wizard-step>
+    <seb-wizard-step>
+      <ng-template sebWizardStepLabel
+        >Step 4
+        <ng-container *sebWizardStepLabelDesc="let wizard">
+          Displaying {{ wizard.currentStep }} of {{ wizard.totalSteps }}
+        </ng-container>
+      </ng-template>
+      <div class="d-flex flex-column h-100">
+        Headline
+        <h2>Content of step 4</h2>
+        <div class="mt-auto d-flex flex-row">
+          <button seb-btn outline (click)="wizard.reset()" class="ml-auto">
+            Reset wizard
+          </button>
+        </div>
+      </div>
+    </seb-wizard-step>
+  </seb-wizard>
+</section>
 <router-outlet></router-outlet>
