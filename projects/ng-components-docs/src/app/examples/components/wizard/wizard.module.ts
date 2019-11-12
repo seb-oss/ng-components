@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ExamplePageComponent } from '../../../components/example-page/example-page.component';
-import { ButtonsComponent } from './examples/buttons/buttons.component';
-import {SebButtonModule} from '@sebgroup/ng-components';
-import {ExampleListComponent} from '../../../components/example-page/example-list/example-list.component';
-import {ApiListComponent} from '../../../components/example-page/api-list/api-list.component';
-import {Route} from '@angular/router';
-
+import { ExampleListComponent } from '../../../components/example-page/example-list/example-list.component';
+import { ApiListComponent } from '../../../components/example-page/api-list/api-list.component';
+import { Route } from '@angular/router';
+import { WizardFormsComponent } from './examples/wizard-forms/wizard-forms.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SebWizardModule } from '../../../../../../../lib/src/wizard';
+import { SebButtonModule } from '../../../../../../../lib/src/button';
+import { SebModalModule } from '../../../../../../../lib/src/modal';
+import { WizardComponent } from './examples/wizard/wizard.component';
 
 export const ROUTES: Array<Route> = [
   { path: '', pathMatch: 'full', redirectTo: 'examples' },
@@ -14,69 +17,64 @@ export const ROUTES: Array<Route> = [
     path: '',
     component: ExamplePageComponent,
     children: [
-      { path: 'examples',
+      {
+        path: 'examples',
         component: ExampleListComponent,
-        children: [{
-          path: 'button',
-          component: ButtonsComponent,
-          data: {
-            title: 'Button directive',
-            description: 'Additional description for example (optional)',
-            sources: [{
-              name: 'buttons.component.html',
-              src: require('!raw-loader!./examples/buttons/buttons.component.html'),
-              lang: 'markup'
-            }, {
-              name: 'buttons.component.ts',
-              src: require('!raw-loader!./examples/buttons/buttons.component.ts'),
-              lang: 'ts'
-            }]
-          }
-        }, {
-          path: 'another-example',
-          component: ButtonsComponent,
-          data: {
-            title: 'Another button example (same component)',
-            description: `Same component used for the sake of showing how multiple examples can be set up.
-                          It's also possible to add html like a <a href="http://www.seb.se" target="blank">link</a>.`,
-            sources: [{
-              name: 'buttons.component.html',
-              src: `<div>Some other <strong class="fancy-class">inline</strong> example markup</div>`,
-              lang: 'markup'
-            }, {
-              name: 'buttons.component.js',
-              src: `foo(bar: any) => {
-                console.log(bar);
-              }`,
-              lang: 'js'
-            }, {
-              name: 'buttons.component.css',
-              src: `
-                .fancy-class {
-                  color: hotpink !important;
-                }
-              `,
-              lang: 'css'
-            }]
-          }
-        }]},
+        children: [
+          {
+            path: 'wizard',
+            component: WizardComponent,
+            data: {
+              title: 'Wizard',
+              description: 'Additional description for example (optional)',
+              sources: [
+                {
+                  name: 'wizard.component.html',
+                  src: require('!raw-loader!./examples/wizard/wizard.component.html'),
+                  lang: 'markup',
+                },
+                {
+                  name: 'wizard.component.ts',
+                  src: require('!raw-loader!./examples/wizard/wizard.component.ts'),
+                  lang: 'ts',
+                },
+                {
+                  name: 'wizard-forms.component.html',
+                  src: require('!raw-loader!./examples/wizard-forms/wizard-forms.component.html'),
+                  lang: 'markup',
+                },
+                {
+                  name: 'wizard-forms.component.ts',
+                  src: require('!raw-loader!./examples/wizard-forms/wizard-forms.component.ts'),
+                  lang: 'ts',
+                },
+              ],
+            },
+          },
+        ],
+      },
       {
         path: 'api',
         component: ApiListComponent,
         data: {
-          sources: [require('!raw-loader!../../../../../../../lib/src/button/button.ts')]
-        }
-      }
-    ]
-  }
+          sources: [
+            require('!raw-loader!../../../../../../../lib/src/wizard/wizard.module.ts'),
+          ],
+        },
+      },
+    ],
+  },
 ];
 
-
 @NgModule({
-  declarations: [ButtonsComponent],
+  declarations: [WizardFormsComponent, WizardComponent],
   imports: [
     CommonModule,
-    SebButtonModule
-  ]
+    ReactiveFormsModule,
+    SebWizardModule,
+    SebButtonModule,
+    SebModalModule,
+  ],
+  entryComponents: [WizardFormsComponent],
 })
-export class ButtonsModule { }
+export class WizardModule {}

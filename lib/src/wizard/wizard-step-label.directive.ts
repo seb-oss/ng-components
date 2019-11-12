@@ -1,8 +1,11 @@
-import {Directive, TemplateRef} from '@angular/core';
+import { Directive, TemplateRef } from '@angular/core';
 
-@Directive({
-  selector: '[sebWizardTitle]'
-})
-export class SebWizardTitleDirective {
-  constructor(public template: TemplateRef<any>) { }
+@Directive({ selector: '[sebWizardStepLabel]' })
+export class SebWizardStepLabelDirective {
+  constructor(public template: TemplateRef<any>) {}
+}
+
+@Directive({ selector: '[sebWizardStepLabelDesc]' })
+export class SebWizardStepLabelDescDirective {
+  constructor(public template: TemplateRef<any>) {}
 }
