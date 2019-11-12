@@ -22,7 +22,7 @@ export class ApiListComponent implements OnInit {
       return [...previous, this.parseSourceFile(current)];
     }, []);
     this.$content = merge(...obs).pipe(
-      reduce(([previous, current]) => [...previous, ...current], [])
+      reduce((previous: any, current: any) => [...previous, ...current], [])
     );
   }
 
@@ -133,7 +133,7 @@ export class ApiListComponent implements OnInit {
   }
   static extractDescription(sourceCode: string) {
     const regex = /(?:\/\*\*(?<comment>[\s\S][^\/]*)\*\/[^\w])/;
-    console.log(regex.exec(sourceCode));
+    console.log(sourceCode, regex.exec(sourceCode));
     return regex.exec(sourceCode);
   }
 
