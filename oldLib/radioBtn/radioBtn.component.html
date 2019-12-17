@@ -1,0 +1,28 @@
+<div class="form-group radio-holder" [ngClass]="className">
+    <div
+        class="input-field"
+        [ngClass]="{
+            'has-error': error,
+            'inline': inline
+        }">
+
+        <div class="radio-item">
+            <label class="radio-label" [for]="label">{{label}}</label>
+            <input
+                class="radio-input"
+                type="radio"
+                [value]="value"
+                [name]="group"
+                [id]="label"
+                [checked]= "value === radioValue"
+                [disabled]="disabled"
+                (change)="handleChange(radioValue)"
+            />
+
+            <span class="checkmark"></span>
+            <span class="radio-description" *ngIf="description">{{description}}</span>
+        </div>
+
+        <div *ngIf="error" class="alert alert-danger" [class.shown]="error">{{error}}</div>
+    </div>
+</div>

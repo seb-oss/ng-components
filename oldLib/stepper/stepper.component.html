@@ -1,0 +1,27 @@
+<div
+    class="form-group custom-stepper"
+    [ngClass]="{
+        className: className,
+        'has-error': error,
+        'has-warning': warning
+    }"
+>
+    <label class="custom-label">{{label}}</label>
+    <div class="stepper-container" [ngClass]="{'disabled': disabled}">
+        <div class="stepper-decrement" (click)="!disabled && decrement()" [class.disabled]="value === min">&#8722;</div>
+        <div class="stepper-preview"><span>{{value}}</span></div>
+        <div class="stepper-increment" (click)="!disabled && increment()" [class.disabled]="value === max">&#43;</div>
+    </div>
+    <input
+        class="stepper-input"
+        id="{{_id}}"
+        name="{{name}}"
+        type="number"
+        [min]="min"
+        [max]="max"
+        [(ngModel)]="value"
+        [disabled]="disabled"
+    />
+    <div class="alert alert-warning">{{warning}}</div>
+    <div class="alert alert-danger">{{error}}</div>
+</div>

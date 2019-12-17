@@ -1,0 +1,8 @@
+<nav [attr.id]="id ? id : null" class="custom-breadcrumb" [ngClass]="className" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <ng-container *ngFor="let item of list; let i = index">
+            <li [value]="i" class="breadcrumb-item" [class.active]="i === list.length-1"
+                (click)="i !== list.length-1 && clickAction ? clickAction($event) : null">{{item}}</li>
+        </ng-container>
+    </ol>
+</nav>

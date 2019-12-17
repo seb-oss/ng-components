@@ -1,0 +1,33 @@
+<div class="custom-cropper-dialogue" [ngClass]="{'open-cropper-dialogue': toggle, 'close-cropper-dialogue': !toggle}">
+    <div class="cropper-dialogue-container">
+        <div class="cropper-dialogue" [ngClass]="imageCropperClassName" (click)="stopProp($event)">
+            <div class="custom-angular-cropper" src="null" crossOrigin="null">
+                <ac-loader [toggle]="!isImageLoaded" className="inner-loader" fullscreen="false"></ac-loader>
+                <img #image [crossOrigin]="crossOrigin" [src]="src || 'data:image/jpeg;base64,PHN2ZyKPC9zdmc+'" [alt]="alt" (load)="onLoad()"
+                    [ngStyle]="{ 'opacity': 0, width: '100%' }" id="image" />
+            </div>
+
+            <div class="cropper-dialogue-footer control-container d-flex flex-row">
+                <div class="btn-delete">
+                    <button type="button" *ngIf="onCustomButtonClick && showCustomButton" class="btn btn-default custom-button"
+                        (click)="onCustomButtonClick && onCustomButtonClick($event)">
+                        <span>{{ customButtonText || 'Delete' }}</span>
+                    </button>
+                </div>
+                <div class="right-controls">
+                    <button type="button" id="cancelBtn" class="btn btn-outline-secondary custom-button" (click)="dismissCropper()">
+                        <span>{{ cancelText || 'Dismiss' }}</span>
+                    </button>
+                    <button type="button" id="cropBtn" class="btn btn-primary custom-button" (click)="onCropClick($event)">
+                        <span>{{ cropButtonText || 'Crop' }}</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        <ac-loader [toggle]="isLoading"></ac-loader>
+    </div>
+</div>
+<ac-image-preview [handleUploadImage]="handleUploadImage" [previewClassName]="previewClassName" [cropResult]="cropResult"
+    [previewSrc]="previewSrc" [selectButtonText]="selectButtonText">
+</ac-image-preview>

@@ -1,0 +1,7 @@
+<div class="custom-progress" [ngClass]="className">
+    <div
+        class="custom-progress-bar" [class.show-progress]="showProgress"
+        [ngStyle]="{ 'width': value+'%' }">
+    </div>
+    <div *ngIf="showProgress" class="custom-progress-text" [class.white]="value > 49">{{value + '%'}}</div>
+</div>

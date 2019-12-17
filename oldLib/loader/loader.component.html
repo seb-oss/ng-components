@@ -1,0 +1,14 @@
+<div class="seb-loader-wrapper" *ngIf="toggle" [ngClass]="className" [class.fullscreen]='fullScreen'>
+    <div class="seb-loader" [ngClass]="size | sizeClassPipe : sizeClassName">
+        <div class="seb-loader-container">
+            <div class="seb-loader-rotator">
+                <div class="seb-loader-left">
+                    <div class="seb-loader-circle"></div>
+                </div>
+                <div class="seb-loader-right">
+                    <div class="seb-loader-circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

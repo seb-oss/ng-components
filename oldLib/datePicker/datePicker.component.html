@@ -1,0 +1,27 @@
+<div class="form-group date-picker">
+    <div class="input-group" [class.has-error]="error" [ngClass]="className">
+        <label *ngIf="label" for={{name}}>{{label}}</label>
+        <input 
+            name="{{name}}"
+            class="form-control input-box" 
+            [placeholder]="placeHolder"
+            name="dp" 
+            [(ngModel)]="value"
+            [readonly]="readOnly"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            id="{{_id}}"
+            ngbDatepicker
+            #picker="ngbDatepicker">
+        <div class="input-group-append">
+            <button 
+                class="btn btn-outline-secondary calander-icon" 
+                (click)="picker.toggle()" 
+                type="button"
+                [innerHtml]="icon | safeHtml">
+            </button>
+        </div>
+        <span class="bar"></span>
+        <div class="alert alert-danger">{{error}}</div>
+    </div>
+</div>

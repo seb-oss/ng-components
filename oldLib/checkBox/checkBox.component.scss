@@ -1,0 +1,64 @@
+$standard: 16px;
+$white: #fff;
+$gray-300: #dedede;
+$gray-600: #868686;
+@mixin transition($props) {
+    -webkit-transition: $props;
+    -moz-transition: $props;
+    -o-transition: $props;
+    transition: $props;
+}
+
+$red: #F03529;
+$transition-time: 200ms;
+.form-group.custom-checkbox {
+    .input-field {
+        margin-bottom: 5px;
+        .custom-control {
+            .custom-control-label,
+            .custom-control-input {
+                &:not(.disabled) {
+                    cursor: pointer;
+                    user-select: none;
+                }
+            }
+            .checkbox-description {
+                color: $gray-600;
+                display: inline-block;
+                margin-left: 8px;
+            }
+        }
+        >.alert {
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+            background: none;
+            border: none;
+            border-radius: 0px;
+            width: 100%;
+            max-height: 0;
+            min-height: 0;
+            overflow: hidden;
+            @include transition((opacity $transition-time, max-height $transition-time*2, max-height $transition-time*2, margin-top $transition-time));
+            &.alert-danger {
+                color: $red;
+            }
+        }
+        &.has-error {
+            .alert {
+                opacity: 1;
+                margin-top: -2px;
+                max-height: 100px;
+                min-height: 27px;
+            }
+        }
+    }
+    &.inline {
+        display: inline-block;
+        &:not(:first-child) {
+            .custom-control {
+                margin-left: 15px;
+            }
+        }
+    }
+}

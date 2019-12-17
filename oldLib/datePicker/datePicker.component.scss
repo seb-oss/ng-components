@@ -1,0 +1,130 @@
+$blue: #41B0EE;
+$white: #ffffff;
+$grey: #cecece;
+$grey-dark: #494949;
+$red: #FF0000;
+$transition-time: 200ms;
+@mixin transition($props) {
+    -webkit-transition: $props;
+    -moz-transition: $props;
+    -o-transition: $props;
+    transition: $props;
+}
+
+.form-group.date-picker {
+    .input-group {
+        .dropdown-menu {
+            width: 100%;
+            margin-top: 2px;
+            margin-bottom: 5px;
+            .ngb-dp-months {
+                display: block !important;
+            }
+            .ngb-dp-weekday,
+            .ngb-dp-day {
+                width: 15%;
+                &:focus {
+                    outline: none;
+                }
+            }
+            .btn-light,
+            .btn-dark {
+                color: black;
+                margin: auto;
+            }
+            .btn-light:not([disabled]):not(.disabled):active,
+            .btn-light:not([disabled]):not(.disabled).active,
+            .show>.btn-light.dropdown-toggle {
+                color: black;
+                background: transparent;
+                box-shadow: none;
+            }
+            &.show {
+                &+.input-group-append .calander-icon {
+                    background-color: $blue;
+                    svg {
+                        fill: $white;
+                    }
+                }
+            }
+        }
+        .input-box {
+            height: 42px;
+            @include transition(border-color 200ms);
+            &:focus {
+                box-shadow: none;
+                border-right: none;
+                &~.input-group-append {
+                    .calander-icon {
+                        border-color: $blue;
+                    }
+                }
+            }
+        }
+        .input-group-append {
+            .calander-icon {
+                border-left: none;
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px;
+                color: $grey-dark;
+                @include transition(border-color 200ms);
+                &:hover {
+                    background-color: $blue;
+                    svg {
+                        fill: $white;
+                    }
+                }
+                &:focus {
+                    outline: none;
+                    box-shadow: none;
+                }
+                svg {
+                    fill: $blue;
+                    width: 16px;
+                    height: 16px;
+                    margin: auto;
+                    will-change: fill;
+                    @include transition(fill $transition-time);
+                }
+            }
+        }
+        .ngb-dp-navigation-select {
+            z-index: 2;
+        }
+        .custom-select {
+            background: $white;
+        }
+        &.has-error {
+            .input-box {
+                border-color: $red;
+            }
+            .input-group-append {
+                .calander-icon {
+                    border-color: $red;
+                }
+            }
+            .alert {
+                opacity: 1;
+                margin-top: -2px;
+                max-height: 100px;
+                min-height: 27px;
+            }
+        }
+        .alert {
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+            background: none;
+            border: none;
+            border-radius: 0px;
+            width: 100%;
+            max-height: 0;
+            min-height: 0;
+            overflow: hidden;
+            @include transition((opacity $transition-time, max-height $transition-time*2, max-height $transition-time*2, margin-top $transition-time));
+            &.alert-danger {
+                color: $red;
+            }
+        }
+    }
+}

@@ -1,0 +1,3 @@
+<div *ngIf="src" class="icon-holder" [ngClass]="className" [class.clickable]="clickAction"
+    (click)="clickAction && clickAction($event)" title="{{title}}" [innerHtml]="src | safeHtml">
+</div>

@@ -1,0 +1,16 @@
+<tr *ngIf="list && list.length">
+    <th 
+        *ngFor="let column of list"
+        app-table-th
+        class="cursor-pointer sort"
+        [class.sort-asc]="column.active && column.asc === true"
+        [class.sort-desc]="column.active && column.asc === false"
+        [class.sticky-top]="isSticky"
+        style="background: white;"
+        scope="col"
+        (click)="handleClickSort({ column: column.tableKeySelector, isAscending: !column.asc, type: column.valueType })"
+        [label]="column.label"
+        [active]="column.active"
+    >
+    </th>
+</tr>

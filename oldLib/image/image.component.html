@@ -1,0 +1,23 @@
+<div
+    *ngIf="!useImgTag"
+    class="div-tag"
+    [ngClass]="className"
+    [ngStyle]="{
+        'background-image': 'url('+src+')',
+        'width': width,
+        'height': height
+    }">
+</div>
+<img
+    *ngIf="useImgTag"
+    class="img-tag"
+    [src]="src"
+    id="{{_id}}"
+    [alt]="alt"
+    [ngClass]="className"
+    (load)="onLoad && onLoad($event)"
+    [ngStyle]="{
+        'width': width,
+        'height': height
+    }"
+/>

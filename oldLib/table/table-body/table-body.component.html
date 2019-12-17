@@ -1,0 +1,13 @@
+<tr 
+    *ngFor="let row of rows; let i = index" 
+    class="cursor-pointer"
+    (click)="handleClickRow({ item: row, index: i })"
+>
+    <td
+        app-table-td
+        *ngFor="let column of headerList"
+        [row]="row[column.tableKeySelector]"
+        [valueType]="column.valueType"
+    >
+    </td>
+</tr>

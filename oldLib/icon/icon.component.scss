@@ -1,0 +1,13 @@
+.icon-holder {
+    display: inline-block;
+    &.clickable {
+        svg {
+            cursor: pointer;
+        }
+    }
+
+    >svg {
+        width: 30px;
+        height: 30px;
+    }
+}
