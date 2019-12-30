@@ -59,7 +59,7 @@
     "@angular/router": "~8.2.8",
     "@datorama/akita": "^3.9.2",
     "@sebgroup/bootstrap": "^4.0.0",
-    "@types/marked": "^0.6.5",
+    "@types/marked": "^0.7.2",
     "core-js": "^2.5.4",
     "marked": "^0.7.0",
     "prismjs": "^1.16.0",
