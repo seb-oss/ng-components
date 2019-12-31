@@ -74,7 +74,7 @@
     "@angular/cli": "~8.3.6",
     "@angular/compiler-cli": "~8.2.8",
     "@angular/language-service": "~8.2.8",
-    "@commitlint/cli": "^7.5.2",
+    "@commitlint/cli": "^8.2.0",
     "@commitlint/config-conventional": "^7.5.0",
     "@datorama/akita-ng-router-store": "^3.0.0",
     "@datorama/akita-ngdevtools": "^1.0.2",
