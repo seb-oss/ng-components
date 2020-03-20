@@ -1,4 +1,4 @@
-import { TooltipComponent } from './tooltip.component';
+import { TooltipComponent } from './tooltip';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { DebugElement, Component } from '@angular/core';
 import { By } from '@angular/platform-browser';

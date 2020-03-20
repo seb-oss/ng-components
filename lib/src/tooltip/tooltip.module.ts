@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TooltipComponent } from './tooltip.component';
+import { TooltipComponent } from './tooltip';
 import { SafeHtmlPipe } from './tooltip.pipe';
 
 @NgModule({
@@ -8,4 +8,4 @@ import { SafeHtmlPipe } from './tooltip.pipe';
   exports: [TooltipComponent],
   declarations: [TooltipComponent, SafeHtmlPipe],
 })
-export class TooltipModule {}
+export class SebTooltipModule {}

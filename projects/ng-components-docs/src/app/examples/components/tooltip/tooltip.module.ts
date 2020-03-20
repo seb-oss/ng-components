@@ -4,6 +4,7 @@ import { TooltipComponent } from './examples/tooltip/tooltip.component';
 import { ExamplePageComponent } from '../../../components/example-page/example-page.component';
 import { ExampleListComponent } from '../../../components/example-page/example-list/example-list.component';
 import { ApiListComponent } from '../../../components/example-page/api-list/api-list.component';
+import { SebTooltipModule } from 'lib/src/tooltip';
 
 export const ROUTES = [
   { path: '', pathMatch: 'full', redirectTo: 'examples' },
@@ -46,8 +47,8 @@ export const ROUTES = [
           sources: [
             require('!raw-loader!../../../../../../../lib/src/button/parse-source-example/parse-source-example.component.ts'),
             require('!raw-loader!../../../../../../../lib/src/tooltip/tooltip.ts'),
-            require('!raw-loader!../../../../../../../lib/src/tooltip/tooltip.directives.ts'),
-            require('!raw-loader!../../../../../../../lib/src/tooltip/tooltip.service.ts'),
+            // require('!raw-loader!../../../../../../../lib/src/tooltip/tooltip.directives.ts'),
+            // require('!raw-loader!../../../../../../../src/app/components/tooltip/tooltip.service.ts'),
           ],
         },
       },
@@ -57,6 +58,6 @@ export const ROUTES = [
 
 @NgModule({
   declarations: [TooltipComponent],
-  imports: [CommonModule],
+  imports: [CommonModule, SebTooltipModule],
 })
-export class ModalModule {}
+export class TooltipModule {}
