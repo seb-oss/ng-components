@@ -1,0 +1,40 @@
+<div class="tooltip-container" [ngClass]="className">
+  <div
+    class="icon"
+    (click)="!triggerOnHover && toggleTooltip(undefined, $event)"
+    (mouseenter)="triggerOnHover && toggleTooltip(true)"
+    (mouseleave)="triggerOnHover && toggleTooltip(false)"
+    [innerHtml]="customSvg | safeHtml"
+  ></div>
+  <div class="content {{ position }} {{ theme }}" [class.open]="toggle">
+    <div class="triangle" *ngIf="isPositioned('bottom')"></div>
+
+    <div
+      class="message-container"
+      [ngStyle]="{ width: width + 'px' }"
+      *ngIf="!messageGroup"
+    >
+      <div class="title" *ngIf="title">{{ title }}</div>
+      <div class="message" *ngIf="message">{{ message }}</div>
+      <ng-content></ng-content>
+    </div>
+
+    <div
+      class="message-container"
+      [ngStyle]="{ width: width + 'px' }"
+      *ngIf="messageGroup"
+    >
+      <div class="message-list-item" *ngFor="let item of messageGroup">
+        <div class="title" *ngIf="item.title">{{ item.title }}</div>
+        <div class="message" *ngIf="item.message">{{ item.message }}</div>
+      </div>
+    </div>
+
+    <div
+      class="triangle"
+      *ngIf="
+        isPositioned('top') || isPositioned('right') || isPositioned('left')
+      "
+    ></div>
+  </div>
+</div>

@@ -5,24 +5,37 @@
         <div class="col-auto px-0">
           <app-logo></app-logo>
         </div>
-        <div class="col-auto align-self-center text-center px-3" (click)="toggleMenu()">
-          <fa-icon icon="bars" class="d-block text-white" size="1x"></fa-icon>
+        <div
+          class="col-auto align-self-center text-center px-3"
+          (click)="toggleMenu()"
+        >
+          <!-- <fa-icon icon="bars" class="d-block text-white" size="1x"></fa-icon> -->
           <div>Menu</div>
         </div>
       </div>
     </div>
     <div class="col d-md-none px-0" *ngIf="activeTab">
-      <div class="row mobile-header h-100 align-items-center text-center no-gutters">
-        <div *ngFor="let menuItem of $menuItems | async" class="col" ngClass="{{activeTab === menuItem.path ? 'active':''}}" (click)="showMenu(menuItem.path)">
-          <fa-icon [icon]="menuItem.icon" size="1x" class="d-block"></fa-icon>
-          <span class="text-capitalize">{{menuItem.text}}</span>
+      <div
+        class="row mobile-header h-100 align-items-center text-center no-gutters"
+      >
+        <div
+          *ngFor="let menuItem of $menuItems | async"
+          class="col"
+          ngClass="{{ activeTab === menuItem.path ? 'active' : '' }}"
+          (click)="showMenu(menuItem.path)"
+        >
+          <!-- <fa-icon [icon]="menuItem.icon" size="1x" class="d-block"></fa-icon> -->
+          <span class="text-capitalize">{{ menuItem.text }}</span>
         </div>
       </div>
     </div>
     <div class="col align-self-center pl-3 d-none d-sm-flex">
       <h3 class="mb-0">ng-components</h3>
     </div>
-    <div class="col d-none d-md-flex bg-white border-bottom sticky-header" [@scrollAnimation]="stickyHeader">
+    <div
+      class="col d-none d-md-flex bg-white border-bottom sticky-header"
+      [@scrollAnimation]="stickyHeader"
+    >
       <div class="row align-items-center h-100">
         <div class="col">
           <h5 class="mb-0">Section header</h5>
