@@ -9,7 +9,6 @@ import {
     OnDestroy,
     Output,
     QueryList,
-    HostBinding,
 } from "@angular/core";
 import { SebWizardTitleDirective } from "./wizard-title.directive";
 import { SebWizardStepComponent } from "./wizard-step.component";

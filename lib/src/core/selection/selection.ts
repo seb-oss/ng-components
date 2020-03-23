@@ -115,7 +115,7 @@ export class Selection<T> {
      */
     sort(predicate?: (a: T, b: T) => number): void {
         if (this._multiple && this.selected) {
-            this._selected?.sort(predicate);
+            this._selected && this._selected.sort(predicate);
         }
     }
 
