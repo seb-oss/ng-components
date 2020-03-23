@@ -1,41 +1,36 @@
 <div class="row no-gutters py-3 align-items-end">
-  <div class="col-12 col-sm pr-sm-3">
-    <h3>{{example.data.title}}</h3>
-    <p class="mb-sm-0" [innerHTML]="example.data.description"></p>
-  </div>
-  <div class="col col-sm-auto pr-1">
-    <button class="btn btn-outline-primary btn-sm w-100" (click)="toggleCodeExample()" [ngClass]="{'active': showCodeExample}">
-      Code
-      <fa-icon icon="code" class="ml-1"></fa-icon>
-    </button>
-  </div>
-  <div class="col col-sm-auto px-1">
-    <button class="btn btn-outline-primary btn-sm w-100">
-      Stackblitz
-      <svg class="ml-1" width="23" height="34" viewBox="0 0 23 34"
-           xmlns="http://www.w3.org/2000/svg">
-        <g class="icon" fill="currentColor"
-           fill-rule="nonzero" id="Symbols">
-          <polygon
-            id="Path"
-            points="0 19.9187087 9.87007874 19.9187087 4.12007874 34 23 13.9612393 13.0846457 13.9612393 18.7893701 0">
-          </polygon>
-        </g>
-      </svg>
-    </button>
-  </div>
-  <div class="col col-sm-auto pl-1">
-    <button class="btn btn-outline-primary btn-sm w-100" [routerLink]="example.path">
-      Fullscreen
-      <fa-icon icon="expand-wide" class="ml-1"></fa-icon>
-    </button>
-  </div>
+    <div class="col-12 col-sm pr-sm-3">
+        <h3>{{ example.data.title }}</h3>
+        <p class="mb-sm-0" [innerHTML]="example.data.description"></p>
+    </div>
+    <div class="col col-sm-auto pr-1">
+        <button class="btn btn-outline-primary btn-sm w-100" (click)="toggleCodeExample()" [ngClass]="{ active: showCodeExample }">
+            Code
+        </button>
+    </div>
+    <div class="col col-sm-auto px-1">
+        <button class="btn btn-outline-primary btn-sm w-100">
+            Stackblitz
+            <svg class="ml-1" width="23" height="34" viewBox="0 0 23 34" xmlns="http://www.w3.org/2000/svg">
+                <g class="icon" fill="currentColor" fill-rule="nonzero" id="Symbols">
+                    <polygon
+                        id="Path"
+                        points="0 19.9187087 9.87007874 19.9187087 4.12007874 34 23 13.9612393 13.0846457 13.9612393 18.7893701 0"
+                    ></polygon>
+                </g>
+            </svg>
+        </button>
+    </div>
+    <div class="col col-sm-auto pl-1">
+        <button class="btn btn-outline-primary btn-sm w-100" [routerLink]="example.path">
+            Fullscreen
+        </button>
+    </div>
 </div>
 <div *ngIf="example.data.sources && showCodeExample" [@enterAnimation]>
-  <exemplify [sources]="example.data.sources"></exemplify>
-  <hr class="mt-0">
+    <exemplify [sources]="example.data.sources"></exemplify>
+    <hr class="mt-0" />
 </div>
 <div class="bg-light p-3">
-  <ng-template appCodeExample></ng-template>
+    <ng-template appCodeExample></ng-template>
 </div>
-
