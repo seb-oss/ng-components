@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 // import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { DropDownComponent } from "./dropDown.component";
+import { DropdownComponent } from "./dropdown-new.component";
 
 @NgModule({
     imports: [
@@ -10,7 +10,7 @@ import { DropDownComponent } from "./dropDown.component";
         CommonModule,
         FormsModule,
     ],
-    declarations: [DropDownComponent],
-    exports: [DropDownComponent],
+    declarations: [DropdownComponent],
+    exports: [DropdownComponent],
 })
 export class DropDownModule {}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { DropdownItem } from "lib/src/dropdown/dropDown.component";
+import { Item } from "lib/src/dropdown/dropdown-new.component";
 
 @Component({
     selector: "app-dropdowns",
@@ -8,9 +8,9 @@ import { DropdownItem } from "lib/src/dropdown/dropDown.component";
 })
 export class DropdownsComponent implements OnInit {
     constructor() {}
-    list: DropdownItem[] = [
-        { text: "One", value: "1" },
-        { text: "Two", value: "2" },
+    list: Item[] = [
+        { key: "One", value: "1", label: "One" },
+        { key: "Two", value: "2", label: "Two" },
     ];
 
     ngOnInit() {}
