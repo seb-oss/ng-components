@@ -1,14 +1,12 @@
-import { Injectable } from '@angular/core';
-import { Query } from '@datorama/akita';
-import { ExampleStore, ExampleState } from './example.store';
+import { Injectable } from "@angular/core";
+import { Query } from "@datorama/akita";
+import { ExampleStore, ExampleState } from "./example.store";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class ExampleQuery extends Query<ExampleState> {
+    $isFullscreen = this.select("isFullscreen");
 
-  $isFullscreen = this.select('isFullscreen');
-
-  constructor(protected store: ExampleStore) {
-    super(store);
-  }
-
+    constructor(protected store: ExampleStore) {
+        super(store);
+    }
 }

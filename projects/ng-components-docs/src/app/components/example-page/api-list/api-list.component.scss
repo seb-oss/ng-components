@@ -1,10 +1,10 @@
-@import '~@sebgroup/bootstrap/scss/styles/functions';
-@import '~@sebgroup/bootstrap/scss/variables';
-@import '~@sebgroup/bootstrap/scss/mixins/mixins';
+@import "~@sebgroup/bootstrap/scss/styles/functions";
+@import "~@sebgroup/bootstrap/scss/variables";
+@import "~@sebgroup/bootstrap/scss/mixins/mixins";
 .table tr td:first-child {
-  width: 25%;
+    width: 25%;
 }
 
 h2 ~ h2 {
-  margin-top: map_get($spacers, 5);
+    margin-top: map_get($spacers, 5);
 }
