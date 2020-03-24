@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
 @Component({
-  template: '',
-  host: { '[class]': '"modal-backdrop fade show"' }
+    template: "",
+    host: { "[class]": '"modal-backdrop fade show"' },
 })
-export class SebModalBackdrop { }
+export class SebModalBackdropComponent {}

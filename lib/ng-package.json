@@ -1,8 +1,8 @@
 {
-  "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
-  "dest": "../dist/sebgroup/ng-components",
-  "lib": {
-    "entryFile": "src/public_api.ts",
-    "umdModuleIds": {}
-  }
+    "$schema": "../node_modules/ng-packagr/ng-package.schema.json",
+    "dest": "../dist/sebgroup/ng-components",
+    "lib": {
+        "entryFile": "src/public_api.ts",
+        "umdModuleIds": {}
+    }
 }
