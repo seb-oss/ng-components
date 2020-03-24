@@ -249,10 +249,7 @@ export class SebDropdown
       });
 
     this.items.changes
-      .pipe(
-        startWith(null),
-        takeUntil(this._ngOnDestroy$)
-      )
+      .pipe(startWith(null), takeUntil(this._ngOnDestroy$))
       .subscribe(() => {
         merge(...this.items.map(item => item.changes))
           .pipe(takeUntil(merge(this.items.changes, this._ngOnDestroy$)))
