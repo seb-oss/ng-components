@@ -42,8 +42,8 @@ const CUSTOM_DROPDOWN_CONTROL_VALUE_ACCESSOR: Provider = {
 
 @Component({
     selector: "sebng-dropdown",
-    templateUrl: "./dropdown-new.component.html",
-    styleUrls: ["./dropdown-new.component.scss"],
+    templateUrl: "./dropdown.component.html",
+    styleUrls: ["./dropdown.component.scss"],
     providers: [CUSTOM_DROPDOWN_CONTROL_VALUE_ACCESSOR],
 })
 export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDestroy {

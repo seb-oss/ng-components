@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Item } from "lib/src/dropdown/dropdown-new.component";
+import { Item } from "lib/src/dropdown/dropdown.component";
 
 @Component({
     selector: "app-dropdowns",
