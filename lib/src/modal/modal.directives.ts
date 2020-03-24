@@ -1,34 +1,34 @@
-import {Directive} from '@angular/core';
+import { Directive } from "@angular/core";
 
 @Directive({
-  selector: '[sebModalTitle]',
-  host: {
-    '[class]': '"modal-title"'
-  }
+    selector: "[sebng-modal-title]",
+    host: {
+        "[class]": '"modal-title"',
+    },
 })
-export class SebModalTitle { }
+export class SebModalTitleDirective {}
 
 @Directive({
-  selector: 'seb-modal-header, [sebModalHeader]',
-  host: {
-    '[class]': '"modal-header"'
-  }
+    selector: "sebng-modal-header, [sebng-modal-header]",
+    host: {
+        "[class]": '"modal-header"',
+    },
 })
-export class SebModalHeader { }
+export class SebModalHeaderDirective {}
 
 @Directive({
-  selector: 'seb-modal-body, [sebModalBody]',
-  host: {
-    '[class]': '"modal-body"',
-    'style': 'display:block;'
-  }
+    selector: "sebng-modal-body, [sebng-modal-body]",
+    host: {
+        "[class]": '"modal-body"',
+        style: "display:block;",
+    },
 })
-export class SebModalBody { }
+export class SebModalBodyDirective {}
 
 @Directive({
-  selector: 'seb-modal-footer, [sebModalFooter]',
-  host: {
-    '[class]': '"modal-footer"'
-  }
+    selector: "sebng-modal-footer, [sebng-modal-footer]",
+    host: {
+        "[class]": '"modal-footer"',
+    },
 })
-export class SebModalFooter { }
+export class SebModalFooterDirective {}

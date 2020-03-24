@@ -1,119 +1,115 @@
 {
-  "name": "ng-components-docs-and-demo",
-  "version": "1.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "docs": "ng serve ng-components-docs",
-    "build": "ng build",
-    "build-lib": "ng build ng-components",
-    "build-docs": "ng build ng-components-docs --base-href https://sebgroup.github.io/ng-components/ && copyfiles -f projects/ng-components-docs/src/404.html dist/ng-components-docs && npm run gen-dl-files",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "commit": "git-cz",
-    "travis-deploy-once": "travis-deploy-once --pro",
-    "semantic-release": "semantic-release",
-    "add-fa-config": "npm config set '@fortawesome:registry' https://npm.fontawesome.com/ && npm config set '//npm.fontawesome.com/:_authToken' $FA_TOKEN",
-    "package-lock-sanitizer": "package-lock-sanitizer && git add package-lock.json",
-    "format:fix": "pretty-quick --staged",
-    "format:check": "pretty-quick --check --verbose",
-    "format:all": "prettier --write \"**/*.{ts,json,scss,md}\"",
-    "gen-dl-files": "node projects/ng-components-docs/designlibrary-config/generate-dl-config.js"
-  },
-  "private": true,
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sebgroup/ng-components.git"
-  },
-  "release": {
-    "pkgRoot": "dist/sebgroup/ng-components"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+    "name": "ng-components-docs-and-demo",
+    "version": "1.0.0",
+    "scripts": {
+        "ng": "ng",
+        "start": "ng serve",
+        "docs": "ng serve ng-components-docs",
+        "build": "ng build",
+        "build-lib": "ng build ng-components",
+        "build-docs": "ng build ng-components-docs --base-href https://sebgroup.github.io/ng-components/ && copyfiles -f projects/ng-components-docs/src/404.html dist/ng-components-docs && npm run gen-dl-files",
+        "test": "ng test",
+        "lint": "ng lint",
+        "e2e": "ng e2e",
+        "commit": "git-cz",
+        "travis-deploy-once": "travis-deploy-once --pro",
+        "semantic-release": "semantic-release",
+        "package-lock-sanitizer": "package-lock-sanitizer && git add package-lock.json",
+        "format:fix": "pretty-quick --staged",
+        "format:check": "pretty-quick --check --verbose",
+        "format:all": "prettier --write \"**/*.{ts,html,json,scss,md}\"",
+        "gen-dl-files": "node projects/ng-components-docs/designlibrary-config/generate-dl-config.js"
+    },
+    "private": true,
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sebgroup/ng-components.git"
+    },
+    "release": {
+        "pkgRoot": "dist/sebgroup/ng-components"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "commit-msg": "commitlint --edit",
+            "pre-commit": "run-s format:fix package-lock-sanitizer"
+        }
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "@angular/animations": "~8.2.8",
+        "@angular/common": "~8.2.8",
+        "@angular/compiler": "~8.2.8",
+        "@angular/core": "~8.2.8",
+        "@angular/forms": "~8.2.8",
+        "@angular/platform-browser": "~8.2.8",
+        "@angular/platform-browser-dynamic": "~8.2.8",
+        "@angular/router": "~8.2.8",
+        "@datorama/akita": "^3.9.2",
+        "@sebgroup/bootstrap": "^4.0.0",
+        "@types/marked": "^0.6.5",
+        "core-js": "^2.5.4",
+        "marked": "^0.7.0",
+        "prismjs": "^1.16.0",
+        "rxjs": "~6.5.3",
+        "tslib": "^1.9.0",
+        "typescript-parser": "^2.6.1",
+        "zone.js": "~0.9.1"
+    },
+    "devDependencies": {
+        "@angular-devkit/build-angular": "~0.803.6",
+        "@angular-devkit/build-ng-packagr": "~0.803.6",
+        "@angular/cli": "~8.3.6",
+        "@angular/compiler-cli": "~8.2.8",
+        "@angular/language-service": "~8.2.8",
+        "@commitlint/cli": "^7.5.2",
+        "@commitlint/config-conventional": "^7.5.0",
+        "@datorama/akita-ng-router-store": "^3.0.0",
+        "@datorama/akita-ngdevtools": "^1.0.2",
+        "@types/jasmine": "~2.8.8",
+        "@types/jasminewd2": "~2.0.3",
+        "@types/node": "^8.9.5",
+        "angular-exemplify": "^3.1.4",
+        "codelyzer": "^5.2.1",
+        "commitizen": "^3.1.1",
+        "copyfiles": "^2.1.0",
+        "cz-conventional-changelog": "^2.1.0",
+        "globby": "^9.2.0",
+        "gray-matter": "^4.0.2",
+        "html-frontmatter": "^1.6.1",
+        "husky": "^2.3.0",
+        "jasmine-core": "~2.99.1",
+        "jasmine-spec-reporter": "~4.2.1",
+        "karma": "~3.1.1",
+        "karma-chrome-launcher": "~2.2.0",
+        "karma-coverage-istanbul-reporter": "~2.0.1",
+        "karma-jasmine": "~1.1.2",
+        "karma-jasmine-html-reporter": "^0.2.2",
+        "mustache": "^3.0.1",
+        "ng-packagr": "^5.4.0",
+        "npm-run-all": "^4.1.5",
+        "package-lock-sanitizer": "^1.0.0",
+        "prettier": "^1.17.1",
+        "pretty-quick": "^1.11.0",
+        "protractor": "~5.4.0",
+        "raw-loader": "^1.0.0",
+        "semantic-release": "^17.0.4",
+        "travis-deploy-once": "^5.0.11",
+        "ts-node": "~7.0.0",
+        "tsickle": "^0.37.0",
+        "tslint": "~5.11.0",
+        "tslint-config-prettier": "^1.18.0",
+        "typescript": "^3.5.3"
     }
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint --edit",
-      "pre-commit": "run-s format:fix package-lock-sanitizer"
-    }
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "dependencies": {
-    "@angular/animations": "~8.2.8",
-    "@angular/common": "~8.2.8",
-    "@angular/compiler": "~8.2.8",
-    "@angular/core": "~8.2.8",
-    "@angular/forms": "~8.2.8",
-    "@angular/platform-browser": "~8.2.8",
-    "@angular/platform-browser-dynamic": "~8.2.8",
-    "@angular/router": "~8.2.8",
-    "@datorama/akita": "^3.9.2",
-    "@sebgroup/bootstrap": "^4.0.0",
-    "@types/marked": "^0.6.5",
-    "core-js": "^2.5.4",
-    "marked": "^0.7.0",
-    "prismjs": "^1.16.0",
-    "rxjs": "~6.5.3",
-    "tslib": "^1.9.0",
-    "typescript-parser": "^2.6.1",
-    "zone.js": "~0.9.1"
-  },
-  "devDependencies": {
-    "@angular-devkit/build-angular": "~0.803.6",
-    "@angular-devkit/build-ng-packagr": "~0.803.6",
-    "@angular/cli": "~8.3.6",
-    "@angular/compiler-cli": "~8.2.8",
-    "@angular/language-service": "~8.2.8",
-    "@commitlint/cli": "^7.5.2",
-    "@commitlint/config-conventional": "^7.5.0",
-    "@datorama/akita-ng-router-store": "^3.0.0",
-    "@datorama/akita-ngdevtools": "^1.0.2",
-    "@fortawesome/angular-fontawesome": "^0.3.0",
-    "@fortawesome/fontawesome-svg-core": "^1.2.17",
-    "@fortawesome/pro-light-svg-icons": "^5.8.1",
-    "@types/jasmine": "~2.8.8",
-    "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^8.9.5",
-    "angular-exemplify": "^3.1.4",
-    "codelyzer": "^5.0.1",
-    "commitizen": "^3.1.1",
-    "copyfiles": "^2.1.0",
-    "cz-conventional-changelog": "^2.1.0",
-    "globby": "^9.2.0",
-    "gray-matter": "^4.0.2",
-    "html-frontmatter": "^1.6.1",
-    "husky": "^2.3.0",
-    "jasmine-core": "~2.99.1",
-    "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~3.1.1",
-    "karma-chrome-launcher": "~2.2.0",
-    "karma-coverage-istanbul-reporter": "~2.0.1",
-    "karma-jasmine": "~1.1.2",
-    "karma-jasmine-html-reporter": "^0.2.2",
-    "mustache": "^3.0.1",
-    "ng-packagr": "^5.4.0",
-    "npm-run-all": "^4.1.5",
-    "package-lock-sanitizer": "^1.0.0",
-    "prettier": "^1.17.1",
-    "pretty-quick": "^1.11.0",
-    "protractor": "~5.4.0",
-    "raw-loader": "^1.0.0",
-    "semantic-release": "^16.0.0-beta.18",
-    "travis-deploy-once": "^5.0.11",
-    "ts-node": "~7.0.0",
-    "tsickle": "^0.37.0",
-    "tslint": "~5.11.0",
-    "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.5.3"
-  }
 }

@@ -2,8 +2,8 @@
 <!--<app-mobile-navigation></app-mobile-navigation>
 <app-side-navigation></app-side-navigation>-->
 <ng-container *ngIf="!($isFullscreen | async)">
-  <app-header></app-header>
-  <app-side-menu></app-side-menu>
+    <app-header></app-header>
+    <app-side-menu></app-side-menu>
 </ng-container>
 <!--<div class="container-fluid">
   <div class="row no-gutters">
@@ -15,15 +15,20 @@
     </div>
   </div>
 </div>-->
-<div (window:scroll)="scroll($event)" style="z-index: 0;" [ngClass]="{'content': !($isFullscreen | async)}">
-  <div class="row">
-    <div class="col-12">
-      <div class="mx-auto mt-5 mt-lg-0 pt-3 pt-lg-0" style="max-width: 920px">
-        <router-outlet></router-outlet>
-        <div *ngIf="!($isFullscreen | async)" class="py-3 text-center">Version: <a href="{{'https://github.com/sebgroup/bootstrap/releases/' + versionLink}}" target="_blank" class="mr-3">{{version}}</a>Build: {{travis_build_number}} </div>
-      </div>
+<div (window:scroll)="scroll($event)" style="z-index: 0;" [ngClass]="{ content: !($isFullscreen | async) }">
+    <div class="row">
+        <div class="col-12">
+            <div class="mx-auto mt-5 mt-lg-0 pt-3 pt-lg-0" style="max-width: 920px">
+                <router-outlet></router-outlet>
+                <div *ngIf="!($isFullscreen | async)" class="py-3 text-center">
+                    Version:
+                    <a href="{{ 'https://github.com/sebgroup/bootstrap/releases/' + versionLink }}" target="_blank" class="mr-3">{{
+                        version
+                    }}</a
+                    >Build: {{ travis_build_number }}
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <!--<app-sub-header [scrollPosition]="scrollPosition"></app-sub-header>-->
-
+    <!--<app-sub-header [scrollPosition]="scrollPosition"></app-sub-header>-->
 </div>

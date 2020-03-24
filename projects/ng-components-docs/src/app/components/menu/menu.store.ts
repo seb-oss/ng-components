@@ -1,24 +1,22 @@
-import { Injectable } from '@angular/core';
-import { Store, StoreConfig } from '@datorama/akita';
+import { Injectable } from "@angular/core";
+import { Store, StoreConfig } from "@datorama/akita";
 
 export interface NavigationState {
-   isMenuActive: boolean;
-   menuItems: Array<any>;
+    isMenuActive: boolean;
+    menuItems: Array<any>;
 }
 
 export function createInitialState(): NavigationState {
-  return {
-    isMenuActive: true,
-    menuItems: []
-  };
+    return {
+        isMenuActive: true,
+        menuItems: [],
+    };
 }
 
-@Injectable({ providedIn: 'root' })
-@StoreConfig({ name: 'navigation' })
+@Injectable({ providedIn: "root" })
+@StoreConfig({ name: "navigation" })
 export class MenuStore extends Store<NavigationState> {
-
-  constructor() {
-    super(createInitialState());
-  }
-
+    constructor() {
+        super(createInitialState());
+    }
 }

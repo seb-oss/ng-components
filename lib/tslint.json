@@ -1,7 +1,7 @@
 {
-  "extends": "../tslint.json",
-  "rules": {
-    "directive-selector": [true, "attribute", "sebng", "kebab-case"],
-    "component-selector": [true, "element", "sebng", "kebab-case"]
-  }
+    "extends": "../tslint.json",
+    "rules": {
+        "directive-selector": [true, "attribute", "sebng", "kebab-case"],
+        "component-selector": [true, "element", "sebng", "kebab-case"]
+    }
 }

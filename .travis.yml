@@ -2,37 +2,36 @@ dist: trusty
 sudo: false
 language: node_js
 node_js:
-  - '12'
+    - "12"
 
 install:
-  - npm run add-fa-config
-  - npm ci
+    - npm ci
 
 cache:
-  directories:
-    - $HOME/.npm
+    directories:
+        - $HOME/.npm
 
 before_script:
-  - export NODE_OPTIONS=–max_old_space_size=8192
+    - export NODE_OPTIONS=–max_old_space_size=8192
 
 script:
-  - npm run build-lib && npm run build-docs
+    - npm run build-lib && npm run build-docs
 
 after_success:
-  - npm run travis-deploy-once "npm run semantic-release"
+    - npm run travis-deploy-once "npm run semantic-release"
 
 before_deploy:
-  - npm run build-docs
+    - npm run build-docs
 
 deploy:
-  - provider: pages
-    skip-cleanup: true
-    github-token: $GITHUB_TOKEN
-    keep-history: true
-    local-dir: dist/ng-components-docs
-    on:
-      branch: alpha
+    - provider: pages
+      skip-cleanup: true
+      github-token: $GITHUB_TOKEN
+      keep-history: true
+      local-dir: dist/ng-components-docs
+      on:
+          branch: alpha
 
 branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
+    except:
+        - /^v\d+\.\d+\.\d+$/
