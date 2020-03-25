@@ -43,7 +43,7 @@ export const ROUTES: Array<Route> = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/radio-group/radio-group.module.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/radio-group/radio-group.component.ts")],
                 },
             },
         ],
