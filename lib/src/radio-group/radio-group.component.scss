@@ -1,0 +1,89 @@
+$transition-time: 200ms;
+$radio-size: 18px;
+$radio-offset: 8px;
+$blue: #41b0ee;
+$white: white;
+$gray-300: #dedede !default;
+$gray-600: #868686 !default;
+$standard: 16px;
+
+.radio-group {
+    position: relative;
+    margin: 10px 20px 10px 0px;
+    user-select: none;
+    transition: all $transition-time;
+
+    .custom-form-radio {
+        .radio-item {
+            position: relative;
+            margin-bottom: 5px;
+
+            input[type="radio"] {
+                position: absolute;
+                opacity: 0;
+                left: 1px;
+                height: $radio-size;
+                width: $radio-size;
+                z-index: 2;
+                cursor: pointer;
+
+                &:hover + span {
+                    border-color: $blue;
+                }
+
+                &:focus + span {
+                    outline: 1px solid $blue;
+                }
+
+                &:checked ~ .radio-indicator {
+                    background-color: $white;
+
+                    &:after {
+                        display: block;
+                    }
+                }
+
+                &[disabled] ~ .radio-indicator {
+                    border: 1px solid $gray-600;
+                    background-color: $gray-300;
+                }
+            }
+
+            .radio-indicator {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: $radio-size;
+                width: $radio-size;
+                background-color: $white;
+                border: 1px solid $gray-300;
+                border-radius: 50%;
+
+                &:after {
+                    content: "";
+                    display: none;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: calc(#{$radio-size} - #{$radio-offset});
+                    height: calc(#{$radio-size} - #{$radio-offset});
+                    border-radius: 50%;
+                    background: $blue;
+                    margin: 0;
+                }
+            }
+
+            label.radio-label {
+                padding-left: calc(#{$radio-size} + #{$radio-offset});
+                display: inline-block;
+                height: $radio-size;
+                cursor: pointer;
+                user-select: none;
+                font-size: $standard;
+                font-weight: normal;
+                line-height: $radio-size;
+            }
+        }
+    }
+}
