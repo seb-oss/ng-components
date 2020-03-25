@@ -156,9 +156,9 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
 
     public toggleButtonId: string = this.getRandomId();
 
-    @ViewChild("dropdownToggleRef", { read: ElementRef, static: true }) dropdownToggleRef: ElementRef;
-    @ViewChild("dropdownMenuRef", { read: ElementRef, static: true }) dropdownMenuRef: ElementRef;
-    @ViewChild("searchRef", { read: ElementRef, static: true }) searchRef: ElementRef;
+    @ViewChild("dropdownToggleRef", { read: ElementRef, static: false }) dropdownToggleRef: ElementRef;
+    @ViewChild("dropdownMenuRef", { read: ElementRef, static: false }) dropdownMenuRef: ElementRef;
+    @ViewChild("searchRef", { read: ElementRef, static: false }) searchRef: ElementRef;
 
     @ViewChildren("listRefs") listRefs: QueryList<ElementRef>;
 
