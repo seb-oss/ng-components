@@ -5,16 +5,19 @@ variantid: component-dropdown-all
 url: https://sebgroup.github.io/ng-components/components/dropdown/examples
 -->
 
-<sebng-dropdown [list]="list"></sebng-dropdown>
+<div class="row">
+    <div class="col">
+        <sebng-dropdown [label]="'Simple'" [list]="list"></sebng-dropdown>
 
-<hr />
+        <hr />
 
-<sebng-dropdown [label]="'Multi select'" [list]="list" [multi]="true"></sebng-dropdown>
+        <sebng-dropdown [label]="'Multi select'" [list]="list" [multi]="true"></sebng-dropdown>
+    </div>
+    <div class="col">
+        <sebng-dropdown [label]="'Native'" [list]="list" [native]="true"></sebng-dropdown>
 
-<hr />
+        <hr />
 
-<sebng-dropdown [label]="'Native'" [list]="list" [native]="true"></sebng-dropdown>
-
-<hr />
-
-<sebng-dropdown [label]="'Native multi select'" [list]="list" [multi]="true" [native]="true"></sebng-dropdown>
+        <sebng-dropdown [label]="'Native multi select'" [list]="list" [multi]="true" [native]="true"></sebng-dropdown>
+    </div>
+</div>
