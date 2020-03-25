@@ -16,7 +16,7 @@ export class ApiListComponent implements OnInit {
     $content: Observable<any>;
 
     static extractInputs(sourceCode: string) {
-        const regex: RegExp = /(?<comment>\/\*\*(?:[\sA-Za-z\*\`\.\,\(\)\/\?\=\:\[\]\&\{\}]*)\*\/)?(?:[\r\n\t\s]*)(?<decorator>\@Input)\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\))(?:[\W]+)(?<accessor>get|set|){1}(?:\W)?(?<name>[^\(]+)/g;
+        const regex: RegExp = /(?<comment>\/\*\*(?:[\sA-Za-z\*\`\.\,\(\)\/\?\=\:\[\]\&\{\}]*)\*\/)?(?:[\r\n\t\s]*)(?<decorator>\@Input)\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\))(?:[\W]+)(?<accessor>get|set|){1}(?:\W)?(?<name>[^\(][^\:][^\;]+)/g;
         let input: RegExpExecArray = regex.exec(sourceCode);
         let inputs = input ? { [input.groups.name]: input.groups } : {};
         while (input !== null) {
@@ -123,7 +123,7 @@ export class ApiListComponent implements OnInit {
     }
 
     static parseComment(comment: string) {
-        return comment ? marked(comment.replace(/\*\/+|\/\*+|\*\s+|[\t\r\n]/g, "")) : "n/a";
+        return comment ? marked(comment.replace(/\*\/+|\/\*+|\*\s+|[\t\r\n]/g, "")) : "Comment N/A";
     }
 
     static sortInputs(a, b) {
@@ -190,8 +190,10 @@ export class ApiListComponent implements OnInit {
                 ...previous,
                 {
                     ...current,
-                    alias: inputs[current.name].alias,
-                    description: ApiListComponent.parseComment(inputs[current.name].comment),
+                    alias: inputs[current.name] ? inputs[current.name].alias : `Alias N/A for ${current.name}`,
+                    description: ApiListComponent.parseComment(
+                        inputs[current.name] ? inputs[current.name].comment : `Alias N/a for ${current.name}`
+                    ),
                 },
             ];
         }, []);
