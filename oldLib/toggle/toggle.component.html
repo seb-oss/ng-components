@@ -1,7 +1,0 @@
-<div class="form-group custom-toggle" [ngClass]="className" [class.focus-class]="hasFocus" (focusin)="setFocus()" (focusout)="setFocus()">
-    <div class="toggle-btn">
-        <input class="toggle" [name]="name" type="checkbox" [(ngModel)]="value" id="{{_id || ramdomId}}" />
-        <label class="toggle-switch" for="{{_id || ramdomId}}"></label>
-    </div>
-    <div *ngIf="label" class="toggle-label">{{label}}</div>
-</div>
