@@ -4,4 +4,9 @@ import { Component } from "@angular/core";
     selector: "app-textlabel",
     templateUrl: "./text-labels.component.html",
 })
-export class TextLabelComponent {}
+export class TextLabelComponent {
+    classNames: { [key: string]: boolean };
+    constructor() {
+        this.classNames = { hello: true };
+    }
+}

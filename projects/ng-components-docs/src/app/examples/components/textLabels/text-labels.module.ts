@@ -4,7 +4,7 @@ import { TextLabelComponent } from "./text-labels.component";
 import { ExamplePageComponent } from "../../../components/example-page/example-page.component";
 import { ExampleListComponent } from "../../../components/example-page/example-list/example-list.component";
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
-import { TextLabelModule as TextLabelListModule } from "../../../../../../../lib/src/textLabel";
+import { TextLabelModule as TextLabelLibModule } from "../../../../../../../lib/src/textLabel";
 
 export const ROUTES = [
     { path: "", pathMatch: "full", redirectTo: "examples" },
@@ -37,17 +37,14 @@ export const ROUTES = [
                             ],
                         },
                     },
-                    {
-                        path: "api",
-                        component: ApiListComponent,
-                        data: {
-                            sources: [
-                                require("!raw-loader!../../../../../../../lib/src/button/parse-source-example/parse-source-example.component.ts"),
-                                require("!raw-loader!../../../../../../../lib/src/textLabel/textLabel.component.ts"),
-                            ],
-                        },
-                    },
                 ],
+            },
+            {
+                path: "api",
+                component: ApiListComponent,
+                data: {
+                    sources: [require("!raw-loader!../../../../../../../lib/src/textLabel/textLabel.component.ts")],
+                },
             },
         ],
     },
@@ -55,6 +52,6 @@ export const ROUTES = [
 
 @NgModule({
     declarations: [TextLabelComponent],
-    imports: [CommonModule, TextLabelListModule],
+    imports: [CommonModule, TextLabelLibModule],
 })
 export class TextLabelModule {}

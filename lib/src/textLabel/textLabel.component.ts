@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation } from "@angular/core";
+import { Component, Input, ViewEncapsulation, TemplateRef } from "@angular/core";
 
 @Component({
     selector: "sebng-textlabel",
@@ -7,8 +7,20 @@ import { Component, Input, ViewEncapsulation } from "@angular/core";
     encapsulation: ViewEncapsulation.None,
 })
 export class TextLabelComponent {
-    @Input() value: any;
-    @Input() label?: string;
+    @Input() id?: string;
     @Input() name?: string;
-    @Input() className?: string;
+    @Input() label?: string | TemplateRef<HTMLElement>;
+    @Input() value?: string | TemplateRef<HTMLElement>;
+    @Input() className?: string | Array<string> | { [key: string]: boolean };
+
+    constructor() {
+        console.log("here");
+    }
+
+    /**
+     * Check if input parameter is a string
+     */
+    isString = (input: any): boolean => {
+        return typeof input == "string";
+    };
 }

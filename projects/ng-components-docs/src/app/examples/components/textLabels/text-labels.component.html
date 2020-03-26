@@ -1,15 +1,11 @@
-<div class="route-template">
-    <div class="info-holder">
-        <div class="info">
-            <div class="md-file"></div>
-        </div>
-
-        <div class="info">
-            <h2>Output</h2>
-            <p>Here is the basic bootstrap one:</p>
-            <div class="result">
-                <sebng-textlabel name="text" value="400,000 kr" label="Current savings"> </sebng-textlabel>
-            </div>
-        </div>
+<sebng-textlabel name="text" [className]="classNames" [label]="label" [value]="value"></sebng-textlabel>
+<ng-template #label>
+    <div class="custom-label">
+        <span>Current savings</span>
     </div>
-</div>
+</ng-template>
+<ng-template #value>
+    <label class="custom-label-value" for="name">
+        <span>400,000 kr</span>
+    </label>
+</ng-template>
