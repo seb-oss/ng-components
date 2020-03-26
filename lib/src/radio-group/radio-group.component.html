@@ -5,40 +5,31 @@
     <div *ngIf="inline; else noninline" class="row">
         <ng-container *ngFor="let item of displayList; index as i">
             <div class="col">
-                <div class="{{ item.className }}" (click)="!(item.optionItem.disabled || disabled) ? handleItemOnClick(item) : null">
-                    <input
-                        [name]="id"
-                        [id]="item.id"
-                        [defaultChecked]="item.selected"
-                        [disabled]="item.optionItem.disabled || disabled"
-                        type="radio"
-                        class="custom-control-input"
-                    />
-                    <label [attr.for]="!(item.optionItem.disabled || disabled) ? item.id : null" class="custom-control-label pr-1"
-                        >{{ item.optionItem.label }}
-                        <span class="text-muted" *ngIf="item.optionItem.description">{{ item.optionItem.description }}</span>
-                    </label>
-                </div>
+                <ng-container *ngTemplateOutlet="readioitem; context: { $implicit: item }"></ng-container>
             </div>
         </ng-container>
     </div>
 
     <ng-template #noninline>
         <ng-container *ngFor="let item of displayList; index as i">
-            <div class="{{ item.className }}" (click)="!(item.optionItem.disabled || disabled) ? handleItemOnClick(item) : null">
-                <input
-                    [name]="id"
-                    [id]="item.id"
-                    [defaultChecked]="item.selected"
-                    [disabled]="item.optionItem.disabled || disabled"
-                    type="radio"
-                    class="custom-control-input"
-                />
-                <label [attr.for]="!(item.optionItem.disabled || disabled) ? item.id : null" class="custom-control-label pr-1"
-                    >{{ item.optionItem.label }}
-                    <span class="text-muted" *ngIf="item.optionItem.description">{{ item.optionItem.description }}</span>
-                </label>
-            </div>
+            <ng-container *ngTemplateOutlet="readioitem; context: { $implicit: item }"></ng-container>
         </ng-container>
     </ng-template>
 </div>
+
+<ng-template #readioitem let-item>
+    <div class="{{ item.className }}" (click)="!(item.optionItem.disabled || disabled) ? handleItemOnClick(item) : null">
+        <input
+            [name]="id"
+            [id]="item.id"
+            [defaultChecked]="item.selected"
+            [disabled]="item.optionItem.disabled || disabled"
+            type="radio"
+            class="custom-control-input"
+        />
+        <label [attr.for]="!(item.optionItem.disabled || disabled) ? item.id : null" class="custom-control-label pr-1"
+            >{{ item.optionItem.label }}
+            <span class="text-muted" *ngIf="item.optionItem.description">{{ item.optionItem.description }}</span>
+        </label>
+    </div>
+</ng-template>
