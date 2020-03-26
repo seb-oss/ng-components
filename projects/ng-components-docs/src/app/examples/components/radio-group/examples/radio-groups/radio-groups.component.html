@@ -8,17 +8,14 @@ url: https://sebgroup.github.io/ng-components/components/radio-group/examples
 <div class="row">
     <div class="col">
         <sebng-radio-group [label]="'Simple'" [list]="list"></sebng-radio-group>
-
         <hr />
-
-        <sebng-radio-group [label]="'One Disabled'" [list]="list2"></sebng-radio-group>
-        <!-- TODO: Add support for inline -->
+        <sebng-radio-group [label]="'Inline'" [list]="list2" [inline]="true"></sebng-radio-group>
         <!-- TODO: Add example using form control -->
-
-        <!-- <sebng-radio-group [label]="'Inline'" [list]="list" [inline]="true"></sebng-radio-group> -->
     </div>
 
     <div class="col">
-        <sebng-radio-group [label]="'All Disabled'" [list]="list3" [disabled]="true"></sebng-radio-group>
+        <sebng-radio-group [label]="'One Disabled'" [list]="list3"></sebng-radio-group>
+        <hr />
+        <sebng-radio-group [label]="'All Disabled'" [list]="list4" [disabled]="true"></sebng-radio-group>
     </div>
 </div>

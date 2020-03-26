@@ -11,6 +11,7 @@ export class RadioGroupsComponent {
         { key: "Two", value: "2", label: "Two" },
     ];
 
-    list2: RadioGroupItem[] = [...this.list, { key: "Three", value: "3", label: "Three disabled", disabled: true }];
-    list3: RadioGroupItem[] = [...this.list];
+    list2: RadioGroupItem[] = [...this.list];
+    list3: RadioGroupItem[] = [...this.list, { key: "Three", value: "3", label: "Three disabled", disabled: true }];
+    list4: RadioGroupItem[] = [...this.list];
 }

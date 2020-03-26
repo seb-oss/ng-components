@@ -42,7 +42,7 @@ export class RadioGroupComponent implements ControlValueAccessor, OnChanges {
     @Input() label?: string;
     @Input() className?: string;
     @Input() disabled?: boolean = false;
-    // TODO: Add inline support
+    @Input() inline?: boolean = false;
 
     // Placeholders for the callbacks which are later provided
     // by the Control Value Accessor
