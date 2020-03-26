@@ -30,7 +30,6 @@ export const ROUTES = [
                                 },
                                 {
                                     name: "text-labels.component.ts",
-                                    // @ts-ignore
                                     src: require("!raw-loader!./text-labels.component.ts"),
                                     lang: "ts",
                                 },

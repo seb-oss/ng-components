@@ -8,7 +8,6 @@ import { Component, Input, ViewEncapsulation, TemplateRef } from "@angular/core"
 })
 export class TextLabelComponent {
     @Input() id?: string;
-    @Input() name?: string;
     @Input() label?: string | TemplateRef<HTMLElement>;
     @Input() value?: string | TemplateRef<HTMLElement>;
     @Input() className?: string | Array<string> | { [key: string]: boolean };

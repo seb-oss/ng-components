@@ -2,7 +2,7 @@
     <ng-container *ngTemplateOutlet="isString(label) ? defaultLabel : label"></ng-container>
     <ng-container *ngTemplateOutlet="isString(value) ? defaultValue : value"></ng-container>
     <ng-template #defaultLabel>
-        <label class="custom-label" for="name">
+        <label class="custom-label">
             {{ label }}
         </label>
     </ng-template>
