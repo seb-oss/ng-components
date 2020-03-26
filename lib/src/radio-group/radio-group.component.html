@@ -1,20 +1,21 @@
+<label *ngIf="label" class="radio-group-label"
+    ><b>{{ label }}</b></label
+>
 <div [attr.id]="id" *ngIf="list" class="radio-group {{ className }}" [class.disabled]="disabled">
-    <label *ngIf="label" class="radio-group-label"
-        ><b>{{ label }}</b></label
-    >
     <ng-container *ngFor="let item of displayList; index as i">
-        <div class="{{ item.className }}" (click)="handleItemOnClick(item)">
-            <div class="custom-control custom-radio">
-                <input
-                    [name]="id"
-                    [id]="item.id"
-                    [defaultChecked]="item.selected"
-                    [disabled]="disabled"
-                    type="radio"
-                    class="custom-control-input"
-                />
-                <label [attr.for]="item.id" class="custom-control-label">{{ item.optionItem.label }}</label>
-            </div>
+        <div class="{{ item.className }}" (click)="!(item.optionItem.disabled || disabled) ? handleItemOnClick(item) : null">
+            <input
+                [name]="id"
+                [id]="item.id"
+                [defaultChecked]="item.selected"
+                [disabled]="item.optionItem.disabled || disabled"
+                type="radio"
+                class="custom-control-input"
+            />
+            <label [attr.for]="!(item.optionItem.disabled || disabled) ? item.id : null" class="custom-control-label"
+                >{{ item.optionItem.label }}
+                <span class="pl-1 text-muted" *ngIf="item.optionItem.description">{{ item.optionItem.description }}</span>
+            </label>
         </div>
     </ng-container>
 </div>

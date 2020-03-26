@@ -4,8 +4,12 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 export interface RadioGroupItem {
     /** The label or text to be displayed in the list */
     label: string;
+    /** optional description to be displayed next to the label */
+    description?: string;
     /** any value which should be tied to the item */
     value: any;
+    /** optional disabled flag. Will show the item grayed out and disabled */
+    disabled?: boolean;
     /** The id or the unique key of the item */
     key: string;
 }
@@ -98,7 +102,7 @@ export class RadioGroupComponent implements ControlValueAccessor, OnChanges {
             this.uniqueList.map((e: UniqueItem) => {
                 return {
                     ...e,
-                    className: `custom-form-radio${e.selected ? " selected" : ""}`,
+                    className: `custom-control custom-radio${e.selected ? " selected" : ""}`,
                 };
             });
 

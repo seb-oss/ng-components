@@ -7,7 +7,10 @@ import { RadioGroupItem } from "lib/src/radio-group/radio-group.component";
 })
 export class RadioGroupsComponent {
     list: RadioGroupItem[] = [
-        { key: "One", value: "1", label: "One" },
+        { key: "One", value: "1", label: "One", description: "Description" },
         { key: "Two", value: "2", label: "Two" },
     ];
+
+    list2: RadioGroupItem[] = [...this.list, { key: "Three", value: "3", label: "Three disabled", disabled: true }];
+    list3: RadioGroupItem[] = [...this.list];
 }
