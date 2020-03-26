@@ -4,11 +4,16 @@
     >
     <ng-container *ngFor="let item of displayList; index as i">
         <div class="{{ item.className }}" (click)="handleItemOnClick(item)">
-            <div class="radio-item d-flex">
-                <label class="radio-label flex-fill" [attr.for]="item.id">{{ item.optionItem.label }}</label>
-                <input class="radio-input" type="radio" [name]="id" [id]="item.id" [disabled]="disabled" [defaultChecked]="item.selected" />
-
-                <span class="radio-indicator"></span>
+            <div class="custom-control custom-radio">
+                <input
+                    [name]="id"
+                    [id]="item.id"
+                    [defaultChecked]="item.selected"
+                    [disabled]="disabled"
+                    type="radio"
+                    class="custom-control-input"
+                />
+                <label [attr.for]="item.id" class="custom-control-label" for="customRadioInline">{{ item.optionItem.label }}</label>
             </div>
         </div>
     </ng-container>
