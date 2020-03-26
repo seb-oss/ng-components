@@ -79,7 +79,7 @@
         "@datorama/akita-ngdevtools": "^4.0.0",
         "@types/jasmine": "~2.8.8",
         "@types/jasminewd2": "~2.0.3",
-        "@types/node": "^8.9.5",
+        "@types/node": "^12.12.31",
         "angular-exemplify": "^3.1.4",
         "codelyzer": "^5.2.1",
         "commitizen": "^3.1.1",
