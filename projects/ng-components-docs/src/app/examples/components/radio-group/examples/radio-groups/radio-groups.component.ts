@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { RadioGroupItem } from "lib/src/radio-group/radio-group.component";
+import { FormControl } from "@angular/forms";
 
 @Component({
     selector: "app-radio-groups",
@@ -12,6 +13,11 @@ export class RadioGroupsComponent {
     ];
 
     list2: RadioGroupItem[] = [...this.list];
-    list3: RadioGroupItem[] = [...this.list, { key: "Three", value: "3", label: "Three disabled", disabled: true }];
-    list4: RadioGroupItem[] = [...this.list];
+    list3: RadioGroupItem[] = [...this.list];
+    list4: RadioGroupItem[] = [...this.list, { key: "Three", value: "3", label: "Three disabled", disabled: true }];
+    list5: RadioGroupItem[] = [...this.list];
+    list6: RadioGroupItem[] = [...this.list];
+
+    formcontrol: FormControl = new FormControl();
+    model: RadioGroupItem;
 }

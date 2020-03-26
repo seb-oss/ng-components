@@ -7,15 +7,19 @@ url: https://sebgroup.github.io/ng-components/components/radio-group/examples
 
 <div class="row">
     <div class="col">
-        <sebng-radio-group [label]="'Simple'" [list]="list"></sebng-radio-group>
+        <sebng-radio-group [id]="'simple'" [label]="'Simple'" [list]="list"></sebng-radio-group>
         <hr />
-        <sebng-radio-group [label]="'Inline'" [list]="list2" [inline]="true"></sebng-radio-group>
-        <!-- TODO: Add example using form control -->
+        <sebng-radio-group [id]="'inline'" [label]="'Inline'" [list]="list2" [inline]="true"></sebng-radio-group>
+        <hr />
+        <sebng-radio-group [id]="'ngmodel'" [label]="'Ng Model'" [list]="list3" [(ngModel)]="model"></sebng-radio-group>
+        <hr />
     </div>
 
     <div class="col">
-        <sebng-radio-group [label]="'One Disabled'" [list]="list3"></sebng-radio-group>
+        <sebng-radio-group [id]="'one-disabled'" [label]="'One Disabled'" [list]="list4"></sebng-radio-group>
         <hr />
-        <sebng-radio-group [label]="'All Disabled'" [list]="list4" [disabled]="true"></sebng-radio-group>
+        <sebng-radio-group [id]="'all-disabled'" [label]="'All Disabled'" [list]="list5" [disabled]="true"></sebng-radio-group>
+        <hr />
+        <sebng-radio-group [id]="'fomr-control'" [label]="'Form Control'" [list]="list6" [formControl]="formcontrol"></sebng-radio-group>
     </div>
 </div>

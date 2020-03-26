@@ -6,6 +6,7 @@ import { ExampleListComponent } from "../../../components/example-page/example-l
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
 import { RadioGroupsComponent } from "./examples/radio-groups/radio-groups.component";
 import { RadioGroupModule as RadioGroupLibModule } from "../../../../../../../lib/src/radio-group";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 export const ROUTES: Array<Route> = [
     { path: "", pathMatch: "full", redirectTo: "examples" },
@@ -52,6 +53,6 @@ export const ROUTES: Array<Route> = [
 
 @NgModule({
     declarations: [RadioGroupsComponent],
-    imports: [CommonModule, RadioGroupLibModule],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, RadioGroupLibModule],
 })
 export class RadioGroupModule {}
