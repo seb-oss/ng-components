@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { ROUTES as BUTTONS_ROUTES } from "./examples/components/buttons/buttons.module";
 import { ROUTES as MODAL_ROUTES } from "./examples/components/modal/modal.module";
 import { ROUTES as WIZARD_ROUTES } from "./examples/components/wizard/wizard.module";
+import { ROUTES as TEXTLABEL_ROUTES } from "./examples/components/textLabels/text-labels.module";
 import { InstallationComponent } from "./components/installation/installation.component";
 
 const routes: Routes = [
@@ -45,6 +46,10 @@ const routes: Routes = [
             {
                 path: "wizard",
                 children: WIZARD_ROUTES,
+            },
+            {
+                path: "textLabel",
+                children: TEXTLABEL_ROUTES,
             },
         ],
     },

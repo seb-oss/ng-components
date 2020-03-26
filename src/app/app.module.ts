@@ -6,7 +6,7 @@ import { AppComponent } from "./app.component";
 import { AkitaNgDevtools } from "@datorama/akita-ngdevtools";
 import { AkitaNgRouterStoreModule } from "@datorama/akita-ng-router-store";
 import { environment } from "../environments/environment";
-import { SebButtonModule, SebModalModule, SebDropdownModule, SebWizardModule } from "@sebgroup/ng-components";
+import { SebButtonModule, SebModalModule, SebDropdownModule } from "@sebgroup/ng-components";
 import { ExampleModalComponent } from "./components/example-modal";
 import { ReactiveFormsModule } from "@angular/forms";
 
@@ -19,7 +19,6 @@ import { ReactiveFormsModule } from "@angular/forms";
         SebButtonModule,
         SebModalModule,
         SebDropdownModule,
-        SebWizardModule,
         ReactiveFormsModule,
     ],
     entryComponents: [ExampleModalComponent],
