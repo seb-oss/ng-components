@@ -1,7 +1,7 @@
 import { Component, Input, forwardRef, OnChanges, SimpleChanges, Provider } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 
-export interface Item {
+export interface RadioGroupItem {
     /** The label or text to be displayed in the list */
     label: string;
     /** any value which should be tied to the item */
@@ -12,7 +12,7 @@ export interface Item {
 
 interface UniqueItem {
     id: string;
-    optionItem: Item;
+    optionItem: RadioGroupItem;
     selected: boolean;
 }
 
@@ -33,7 +33,7 @@ const CUSTOM_RADIOGROUP_CONTROL_VALUE_ACCESSOR: Provider = {
     providers: [CUSTOM_RADIOGROUP_CONTROL_VALUE_ACCESSOR],
 })
 export class RadioGroupComponent implements ControlValueAccessor, OnChanges {
-    @Input() list: Array<Item>; // TODO: Add support for custom html as well as string labels?
+    @Input() list: Array<RadioGroupItem>; // TODO: Add support for custom html as well as string labels?
     @Input() id?: string;
     @Input() label?: string;
     @Input() className?: string;
@@ -45,10 +45,10 @@ export class RadioGroupComponent implements ControlValueAccessor, OnChanges {
     private onTouchedCallback: () => void;
     private onChangeCallback: (_: any) => void;
 
-    private _selectedValue: Item = null;
+    private _selectedValue: RadioGroupItem = null;
     public allSelected = null;
 
-    set selectedValue(state: Item) {
+    set selectedValue(state: RadioGroupItem) {
         if (state !== this._selectedValue) {
             this._selectedValue = state;
             this.onChangeCallback && this.onChangeCallback(state);
@@ -68,9 +68,7 @@ export class RadioGroupComponent implements ControlValueAccessor, OnChanges {
     /** Array of dropdown item elements which should be displayed in the current render cycle */
     public displayList: Array<DisplayItem> = [];
     /** Array of all dropdown item which are currently selected */
-    public selectedList: Array<Item> = [];
-
-    constructor() {}
+    public selectedList: Array<RadioGroupItem> = [];
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.list && changes.list.previousValue !== changes.list.currentValue) {
@@ -83,12 +81,12 @@ export class RadioGroupComponent implements ControlValueAccessor, OnChanges {
         this.uniqueList =
             this.list &&
             this.list
-                .filter(e => e && e.hasOwnProperty("key") && e.hasOwnProperty("value"))
-                .map((e: Item, i: number) => {
-                    const id = `${e.key}-${i}`;
-                    let selected = false;
+                .filter((e: RadioGroupItem) => e && e.hasOwnProperty("key") && e.hasOwnProperty("value") && e.hasOwnProperty("label"))
+                .map((e: RadioGroupItem, i: number) => {
+                    const id: string = `${e.key}-${i}`;
+                    let selected: boolean = false;
 
-                    if ((this.selectedValue as Item) && e.key === (this.selectedValue as Item).key) {
+                    if ((this.selectedValue as RadioGroupItem) && e.key === (this.selectedValue as RadioGroupItem).key) {
                         selected = true;
                     }
 
@@ -104,18 +102,18 @@ export class RadioGroupComponent implements ControlValueAccessor, OnChanges {
                 };
             });
 
-        this.selectedList = this.uniqueList && this.uniqueList.filter(e => e.selected).map(e => e.optionItem);
+        this.selectedList = this.uniqueList && this.uniqueList.filter((e: UniqueItem) => e.selected).map((e: UniqueItem) => e.optionItem);
         this.allSelected = this.selectedList && this.uniqueList ? this.selectedList.length === this.uniqueList.length : false;
     }
 
     /** Function which handles the logic of setting the non-native onChange prop (and sets the internal selected value as well) */
-    handleOnChange(value: Item): void {
+    handleOnChange(value: RadioGroupItem): void {
         this.selectedValue = value;
     }
 
     /** Function containing the select dropdown item logic */
-    optionItemSelected(item: Item): void {
-        const newItem: Item = { ...item };
+    optionItemSelected(item: RadioGroupItem): void {
+        const newItem: RadioGroupItem = { ...item };
         this.handleOnChange(newItem);
     }
 
