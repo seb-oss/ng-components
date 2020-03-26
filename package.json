@@ -76,7 +76,7 @@
         "@commitlint/cli": "^8.3.5",
         "@commitlint/config-conventional": "^8.3.4",
         "@datorama/akita-ng-router-store": "^3.0.0",
-        "@datorama/akita-ngdevtools": "^1.0.2",
+        "@datorama/akita-ngdevtools": "^4.0.0",
         "@types/jasmine": "~2.8.8",
         "@types/jasminewd2": "~2.0.3",
         "@types/node": "^8.9.5",
