@@ -69,10 +69,10 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
 
     private _subscriber: Subscription = null;
 
-    private _open = false;
-    private _searchText = "";
-    private _shouldFocus = true;
-    private _currentFocused = -1;
+    private _open: boolean = false;
+    private _searchText: string = "";
+    private _shouldFocus: boolean = true;
+    private _currentFocused: number = -1;
 
     private _selectedValue: Item | Array<Item> = null;
     public allSelected = null;
