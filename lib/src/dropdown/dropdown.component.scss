@@ -28,9 +28,9 @@ $white: white;
 
 .custom-dropdown {
     > .custom-dropdown-toggle {
-        background-color: white !important;
-        height: $dropdown-toggle-height !important;
-        min-width: $dropdown-width !important;
+        background-color: white;
+        height: $dropdown-toggle-height;
+        min-width: $dropdown-width;
         padding: 0px;
         border-color: $gray-500;
         display: flex;
@@ -90,10 +90,10 @@ $white: white;
         }
 
         &.more {
-            background-color: inherit !important;
-            height: $dropdown-toggle-height !important;
-            min-width: $dropdown-toggle-height !important;
-            max-width: $dropdown-toggle-height !important;
+            background-color: inherit;
+            height: $dropdown-toggle-height;
+            min-width: $dropdown-toggle-height;
+            max-width: $dropdown-toggle-height;
             padding: 0px;
             border-color: transparent;
             margin: 0px 0px 0px auto;
@@ -108,7 +108,7 @@ $white: white;
             }
 
             &:hover {
-                background-color: $blue !important;
+                background-color: $blue;
                 > .right-items > .dropdown-icon-holder > svg {
                     fill: white;
                 }
@@ -117,12 +117,12 @@ $white: white;
             &:focus {
                 border-color: $blue-darker;
                 &:active {
-                    background-color: $blue-darker !important;
+                    background-color: $blue-darker;
                 }
             }
 
             &.open {
-                background-color: $blue-darker !important;
+                background-color: $blue-darker;
                 > .right-items > .dropdown-icon-holder > svg {
                     fill: white;
                 }

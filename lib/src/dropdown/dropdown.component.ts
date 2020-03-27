@@ -75,7 +75,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     private _currentFocused: number = -1;
 
     private _selectedValue: Item | Array<Item> = null;
-    public allSelected = null;
+    public allSelected: boolean = null;
 
     set searchText(state: string) {
         if (this._searchText !== state) {
@@ -85,7 +85,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
         }
     }
 
-    get searchText() {
+    get searchText(): string {
         return this._searchText || "";
     }
 
@@ -114,7 +114,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
         }
     }
 
-    get shouldFocus() {
+    get shouldFocus(): boolean {
         return this._shouldFocus || false;
     }
 
@@ -128,7 +128,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
         }
     }
 
-    get currentFocused() {
+    get currentFocused(): number {
         return this._currentFocused;
     }
 
@@ -142,7 +142,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
         }
     }
 
-    get selectedValue() {
+    get selectedValue(): Item | Array<Item> {
         return this._selectedValue;
     }
 
@@ -169,8 +169,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     handleFocus(): void {
         this._ngZone.runOutsideAngular(() => {
             setTimeout(() => {
-                const focusSuccess = this.focusCurrentItem();
-                if (!focusSuccess) {
+                if (!this.focusCurrentItem()) {
                     this.setInitialFocus();
                 }
             }, 0);
@@ -213,13 +212,13 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
         });
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.list && changes.list.previousValue !== changes.list.currentValue) {
             this._generateHelperArrays();
         }
     }
 
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this._subscriber.unsubscribe();
     }
 
@@ -228,7 +227,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
         this.uniqueList =
             this.list &&
             this.list
-                .filter(e => e && e.hasOwnProperty("key") && e.hasOwnProperty("value"))
+                .filter((e: Item) => e && e.hasOwnProperty("key") && e.hasOwnProperty("value") && e.hasOwnProperty("label"))
                 .map((e: Item, i: number) => {
                     const id = `${e.key}-${i}`;
                     let selected = false;
@@ -258,7 +257,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
                     };
                 })
                 .filter(
-                    e =>
+                    (e: UniqueItem) =>
                         e &&
                         e.optionItem &&
                         e.optionItem.value &&
@@ -268,7 +267,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
                             .indexOf(this.searchText.toLowerCase()) !== -1
                 );
 
-        this.selectedList = this.uniqueList && this.uniqueList.filter(e => e.selected).map(e => e.optionItem);
+        this.selectedList = this.uniqueList && this.uniqueList.filter((e: UniqueItem) => e.selected).map((e: UniqueItem) => e.optionItem);
         this.allSelected = this.selectedList && this.uniqueList ? this.selectedList.length === this.uniqueList.length : false;
 
         if (this.multi && this.searchText.length === 0) {
@@ -289,12 +288,12 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     }
 
     /** The native event function that runs when a keyboard button is pressed on dropdown toggle */
-    handleKeyDownToggle(event: any): void {
+    handleKeyDownToggle(event: KeyboardEvent): void {
         if (this.disabled) {
             return;
         }
 
-        const key = event.key.toLowerCase();
+        const key: string = event.key.toLowerCase();
 
         switch (key) {
             case "tab":
@@ -311,9 +310,9 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     }
 
     /** The native event function that runs when a keyboard button is pressed on dropdown menu */
-    handleKeyDownMenu(event: any): void {
+    handleKeyDownMenu(event: KeyboardEvent): void {
         this.shouldFocus = true;
-        const key = event.key.toLowerCase();
+        const key: string = event.key.toLowerCase();
         if (this.open) {
             switch (key) {
                 case "tab":
@@ -356,7 +355,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     }
 
     /** The native event function that runs when the clean icon is clicked */
-    handleClickClear(event: any): void {
+    handleClickClear(event: MouseEvent): void {
         if (this.disabled) {
             return;
         }
@@ -368,14 +367,13 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     }
 
     /** Function which handles the logic of setting the native onChange prop (and sets the internal selected value as well) */
-    handleNativeOnChange(event: any): void {
-        // console.log("handleNativeOnChange: ", event.target.options);
+    handleNativeOnChange(event: UIEvent): void {
         if (!this.multi) {
-            const item = this.list.filter((e: Item) => e.key === event.target.value)[0];
+            const item: Item = this.list.filter((e: Item) => e.key === (event.target as HTMLSelectElement).value)[0];
             this.nativeOnChange && this.nativeOnChange(event);
             this.selectedValue = item;
         } else {
-            const items = Array.from(event.target.options as HTMLOptionsCollection)
+            const items: Array<Item> = Array.from((event.target as HTMLSelectElement).options as HTMLOptionsCollection)
                 .filter(e => e.selected)
                 .map(e => {
                     const item = this.list.filter((el: Item) => el.key === e.value)[0];
@@ -399,25 +397,25 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     }
 
     /** The native onchange event function that runs when the search input value changes */
-    handleOnChangeSearch(event: any): void {
+    handleOnChangeSearch(event: KeyboardEvent): void {
         if (this.currentFocused !== -1) {
             this.currentFocused = -1;
         }
-        this.searchText = event.target.value;
+        this.searchText = (event.target as HTMLInputElement).value;
     }
 
     /** Function containing the select dropdown item logic */
     optionItemSelected(item: Item): void {
         if (!this.multi) {
-            const newItem = { ...item };
+            const newItem: Item = { ...item };
             this.handleOnChange(newItem);
             this.open = false;
         } else {
             const currentList: Array<Item> = (this.selectedValue as Array<Item>) ? (this.selectedValue as Array<Item>) : [];
-            const index = currentList.findIndex((e: Item) => e.key === item.key);
+            const index: number = currentList.findIndex((e: Item) => e.key === item.key);
             if (index === -1) {
-                const newItem = { ...item };
-                const newList = [...currentList, newItem];
+                const newItem: Item = { ...item };
+                const newList: Array<Item> = [...currentList, newItem];
                 this.handleOnChange(newList);
             } else {
                 const newList: Array<Item> = currentList.filter((e: Item) => e.key !== item.key);
@@ -428,7 +426,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     }
 
     /** The native event function that runs when the dropdown button is clicked */
-    handleClickToggle(event: any): void {
+    handleClickToggle(event: MouseEvent): void {
         if (!this.disabled) {
             this.open = !this.open;
         }
@@ -449,17 +447,15 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     getTitleLabel() {
         if (this.uniqueList && this.uniqueList.length === 0) {
             return "Empty";
-        }
-        if (this.selectedList && this.selectedList.length > 0) {
+        } else if (this.selectedList && this.selectedList.length > 0) {
             if (this.allSelected) {
                 return `All selected (${this.selectedList.length})`;
-            }
-            if (this.multi) {
+            } else if (this.multi) {
                 if (this.selectedList.length === 1) {
                     return this.selectedList[0].label;
                 }
                 return this.selectedList
-                    .map((item, index) => {
+                    .map((item: Item, index: number) => {
                         if (index > 0) {
                             return ` ${item.label}`;
                         } else {
@@ -467,7 +463,6 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
                         }
                     })
                     .toString();
-                // return this.selectedList.length + " Selected"; // TODO should be like this example: 1st Item, 2nd Item... (+2)
             }
             return (this.selectedValue as Item).label;
         }
@@ -475,12 +470,12 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
         return this.placeHolder && this.placeHolder.length ? this.placeHolder : "Select ...";
     }
 
-    handleItemOnMouseMove(event: any, index: number): void {
+    handleItemOnMouseMove(event: MouseEvent, index: number): void {
         this.currentFocused = index;
         this.shouldFocus = false;
     }
 
-    handleItemOnClick(event: any, index: number, item: DisplayItem): void {
+    handleItemOnClick(event: MouseEvent, index: number, item: DisplayItem): void {
         event.preventDefault();
         this.shouldFocus = true;
 
