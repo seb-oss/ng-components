@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { Item } from "lib/src/dropdown/dropdown.component";
+import { DropdownItem } from "lib/src/dropdown/dropdown.component";
 
 @Component({
     selector: "app-dropdowns",
@@ -7,7 +7,7 @@ import { Item } from "lib/src/dropdown/dropdown.component";
     styleUrls: ["./dropdowns.component.scss"],
 })
 export class DropdownsComponent {
-    list: Item[] = [
+    list: DropdownItem[] = [
         { key: "One", value: "1", label: "One" },
         { key: "Two", value: "2", label: "Two" },
     ];

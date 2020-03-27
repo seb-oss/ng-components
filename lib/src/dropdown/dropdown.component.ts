@@ -15,7 +15,7 @@ import {
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { fromEvent, Subscription } from "rxjs";
 
-export interface Item {
+export interface DropdownItem {
     /** The label or text to be displayed in the list */
     label: string;
     /** any value which should be tied to the item */
@@ -26,7 +26,7 @@ export interface Item {
 
 interface UniqueItem {
     id: string;
-    optionItem: Item;
+    optionItem: DropdownItem;
     selected: boolean;
 }
 
@@ -48,7 +48,7 @@ const CUSTOM_DROPDOWN_CONTROL_VALUE_ACCESSOR: Provider = {
 })
 export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDestroy {
     @Input() name: string;
-    @Input() list: Array<Item>;
+    @Input() list: Array<DropdownItem>;
     @Input() id?: string;
     @Input() label?: string;
     @Input() error?: string;
@@ -60,7 +60,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     @Input() clearable?: boolean = false;
     @Input() searchable?: boolean = false;
     @Input() searchPlaceholder?: string = "";
-    @Input() nativeOnChange?: (event: Item | Array<Item> | UIEvent) => void;
+    @Input() nativeOnChange?: (event: DropdownItem | Array<DropdownItem> | UIEvent) => void;
     @Input() ellipsisMode: boolean;
     // Placeholders for the callbacks which are later provided
     // by the Control Value Accessor
@@ -74,7 +74,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     private _shouldFocus: boolean = true;
     private _currentFocused: number = -1;
 
-    private _selectedValue: Item | Array<Item> = null;
+    private _selectedValue: DropdownItem | Array<DropdownItem> = null;
     public allSelected: boolean = null;
 
     set searchText(state: string) {
@@ -132,7 +132,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
         return this._currentFocused;
     }
 
-    set selectedValue(state: Item | Array<Item>) {
+    set selectedValue(state: DropdownItem | Array<DropdownItem>) {
         if (state !== this._selectedValue) {
             this._selectedValue = state;
             this.onChangeCallback && this.onChangeCallback(state);
@@ -142,7 +142,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
         }
     }
 
-    get selectedValue(): Item | Array<Item> {
+    get selectedValue(): DropdownItem | Array<DropdownItem> {
         return this._selectedValue;
     }
 
@@ -152,7 +152,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     /** Array of dropdown item elements which should be displayed in the current render cycle */
     public displayList: Array<DisplayItem> = [];
     /** Array of all dropdown item which are currently selected */
-    public selectedList: Array<Item> = [];
+    public selectedList: Array<DropdownItem> = [];
 
     public toggleButtonId: string = this.getRandomId();
 
@@ -227,19 +227,19 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
         this.uniqueList =
             this.list &&
             this.list
-                .filter((e: Item) => e && e.hasOwnProperty("key") && e.hasOwnProperty("value") && e.hasOwnProperty("label"))
-                .map((e: Item, i: number) => {
+                .filter((e: DropdownItem) => e && e.hasOwnProperty("key") && e.hasOwnProperty("value") && e.hasOwnProperty("label"))
+                .map((e: DropdownItem, i: number) => {
                     const id = `${e.key}-${i}`;
                     let selected = false;
 
                     if (!this.multi) {
-                        if ((this.selectedValue as Item) && e.key === (this.selectedValue as Item).key) {
+                        if ((this.selectedValue as DropdownItem) && e.key === (this.selectedValue as DropdownItem).key) {
                             selected = true;
                         }
                     } else {
                         if (
-                            (this.selectedValue as Array<Item>) &&
-                            (this.selectedValue as Array<Item>).find((el: Item) => el.key === e.key)
+                            (this.selectedValue as Array<DropdownItem>) &&
+                            (this.selectedValue as Array<DropdownItem>).find((el: DropdownItem) => el.key === e.key)
                         ) {
                             selected = true;
                         }
@@ -369,14 +369,14 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     /** Function which handles the logic of setting the native onChange prop (and sets the internal selected value as well) */
     handleNativeOnChange(event: UIEvent): void {
         if (!this.multi) {
-            const item: Item = this.list.filter((e: Item) => e.key === (event.target as HTMLSelectElement).value)[0];
+            const item: DropdownItem = this.list.filter((e: DropdownItem) => e.key === (event.target as HTMLSelectElement).value)[0];
             this.nativeOnChange && this.nativeOnChange(event);
             this.selectedValue = item;
         } else {
-            const items: Array<Item> = Array.from((event.target as HTMLSelectElement).options as HTMLOptionsCollection)
+            const items: Array<DropdownItem> = Array.from((event.target as HTMLSelectElement).options as HTMLOptionsCollection)
                 .filter(e => e.selected)
                 .map(e => {
-                    const item = this.list.filter((el: Item) => el.key === e.value)[0];
+                    const item = this.list.filter((el: DropdownItem) => el.key === e.value)[0];
                     return item;
                 });
             this.nativeOnChange && this.nativeOnChange(event);
@@ -385,7 +385,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     }
 
     /** Function which handles the logic of setting the non-native onChange prop (and sets the internal selected value as well) */
-    handleOnChange(value: Item | Array<Item>): void {
+    handleOnChange(value: DropdownItem | Array<DropdownItem>): void {
         this.nativeOnChange && this.nativeOnChange(value);
         this.selectedValue = value;
     }
@@ -405,20 +405,22 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     }
 
     /** Function containing the select dropdown item logic */
-    optionItemSelected(item: Item): void {
+    optionItemSelected(item: DropdownItem): void {
         if (!this.multi) {
-            const newItem: Item = { ...item };
+            const newItem: DropdownItem = { ...item };
             this.handleOnChange(newItem);
             this.open = false;
         } else {
-            const currentList: Array<Item> = (this.selectedValue as Array<Item>) ? (this.selectedValue as Array<Item>) : [];
-            const index: number = currentList.findIndex((e: Item) => e.key === item.key);
+            const currentList: Array<DropdownItem> = (this.selectedValue as Array<DropdownItem>)
+                ? (this.selectedValue as Array<DropdownItem>)
+                : [];
+            const index: number = currentList.findIndex((e: DropdownItem) => e.key === item.key);
             if (index === -1) {
-                const newItem: Item = { ...item };
-                const newList: Array<Item> = [...currentList, newItem];
+                const newItem: DropdownItem = { ...item };
+                const newList: Array<DropdownItem> = [...currentList, newItem];
                 this.handleOnChange(newList);
             } else {
-                const newList: Array<Item> = currentList.filter((e: Item) => e.key !== item.key);
+                const newList: Array<DropdownItem> = currentList.filter((e: DropdownItem) => e.key !== item.key);
                 this.handleOnChange(newList);
             }
         }
@@ -455,7 +457,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
                     return this.selectedList[0].label;
                 }
                 return this.selectedList
-                    .map((item: Item, index: number) => {
+                    .map((item: DropdownItem, index: number) => {
                         if (index > 0) {
                             return ` ${item.label}`;
                         } else {
@@ -464,7 +466,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
                     })
                     .toString();
             }
-            return (this.selectedValue as Item).label;
+            return (this.selectedValue as DropdownItem).label;
         }
 
         return this.placeHolder && this.placeHolder.length ? this.placeHolder : "Select ...";
