@@ -420,7 +420,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
                 const newList = [...currentList, newItem];
                 this.handleOnChange(newList);
             } else {
-                const newList = currentList.filter((e: Item) => e.key !== item.key);
+                const newList: Array<Item> = currentList.filter((e: Item) => e.key !== item.key);
                 this.handleOnChange(newList);
             }
         }
