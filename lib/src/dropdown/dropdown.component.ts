@@ -104,7 +104,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
         }
     }
 
-    get open() {
+    get open(): boolean {
         return this._open;
     }
 
