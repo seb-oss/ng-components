@@ -1,0 +1,20 @@
+$gray-400: #cecece !default; // TODO: import this from sebgroup bootstrap scss variables
+$gray-600: #868686 !default;
+
+.radio-group {
+    .custom-control-label {
+        padding-right: 0.25rem;
+
+        > .custom-description {
+            color: $gray-600;
+        }
+    }
+
+    &.disabled {
+        .custom-control-label {
+            > .custom-description {
+                color: $gray-400;
+            }
+        }
+    }
+}

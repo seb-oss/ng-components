@@ -1,24 +1,25 @@
 <label *ngIf="label" class="radio-group-label"
     ><b>{{ label }}</b></label
 >
-<div [attr.id]="id" *ngIf="list" class="radio-group {{ className }}" [class.disabled]="disabled">
+
+<div [attr.id]="id" *ngIf="list" [ngClass]="classList" [class.disabled]="disabled">
     <div *ngIf="inline; else noninline" class="row">
         <ng-container *ngFor="let item of displayList; index as i">
             <div class="col">
-                <ng-container *ngTemplateOutlet="readioitem; context: { $implicit: item }"></ng-container>
+                <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
             </div>
         </ng-container>
     </div>
 
     <ng-template #noninline>
         <ng-container *ngFor="let item of displayList; index as i">
-            <ng-container *ngTemplateOutlet="readioitem; context: { $implicit: item }"></ng-container>
+            <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
         </ng-container>
     </ng-template>
 </div>
 
-<ng-template #readioitem let-item>
-    <div class="{{ item.className }}" (click)="!(item.optionItem.disabled || disabled) ? handleItemOnClick(item) : null">
+<ng-template #radioItem let-item>
+    <div [class]="item.className" (click)="!(item.optionItem.disabled || disabled) ? handleItemOnClick(item) : null">
         <input
             [name]="id"
             [id]="item.id"
@@ -27,9 +28,9 @@
             type="radio"
             class="custom-control-input"
         />
-        <label [attr.for]="!(item.optionItem.disabled || disabled) ? item.id : null" class="custom-control-label pr-1"
+        <label [attr.for]="!(item.optionItem.disabled || disabled) ? item.id : null" class="custom-control-label"
             >{{ item.optionItem.label }}
-            <span class="text-muted" *ngIf="item.optionItem.description">{{ item.optionItem.description }}</span>
+            <span class="custom-description" *ngIf="item.optionItem.description">{{ item.optionItem.description }}</span>
         </label>
     </div>
 </ng-template>

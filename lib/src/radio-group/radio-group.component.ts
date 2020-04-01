@@ -1,5 +1,6 @@
-import { Component, Input, forwardRef, OnChanges, SimpleChanges, Provider } from "@angular/core";
+import { Component, Input, forwardRef, Provider } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
+import { NgClass } from "@angular/common";
 
 export interface RadioGroupItem {
     /** The label or text to be displayed in the list */
@@ -36,13 +37,34 @@ const CUSTOM_RADIOGROUP_CONTROL_VALUE_ACCESSOR: Provider = {
     styleUrls: ["./radio-group.component.scss"],
     providers: [CUSTOM_RADIOGROUP_CONTROL_VALUE_ACCESSOR],
 })
-export class RadioGroupComponent implements ControlValueAccessor, OnChanges {
-    @Input() list: Array<RadioGroupItem>; // TODO: Add support for custom html as well as string labels?
+export class RadioGroupComponent implements ControlValueAccessor {
+    // TODO: Add support for custom html as well as string labels?
+    @Input("list")
+    set list(value: RadioGroupItem[]) {
+        this._list = value;
+        this._generateHelperArrays();
+    }
+    get list(): RadioGroupItem[] {
+        return this._list;
+    }
+    private _list: RadioGroupItem[];
+
     @Input() id?: string;
     @Input() label?: string;
-    @Input() className?: string;
+    @Input("className")
+    set className(value: string) {
+        if (value) {
+            this._classList = ["radio-group", value];
+        }
+    }
+    private _classList: NgClass["ngClass"] = "radio-group";
+
     @Input() disabled?: boolean = false;
     @Input() inline?: boolean = false;
+
+    get classList(): NgClass["ngClass"] {
+        return this._classList;
+    }
 
     // Placeholders for the callbacks which are later provided
     // by the Control Value Accessor
@@ -73,12 +95,6 @@ export class RadioGroupComponent implements ControlValueAccessor, OnChanges {
     public displayList: Array<DisplayItem> = [];
     /** Array of all dropdown item which are currently selected */
     public selectedList: Array<RadioGroupItem> = [];
-
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes.list && changes.list.previousValue !== changes.list.currentValue) {
-            this._generateHelperArrays();
-        }
-    }
 
     /** internal generate helper array function. Should be run on every change where the helper arrays need to be regenerated */
     private _generateHelperArrays(): void {
