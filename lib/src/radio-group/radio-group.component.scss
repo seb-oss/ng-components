@@ -2,19 +2,26 @@ $gray-400: #cecece !default; // TODO: import this from sebgroup bootstrap scss v
 $gray-600: #868686 !default;
 
 .radio-group {
-    .custom-control-label {
-        padding-right: 0.25rem;
+    padding: 0.625rem;
+    .custom-control {
+        .custom-control-label {
+            padding-right: 0.5rem;
 
-        > .custom-description {
-            color: $gray-600;
+            > .custom-description {
+                color: $gray-600;
+            }
+        }
+
+        &.disabled {
+            .custom-control-label {
+                > .custom-description {
+                    color: $gray-400;
+                }
+            }
         }
     }
 
-    &.disabled {
-        .custom-control-label {
-            > .custom-description {
-                color: $gray-400;
-            }
-        }
+    .condensed {
+        padding: 0;
     }
 }

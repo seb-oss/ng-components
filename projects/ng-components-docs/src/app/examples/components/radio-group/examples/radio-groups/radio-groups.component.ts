@@ -14,9 +14,10 @@ export class RadioGroupsComponent {
 
     list2: RadioGroupItem[] = [...this.list];
     list3: RadioGroupItem[] = [...this.list];
-    list4: RadioGroupItem[] = [...this.list, { key: "Three", value: "3", label: "Three disabled", disabled: true }];
-    list5: RadioGroupItem[] = [...this.list];
+    list4: RadioGroupItem[] = [...this.list];
+    list5: RadioGroupItem[] = [...this.list, { key: "Three", value: "3", label: "Three disabled", disabled: true }];
     list6: RadioGroupItem[] = [...this.list];
+    list7: RadioGroupItem[] = [...this.list];
 
     formcontrol: FormControl = new FormControl();
     model: RadioGroupItem;

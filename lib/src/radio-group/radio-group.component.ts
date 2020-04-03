@@ -60,6 +60,7 @@ export class RadioGroupComponent implements ControlValueAccessor {
     private _classList: NgClass["ngClass"] = "radio-group";
 
     @Input() disabled?: boolean = false;
+    @Input() condensed?: boolean = false;
     @Input() inline?: boolean = false;
 
     get classList(): NgClass["ngClass"] {

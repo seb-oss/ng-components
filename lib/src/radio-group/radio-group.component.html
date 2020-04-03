@@ -2,18 +2,30 @@
     ><b>{{ label }}</b></label
 >
 
-<div [attr.id]="id" *ngIf="list" [ngClass]="classList" [class.disabled]="disabled">
+<div [attr.id]="id" *ngIf="list" [ngClass]="classList" [class.disabled]="disabled" [class.condensed]="condensed">
     <div *ngIf="inline; else noninline" class="row">
         <ng-container *ngFor="let item of displayList; index as i">
             <div class="col">
-                <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
+                <div *ngIf="!condensed" style="padding: .625rem">
+                    <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
+                </div>
+
+                <ng-container *ngIf="condensed">
+                    <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
+                </ng-container>
             </div>
         </ng-container>
     </div>
 
     <ng-template #noninline>
         <ng-container *ngFor="let item of displayList; index as i">
-            <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
+            <div *ngIf="!condensed" style="padding: .625rem">
+                <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
+            </div>
+
+            <ng-container *ngIf="condensed">
+                <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
+            </ng-container>
         </ng-container>
     </ng-template>
 </div>
