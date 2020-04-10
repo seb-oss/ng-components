@@ -12,7 +12,7 @@ url: https://sebgroup.github.io/ng-components/components/buttons/examples
     <select
         [name]="name"
         [id]="id || toggleButtonId"
-        class="form-control {{ className }}"
+        class="form-control custom-select{{ className }}"
         [class.disabled]="disabled"
         [disabled]="disabled"
         [multiple]="multi"
@@ -34,10 +34,10 @@ url: https://sebgroup.github.io/ng-components/components/buttons/examples
             ><b>{{ label }}</b></label
         >
 
-        <div
+        <button
             #dropdownToggleRef
             [id]="id || toggleButtonId"
-            class="btn btn-secondary custom-dropdown-toggle"
+            class="btn btn-secondary dropdown-toggle custom-dropdown-toggle"
             [class.disabled]="disabled"
             [class.open]="open"
             [ngClass]="{ 'more mx-right': ellipsisMode }"
@@ -86,7 +86,7 @@ url: https://sebgroup.github.io/ng-components/components/buttons/examples
                     </div>
                 </div>
             </ng-template>
-        </div>
+        </button>
 
         <div
             #dropdownMenuRef

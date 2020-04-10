@@ -50,7 +50,7 @@ class DropdownTestComponent {
     }
 }
 
-describe("RadioGroupComponent", () => {
+describe("DropdownComponent", () => {
     let component: DropdownTestComponent;
     let fixture: ComponentFixture<DropdownTestComponent>;
 

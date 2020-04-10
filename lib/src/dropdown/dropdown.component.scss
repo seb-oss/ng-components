@@ -27,7 +27,11 @@ $white: white;
 }
 
 .custom-dropdown {
-    > .custom-dropdown-toggle {
+    > .dropdown-toggle.custom-dropdown-toggle {
+        &::after {
+            content: none;
+        }
+
         background-color: white;
         height: $dropdown-toggle-height;
         min-width: $dropdown-width;
