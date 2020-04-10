@@ -260,8 +260,8 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
                     (e: UniqueItem) =>
                         e &&
                         e.optionItem &&
-                        e.optionItem.value &&
-                        e.optionItem.value
+                        e.optionItem.label &&
+                        e.optionItem.label
                             .toString()
                             .toLowerCase()
                             .indexOf(this.searchText.toLowerCase()) !== -1

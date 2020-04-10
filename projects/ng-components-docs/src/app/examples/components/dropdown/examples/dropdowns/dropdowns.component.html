@@ -13,6 +13,15 @@ url: https://sebgroup.github.io/ng-components/components/dropdown/examples
 
         <sebng-dropdown [label]="'Multi select'" [list]="list" [multi]="true"></sebng-dropdown>
     </div>
+
+    <div class="col">
+        <sebng-dropdown [label]="'Simple searchable'" [searchable]="true" [list]="list"></sebng-dropdown>
+
+        <hr />
+
+        <sebng-dropdown [label]="'Multi select searchable'" [searchable]="true" [list]="list" [multi]="true"></sebng-dropdown>
+    </div>
+
     <div class="col">
         <sebng-dropdown [label]="'Native'" [list]="list" [native]="true"></sebng-dropdown>
 
