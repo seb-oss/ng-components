@@ -17,6 +17,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
+                        "aot": true,
                         "outputPath": "dist/ng-components-web",
                         "index": "src/index.html",
                         "main": "src/main.ts",
@@ -49,6 +50,10 @@
                                     "type": "initial",
                                     "maximumWarning": "2mb",
                                     "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
                                 }
                             ]
                         }
@@ -129,6 +134,11 @@
                     "options": {
                         "tsConfig": "lib/tsconfig.lib.json",
                         "project": "lib/ng-package.json"
+                    },
+                    "configurations": {
+                        "production": {
+                            "tsConfig": "lib/tsconfig.lib.prod.json"
+                        }
                     }
                 },
                 "test": {
@@ -162,6 +172,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
+                        "aot": true,
                         "outputPath": "dist/ng-components-docs",
                         "index": "projects/ng-components-docs/src/index.html",
                         "main": "projects/ng-components-docs/src/main.ts",
@@ -194,6 +205,10 @@
                                     "type": "initial",
                                     "maximumWarning": "2mb",
                                     "maximumError": "5mb"
+                                },
+                                {
+                                    "type": "anyComponentStyle",
+                                    "maximumWarning": "6kb"
                                 }
                             ]
                         }
