@@ -19,7 +19,6 @@ export class PaginationComponent {
     }
 
     setPagination(value: number) {
-        console.log("Setting pagination here ", value);
         this.pagination = value;
     }
 }

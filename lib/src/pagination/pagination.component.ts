@@ -1,9 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, ViewEncapsulation } from "@angular/core";
 
 @Component({
     selector: "sebng-pagination",
     templateUrl: "./pagination.component.html",
     styleUrls: ["./pagination.component.scss"],
+    encapsulation: ViewEncapsulation.None,
 })
 export class PaginationComponent implements OnChanges {
     @Input() size: number;
