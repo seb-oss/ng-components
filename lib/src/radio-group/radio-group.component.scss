@@ -1,8 +1,8 @@
-$gray-400: #cecece !default; // TODO: import this from sebgroup bootstrap scss variables
-$gray-600: #868686 !default;
+@import "@sebgroup/bootstrap/scss/_variables";
+$radio-padding: 0.625rem;
 
 .radio-group {
-    padding: 0.625rem;
+    padding: $radio-padding;
     .custom-control {
         .custom-control-label {
             padding-right: 0.5rem;
