@@ -11,5 +11,6 @@
             "path": ["lib/src/button/*"]
         }
     },
-    "exclude": ["test.ts", "**/*.spec.ts"]
+    "files": ["src/main.ts", "src/polyfills.ts"],
+    "include": ["projects/ng-components-docs/src/**/*.d.ts"]
 }

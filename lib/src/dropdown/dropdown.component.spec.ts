@@ -26,7 +26,7 @@ import { CommonModule } from "@angular/common";
     `,
 })
 class DropdownTestComponent {
-    @ViewChild(DropdownComponent, { static: false }) dropDownComponent: DropdownComponent;
+    @ViewChild(DropdownComponent) dropDownComponent: DropdownComponent;
     list: Array<DropdownItem>;
     label?: string;
     error?: string;
