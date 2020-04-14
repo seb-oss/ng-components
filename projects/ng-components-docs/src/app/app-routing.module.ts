@@ -4,6 +4,7 @@ import { ROUTES as RADIOS_ROUTES } from "./examples/components/radio-group/radio
 import { ROUTES as BUTTONS_ROUTES } from "./examples/components/buttons/buttons.module";
 import { ROUTES as MODAL_ROUTES } from "./examples/components/modal/modal.module";
 import { ROUTES as WIZARD_ROUTES } from "./examples/components/wizard/wizard.module";
+import { ROUTES as DROPDOWN_ROUTES } from "./examples/components/dropdown/dropdown.module";
 import { InstallationComponent } from "./components/installation/installation.component";
 
 const routes: Routes = [
@@ -46,6 +47,10 @@ const routes: Routes = [
             {
                 path: "modal",
                 children: MODAL_ROUTES,
+            },
+            {
+                path: "dropdown",
+                children: DROPDOWN_ROUTES,
             },
             {
                 path: "wizard",

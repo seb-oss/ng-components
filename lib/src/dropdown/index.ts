@@ -1,1 +1,2 @@
-export * from "./public_api";
+export * from "./dropdown.module";
+export * from "./dropdown.component";

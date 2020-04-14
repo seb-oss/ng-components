@@ -1,10 +1,11 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { SebDropdownComponent, SebDropdownItemComponent, SebDropdownToggleDirective } from "./dropdown";
+import { FormsModule } from "@angular/forms";
+import { DropdownComponent } from "./dropdown.component";
 
 @NgModule({
-    imports: [CommonModule],
-    declarations: [SebDropdownComponent, SebDropdownToggleDirective, SebDropdownItemComponent],
-    exports: [SebDropdownComponent, SebDropdownToggleDirective, SebDropdownItemComponent],
+    imports: [CommonModule, FormsModule],
+    declarations: [DropdownComponent],
+    exports: [DropdownComponent],
 })
-export class SebDropdownModule {}
+export class DropdownModule {}
