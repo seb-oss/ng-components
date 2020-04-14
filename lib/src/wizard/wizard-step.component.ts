@@ -17,7 +17,7 @@ export interface ISebWizardStepControl {
 export class SebWizardStepComponent {
     @ContentChild(SebWizardStepLabelDirective, { static: true })
     wizardStepLabel: SebWizardStepLabelDirective;
-    @ContentChild(SebWizardStepLabelDescDirective, { static: false })
+    @ContentChild(SebWizardStepLabelDescDirective)
     wizardStepLabelDesc: SebWizardStepLabelDescDirective;
     @ViewChild(TemplateRef, { static: true }) wizardStepContent: TemplateRef<any>;
 
