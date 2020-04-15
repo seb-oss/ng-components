@@ -36,9 +36,6 @@ export class PaginationComponent implements OnChanges {
     /**
      * Generates an array of the pages that needs to be displayed
      * It depends on the size, offset, and the current value
-     * @param {number} value The current value. The current page.
-     * @param {number} length The length of the pagination, number of pages to be displayed.
-     * @returns void
      */
     generateList(): void {
         const genList: Array<number> = [];
