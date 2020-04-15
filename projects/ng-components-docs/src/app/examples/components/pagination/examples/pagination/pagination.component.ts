@@ -9,9 +9,9 @@ export class PaginationComponent {
         this.setPagination = this.setPagination.bind(this);
     }
 
-    private _pagination: number = 0;
-    private _pagination2: number = 0;
-    private _dotnav: number = 0;
+    private _pagination: number = 2;
+    private _pagination2: number = 4;
+    private _dotnav: number = 1;
 
     get pagination(): number {
         return this._pagination;
