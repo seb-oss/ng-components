@@ -3,7 +3,7 @@
         <ng-container *ngIf="useDotNav; else numNav">
             <ul class="pagination dotnav">
                 <ng-container *ngFor="let num of dotnavList">
-                    <li class="page-item" [ngClass]="{ active: value === num }" (click)="handleOnChange(num)" value="num">
+                    <li class="page-item" (click)="handleOnChange(num)" value="num">
                         <span class="page-dot-link" [ngClass]="{ active: value === num }"></span>
                     </li>
                 </ng-container>
