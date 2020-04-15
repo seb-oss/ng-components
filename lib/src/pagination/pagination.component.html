@@ -1,4 +1,4 @@
-<div class="pagination-wrapper" [ngClass]="className" id="id">
+<div class="pagination-wrapper" [ngClass]="className" [id]="id || ''">
     <nav class="custom-pagination">
         <ng-container *ngIf="useDotNav; else numNav">
             <ul class="pagination dotnav">
@@ -13,7 +13,7 @@
             <ul class="pagination">
                 <ng-container *ngIf="value !== 1 && useFirstAndLast">
                     <li class="page-item" (click)="handleOnChange(1)">
-                        <button class="page-link" [title]="firstText">
+                        <button class="page-link" [title]="firstText || ''">
                             <span class="nav-action">
                                 <ng-container *ngIf="useTextNav; else angleDoubleLeftIcon">
                                     {{ firstText ? firstText : "First" }}
@@ -33,7 +33,7 @@
                 </ng-container>
                 <ng-container *ngIf="value !== 1">
                     <li class="page-item" (click)="handleOnChange(value - 1)">
-                        <button class="page-link" [title]="previousText">
+                        <button class="page-link" [title]="previousText || ''">
                             <span class="nav-action">
                                 <ng-container *ngIf="useTextNav; else angleLeftIcon">
                                     {{ previousText ? previousText : "Previous" }}
@@ -60,7 +60,7 @@
                 </ng-container>
                 <ng-container *ngIf="value !== pagingSize">
                     <li class="page-item" (click)="handleOnChange(value + 1)">
-                        <button class="page-link" [title]="nextText">
+                        <button class="page-link" [title]="nextText || ''">
                             <span class="nav-action">
                                 <ng-container *ngIf="useTextNav; else angleRightIcon"> {{ nextText ? nextText : "Next" }} </ng-container>
                                 <ng-template #angleRightIcon>
@@ -78,7 +78,7 @@
                 </ng-container>
                 <ng-container *ngIf="value !== pagingSize && useFirstAndLast">
                     <li class="page-item" (click)="handleOnChange(pagingSize)">
-                        <button class="page-link" [title]="lastText">
+                        <button class="page-link" [title]="lastText || ''">
                             <span class="nav-action">
                                 <ng-container *ngIf="useTextNav; else angleDoubleRightIcon">
                                     {{ lastText ? lastText : "Last" }}
