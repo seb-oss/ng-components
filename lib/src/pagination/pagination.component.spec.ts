@@ -10,7 +10,7 @@ import { CommonModule } from "@angular/common";
         <sebng-pagination
             [value]="value"
             [className]="className"
-            (onChange)="setPagination($event)"
+            (handleChange)="setPagination($event)"
             [size]="size"
             [offset]="offset"
             [useDotNav]="useDotNav"

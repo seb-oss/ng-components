@@ -1,14 +1,20 @@
 <p>Here are sample outputs</p>
-<sebng-pagination [value]="pagination" (onChange)="setPagination($event)" [size]="60" [offset]="6" [pagingLength]="7"></sebng-pagination>
+<sebng-pagination
+    [value]="pagination"
+    (handleChange)="setPagination($event)"
+    [size]="60"
+    [offset]="6"
+    [pagingLength]="7"
+></sebng-pagination>
 
 <p>With <b>first</b> and <b>last</b> enabled</p>
 <sebng-pagination
     [value]="pagination2"
-    (onChange)="setPagination2($event)"
+    (handleChange)="setPagination2($event)"
     [size]="60"
     [offset]="6"
     useFirstAndLast="true"
 ></sebng-pagination>
 
 <p>Here are sample outputs of DotNav: {{ dotnav }}</p>
-<sebng-pagination [value]="dotnav" (onChange)="setDotnav($event)" [size]="60" [offset]="6" [useDotNav]="true"></sebng-pagination>
+<sebng-pagination [value]="dotnav" (handleChange)="setDotnav($event)" [size]="60" [offset]="6" [useDotNav]="true"></sebng-pagination>
