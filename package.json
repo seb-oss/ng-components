@@ -56,7 +56,7 @@
         "@angular/platform-browser": "~9.1.1",
         "@angular/platform-browser-dynamic": "~9.1.1",
         "@angular/router": "~9.1.1",
-        "@datorama/akita": "^3.9.2",
+        "@datorama/akita": "^4.22.2",
         "@sebgroup/bootstrap": "^4.0.0",
         "@types/marked": "^0.7.4",
         "core-js": "^2.5.4",
