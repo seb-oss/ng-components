@@ -8,7 +8,7 @@ import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, ViewE
 })
 export class PaginationComponent implements OnChanges {
     @Input() size: number;
-    @Output() handleChange: EventEmitter<any> = new EventEmitter();
+    @Output() handleChange: EventEmitter<number> = new EventEmitter();
     @Input() value: number;
 
     @Input() className?: string;
