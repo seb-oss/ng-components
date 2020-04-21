@@ -4,6 +4,8 @@ import { ROUTES as BUTTONS_ROUTES } from "./examples/components/buttons/buttons.
 import { ROUTES as MODAL_ROUTES } from "./examples/components/modal/modal.module";
 import { ROUTES as WIZARD_ROUTES } from "./examples/components/wizard/wizard.module";
 import { ROUTES as DROPDOWN_ROUTES } from "./examples/components/dropdown/dropdown.module";
+import { ROUTES as PAGINATION_ROUTES } from "./examples/components/pagination/pagination.module";
+
 import { InstallationComponent } from "./components/installation/installation.component";
 
 const routes: Routes = [
@@ -50,6 +52,10 @@ const routes: Routes = [
             {
                 path: "wizard",
                 children: WIZARD_ROUTES,
+            },
+            {
+                path: "pagination",
+                children: PAGINATION_ROUTES,
             },
         ],
     },

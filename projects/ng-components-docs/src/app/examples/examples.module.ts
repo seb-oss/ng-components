@@ -4,9 +4,10 @@ import { ButtonsModule } from "./components/buttons/buttons.module";
 import { ModalModule } from "./components/modal/modal.module";
 import { DropdownModule } from "./components/dropdown/dropdown.module";
 import { WizardModule } from "./components/wizard/wizard.module";
+import { PaginationModule } from "./components/pagination/pagination.module";
 
 @NgModule({
     declarations: [],
-    imports: [CommonModule, ButtonsModule, ModalModule, DropdownModule, WizardModule],
+    imports: [CommonModule, ButtonsModule, ModalModule, DropdownModule, WizardModule, PaginationModule],
 })
 export class ExamplesModule {}
