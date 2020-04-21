@@ -90,11 +90,11 @@ export class RadioGroupComponent implements ControlValueAccessor {
     }
 
     // HELPER ARRAYS
-    /** array of dropdown item elements with a unique id, the original optionItem and calculated selected property */
+    /** array of radio-group item elements with a unique id, the original optionItem and calculated selected property */
     public uniqueList: Array<UniqueItem> = [];
-    /** Array of dropdown item elements which should be displayed in the current render cycle */
+    /** Array of radio-group item elements which should be displayed in the current render cycle */
     public displayList: Array<DisplayItem> = [];
-    /** Array of all dropdown item which are currently selected */
+    /** Array of all radio-group item which are currently selected */
     public selectedList: Array<RadioGroupItem> = [];
 
     /** internal generate helper array function. Should be run on every change where the helper arrays need to be regenerated */
@@ -132,7 +132,7 @@ export class RadioGroupComponent implements ControlValueAccessor {
         this.selectedValue = value;
     }
 
-    /** Function containing the select dropdown item logic */
+    /** Function containing the select radio-group item logic */
     optionItemSelected(item: RadioGroupItem): void {
         const newItem: RadioGroupItem = { ...item };
         this.handleOnChange(newItem);
