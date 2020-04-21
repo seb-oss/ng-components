@@ -49,7 +49,7 @@ export class RadioGroupComponent implements ControlValueAccessor {
     }
     private _list: RadioGroupItem[];
 
-    @Input() id?: string;
+    @Input() name?: string;
     @Input() label?: string;
     @Input("className")
     set className(value: string) {

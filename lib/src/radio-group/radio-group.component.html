@@ -2,11 +2,11 @@
     ><b>{{ label }}</b></label
 >
 
-<div [attr.id]="id" *ngIf="list" [ngClass]="classList" [class.disabled]="disabled" [class.condensed]="condensed">
+<div *ngIf="list" [ngClass]="classList" [class.disabled]="disabled" [class.condensed]="condensed">
     <div *ngIf="inline; else noninline" class="row">
         <ng-container *ngFor="let item of displayList; index as i">
             <div class="col">
-                <div *ngIf="!condensed" style="padding: .625rem">
+                <div *ngIf="!condensed" style="padding: 0.625rem;">
                     <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
                 </div>
 
@@ -19,7 +19,7 @@
 
     <ng-template #noninline>
         <ng-container *ngFor="let item of displayList; index as i">
-            <div *ngIf="!condensed" style="padding: .625rem">
+            <div *ngIf="!condensed" style="padding: 0.625rem;">
                 <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
             </div>
 
@@ -33,7 +33,7 @@
 <ng-template #radioItem let-item>
     <div [class]="item.className" (click)="!(item.optionItem.disabled || disabled) ? handleItemOnClick(item) : null">
         <input
-            [name]="id"
+            [attr.name]="name"
             [id]="item.id"
             [defaultChecked]="item.selected"
             [disabled]="item.optionItem.disabled || disabled"
