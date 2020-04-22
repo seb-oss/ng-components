@@ -1,0 +1,70 @@
+<div class="form-group input-box-group" [ngClass]="className">
+    <ng-container *ngIf="label">
+        <label class="custom-label" [htmlFor]="internalId">
+            {{ label }}
+        </label>
+    </ng-container>
+    <div class="input-group" [ngClass]="{ success: success, 'has-error': error }" [class.disabled]="disabled">
+        <div class="input-box-group-wrapper">
+            <ng-container *ngIf="leftIcon || leftText">
+                <div
+                    class="input-group-prepend"
+                    [class.clickable]="onLeftClick"
+                    [attr.role]="onLeftClick ? 'button' : ''"
+                    (click)="onLeftClick && onLeftClick($event)"
+                >
+                    <ng-container *ngIf="leftText">
+                        <span class="input-group-text" [attr.title]="leftTitle">
+                            {{ leftText }}
+                        </span>
+                    </ng-container>
+                    <ng-container *ngIf="leftIcon && leftText">
+                        <span class="input-group-text" [innerHTML]="leftIcon | safeHtml"></span>
+                    </ng-container>
+                </div>
+            </ng-container>
+            <input
+                [attr.id]="internalId"
+                [attr.name]="name"
+                [attr.type]="type || 'text'"
+                [attr.pattern]="pattern"
+                [attr.required]="required"
+                [attr.minLength]="minLength"
+                [attr.maxLength]="maxLength"
+                [(ngModel)]="value"
+                (change)="onChange && onChange(value)"
+                [attr.placeholder]="placeholder"
+                class="form-control"
+                [attr.autoFocus]="focus"
+                [attr.autoComplete]="autoComplete"
+                [attr.readOnly]="readOnly"
+                [attr.disabled]="disabled"
+                (keydown)="onKeyDown && onKeyDown($event)"
+                (keyup)="onKeyUp && onKeyUp($event)"
+                (keypress)="onKeyPress && onKeyPress($event)"
+                (focus)="onFocus && onFocus($event)"
+                (blur)="onBlur && onBlur($event)"
+            />
+            <ng-container *ngIf="rightIcon || rightText">
+                <div
+                    class="input-group-append"
+                    [class.clickable]="onRightClick"
+                    (click)="onRightClick && onRightClick($event)"
+                    [attr.role]="onRightClick ? 'button' : ''"
+                >
+                    <ng-container *ngIf="rightText">
+                        <span class="input-group-text" [attr.title]="rightTitle">
+                            {{ rightText }}
+                        </span>
+                    </ng-container>
+                    <ng-container *ngIf="rightIcon && !rightText">
+                        <span class="input-group-text" [innerHTML]="rightIcon | safeHtml"></span>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+        <ng-container *ngIf="displayError">
+            <div class="alert alert-danger">{{ error }}</div>
+        </ng-container>
+    </div>
+</div>
