@@ -73,7 +73,6 @@ export class RadioGroupComponent implements ControlValueAccessor, AfterViewCheck
     private onChangeCallback: (_: any) => void;
 
     private _selectedValue: RadioGroupItem = null;
-    public allSelected = null;
 
     set selectedValue(state: RadioGroupItem) {
         if (state !== this._selectedValue) {
@@ -147,7 +146,6 @@ export class RadioGroupComponent implements ControlValueAccessor, AfterViewCheck
             });
 
         this.selectedList = this.uniqueList && this.uniqueList.filter((e: UniqueItem) => e.selected).map((e: UniqueItem) => e.optionItem);
-        this.allSelected = this.selectedList && this.uniqueList ? this.selectedList.length === this.uniqueList.length : false;
     }
 
     /** Function which handles the logic of setting the non-native onChange prop (and sets the internal selected value as well) */
