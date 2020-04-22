@@ -3,7 +3,17 @@ $radio-padding: 0.625rem;
 
 .radio-group {
     padding: $radio-padding;
-    .custom-control {
+    .custom-control.custom-radio {
+        &.normal {
+            padding-top: $radio-padding;
+            padding-bottom: $radio-padding;
+        }
+
+        &.condensed {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
         .custom-control-label {
             padding-right: 0.5rem;
 
@@ -19,9 +29,5 @@ $radio-padding: 0.625rem;
                 }
             }
         }
-    }
-
-    .condensed {
-        padding: 0;
     }
 }

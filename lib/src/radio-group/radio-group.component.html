@@ -2,36 +2,29 @@
     ><b>{{ label }}</b></label
 >
 
-<div *ngIf="list" [ngClass]="classList" [class.disabled]="disabled" [class.condensed]="condensed">
+<div *ngIf="list" [ngClass]="classList" [class.disabled]="disabled">
     <div *ngIf="inline; else noninline" class="row">
         <ng-container *ngFor="let item of displayList; index as i">
             <div class="col">
-                <div *ngIf="!condensed" style="padding: 0.625rem;">
-                    <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
-                </div>
-
-                <ng-container *ngIf="condensed">
-                    <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
-                </ng-container>
+                <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
             </div>
         </ng-container>
     </div>
 
     <ng-template #noninline>
         <ng-container *ngFor="let item of displayList; index as i">
-            <div *ngIf="!condensed" style="padding: 0.625rem;">
-                <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
-            </div>
-
-            <ng-container *ngIf="condensed">
-                <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
-            </ng-container>
+            <ng-container *ngTemplateOutlet="radioItem; context: { $implicit: item }"></ng-container>
         </ng-container>
     </ng-template>
 </div>
 
 <ng-template #radioItem let-item>
-    <div [class]="item.className" (click)="!(item.optionItem.disabled || disabled) ? handleItemOnClick(item) : null">
+    <div
+        [class.condensed]="condensed"
+        [class.normal]="!condensed"
+        [class]="item.className"
+        (click)="!(item.optionItem.disabled || disabled) ? handleItemOnClick(item) : null"
+    >
         <input
             #radioRefs
             [attr.name]="name"
