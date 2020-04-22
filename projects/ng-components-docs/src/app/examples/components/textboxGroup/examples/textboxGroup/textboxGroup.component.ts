@@ -32,38 +32,6 @@ export class TextboxGroupComponent {
         </svg>
     `;
 
-    get textBoxGroupValue(): string {
-        return this._textBoxGroupValue;
-    }
-
-    set textBoxGroupValue(value: string) {
-        this._textBoxGroupValue = value;
-    }
-
-    get textBoxGroupValue2(): string {
-        return this._textBoxGroupValue2;
-    }
-
-    set textBoxGroupValue2(value: string) {
-        this._textBoxGroupValue2 = value;
-    }
-
-    get textBoxGroupValue3(): string {
-        return this._textBoxGroupValue3;
-    }
-
-    set textBoxGroupValue3(value: string) {
-        this._textBoxGroupValue3 = value;
-    }
-
-    get textBoxGroupValue4(): string {
-        return this._textBoxGroupValue4;
-    }
-
-    set textBoxGroupValue4(value: string) {
-        this._textBoxGroupValue4 = value;
-    }
-
     onLeftClick(e: Event) {
         alert("Left icon clicked!");
     }

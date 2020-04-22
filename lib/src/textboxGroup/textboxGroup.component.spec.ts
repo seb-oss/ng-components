@@ -160,9 +160,11 @@ describe("TextboxGroupComponent", () => {
             fixture.debugElement
                 .query(By.css(".form-control"))
                 .nativeElement.dispatchEvent(new KeyboardEvent("keyDown", { key: "a", code: "65" }));
-            fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent("keyPress", { key: "a", code: "65" });
-            fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent("focus", { key: "a", code: "65" });
-            fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent("blur", { key: "a", code: "65" });
+            fixture.debugElement
+                .query(By.css(".form-control"))
+                .nativeElement.dispatchEvent(new KeyboardEvent("keyPress", { key: "a", code: "65" }));
+            fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new MouseEvent("focus"));
+            fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new MouseEvent("blur"));
         });
 
         const onKeyDown: jasmine.Spy = spyOn(component, "onKeyDown").and.callThrough();
