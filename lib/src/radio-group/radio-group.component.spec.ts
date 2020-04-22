@@ -101,4 +101,7 @@ describe("RadioGroupComponent", () => {
         // TODO: simulate a click on first element
         // TODO: check to see if .custom-control.custom-radio.selected > input equals 1
     }));
+
+    // TODO: check if currently selected element is focused
+    // TODO: simulate tab button or arrow buttons and check if element is selected and focused
 });

@@ -33,7 +33,9 @@
 <ng-template #radioItem let-item>
     <div [class]="item.className" (click)="!(item.optionItem.disabled || disabled) ? handleItemOnClick(item) : null">
         <input
+            #radioRefs
             [attr.name]="name"
+            [autofocus]="item.selected"
             [id]="item.id"
             [defaultChecked]="item.selected"
             [disabled]="item.optionItem.disabled || disabled"

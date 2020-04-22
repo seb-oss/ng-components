@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, Provider } from "@angular/core";
+import { Component, Input, forwardRef, Provider, ViewChildren, QueryList, ElementRef, AfterViewChecked } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { NgClass } from "@angular/common";
 
@@ -37,7 +37,7 @@ const CUSTOM_RADIOGROUP_CONTROL_VALUE_ACCESSOR: Provider = {
     styleUrls: ["./radio-group.component.scss"],
     providers: [CUSTOM_RADIOGROUP_CONTROL_VALUE_ACCESSOR],
 })
-export class RadioGroupComponent implements ControlValueAccessor {
+export class RadioGroupComponent implements ControlValueAccessor, AfterViewChecked {
     // TODO: Add support for custom html as well as string labels?
     @Input("list")
     set list(value: RadioGroupItem[]) {
@@ -89,6 +89,29 @@ export class RadioGroupComponent implements ControlValueAccessor {
         return this._selectedValue;
     }
 
+    @ViewChildren("radioRefs") radioRefs: QueryList<ElementRef>;
+
+    /** has the currently selected element been focused already */
+    private didFocus: boolean = false;
+
+    ngAfterViewChecked(): void {
+        this.focusCurrentItem();
+    }
+
+    /**
+     * FOCUS CURRENT ITEM:
+     * Find which of the radio buttons is currently selected (if any) and sets it to focus
+     */
+    focusCurrentItem(): void {
+        if (!this.didFocus && this.list && this.list.length) {
+            const currentFocused: number = this.list.findIndex(e => e && this.selectedValue && e.key === this.selectedValue.key);
+            if (currentFocused > -1 && this.radioRefs.toArray()[currentFocused] && this.radioRefs.toArray()[currentFocused].nativeElement) {
+                this.radioRefs.toArray()[currentFocused].nativeElement.focus();
+                this.didFocus = true;
+            }
+        }
+    }
+
     // HELPER ARRAYS
     /** array of radio-group item elements with a unique id, the original optionItem and calculated selected property */
     public uniqueList: Array<UniqueItem> = [];
@@ -129,6 +152,7 @@ export class RadioGroupComponent implements ControlValueAccessor {
 
     /** Function which handles the logic of setting the non-native onChange prop (and sets the internal selected value as well) */
     handleOnChange(value: RadioGroupItem): void {
+        this.didFocus = false;
         this.selectedValue = value;
     }
 
