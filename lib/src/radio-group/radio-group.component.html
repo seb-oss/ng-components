@@ -35,9 +35,17 @@
             type="radio"
             class="custom-control-input"
         />
-        <label [attr.for]="!(item.optionItem.disabled || disabled) ? item.id : null" class="custom-control-label"
-            >{{ item.optionItem.label }}
-            <span class="custom-description" *ngIf="item.optionItem.description">{{ item.optionItem.description }}</span>
-        </label>
+        <label
+            *ngIf="item.optionItem.customTemplate; else normal"
+            [attr.for]="!(item.optionItem.disabled || disabled) ? item.id : null"
+            class="custom-control-label"
+            [innerHtml]="item.optionItem.customTemplate"
+        ></label>
+        <ng-template #normal>
+            <label [attr.for]="!(item.optionItem.disabled || disabled) ? item.id : null" class="custom-control-label"
+                >{{ item.optionItem.label }}
+                <span class="custom-description" *ngIf="item.optionItem.description">{{ item.optionItem.description }}</span>
+            </label>
+        </ng-template>
     </div>
 </ng-template>

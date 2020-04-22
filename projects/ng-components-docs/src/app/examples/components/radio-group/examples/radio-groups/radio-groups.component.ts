@@ -18,6 +18,15 @@ export class RadioGroupsComponent {
     list5: RadioGroupItem[] = [...this.list, { key: "Three", value: "3", label: "Three disabled", disabled: true }];
     list6: RadioGroupItem[] = [...this.list];
     list7: RadioGroupItem[] = [...this.list];
+    list8: RadioGroupItem[] = [
+        ...this.list,
+        {
+            key: "Three",
+            customTemplate:
+                "<div class='btn btn-outline-primary m-0'><h5>I'm a custom html element :)</h5> </ br> <p> You can put whatever you like in here </p></div>",
+            value: "3",
+        },
+    ];
 
     formcontrol: FormControl = new FormControl();
     model: RadioGroupItem;

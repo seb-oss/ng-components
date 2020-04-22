@@ -4,7 +4,13 @@ import { NgClass } from "@angular/common";
 
 export interface RadioGroupItem {
     /** The label or text to be displayed in the list */
-    label: string;
+    label?: string;
+    /**
+     * A Custom template as html string to be used instead of label and description.
+     *
+     * Example: "<b>Hello</b>"
+     * */
+    customTemplate?: string;
     /** optional description to be displayed next to the label */
     description?: string;
     /** any value which should be tied to the item */
@@ -114,7 +120,7 @@ export class RadioGroupComponent implements ControlValueAccessor, AfterViewCheck
         this.uniqueList =
             this.list &&
             this.list
-                .filter((e: RadioGroupItem) => e && e.hasOwnProperty("key") && e.hasOwnProperty("value") && e.hasOwnProperty("label"))
+                .filter((e: RadioGroupItem) => e && e.hasOwnProperty("key") && e.hasOwnProperty("value"))
                 .map((e: RadioGroupItem, i: number) => {
                     const id: string = `${e.key}-${i}`;
                     let selected: boolean = false;

@@ -15,6 +15,13 @@ $radio-padding: 0.625rem;
         }
 
         .custom-control-label {
+            &::before,
+            &::after {
+                -webkit-transform: translate(0%, -50%);
+                transform: translate(0%, -50%);
+                position: absolute;
+                top: 50%;
+            }
             padding-right: 0.5rem;
 
             > .custom-description {

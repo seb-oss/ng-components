@@ -13,15 +13,19 @@ url: https://sebgroup.github.io/ng-components/components/radio-group/examples
         <hr />
         <sebng-radio-group [name]="'ngmodel'" [label]="'Ng Model'" [list]="list3" [(ngModel)]="model"></sebng-radio-group>
         <hr />
-        <sebng-radio-group [name]="'condensed'" [label]="'Condensed'" [list]="list4" [condensed]="true"></sebng-radio-group>
-        <hr />
     </div>
 
     <div class="col">
+        <sebng-radio-group [name]="'condensed'" [label]="'Condensed'" [list]="list4" [condensed]="true"></sebng-radio-group>
+        <hr />
         <sebng-radio-group [name]="'one-disabled'" [label]="'One Disabled'" [list]="list5"></sebng-radio-group>
         <hr />
+        <sebng-radio-group [name]="'form-control'" [label]="'Form Control'" [list]="list7" [formControl]="formcontrol"></sebng-radio-group>
+        <hr />
+    </div>
+    <div class="col">
         <sebng-radio-group [name]="'all-disabled'" [label]="'All Disabled'" [list]="list6" [disabled]="true"></sebng-radio-group>
         <hr />
-        <sebng-radio-group [name]="'fomr-control'" [label]="'Form Control'" [list]="list7" [formControl]="formcontrol"></sebng-radio-group>
+        <sebng-radio-group [name]="'custom-template'" [label]="'Custom template'" [list]="list8"></sebng-radio-group>
     </div>
 </div>
