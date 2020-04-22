@@ -51,21 +51,11 @@ export class RadioGroupComponent implements ControlValueAccessor, AfterViewCheck
 
     @Input() name?: string;
     @Input() label?: string;
-    @Input("className")
-    set className(value: string) {
-        if (value) {
-            this._classList = ["radio-group", value];
-        }
-    }
-    private _classList: NgClass["ngClass"] = "radio-group";
+    @Input() className?: string;
 
     @Input() disabled?: boolean = false;
     @Input() condensed?: boolean = false;
     @Input() inline?: boolean = false;
-
-    get classList(): NgClass["ngClass"] {
-        return this._classList;
-    }
 
     // Placeholders for the callbacks which are later provided
     // by the Control Value Accessor

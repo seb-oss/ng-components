@@ -2,7 +2,7 @@
     ><b>{{ label }}</b></label
 >
 
-<div *ngIf="list" [ngClass]="classList" [class.disabled]="disabled">
+<div *ngIf="list" class="radio-group" [ngClass]="className" [class.disabled]="disabled">
     <div *ngIf="inline; else noninline" class="row">
         <ng-container *ngFor="let item of displayList; index as i">
             <div class="col">
