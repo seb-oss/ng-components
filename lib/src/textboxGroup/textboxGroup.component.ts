@@ -1,4 +1,16 @@
-import { Component, Input, ViewEncapsulation, ElementRef, forwardRef, Provider, OnChanges, SimpleChanges, OnInit } from "@angular/core";
+import {
+    Component,
+    Input,
+    ViewEncapsulation,
+    ElementRef,
+    forwardRef,
+    Provider,
+    OnChanges,
+    SimpleChanges,
+    OnInit,
+    Output,
+    EventEmitter,
+} from "@angular/core";
 import { randomId } from "@sebgroup/frontend-tools/dist/randomId";
 
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
@@ -32,14 +44,6 @@ export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnCh
     @Input() maxLength?: number;
     @Input() minLength?: number;
     @Input() name: string;
-    @Input() onBlur?: (event: FocusEvent) => void;
-    @Input() onChange: (value: Value) => void;
-    @Input() onFocus?: (event: FocusEvent) => void;
-    @Input() onKeyDown?: (event: KeyboardEvent) => void;
-    @Input() onKeyPress?: (event: KeyboardEvent) => void;
-    @Input() onKeyUp?: (event: KeyboardEvent) => void;
-    @Input() onLeftClick?: (event: MouseEvent) => void;
-    @Input() onRightClick?: (event: MouseEvent) => void;
     @Input() pattern?: string;
     @Input() placeholder?: string;
     @Input() readOnly?: boolean;
@@ -50,6 +54,15 @@ export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnCh
     @Input() type?: string;
     @Input() success?: boolean;
     @Input() showErrorMessage?: boolean;
+
+    @Output() onBlur = new EventEmitter<MouseEvent>();
+    @Output() onChange = new EventEmitter<Value>();
+    @Output() onFocus = new EventEmitter<MouseEvent>();
+    @Output() onKeyDown = new EventEmitter<KeyboardEvent>();
+    @Output() onKeyPress = new EventEmitter<KeyboardEvent>();
+    @Output() onKeyUp = new EventEmitter<KeyboardEvent>();
+    @Output() onLeftClick = new EventEmitter<MouseEvent>();
+    @Output() onRightClick = new EventEmitter<MouseEvent>();
 
     private innerValue: Value;
 
@@ -91,10 +104,42 @@ export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnCh
         if (v !== this.innerValue) {
             this.innerValue = v;
             this.onChangeCallback && this.onChangeCallback(v);
-            this.onChange && this.onChange(v);
+            this.onChange && this.onChange.emit(v);
         }
     }
 
+    // event
+    handleBlur(e: MouseEvent) {
+        this.onBlur?.emit(e);
+    }
+
+    handleKeyUp(e: KeyboardEvent) {
+        this.onKeyUp?.emit(e);
+    }
+
+    handleKeyDown(e: KeyboardEvent) {
+        this.onKeyDown?.emit(e);
+    }
+
+    handleFocus(e: MouseEvent) {
+        this.onFocus?.emit(e);
+    }
+
+    handleKeyPress(e: KeyboardEvent) {
+        this.onKeyPress?.emit(e);
+    }
+
+    handleLeftIconClick(e: MouseEvent) {
+        this.onLeftClick?.emit(e);
+    }
+
+    handleChange(value: Value) {
+        this.onChange?.emit(value);
+    }
+    handleRightIconClick(e: MouseEvent) {
+        this.onRightClick?.emit(e);
+    }
+    // accessor props
     writeValue(val: Value) {
         if (val !== this.innerValue) {
             this.innerValue = val;

@@ -11,7 +11,7 @@
                     class="input-group-prepend"
                     [class.clickable]="onLeftClick"
                     [attr.role]="onLeftClick ? 'button' : ''"
-                    (click)="onLeftClick && onLeftClick($event)"
+                    (click)="handleLeftIconClick($event)"
                 >
                     <ng-container *ngIf="leftText">
                         <span class="input-group-text" [attr.title]="leftTitle">
@@ -32,24 +32,24 @@
                 [attr.minLength]="minLength"
                 [attr.maxLength]="maxLength"
                 [(ngModel)]="value"
-                (change)="onChange && onChange(value)"
+                (change)="handleChange(value)"
                 [attr.placeholder]="placeholder"
                 class="form-control"
                 [attr.autoFocus]="focus"
                 [attr.autoComplete]="autoComplete"
                 [attr.readOnly]="readOnly"
                 [attr.disabled]="disabled"
-                (keydown)="onKeyDown && onKeyDown($event)"
-                (keyup)="onKeyUp && onKeyUp($event)"
-                (keypress)="onKeyPress && onKeyPress($event)"
-                (focus)="onFocus && onFocus($event)"
-                (blur)="onBlur && onBlur($event)"
+                (keydown)="handleKeyDown($event)"
+                (keyup)="handleKeyUp($event)"
+                (keypress)="handleKeyPress($event)"
+                (focus)="handleFocus($event)"
+                (blur)="handleBlur($event)"
             />
             <ng-container *ngIf="rightIcon || rightText">
                 <div
                     class="input-group-append"
                     [class.clickable]="onRightClick"
-                    (click)="onRightClick && onRightClick($event)"
+                    (click)="handleRightIconClick($event)"
                     [attr.role]="onRightClick ? 'button' : ''"
                 >
                     <ng-container *ngIf="rightText">

@@ -32,11 +32,11 @@ export class TextboxGroupComponent {
         </svg>
     `;
 
-    onLeftClick(e: Event) {
+    onLeftClick(e: MouseEvent) {
         alert("Left icon clicked!");
     }
 
-    onRightClick(e: Event) {
+    onRightClick(e: MouseEvent) {
         alert("Right icon clicked");
     }
 
