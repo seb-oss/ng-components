@@ -1,1 +1,2 @@
-export { TextboxGroupModule } from "./textboxGroup.module";
+export * from "./textboxGroup.module";
+export * from "./textboxGroup.component";
