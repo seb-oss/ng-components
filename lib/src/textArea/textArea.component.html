@@ -16,13 +16,14 @@
             [attr.readOnly]="readonly"
             [attr.disabled]="disabled"
             [cols]="cols"
+            [(ngModel)]="value"
             [rows]="rows"
-            (onChange)="handleChange($event)"
-            (onKeyDown)="handleKeydown($event)"
-            (onKeyUp)="handleKeyUp($event)"
-            (onKeyPress)="handleKeyPress($event)"
-            (onFocus)="handleFocus($event)"
-            (onBlur)="handleBlur($event)"
+            (change)="handleChange(value)"
+            (keydown)="handleKeyDown($event)"
+            (keyup)="handleKeyUp($event)"
+            (keypress)="handleKeyPress($event)"
+            (focus)="handleFocus($event)"
+            (blur)="handleBlur($event)"
         ></textarea>
         <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
     </div>

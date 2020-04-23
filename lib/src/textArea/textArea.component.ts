@@ -1,12 +1,20 @@
-import { Component, Input, Output, EventEmitter, ViewEncapsulation } from "@angular/core";
+import { Component, Input, Output, EventEmitter, ViewEncapsulation, forwardRef, Provider } from "@angular/core";
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
+
+const CUSTOM_TEXTAREA_CONTROL_VALUE_ACCESSOR: Provider = {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => TextAreaComponent),
+    multi: true,
+};
 
 @Component({
     selector: "sebng-textArea",
     templateUrl: "./textArea.component.html",
     styleUrls: ["./textArea.component.scss"],
     encapsulation: ViewEncapsulation.None,
+    providers: [CUSTOM_TEXTAREA_CONTROL_VALUE_ACCESSOR],
 })
-export class TextAreaComponent {
+export class TextAreaComponent implements ControlValueAccessor {
     @Input() className?: string;
     @Input() cols?: number;
     @Input() disabled?: boolean;

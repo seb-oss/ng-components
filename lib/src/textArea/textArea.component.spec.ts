@@ -54,10 +54,9 @@ class TextAreaTestComponent {
     onKeyUp() {}
 }
 
-describe("PaginationComponent", () => {
+describe("TextAreaComponent", () => {
     let component: TextAreaTestComponent;
     let fixture: ComponentFixture<TextAreaTestComponent>;
-    let onChange: jasmine.Spy;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -97,14 +96,13 @@ describe("PaginationComponent", () => {
     });
 
     it("Should fire change event", () => {
-        onChange = spyOn(component, "onChange");
+        const onChange: jasmine.Spy = spyOn(component, "onChange");
         const event = new KeyboardEvent("change", {
             view: window,
             bubbles: true,
             cancelable: true,
         });
 
-        console.log("Tada here ", fixture.debugElement.query(By.css("textarea")).nativeElement);
         fixture.debugElement.query(By.css("textarea")).nativeElement.dispatchEvent(event);
         expect(onChange).toHaveBeenCalled();
     });
