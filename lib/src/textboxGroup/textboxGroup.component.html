@@ -18,7 +18,7 @@
                             {{ leftText }}
                         </span>
                     </ng-container>
-                    <ng-container *ngIf="leftIcon && leftText">
+                    <ng-container *ngIf="leftIcon && !leftText">
                         <span class="input-group-text" [innerHTML]="leftIcon | safeHtml"></span>
                     </ng-container>
                 </div>

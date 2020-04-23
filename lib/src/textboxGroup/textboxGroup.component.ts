@@ -83,10 +83,10 @@ export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnCh
         }
 
         if (changes.showErrorMessage || changes.success) {
-            if (changes.success && changes.success.currentValue) {
+            if (changes.success?.currentValue === true) {
                 // Only false when success is enabled
                 this.displayError = false;
-            } else if (changes.showErrorMessage && !changes.showErrorMessage.currentValue) {
+            } else if (!changes.showErrorMessage?.currentValue) {
                 // `showErrorMessage` is set to boolean false
                 this.displayError = false;
             } else {
