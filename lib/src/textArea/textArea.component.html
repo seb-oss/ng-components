@@ -1,0 +1,29 @@
+<div class="form-group text-area" [ngClass]="className">
+    <div class="input-field" [class.has-error]="error">
+        <ng-container *ngIf="label">
+            <label class="custom-label" htmlFor="{id}">
+                {{ label }}
+            </label>
+        </ng-container>
+        <textarea
+            [attr.name]="name"
+            class="form-control"
+            [class.resizable]="resizable || resizable === undefined"
+            [attr.id]="id"
+            [attr.placeholder]="placeholder"
+            [attr.maxLength]="max"
+            [attr.autoFocus]="focus"
+            [attr.readOnly]="readonly"
+            [attr.disabled]="disabled"
+            [cols]="cols"
+            [rows]="rows"
+            (onChange)="handleChange($event)"
+            (onKeyDown)="handleKeydown($event)"
+            (onKeyUp)="handleKeyUp($event)"
+            (onKeyPress)="handleKeyPress($event)"
+            (onFocus)="handleFocus($event)"
+            (onBlur)="handleBlur($event)"
+        ></textarea>
+        <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+    </div>
+</div>
