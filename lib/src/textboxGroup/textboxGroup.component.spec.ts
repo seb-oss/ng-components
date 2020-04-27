@@ -137,18 +137,6 @@ describe("TextboxGroupComponent", () => {
         expect(componentProps.required).toEqual("true");
     });
 
-    it("Should trigger onChange callback when change to input element is detected", () => {
-        const onChange: jasmine.Spy = spyOn(component, "onChange");
-
-        const event = new MouseEvent("change", {
-            view: window,
-            bubbles: true,
-            cancelable: true,
-        });
-        fixture.debugElement.query(By.css("input")).nativeElement.dispatchEvent(event);
-        expect(onChange).toHaveBeenCalled();
-    });
-
     describe("Testing optional events", () => {
         let onKeyDown: jasmine.Spy;
         let onKeyPress: jasmine.Spy;
