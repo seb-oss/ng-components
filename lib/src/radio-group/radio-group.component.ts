@@ -1,6 +1,5 @@
 import { Component, Input, forwardRef, Provider, ViewChildren, QueryList, ElementRef, AfterViewChecked } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
-import { NgClass } from "@angular/common";
 
 export interface RadioGroupItem {
     /** The label or text to be displayed in the list */
