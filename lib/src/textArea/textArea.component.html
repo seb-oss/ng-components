@@ -1,10 +1,8 @@
 <div class="form-group text-area" [ngClass]="className">
     <div class="input-field" [class.has-error]="error">
-        <ng-container *ngIf="label">
-            <label class="custom-label" htmlFor="{id}">
-                {{ label }}
-            </label>
-        </ng-container>
+        <label class="custom-label" [attr.htmlFor]="id" *ngIf="label">
+            {{ label }}
+        </label>
         <textarea
             [attr.name]="name"
             class="form-control"
@@ -18,7 +16,6 @@
             [cols]="cols"
             [(ngModel)]="value"
             [rows]="rows"
-            (change)="handleChange(value)"
             (keydown)="handleKeyDown($event)"
             (keyup)="handleKeyUp($event)"
             (keypress)="handleKeyPress($event)"

@@ -74,10 +74,6 @@ export class TextAreaComponent implements ControlValueAccessor {
         this.onKeyPress?.emit(e);
     }
 
-    handleChange(value: string) {
-        console.log("The new value is ", value);
-        this.onChange?.emit(value);
-    }
     // accessor props
     writeValue(val: string) {
         if (val !== this.innerValue) {

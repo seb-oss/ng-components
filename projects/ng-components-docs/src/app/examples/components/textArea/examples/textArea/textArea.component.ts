@@ -7,5 +7,7 @@ import { Component } from "@angular/core";
 export class TextAreaComponent {
     textBoxValue: string;
 
-    onChange(value: string) {}
+    onChange(value: string) {
+        console.log(value);
+    }
 }
