@@ -133,9 +133,6 @@ export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnCh
         this.onLeftClick?.emit(e);
     }
 
-    handleChange(value: Value) {
-        this.onChange?.emit(value);
-    }
     handleRightIconClick(e: MouseEvent) {
         this.onRightClick?.emit(e);
     }
