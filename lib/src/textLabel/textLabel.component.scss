@@ -1,12 +1,14 @@
+@import "~@sebgroup/bootstrap/scss/variables";
+
 .text-label {
     label.custom-label:not(.form-check-label):not(.custom-checkbox):not(.custom-radio):not(.custom-control-label) {
         display: block;
         margin-bottom: 4px;
         line-height: 1;
-        font-size: 12px;
-        font-weight: normal;
+        font-size: 0.75rem;
+        font-weight: $font-weight-normal;
     }
     .custom-label-value {
-        font-weight: 500;
+        font-weight: $font-weight-medium;
     }
 }

@@ -12,14 +12,10 @@ export class TextLabelComponent {
     @Input() value?: string | TemplateRef<HTMLElement>;
     @Input() className?: string | Array<string> | { [key: string]: boolean };
 
-    constructor() {
-        console.log("here");
-    }
-
     /**
      * Check if input parameter is a string
      */
     isString = (input: any): boolean => {
-        return typeof input == "string";
+        return typeof input === "string";
     };
 }

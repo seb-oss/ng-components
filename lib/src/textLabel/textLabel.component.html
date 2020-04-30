@@ -1,14 +1,10 @@
-<div class="text-label" [ngClass]="className" id="id">
+<div class="text-label" [ngClass]="className" [attr.id]="id">
     <ng-container *ngTemplateOutlet="isString(label) ? defaultLabel : label"></ng-container>
     <ng-container *ngTemplateOutlet="isString(value) ? defaultValue : value"></ng-container>
     <ng-template #defaultLabel>
-        <label class="custom-label">
-            {{ label }}
-        </label>
+        <label class="custom-label">{{ label }}</label>
     </ng-template>
     <ng-template #defaultValue>
-        <div class="custom-label-value">
-            {{ value }}
-        </div>
+        <div class="custom-label-value">{{ value }}</div>
     </ng-template>
 </div>
