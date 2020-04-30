@@ -15,7 +15,6 @@
         "lib": ["dom", "es2018"]
     },
     "angularCompilerOptions": {
-        "annotateForClosureCompiler": true,
         "skipTemplateCodegen": true,
         "flatModuleId": "@sebgroup/ng-components",
         "strictMetadataEmit": true,

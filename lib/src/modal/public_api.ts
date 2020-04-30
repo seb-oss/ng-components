@@ -5,3 +5,4 @@ export * from "./modal.service";
 export * from "./modal";
 export * from "./modal.ref";
 export * from "./modal.backdrop";
+export * from "./modal.directives";

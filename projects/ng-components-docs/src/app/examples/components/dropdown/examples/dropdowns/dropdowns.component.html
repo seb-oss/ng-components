@@ -1,0 +1,48 @@
+<!--
+title: Dropdown
+componentid: component-dropdown
+variantid: component-dropdown-all
+url: https://sebgroup.github.io/ng-components/components/dropdown/examples
+-->
+
+<div class="row">
+    <div class="col">
+        <sebng-dropdown [label]="'Simple'" [list]="list"></sebng-dropdown>
+
+        <hr />
+
+        <sebng-dropdown [label]="'Multi select'" [list]="list" [multi]="true"></sebng-dropdown>
+
+        <hr />
+
+        <sebng-dropdown [label]="'Elipsis mode'" [ellipsisMode]="true" [list]="list"></sebng-dropdown>
+
+        <hr />
+
+        <sebng-dropdown [label]="'Disabled'" [list]="list" [disabled]="true"></sebng-dropdown>
+    </div>
+
+    <div class="col">
+        <sebng-dropdown [label]="'Simple searchable'" [searchable]="true" [list]="list"></sebng-dropdown>
+
+        <hr />
+
+        <sebng-dropdown [label]="'Multi select searchable'" [searchable]="true" [list]="list" [multi]="true"></sebng-dropdown>
+
+        <hr />
+
+        <sebng-dropdown [label]="'Multi select elipsis mode'" [ellipsisMode]="true" [multi]="true" [list]="list"></sebng-dropdown>
+
+        <hr />
+
+        <sebng-dropdown [label]="'Placeholder'" [list]="list" [placeHolder]="'I am a placeholder'"></sebng-dropdown>
+    </div>
+
+    <div class="col">
+        <sebng-dropdown [label]="'Native'" [list]="list" [native]="true"></sebng-dropdown>
+
+        <hr />
+
+        <sebng-dropdown [label]="'Native multi select'" [list]="list" [multi]="true" [native]="true"></sebng-dropdown>
+    </div>
+</div>
