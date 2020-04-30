@@ -95,18 +95,6 @@ describe("TextAreaComponent", () => {
         expect(fixture.debugElement.query(By.css("textarea")).nativeElement.attributes.id).toBeTruthy();
     });
 
-    it("Should fire change event", () => {
-        const onChange: jasmine.Spy = spyOn(component, "onChange");
-        const event = new KeyboardEvent("change", {
-            view: window,
-            bubbles: true,
-            cancelable: true,
-        });
-
-        fixture.debugElement.query(By.css("textarea")).nativeElement.dispatchEvent(event);
-        expect(onChange).toHaveBeenCalled();
-    });
-
     it("Should render label and error", () => {
         const error: string = "some error";
         const label: string = "some label";
