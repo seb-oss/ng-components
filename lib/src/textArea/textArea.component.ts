@@ -76,9 +76,7 @@ export class TextAreaComponent implements ControlValueAccessor {
 
     // accessor props
     writeValue(val: string) {
-        if (val !== this.innerValue) {
-            this.innerValue = val;
-        }
+        this.innerValue = val;
     }
 
     registerOnChange(fn: () => void): void {
