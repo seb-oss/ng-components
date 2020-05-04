@@ -2,7 +2,7 @@
     <label class="custom-label" [htmlFor]="internalId" *ngIf="label">
         {{ label }}
     </label>
-    <div class="input-group" [ngClass]="{ success: success, 'has-error': error }" [class.disabled]="disabled">
+    <div class="input-group" [ngClass]="{ success: success, 'has-error': error, disabled: disabled }">
         <div class="input-box-group-wrapper">
             <div
                 class="input-group-prepend"
