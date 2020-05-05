@@ -1,0 +1,54 @@
+<h2>Output</h2>
+<div class="row">
+    <div class="col">
+        <p>text box group with right text:</p>
+        <sebng-textboxgroup
+            name="textInput"
+            label="Textbox group label"
+            placeholder="Text Box PlaceHolder"
+            rightText="kr"
+        ></sebng-textboxgroup>
+    </div>
+    <div class="col">
+        <p>text box group with left icon and disabled:</p>
+        <sebng-textboxgroup
+            name="textInput2"
+            label=" "
+            placeholder="Text Box PlaceHolder"
+            [leftIcon]="moneyIcon"
+            [disabled]="true"
+        ></sebng-textboxgroup>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <p>text box group with both sides and error:</p>
+        <sebng-textboxgroup
+            name="textInput3"
+            placeholder="Text Box PlaceHolder"
+            [leftIcon]="moneyIcon"
+            [rightIcon]="userIcon"
+            (onLeftClick)="onLeftClick($event)"
+            (onChange)="onChange($event)"
+            (onRightClick)="onRightClick($event)"
+            leftTitle="Click to view more of the left"
+            rightTitle="Click to view more of the right"
+            error="some error message"
+        ></sebng-textboxgroup>
+    </div>
+    <div class="col">
+        <p>text box group with both sides and success:</p>
+        <sebng-textboxgroup
+            name="textInput3"
+            placeholder="Text Box PlaceHolder"
+            [leftIcon]="moneyIcon"
+            [rightIcon]="userIcon"
+            (onLeftClick)="onLeftClick($event)"
+            (onRightClick)="onRightClick($event)"
+            leftTitle="Click to view more of the left"
+            rightTitle="Click to view more of the right"
+            [success]="true"
+            (onChange)="onChange($event)"
+        ></sebng-textboxgroup>
+    </div>
+</div>
