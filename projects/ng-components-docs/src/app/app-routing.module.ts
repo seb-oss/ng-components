@@ -6,6 +6,7 @@ import { ROUTES as WIZARD_ROUTES } from "./examples/components/wizard/wizard.mod
 import { ROUTES as DROPDOWN_ROUTES } from "./examples/components/dropdown/dropdown.module";
 import { ROUTES as PAGINATION_ROUTES } from "./examples/components/pagination/pagination.module";
 import { ROUTES as TEXTAREA_ROUTES } from "./examples/components/textArea/textArea.module";
+import { ROUTES as TEXTBOXGROUP_ROUTES } from "./examples/components/textboxGroup/textboxGroup.module";
 
 import { InstallationComponent } from "./components/installation/installation.component";
 
@@ -61,6 +62,10 @@ const routes: Routes = [
             {
                 path: "textarea",
                 children: TEXTAREA_ROUTES,
+            },
+            {
+                path: "textboxGroup",
+                children: TEXTBOXGROUP_ROUTES,
             },
         ],
     },

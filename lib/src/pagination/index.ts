@@ -1,1 +1,2 @@
-export { PaginationModule } from "./pagination.module";
+export * from "./pagination.module";
+export * from "./pagination.component";
