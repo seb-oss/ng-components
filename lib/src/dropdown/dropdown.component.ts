@@ -261,7 +261,10 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
                         e &&
                         e.optionItem &&
                         e.optionItem.label &&
-                        e.optionItem.label.toString().toLowerCase().indexOf(this.searchText.toLowerCase()) !== -1
+                        e.optionItem.label
+                            .toString()
+                            .toLowerCase()
+                            .indexOf(this.searchText.toLowerCase()) !== -1
                 );
 
         this.selectedList = this.uniqueList && this.uniqueList.filter((e: UniqueItem) => e.selected).map((e: UniqueItem) => e.optionItem);
