@@ -9,6 +9,7 @@ import { TextLabelModule } from "./components/textLabels/text-labels.module";
 import { PaginationModule } from "./components/pagination/pagination.module";
 import { TextAreaModule } from "./components/textArea/textArea.module";
 import { TextboxGroupModule } from "./components/textboxGroup/textboxGroup.module";
+import { ChipModule } from "./components/chip/chip.module";
 
 @NgModule({
     declarations: [],
@@ -23,6 +24,7 @@ import { TextboxGroupModule } from "./components/textboxGroup/textboxGroup.modul
         TextAreaModule,
         TextboxGroupModule,
         TextLabelModule,
+        ChipModule,
     ],
 })
 export class ExamplesModule {}
