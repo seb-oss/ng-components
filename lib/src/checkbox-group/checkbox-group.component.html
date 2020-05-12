@@ -1,0 +1,51 @@
+<label *ngIf="label" class="checkbox-group-label"
+    ><b>{{ label }}</b></label
+>
+
+<div *ngIf="list" class="checkbox-group" [ngClass]="className" [class.disabled]="disabled">
+    <div *ngIf="inline; else noninline" class="row">
+        <ng-container *ngFor="let item of displayList; index as i">
+            <div class="col">
+                <ng-container *ngTemplateOutlet="checkboxItem; context: { $implicit: item }"></ng-container>
+            </div>
+        </ng-container>
+    </div>
+
+    <ng-template #noninline>
+        <ng-container *ngFor="let item of displayList; index as i">
+            <ng-container *ngTemplateOutlet="checkboxItem; context: { $implicit: item }"></ng-container>
+        </ng-container>
+    </ng-template>
+</div>
+
+<ng-template #checkboxItem let-item>
+    <div
+        [class.condensed]="condensed"
+        [class.normal]="!condensed"
+        [class]="item.className"
+        (click)="!(item.optionItem.disabled || disabled) ? handleItemOnClick(item) : null"
+    >
+        <input
+            #checkboxRefs
+            [attr.name]="name"
+            [autofocus]="item.selected"
+            [id]="item.id"
+            [defaultChecked]="item.selected"
+            [disabled]="item.optionItem.disabled || disabled"
+            type="checkbox"
+            class="custom-control-input"
+        />
+        <label
+            *ngIf="item.optionItem.customTemplate; else normal"
+            [attr.for]="!(item.optionItem.disabled || disabled) ? item.id : null"
+            class="custom-control-label"
+            [innerHtml]="item.optionItem.customTemplate"
+        ></label>
+        <ng-template #normal>
+            <label [attr.for]="!(item.optionItem.disabled || disabled) ? item.id : null" class="custom-control-label"
+                >{{ item.optionItem.label }}
+                <span class="custom-description" *ngIf="item.optionItem.description">{{ item.optionItem.description }}</span>
+            </label>
+        </ng-template>
+    </div>
+</ng-template>

@@ -1,0 +1,40 @@
+@import "~@sebgroup/bootstrap/scss/variables";
+$checkbox-padding: 0.625rem;
+
+.checkbox-group {
+    padding: $checkbox-padding;
+    .custom-control.custom-checkbox {
+        &.normal {
+            padding-top: $checkbox-padding;
+            padding-bottom: $checkbox-padding;
+        }
+
+        &.condensed {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .custom-control-label {
+            &::before,
+            &::after {
+                -webkit-transform: translate(0%, -50%);
+                transform: translate(0%, -50%);
+                position: absolute;
+                top: 50%;
+            }
+            padding-right: 0.5rem;
+
+            > .custom-description {
+                color: $gray-600;
+            }
+        }
+
+        &.disabled {
+            .custom-control-label {
+                > .custom-description {
+                    color: $gray-400;
+                }
+            }
+        }
+    }
+}
