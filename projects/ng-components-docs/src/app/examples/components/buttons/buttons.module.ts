@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ExamplePageComponent } from "../../../components/example-page/example-page.component";
 import { ButtonsComponent } from "./examples/buttons/buttons.component";
-import { SebButtonModule } from "@sebgroup/ng-components";
+import { SebButtonModule as ButtonLibModule } from "../../../../../../../lib/src/button";
 import { ExampleListComponent } from "../../../components/example-page/example-list/example-list.component";
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
 import { Route } from "@angular/router";
@@ -84,6 +84,6 @@ export const ROUTES: Array<Route> = [
 
 @NgModule({
     declarations: [ButtonsComponent],
-    imports: [CommonModule, SebButtonModule],
+    imports: [CommonModule, ButtonLibModule],
 })
 export class ButtonsModule {}

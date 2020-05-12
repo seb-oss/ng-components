@@ -1,9 +1,11 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ModalComponent } from "./examples/modal/modal.component";
+import { ModalComponent } from "./modals.component";
 import { ExamplePageComponent } from "../../../components/example-page/example-page.component";
 import { ExampleListComponent } from "../../../components/example-page/example-list/example-list.component";
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
+import { ModalModule as ModalLibModule } from "../../../../../../../lib/src/modal";
+import { SebButtonModule } from "../../../../../../../lib/src/button";
 
 export const ROUTES = [
     { path: "", pathMatch: "full", redirectTo: "examples" },
@@ -16,22 +18,20 @@ export const ROUTES = [
                 component: ExampleListComponent,
                 children: [
                     {
-                        path: "modal",
+                        path: "Modal",
                         component: ModalComponent,
                         data: {
-                            title: "Modal component",
+                            title: "Dialog Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
-                                    name: "modal.component.html",
-                                    // @ts-ignore
-                                    src: require("!raw-loader!./examples/modal/modal.component.html"),
+                                    name: "modals.component.html",
+                                    src: require("!raw-loader!./modals.component.html"),
                                     lang: "markup",
                                 },
                                 {
-                                    name: "modal.component.ts",
-                                    // @ts-ignore
-                                    src: require("!raw-loader!./examples/modal/modal.component.ts"),
+                                    name: "modals.component.ts",
+                                    src: require("!raw-loader!./modals.component.ts"),
                                     lang: "ts",
                                 },
                             ],
@@ -43,12 +43,7 @@ export const ROUTES = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [
-                        require("!raw-loader!../../../../../../../lib/src/button/parse-source-example/parse-source-example.component.ts"),
-                        require("!raw-loader!../../../../../../../lib/src/modal/modal.ts"),
-                        require("!raw-loader!../../../../../../../lib/src/modal/modal.directives.ts"),
-                        require("!raw-loader!../../../../../../../lib/src/modal/modal.service.ts"),
-                    ],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/modal/modal.component.ts")],
                 },
             },
         ],
@@ -57,6 +52,6 @@ export const ROUTES = [
 
 @NgModule({
     declarations: [ModalComponent],
-    imports: [CommonModule],
+    imports: [CommonModule, ModalLibModule, SebButtonModule],
 })
 export class ModalModule {}

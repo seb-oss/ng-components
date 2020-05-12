@@ -1,0 +1,7 @@
+@import "~@sebgroup/bootstrap/scss/variables";
+
+.modal {
+    &.show {
+        display: block;
+    }
+}

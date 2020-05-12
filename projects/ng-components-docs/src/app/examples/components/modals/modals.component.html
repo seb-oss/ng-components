@@ -1,0 +1,68 @@
+<div class="modal static" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header custom-header">
+                Dialogue title
+            </div>
+            <div class="modal-body custom-body">
+                Dialogue body
+            </div>
+            <div class="modal-footer custom-action">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <button sebng-btn (click)="openDialogue()">Default Dialogue</button>
+    </div>
+    <div class="col">
+        <button sebng-btn (click)="openSizeDialogue('modal-lg')">Large Dialogue</button>
+    </div>
+    <div class="col">
+        <button sebng-btn (click)="openSizeDialogue('modal-sm')">Small Dialogue</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <button sebng-btn (click)="openCenteredModal()">Vertically centered</button>
+    </div>
+    <div class="col">
+        <button sebng-btn (click)="openWithoutBackdrop()">No BackDrop</button>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <button sebng-btn (click)="openFullscreen()">Fullscreen</button>
+    </div>
+
+    <div class="col">
+        <button sebng-btn (click)="openAside('right')">aside right</button>
+    </div>
+
+    <div class="col">
+        <button sebng-btn (click)="openAside('left')">aside left</button>
+    </div>
+</div>
+
+<sebng-modal [size]="size" [position]="position" [center]="center" [fullscreen]="fullscreen" [backdropDismiss]="backdropDismiss">
+    <div class="custom-header" header>
+        Modal Title
+    </div>
+
+    <div class="custom-body" body>
+        Modal Body
+    </div>
+
+    <div class="custom-footer" footer>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeModal()">
+            Close
+        </button>
+    </div>
+</sebng-modal>

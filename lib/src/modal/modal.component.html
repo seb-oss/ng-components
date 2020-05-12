@@ -1,0 +1,15 @@
+<div class="modal fade" [ngClass]="modalPosition" tabindex="-1" role="dialog" [attr.id]="id" #modalRef>
+    <div class="modal-dialog" [ngClass]="size" [class.modal-dialog-centered]="center" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <ng-content select="[header]"></ng-content>
+            </div>
+            <div class="modal-body">
+                <ng-content select="[body]"></ng-content>
+            </div>
+            <div class="modal-footer">
+                <ng-content select="[footer]"></ng-content>
+            </div>
+        </div>
+    </div>
+</div>
