@@ -7,6 +7,9 @@
         margin-bottom: 10px;
 
         > .custom-control-input {
+            width: 2.5rem;
+            z-index: 1;
+
             &:disabled:not(:checked) {
                 & + label.custom-control-label {
                     &:before {
