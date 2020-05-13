@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { ROUTES as RADIOS_ROUTES } from "./examples/components/radio-group/radio-group.module";
+import { ROUTES as CHECKBOXES_ROUTES } from "./examples/components/checkbox-group/checkbox-group.module";
 import { ROUTES as BUTTONS_ROUTES } from "./examples/components/buttons/buttons.module";
 import { ROUTES as MODAL_ROUTES } from "./examples/components/modal/modal.module";
 import { ROUTES as WIZARD_ROUTES } from "./examples/components/wizard/wizard.module";
@@ -43,6 +44,10 @@ const routes: Routes = [
             {
                 path: "radios",
                 children: RADIOS_ROUTES,
+            },
+            {
+                path: "checkboxes",
+                children: CHECKBOXES_ROUTES,
             },
             {
                 path: "buttons",

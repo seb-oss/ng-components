@@ -1,0 +1,36 @@
+<!--
+title: Checkbox Group
+componentid: component-checkbox-group
+variantid: component-checkbox-group-all
+url: https://sebgroup.github.io/ng-components/components/checkbox-group/examples
+-->
+
+<div class="row">
+    <div class="col">
+        <sebng-checkbox-group [name]="'simple'" [label]="'Simple'" [list]="list"></sebng-checkbox-group>
+        <hr />
+        <sebng-checkbox-group [name]="'inline'" [label]="'Inline'" [list]="list2" [inline]="true"></sebng-checkbox-group>
+        <hr />
+        <sebng-checkbox-group [name]="'ngmodel'" [label]="'Ng Model'" [list]="list3" [(ngModel)]="model"></sebng-checkbox-group>
+        <hr />
+    </div>
+
+    <div class="col">
+        <sebng-checkbox-group [name]="'condensed'" [label]="'Condensed'" [list]="list4" [condensed]="true"></sebng-checkbox-group>
+        <hr />
+        <sebng-checkbox-group [name]="'one-disabled'" [label]="'One Disabled'" [list]="list5"></sebng-checkbox-group>
+        <hr />
+        <sebng-checkbox-group
+            [name]="'form-control'"
+            [label]="'Form Control'"
+            [list]="list7"
+            [formControl]="formcontrol"
+        ></sebng-checkbox-group>
+        <hr />
+    </div>
+    <div class="col">
+        <sebng-checkbox-group [name]="'all-disabled'" [label]="'All Disabled'" [list]="list6" [disabled]="true"></sebng-checkbox-group>
+        <hr />
+        <sebng-checkbox-group [name]="'custom-template'" [label]="'Custom template'" [list]="list8"></sebng-checkbox-group>
+    </div>
+</div>
