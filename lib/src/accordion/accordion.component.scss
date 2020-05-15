@@ -122,19 +122,19 @@ $accordion-min-height: 48px;
         }
 
         &.deg-90 {
-            .header-wrapper > svg:last-of-type:not(:first-of-type) {
+            .header-wrapper svg:last-of-type:not(:first-of-type) {
                 transform: rotate(-90deg);
             }
         }
 
         &.deg-90-counter {
-            .header-wrapper > svg:last-of-type:not(:first-of-type) {
+            .header-wrapper svg:last-of-type:not(:first-of-type) {
                 transform: rotate(90deg);
             }
         }
 
         &.deg-180 {
-            .header-wrapper > svg:last-of-type:not(:first-of-type) {
+            .header-wrapper svg:last-of-type:not(:first-of-type) {
                 transform: rotate(-18deg0);
             }
         }
@@ -151,36 +151,36 @@ $accordion-min-height: 48px;
             }
 
             &.deg-90 {
-                .header-wrapper > svg:first-of-type {
+                .header-wrapper svg:first-of-type {
                     transform: rotate(90deg);
                 }
             }
 
             &.deg-90-counter {
-                .header-wrapper > svg:first-of-type {
+                .header-wrapper svg:first-of-type {
                     transform: rotate(-90deg);
                 }
             }
 
             &.deg-180 {
-                .header-wrapper > svg:first-of-type {
+                .header-wrapper svg:first-of-type {
                     transform: rotate(180deg);
                 }
             }
 
             &.deg-180-counter {
-                .header-wrapper > svg:first-of-type {
+                .header-wrapper svg:first-of-type {
                     transform: rotate(-180deg);
                 }
             }
 
-            .header-wrapper > svg:last-of-type:not(:first-of-type) {
+            .header-wrapper svg:last-of-type:not(:first-of-type) {
                 transform: rotate(0);
                 opacity: 1;
             }
 
             &.transform {
-                .header-wrapper > svg:first-of-type:not(:last-of-type) {
+                .header-wrapper svg:first-of-type:not(:last-of-type) {
                     opacity: 0;
                 }
             }
@@ -228,7 +228,7 @@ $accordion-min-height: 48px;
                 > .header-wrapper {
                     padding: 0 $padding-left-size 0 10px;
 
-                    > svg {
+                    svg {
                         right: 15px;
                     }
                 }
