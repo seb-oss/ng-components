@@ -49,16 +49,16 @@
                     </ng-template>
                     <ng-template #arrayContent>
                         <ng-container *ngFor="let text of item.content">
-                            <div className="text-item">
+                            <div class="text-item">
                                 <div *ngIf="text.title" class="accordion-title">{{ text.title }}</div>
                                 <div *ngIf="text.desc" class="accordion-desc">{{ text.desc }}</div>
                             </div>
                         </ng-container>
                     </ng-template>
                     <ng-template #accordionContent>
-                        <div className="text-item">
-                            <div *ngIf="item.content.title" className="accordion-title">{{ item.content.title }}</div>
-                            <div *ngIf="item.content.desc" className="accordion-desc">{{ item.content.desc }}</div>
+                        <div class="text-item">
+                            <div *ngIf="item.content.title" class="accordion-title">{{ item.content.title }}</div>
+                            <div *ngIf="item.content.desc" class="accordion-desc">{{ item.content.desc }}</div>
                         </div>
                     </ng-template>
                 </div>
