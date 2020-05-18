@@ -82,7 +82,7 @@ describe("AccordionComponent", () => {
     });
 
     it("Should render subheader is included in props", () => {
-        const newAccordionList = JSON.parse(JSON.stringify(accordionList));
+        const newAccordionList: Array<AccrodionListItem> = JSON.parse(JSON.stringify(accordionList));
 
         newAccordionList[0].subHeaderText = "Test subheader";
 
