@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { AccrodionListItem } from "lib/src/accordion";
+import { loremIpsum } from "lorem-ipsum";
 
 @Component({
     selector: "app-accordion",
@@ -34,43 +35,21 @@ export class AccordionComponent {
         </svg>
     `;
 
-    accordionList: Array<AccrodionListItem> = [
-        {
-            header: "Accordion List Item 1",
-            subHeaderText: "Accordion Sub Header",
-            content: {
-                title: "Tempor incididun",
-                desc:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
-                    "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Morbi tristique senectus et netus. Lectus mauris ultrices eros in cursus turpis massa tincidunt.",
-            },
-        },
-        {
-            header: "Accordion List Item 2",
-            content: [
-                {
-                    title: "Excepteur sint",
-                    desc:
-                        "Vitae suscipit tellus mauris a diam maecenas sed. Feugiat in fermentum posuere urna nec tincidunt praesent semper." +
-                        "Tellus id interdum velit laoreet id donec. Morbi enim nunc faucibus a pellentesque sit. Vitae congue mauris rhoncus aenean.",
-                },
-                {
-                    title: "Duis aute",
-                    desc:
-                        "Eleifend donec pretium vulputate sapien nec sagittis. Malesuada fames ac turpis egestas." +
-                        "Molestie ac feugiat sed lectus vestibulum mattis. Suscipit adipiscing bibendum est ultricies integer quis auctor elit sed.",
-                },
-            ],
-        },
-        {
-            header: "Accordion List Item 3",
-            content: `
-            <div>
-                <p className="m-0">Ut nemo corporis inventore neque qui. Est quos facere et id praesentium ut in iusto qui. Labore vel est ab.</p>
-                <a href="https://seb.se" target="_blank">
-                    Link to seb.se
-                </a>
-            </div>`,
-        },
-    ];
+    accordionList: Array<AccrodionListItem> = [...Array(3).keys()].map((i: number) => {
+        return {
+            header: loremIpsum({ units: "words", count: 3 }),
+            subHeaderText: loremIpsum({ units: "words", count: 3 }),
+            content:
+                i === 2
+                    ? `<div>
+        <p className="m-0">Ut nemo corporis inventore neque qui. Est quos facere et id praesentium ut in iusto qui. Labore vel est ab.</p>
+        <a href="https://seb.se" target="_blank">
+            Link to seb.se
+        </a`
+                    : {
+                          title: loremIpsum({ units: "words", count: 3 }),
+                          desc: loremIpsum({ units: "paragraph" }),
+                      },
+        };
+    });
 }
