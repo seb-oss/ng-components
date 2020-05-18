@@ -93,17 +93,68 @@ describe("AccordionComponent", () => {
     });
 
     // Todo: fix and update in next commit
-    // it("Should toggle accordion when clicked, and toggled off when another item is clicked", () => {
-    //     fixture.debugElement.queryAll(By.css(".accordion-item .header-wrapper"))[0].nativeElement.dispatchEvent(new MouseEvent("click"));
+    it("Should toggle accordion when clicked, and toggled off when another item is clicked", async () => {
+        fixture.debugElement.queryAll(By.css(".accordion-item .header-wrapper"))[0].nativeElement.dispatchEvent(new MouseEvent("click"));
 
-    //     expect(fixture.debugElement.query(By.css(".accordion-item .active"))).toBeTruthy();
+        fixture.detectChanges();
 
-    //     fixture.debugElement.queryAll(By.css(".accordion-item .header-wrapper"))[1].nativeElement.dispatchEvent(new MouseEvent("click"));
+        await fixture.whenStable();
+        expect(fixture.debugElement.query(By.css(".accordion-item")).classes.active).toBeTrue();
 
-    //     expect(fixture.debugElement.queryAll(By.css(".accordion-item"))[0].query(By.css(".active"))).toBeFalsy();
+        fixture.debugElement.queryAll(By.css(".accordion-item .header-wrapper"))[1].nativeElement.dispatchEvent(new MouseEvent("click"));
+        fixture.detectChanges();
+        await fixture.whenStable();
 
-    //     expect(fixture.debugElement.queryAll(By.css(".accordion-item"))[0].query(By.css(".active"))).toBeFalsy();
+        expect(fixture.debugElement.queryAll(By.css(".accordion-item"))[0].classes.active).toBeFalsy();
 
-    //     expect(fixture.debugElement.queryAll(By.css(".accordion-item"))[1].query(By.css(".active"))).toBeTruthy();
-    // });
+        expect(fixture.debugElement.queryAll(By.css(".accordion-item"))[1].classes.active).toBeTrue();
+    });
+
+    it("Should untoggle accordion when clicked again", async () => {
+        fixture.debugElement.queryAll(By.css(".accordion-item .header-wrapper"))[0].nativeElement.dispatchEvent(new MouseEvent("click"));
+        await fixture.whenStable();
+
+        fixture.debugElement.queryAll(By.css(".accordion-item .header-wrapper"))[0].nativeElement.dispatchEvent(new MouseEvent("click"));
+
+        await fixture.whenStable();
+        expect(fixture.debugElement.queryAll(By.css(".active")).length).toEqual(0);
+    });
+
+    it("Should untoggle accordion item when clicked on another accordion item", async () => {
+        fixture.debugElement.queryAll(By.css(".accordion-item .header-wrapper"))[0].nativeElement.dispatchEvent(new MouseEvent("click"));
+        await fixture.whenStable();
+
+        expect(fixture.debugElement.queryAll(By.css(".accordion-item"))[0].classes.active).toBeFalsy();
+
+        component.activeIndex = 1;
+
+        fixture.detectChanges();
+        fixture.debugElement.queryAll(By.css(".accordion-item .header-wrapper"))[1].nativeElement.dispatchEvent(new MouseEvent("click"));
+        await fixture.whenStable();
+
+        expect(fixture.debugElement.queryAll(By.css(".accordion-item"))[1].classes.active).toBeTrue();
+
+        expect(fixture.debugElement.queryAll(By.css(".active")).length).toEqual(1);
+    });
+
+    it("Should render with a custom icon", async () => {
+        component.customIcon = "<svg id='testIcon' />";
+        fixture.detectChanges();
+
+        await fixture.whenStable();
+
+        expect(fixture.debugElement.query(By.css(".header-wrapper #testIcon"))).toBeTruthy();
+    });
+
+    it("Should render with a custom icon when expanded", async () => {
+        component.customIcon = null;
+        component.customIconExpanded = "<svg id='testIcon' />";
+
+        fixture.detectChanges();
+
+        await fixture.whenStable();
+
+        expect(fixture.debugElement.query(By.css(".header-wrapper #testIcon"))).toBeTruthy();
+        expect(fixture.debugElement.query(By.css(".accordion-item")).classes.transform).toBeTrue();
+    });
 });

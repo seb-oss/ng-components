@@ -21,7 +21,7 @@
                     </svg>
                 </ng-template>
 
-                <ng-container *ngIf="customIconExpanded" [innerHTML]="customIconExpanded | safeHtml"></ng-container>
+                <div *ngIf="customIconExpanded" [innerHTML]="customIconExpanded | safeHtml"></div>
 
                 <h4 class="accordion-header">{{ item.header }}</h4>
                 <h6 class="accordion-sub-header" *ngIf="item.subHeaderText">{{ item.subHeaderText }}</h6>

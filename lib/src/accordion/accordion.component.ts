@@ -11,8 +11,10 @@ import {
     AfterViewInit,
     ChangeDetectorRef,
     AfterViewChecked,
+    OnDestroy,
 } from "@angular/core";
 import { randomId } from "@sebgroup/frontend-tools/dist/randomId";
+import { Subscription } from "rxjs";
 
 export type AccordionIconRotation = "deg-180" | "deg-180-counter" | "deg-90" | "deg-90-counter";
 export type AccordionContentType = AccordionContent | Array<AccordionContent> | string;
@@ -42,7 +44,7 @@ export interface AccordionProps {
     styleUrls: ["./accordion.component.scss"],
     encapsulation: ViewEncapsulation.None,
 })
-export class AccordionComponent implements OnInit, OnChanges, AfterViewInit, AfterViewChecked {
+export class AccordionComponent implements OnInit, OnChanges, AfterViewInit, AfterViewChecked, OnDestroy {
     @Input() className?: string;
     @Input() customIcon?: string;
     @Input() customIconExpanded?: string;
@@ -59,6 +61,8 @@ export class AccordionComponent implements OnInit, OnChanges, AfterViewInit, Aft
     public accordionClassName: string = "custom-accordion";
     public itemClassName: string = "custom-accordion";
     public active: number = null;
+
+    private aacordionRefSubscription: Subscription;
 
     public heightList: Array<number>;
 
@@ -144,7 +148,7 @@ export class AccordionComponent implements OnInit, OnChanges, AfterViewInit, Aft
 
     ngAfterViewInit() {
         this.toggle(this.activeIndex);
-        this.accordionItemRefs.changes.subscribe(r => {
+        this.aacordionRefSubscription = this.accordionItemRefs.changes.subscribe(r => {
             setTimeout(() => {
                 this.toggle(this.activeIndex);
             }, 0);
@@ -153,6 +157,10 @@ export class AccordionComponent implements OnInit, OnChanges, AfterViewInit, Aft
 
     ngAfterViewChecked() {
         this.changeDetector.detectChanges();
+    }
+
+    ngOnDestroy(): void {
+        this.aacordionRefSubscription.unsubscribe();
     }
 
     ngOnChanges(changes: SimpleChanges) {
