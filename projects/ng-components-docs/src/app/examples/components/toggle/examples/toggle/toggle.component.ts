@@ -6,6 +6,4 @@ import { Component } from "@angular/core";
 })
 export class ToggleComponent {
     toggleValue: boolean = false;
-
-    onChange(value: boolean) {}
 }
