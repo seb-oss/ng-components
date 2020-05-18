@@ -148,10 +148,8 @@ export class AccordionComponent implements OnInit, OnChanges, AfterViewInit, Aft
 
     ngAfterViewInit() {
         this.toggle(this.activeIndex);
-        this.aacordionRefSubscription = this.accordionItemRefs.changes.subscribe(r => {
-            setTimeout(() => {
-                this.toggle(this.activeIndex);
-            }, 0);
+        this.aacordionRefSubscription = this.accordionItemRefs.changes.subscribe(() => {
+            this.toggle(this.activeIndex);
         });
     }
 
