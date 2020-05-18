@@ -41,11 +41,7 @@ export class AccordionComponent {
             subHeaderText: loremIpsum({ units: "words", count: 3 }),
             content:
                 i === 2
-                    ? `<div>
-        <p className="m-0">Ut nemo corporis inventore neque qui. Est quos facere et id praesentium ut in iusto qui. Labore vel est ab.</p>
-        <a href="https://seb.se" target="_blank">
-            Link to seb.se
-        </a`
+                    ? `<div>${loremIpsum({ units: "paragraph", format: "html" })}<a href="https://seb.se" target="_blank">Link to seb.se</a></div>`
                     : {
                           title: loremIpsum({ units: "words", count: 3 }),
                           desc: loremIpsum({ units: "paragraph" }),
