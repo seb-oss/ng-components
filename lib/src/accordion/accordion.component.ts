@@ -113,7 +113,7 @@ export class AccordionComponent implements OnInit, OnChanges, AfterViewInit, Aft
     }
 
     contentIsOfTypeArray(content: AccordionContentType): boolean {
-        return content instanceof Array;
+        return (Array.isArray && Array.isArray(content)) || content instanceof Array;
     }
 
     contentTypeElementRef(content: AccordionContentType): boolean {
