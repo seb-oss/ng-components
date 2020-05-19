@@ -1,5 +1,5 @@
 <div class="custom-chip" [ngClass]="className" [attr.id]="id">
-    <div class="content"><ng-content></ng-content></div>
+    <ng-content></ng-content>
     <div class="chip-close" (click)="handleClick($event)">
         &times;
     </div>
