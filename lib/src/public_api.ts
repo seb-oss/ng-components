@@ -9,3 +9,4 @@ export * from "./dropdown/index";
 export * from "./wizard/index";
 export * from "./pagination/index";
 export * from "./textboxGroup/index";
+export * from "./toggle/index";

@@ -9,6 +9,7 @@ import { TextLabelModule } from "./components/textLabels/text-labels.module";
 import { PaginationModule } from "./components/pagination/pagination.module";
 import { TextAreaModule } from "./components/textArea/textArea.module";
 import { TextboxGroupModule } from "./components/textboxGroup/textboxGroup.module";
+import { ToggleModule } from "./components/toggle/toggle.module";
 import { ChipModule } from "./components/chip/chip.module";
 import { TabsModule } from "./components/tabs/tabs.module";
 
@@ -25,6 +26,7 @@ import { TabsModule } from "./components/tabs/tabs.module";
         TextAreaModule,
         TextboxGroupModule,
         TextLabelModule,
+        ToggleModule,
         ChipModule,
         TabsModule,
     ],
