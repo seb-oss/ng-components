@@ -10,6 +10,7 @@ import { ROUTES as PAGINATION_ROUTES } from "./examples/components/pagination/pa
 import { ROUTES as TEXTAREA_ROUTES } from "./examples/components/textArea/textArea.module";
 import { ROUTES as TEXTBOXGROUP_ROUTES } from "./examples/components/textboxGroup/textboxGroup.module";
 import { ROUTES as TOGGLE_ROUTES } from "./examples/components/toggle/toggle.module";
+import { ROUTES as TABS_ROUTES } from "./examples/components/tabs/tabs.module";
 
 import { InstallationComponent } from "./components/installation/installation.component";
 
@@ -81,6 +82,10 @@ const routes: Routes = [
             {
                 path: "toggle",
                 children: TOGGLE_ROUTES,
+            },
+            {
+                path: "tabs",
+                children: TABS_ROUTES,
             },
         ],
     },

@@ -10,6 +10,7 @@ import { PaginationModule } from "./components/pagination/pagination.module";
 import { TextAreaModule } from "./components/textArea/textArea.module";
 import { TextboxGroupModule } from "./components/textboxGroup/textboxGroup.module";
 import { ToggleModule } from "./components/toggle/toggle.module";
+import { TabsModule } from "./components/tabs/tabs.module";
 
 @NgModule({
     declarations: [],
@@ -25,6 +26,7 @@ import { ToggleModule } from "./components/toggle/toggle.module";
         TextboxGroupModule,
         TextLabelModule,
         ToggleModule,
+        TabsModule,
     ],
 })
 export class ExamplesModule {}
