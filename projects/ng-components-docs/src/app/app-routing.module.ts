@@ -9,6 +9,7 @@ import { ROUTES as DROPDOWN_ROUTES } from "./examples/components/dropdown/dropdo
 import { ROUTES as PAGINATION_ROUTES } from "./examples/components/pagination/pagination.module";
 import { ROUTES as TEXTAREA_ROUTES } from "./examples/components/textArea/textArea.module";
 import { ROUTES as TEXTBOXGROUP_ROUTES } from "./examples/components/textboxGroup/textboxGroup.module";
+import { ROUTES as CHIP_ROUTES } from "./examples/components/chip/chip.module";
 import { ROUTES as TABS_ROUTES } from "./examples/components/tabs/tabs.module";
 
 import { InstallationComponent } from "./components/installation/installation.component";
@@ -77,6 +78,10 @@ const routes: Routes = [
             {
                 path: "textboxGroup",
                 children: TEXTBOXGROUP_ROUTES,
+            },
+            {
+                path: "chip",
+                children: CHIP_ROUTES,
             },
             {
                 path: "tabs",
