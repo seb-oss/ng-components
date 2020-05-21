@@ -1,8 +1,8 @@
 import { OnChanges, Component, ViewEncapsulation, Input, Output, EventEmitter, OnInit, SimpleChanges, OnDestroy } from "@angular/core";
 
-type NotificationStyle = "slide-in" | "bar";
-type NotificationPosition = "bottom-left" | "bottom-right" | "top-left" | "top-right" | "top" | "bottom";
-type NotificationTheme = "purple" | "primary" | "danger" | "success" | "warning" | "inverted";
+export type NotificationStyle = "slide-in" | "bar";
+export type NotificationPosition = "bottom-left" | "bottom-right" | "top-left" | "top-right" | "top" | "bottom";
+export type NotificationTheme = "purple" | "primary" | "danger" | "success" | "warning" | "inverted";
 
 export interface NotificationAction {
     text: string;

@@ -1,6 +1,6 @@
 <div class="{{ notificationClassNames }}">
     <div class="content-wrapper" [class.clickable]="onClick" (click)="handleClick($event)">
-        <div class="notification-title" *ngIf="showNotificationTitle">{{ this.props.title }}</div>
+        <div class="notification-title" *ngIf="showNotificationTitle">{{ title }}</div>
         <div class="notification-message" *ngIf="message">{{ message }}</div>
         <ng-content></ng-content>
 
