@@ -182,7 +182,68 @@ describe("NotificationComponent", () => {
     });
 
     it("Should render child element when passed", () => {
-        console.log("The element is neither title nor ", fixture.debugElement.query(By.css(".content-wrapper")).nativeElement);
         expect(fixture.debugElement.queryAll(By.css(".testing")).length).not.toBe(0);
+    });
+
+    describe("Should render actions when passed", () => {
+        it("Should not render actions if more than two actions are passed", () => {
+            const actions: Array<NotificationAction> = [
+                { text: "action1", action: () => {} },
+                { text: "action2", action: () => {} },
+                { text: "action3", action: () => {} },
+                { text: "action4", action: () => {} },
+            ];
+            component.actions = actions;
+            fixture.detectChanges();
+
+            expect(fixture.debugElement.queryAll(By.css(".action-wrapper")).length).toBe(0);
+        });
+
+        it("Should not render actions if the style is set to bar", () => {
+            component.style = "bar";
+            component.actions = [{ text: "actions1", action: () => {} }];
+            fixture.detectChanges();
+            expect(fixture.debugElement.queryAll(By.css(".action-wrapper")).length).toBe(0);
+        });
+
+        it("Should render one action taking the whole width", () => {
+            component.actions = [
+                { text: "action1", action: () => {} },
+                { text: "action2", action: () => {} },
+            ];
+            fixture.detectChanges();
+
+            expect(fixture.debugElement.queryAll(By.css(".action-wrapper")).length).not.toBe(0);
+            expect(fixture.debugElement.query(By.css(".actions-wrapper")).classes.partitioned).toBeTrue();
+        });
+
+        it("Should render two actions with equal width", () => {
+            const actions: Array<NotificationAction> = [
+                { text: "action1", action: () => {} },
+                { text: "action2", action: () => {} },
+            ];
+            component.actions = actions;
+            fixture.detectChanges();
+
+            expect(fixture.debugElement.queryAll(By.css(".action-wrapper")).length).not.toBe(0);
+            expect(fixture.debugElement.query(By.css(".actions-wrapper")).classes.partitioned).toBeTrue();
+        });
+
+        it("Should render actions with correct label and action callback should be called when clicked", () => {
+            const actions: Array<NotificationAction> = [
+                { text: "action1", action: () => {} },
+                { text: "action2", action: () => {} },
+            ];
+            component.actions = actions;
+
+            fixture.detectChanges();
+
+            expect(fixture.debugElement.queryAll(By.css(".action-wrapper"))[0].query(By.css("button")).nativeElement.textContent).toContain(
+                "action1"
+            );
+            expect(fixture.debugElement.queryAll(By.css(".action-wrapper"))[1].query(By.css("button")).nativeElement.textContent).toContain(
+                "action2"
+            );
+        });
     });
 });

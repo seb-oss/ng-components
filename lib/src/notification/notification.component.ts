@@ -58,6 +58,8 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
         this.showNotificationTitle = this.title && this.style === ("style-slide-in" as NotificationStyle);
         this.showNotificationBody =
             styleClass === ("style-slide-in" as NotificationStyle) && this.actions && this.actions.length && this.actions.length < 3;
+
+        console.log("We lost", this.actions.length);
     }
 
     /**
@@ -159,7 +161,7 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
             this.setClassNames();
         }
 
-        if (changes.style || changes.position || changes.theme || changes.className) {
+        if (changes.style || changes.position || changes.theme || changes.className || changes.actions) {
             this.setClassNames();
         }
     }
