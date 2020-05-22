@@ -15,38 +15,40 @@ export class ModalComponent {
     backdropDismiss: boolean = true;
     @ViewChild(MC) modalChild: MC;
 
-    openDialogue(): void {
+    openModal(): void {
         this.modalChild.open();
     }
 
-    openSizeDialogue(size: ModalSizeType): void {
+    openSizeModal(size: ModalSizeType): void {
         this.size = size;
-        this.openDialogue();
+        this.openModal();
     }
 
     openWithoutBackdrop(): void {
         this.backdropDismiss = false;
-        this.openDialogue();
+        this.openModal();
     }
 
     openCenteredModal(): void {
         this.center = true;
-        this.openDialogue();
+        this.openModal();
     }
 
     openFullscreen(): void {
         this.fullscreen = true;
-        this.openDialogue();
+        this.openModal();
     }
 
     openAside(position: ModalPositionType) {
         this.position = position;
-        this.openDialogue();
+        this.openModal();
     }
 
     closeModal(): void {
         this.modalChild.close();
-        this.resetModal();
+        setTimeout(() => {
+            this.resetModal();
+        }, 500);
     }
 
     resetModal(): void {

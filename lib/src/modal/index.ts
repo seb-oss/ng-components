@@ -1,1 +1,1 @@
-export { ModalModule } from "./modal.module";
+export * from "./modal.module";

@@ -9,15 +9,15 @@ export class ModalService {
         private injector: Injector
     ) {}
 
-    appendComponentToBody(component: any) {
+    appendComponentToBody(component: any): ComponentRef<any> {
         //create a component reference
-        const componentRef = this.componentFactoryResolver.resolveComponentFactory(component).create(this.injector);
+        const componentRef: ComponentRef<any> = this.componentFactoryResolver.resolveComponentFactory(component).create(this.injector);
 
         // attach component to the appRef.
         this.applicationRef.attachView(componentRef.hostView);
 
         // get DOM element from component
-        const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+        const domElem: HTMLElement = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
 
         document.body.appendChild(domElem);
         toggleBodyOverflow(true);
@@ -25,17 +25,17 @@ export class ModalService {
         return componentRef;
     }
 
-    removeComponentFromBody(componentRef: ComponentRef<any>) {
+    removeComponentFromBody(componentRef: ComponentRef<any>): void {
         this.applicationRef.detachView(componentRef.hostView);
         toggleBodyOverflow(false);
         componentRef.destroy();
     }
 
-    open(ref: ElementRef) {
+    open(ref: ElementRef): void {
         ref.nativeElement.classList.add("show");
     }
 
-    close(ref: ElementRef) {
+    close(ref: ElementRef): void {
         ref.nativeElement.classList.remove("show");
     }
 }
