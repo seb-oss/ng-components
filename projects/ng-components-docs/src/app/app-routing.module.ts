@@ -12,6 +12,7 @@ import { ROUTES as TEXTBOXGROUP_ROUTES } from "./examples/components/textboxGrou
 import { ROUTES as TOGGLE_ROUTES } from "./examples/components/toggle/toggle.module";
 import { ROUTES as CHIP_ROUTES } from "./examples/components/chip/chip.module";
 import { ROUTES as TABS_ROUTES } from "./examples/components/tabs/tabs.module";
+import { ROUTES as BREADCRUMB_ROUTES } from "./examples/components/breadcrumb/breadcrumb.module";
 
 import { InstallationComponent } from "./components/installation/installation.component";
 
@@ -91,6 +92,10 @@ const routes: Routes = [
             {
                 path: "tabs",
                 children: TABS_ROUTES,
+            },
+            {
+                path: "breadcrumb",
+                children: BREADCRUMB_ROUTES,
             },
         ],
     },
