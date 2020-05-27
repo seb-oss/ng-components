@@ -16,9 +16,7 @@ export class NotificationComponent {
         { text: "Ignore", action: () => this.onToggle2(false) },
     ];
 
-    onClick(e: MouseEvent) {
-        console.log("Notification clicked");
-    }
+    onClick(e: MouseEvent) {}
 
     onDismiss(): void {
         this.notification1Toggle = false;
@@ -38,7 +36,5 @@ export class NotificationComponent {
         this.notification3Toggle = value;
     }
 
-    onNotificationClick(): void {
-        console.log("Notification clicked");
-    }
+    onNotificationClick(): void {}
 }

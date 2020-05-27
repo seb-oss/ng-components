@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import {
     NotificationComponent,
@@ -97,19 +97,21 @@ describe("NotificationComponent", () => {
             expect(fixture.debugElement.query(By.css(".theme-purple"))).toBeTruthy();
         });
 
-        it("Should dismiss when the default timer is done", async () => {
-            component.toggle = true;
-            component.dismissTimeout = 500;
-            component.onDismiss = () => (component.toggle = false);
+        it(
+            "Should dismiss when the default timer is done",
+            <any>fakeAsync((): void => {
+                component.toggle = true;
+                component.dismissTimeout = 500;
+                component.onDismiss = () => (component.toggle = false);
 
-            fixture.detectChanges();
+                fixture.detectChanges();
 
-            expect(fixture.debugElement.query(By.css(".open"))).toBeTruthy();
-            await fixture.whenStable();
-            await setTimeout(() => {
                 expect(fixture.debugElement.query(By.css(".open"))).toBeTruthy();
-            }, 600);
-        });
+
+                tick(600);
+                expect(fixture.debugElement.query(By.css(".open"))).toBeTruthy();
+            })
+        );
 
         it("Should render with defaults if style or position props passed is not supported", () => {
             component.style = "bingo" as NotificationStyle;
