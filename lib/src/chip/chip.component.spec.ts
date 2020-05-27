@@ -33,7 +33,7 @@ describe("ChipComponent", () => {
 
     it("should create", () => {
         expect(component).toBeTruthy();
-        expect(fixture.debugElement.query(By.css(".content")).nativeElement.textContent).toContain("Test");
+        expect(fixture.debugElement.query(By.css(".custom-chip")).nativeElement.textContent).toContain("Test");
     });
 
     it("Should render id and className", () => {
