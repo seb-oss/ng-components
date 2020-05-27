@@ -15,7 +15,7 @@ export class BreadcrumbComponent {
     @Input() className?: string;
     @Input() id?: string;
     @Input() list: Array<string>;
-    @Output() onClick = new EventEmitter<ClickProps>();
+    @Output() onClick: EventEmitter<ClickProps> = new EventEmitter<ClickProps>();
 
     handleClick(index: number, e: MouseEvent): void {
         if (index !== this.list.length - 1 && this.onClick) {
