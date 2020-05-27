@@ -50,8 +50,15 @@
             },
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular-builders/custom-webpack:browser",
                     "options": {
+                        "customWebpackConfig": {
+                            "path": "./webpack.config.js",
+                            "mergeStrategies": {
+                                "module.rules": "prepend"
+                            },
+                            "replaceDuplicatePlugins": true
+                        },
                         "aot": true,
                         "outputPath": "dist/ng-components-docs",
                         "index": "projects/ng-components-docs/src/index.html",

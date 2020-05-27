@@ -1,0 +1,24 @@
+<div class="video-holder-component" [ngClass]="className" [attr.id]="id">
+    <ng-container [ngSwitch]="sourceType">
+        <video
+            *ngSwitchCase="'local'"
+            [width]="width"
+            [height]="height"
+            [attr.controls]="showControls"
+            [attr.autoPlay]="autoplay"
+            [attr.loop]="loop"
+            [muted]="autoplay ? true : false"
+        >
+            <source [src]="src" />
+            Your browser does not support the video tag.
+        </video>
+        <iframe
+            [src]="videoSrc"
+            [width]="width"
+            [height]="height"
+            [frameBorder]="0"
+            *ngSwitchCase="'stream'"
+            [allowFullScreen]="allowFullScreen"
+        ></iframe>
+    </ng-container>
+</div>
