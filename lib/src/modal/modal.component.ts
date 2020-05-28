@@ -1,7 +1,7 @@
 import { Component, Input, ViewEncapsulation, ComponentRef, HostListener, ElementRef, ViewChild } from "@angular/core";
 import { SebModalBackdropComponent } from "./modal.backdrop";
 import { ModalService } from "./modal.service";
-import { ModalSizeType, ModalPositionType } from "./modal.config";
+import { ModalSizeType, ModalPositionType } from "./modal.type";
 import { trigger, state, style, transition, animate } from "@angular/animations";
 
 @Component({
@@ -36,12 +36,16 @@ export class ModalComponent {
     @Input() backdropDismiss?: boolean = true;
     @Input() className?: string;
     @ViewChild("modalRef") modalRef: ElementRef;
-    toggle: boolean;
+    toggle: boolean; // toggle is required to enable the open or close animation
 
     backDropRef: ComponentRef<SebModalBackdropComponent>;
 
     constructor(private modalService: ModalService) {}
 
+    /**
+     * construct the class names that needs to be appended to the modal depending on the inputs requested
+     * @returns { [key: string]: boolean } key value pair for the positions of the modal
+     */
     get modalPosition(): { [key: string]: boolean } {
         return {
             "modal-aside": !!this.position && !this.fullscreen,
@@ -52,7 +56,7 @@ export class ModalComponent {
     }
 
     /**
-     * emit closeModal event when backdrop is clicked
+     * emit close event when backdrop is clicked
      */
     @HostListener("click", ["$event"])
     onBackdropClick(event: MouseEvent): void {
@@ -66,17 +70,26 @@ export class ModalComponent {
         }
     }
 
+    /**
+     * emit close when escape key is clicked
+     */
     @HostListener("keyup.esc")
     onEscKey(): void {
         this.close();
     }
 
+    /**
+     * append backrop to the body, open the modal and trigger the animation
+     */
     open(): void {
         this.backDropRef = this.modalService.appendComponentToBody(SebModalBackdropComponent);
         this.modalService.open(this.modalRef);
         this.toggle = true;
     }
 
+    /**
+     * close the modal, trigger the anumation and remove the backdrop from the body using its reference
+     */
     close(): void {
         this.modalService.close(this.modalRef);
         this.toggle = false;

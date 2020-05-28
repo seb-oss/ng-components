@@ -1,7 +1,5 @@
 import { ModalComponent } from "./modal.component";
-import { TestBed, async, ComponentFixture, fakeAsync, tick } from "@angular/core/testing";
-import { DebugElement, SimpleChange } from "@angular/core";
-import { By } from "@angular/platform-browser";
+import { TestBed, async, ComponentFixture } from "@angular/core/testing";
 import { CommonModule } from "@angular/common";
 
 describe("Component: ModalComponent", () => {
