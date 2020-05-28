@@ -65,7 +65,14 @@
                         "main": "projects/ng-components-docs/src/main.ts",
                         "polyfills": "projects/ng-components-docs/src/polyfills.ts",
                         "tsConfig": "projects/ng-components-docs/tsconfig.app.json",
-                        "assets": ["projects/ng-components-docs/src/favicon.ico", "projects/ng-components-docs/src/assets"],
+                        "assets": [
+                            "projects/ng-components-docs/src/favicon.ico",
+                            {
+                                "glob": "**/*",
+                                "input": "projects/ng-components-docs/src/assets/",
+                                "output": "./assets"
+                            }
+                        ],
                         "styles": ["projects/ng-components-docs/src/styles.scss"],
                         "scripts": ["node_modules/prismjs/prism.js"],
                         "es5BrowserSupport": true
@@ -102,9 +109,16 @@
                     }
                 },
                 "serve": {
-                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "builder": "@angular-builders/custom-webpack:dev-server",
                     "options": {
-                        "browserTarget": "ng-components-docs:build"
+                        "browserTarget": "ng-components-docs:build",
+                        "customWebpackConfig": {
+                            "path": "./webpack.config.js",
+                            "mergeStrategies": {
+                                "module.rules": "prepend"
+                            },
+                            "replaceDuplicatePlugins": true
+                        }
                     },
                     "configurations": {
                         "production": {
