@@ -159,7 +159,7 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
             this.setClassNames();
         }
 
-        if (changes.style || changes.position || changes.theme || changes.className || changes.actions) {
+        if (["style", "position", "theme", "className", "actions"].some((prop) => changes.hasOwnProperty(prop))) {
             this.setClassNames();
         }
     }
