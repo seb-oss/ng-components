@@ -44,7 +44,7 @@ export class VideoComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges) {
-        if (changes.src) {
+        if (changes.src || changes.showControls || changes.loop || changes.autoplay || changes.showInfo) {
             this.generateVideoSrc();
         }
     }

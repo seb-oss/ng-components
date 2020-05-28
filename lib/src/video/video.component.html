@@ -7,7 +7,7 @@
             [attr.controls]="showControls"
             [attr.autoPlay]="autoplay"
             [attr.loop]="loop"
-            [muted]="autoplay ? true : false"
+            [attr.muted]="autoplay ? true : false"
         >
             <source [src]="src" />
             Your browser does not support the video tag.
@@ -18,7 +18,7 @@
             [height]="height"
             [frameBorder]="0"
             *ngSwitchCase="'stream'"
-            [allowFullScreen]="allowFullScreen"
+            [attr.allowFullScreen]="allowFullScreen"
         ></iframe>
     </ng-container>
 </div>
