@@ -12,6 +12,7 @@ import { TextboxGroupModule } from "./components/textboxGroup/textboxGroup.modul
 import { ToggleModule } from "./components/toggle/toggle.module";
 import { ChipModule } from "./components/chip/chip.module";
 import { TabsModule } from "./components/tabs/tabs.module";
+import { BreadcrumbModule } from "./components/breadcrumb/breadcrumb.module";
 
 @NgModule({
     declarations: [],
@@ -29,6 +30,7 @@ import { TabsModule } from "./components/tabs/tabs.module";
         ToggleModule,
         ChipModule,
         TabsModule,
+        BreadcrumbModule,
     ],
 })
 export class ExamplesModule {}
