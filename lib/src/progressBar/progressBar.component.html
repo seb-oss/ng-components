@@ -1,0 +1,15 @@
+<div class="progress" [ngClass]="className" [attr.id]="id" [ngStyle]="height ? { height: height + 'px' } : null">
+    <div
+        class="progress-bar"
+        [ngClass]="theme | proggressTheme"
+        [class.progress-bar-striped]="striped"
+        [class.progress-bar-animated]="animated"
+        role="progressbar"
+        [attr.aria-valuenow]="value"
+        [attr.aria-valuemin]="value"
+        [attr.aria-valuemax]="value"
+        [ngStyle]="{ width: value + '%' }"
+    >
+        <span *ngIf="showProgress"> {{ value }}%</span>
+    </div>
+</div>
