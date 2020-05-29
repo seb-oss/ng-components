@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
+import { BarItem } from "lib/src/public_api";
 
 @Component({
     selector: "app-progressBar",
@@ -7,6 +8,12 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 export class ProgressBarComponent implements OnInit, OnDestroy {
     timerRef: NodeJS.Timeout;
     progress: number;
+    bars: Array<BarItem> = [
+        { value: 20, theme: "success" },
+        { value: 30, theme: "danger", striped: true },
+        { value: 30, theme: "info", striped: true, animated: true },
+        { value: 20, theme: "warning", showProgress: true },
+    ];
 
     simulateProgress(): void {
         if (this.timerRef) {
