@@ -3,7 +3,6 @@ import { ViewEncapsulation, Component, Input } from "@angular/core";
 export type ProggressTheme = "success" | "warning" | "danger" | "info";
 @Component({
     selector: "sebng-progressBar",
-    styleUrls: ["./progressBar.component.scss"],
     templateUrl: "./progressBar.component.html",
     encapsulation: ViewEncapsulation.None,
 })
