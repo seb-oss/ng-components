@@ -100,7 +100,7 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
             }
         } else {
             // Should default back to `slide-in`
-            if (position && ["bottom-left", "bottom-right", "top-left", "top-right"].indexOf(position) !== -1) {
+            if (["bottom-left", "bottom-right", "top-left", "top-right"].some((pos: string) => pos === position)) {
                 positionClass = position;
             } else {
                 positionClass = "bottom-left";
