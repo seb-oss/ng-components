@@ -47,7 +47,7 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
      */
     private getStyleClass(): void {
         let styleClass: string = "style-";
-        if (this.style && ["slide-in", "bar"].indexOf(this.style) !== -1) {
+        if (this.style && ["slide-in", "bar"].some((s: string) => s === this.style)) {
             styleClass += this.style;
         } else {
             styleClass += "slide-in";
@@ -55,9 +55,8 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
 
         this.notificationClassNames += " " + styleClass;
 
-        this.showNotificationTitle = this.title && this.style === ("style-slide-in" as NotificationStyle);
-        this.showNotificationBody =
-            styleClass === ("style-slide-in" as NotificationStyle) && this.actions && this.actions.length && this.actions.length < 3;
+        this.showNotificationTitle = this.title && styleClass === "style-slide-in";
+        this.showNotificationBody = styleClass === "style-slide-in" && this.actions && this.actions.length && this.actions.length < 3;
     }
 
     /**
@@ -66,7 +65,10 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
      */
     private getThemeClass(): void {
         let themeClass: string = "theme-";
-        if (this.theme && ["purple", "primary", "danger", "success", "warning", "inverted"].indexOf(this.theme) !== -1) {
+        if (
+            this.theme &&
+            ["purple", "primary", "danger", "success", "warning", "inverted"].some((t: NotificationTheme) => t === this.theme)
+        ) {
             themeClass += this.theme;
         } else {
             themeClass += "purple";
@@ -81,17 +83,17 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
     private getPositionClass(): void {
         let positionClass: string;
         const position: string = this.position;
-        if (this.style && ["slide-in", "bar"].indexOf(this.style) !== -1) {
+        if (this.style && ["slide-in", "bar"].some((s: string) => s === this.style)) {
             switch (this.style) {
                 case "slide-in":
-                    if (position && ["bottom-left", "bottom-right", "top-left", "top-right"].indexOf(position) !== -1) {
+                    if (position && ["bottom-left", "bottom-right", "top-left", "top-right"].some((p: string) => p === position)) {
                         positionClass = position;
                     } else {
                         positionClass = "bottom-left";
                     }
                     break;
                 case "bar":
-                    if (position && ["top", "bottom"].indexOf(position) !== -1) {
+                    if (position && ["top", "bottom"].some((p: string) => p === position)) {
                         positionClass = position;
                     } else {
                         positionClass = "top";
@@ -100,7 +102,7 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
             }
         } else {
             // Should default back to `slide-in`
-            if (["bottom-left", "bottom-right", "top-left", "top-right"].some((pos: string) => pos === position)) {
+            if (position && ["bottom-left", "bottom-right", "top-left", "top-right"].some((p: string) => p === position)) {
                 positionClass = position;
             } else {
                 positionClass = "bottom-left";
@@ -159,7 +161,7 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
             this.setClassNames();
         }
 
-        if (["style", "position", "theme", "className", "actions"].some((prop) => changes.hasOwnProperty(prop))) {
+        if (changes.style || changes.position || changes.className || changes.actions || changes.theme) {
             this.setClassNames();
         }
     }
