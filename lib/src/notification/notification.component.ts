@@ -43,7 +43,6 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
     /**
      * Get the style class based on the theme passed through the props
      * @param {string} style The style passed through the props
-     * @returns {void} The style class
      */
     private getStyleClass(): void {
         let styleClass: string = "style-";
@@ -61,7 +60,6 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
 
     /**
      * Get the theme class based on the theme passed though the props
-     * @returns {void} The theme class
      */
     private getThemeClass(): void {
         let themeClass: string = "theme-";
@@ -78,7 +76,6 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
 
     /**
      * Get the position class based on the position and style passed through the props
-     * @returns {void} The position class
      */
     private getPositionClass(): void {
         let positionClass: string;
