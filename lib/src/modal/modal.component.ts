@@ -2,7 +2,7 @@ import { Component, Input, ViewEncapsulation, ComponentRef, HostListener, Elemen
 import { SebModalBackdropComponent } from "./modal.backdrop";
 import { ModalService } from "./modal.service";
 import { ModalSizeType, ModalPositionType } from "./modal.type";
-import { trigger, state, style, transition, animate } from "@angular/animations";
+import { trigger, state, style, transition, animate, AnimationEvent } from "@angular/animations";
 
 @Component({
     selector: "sebng-modal",
@@ -34,7 +34,10 @@ export class ModalComponent {
     @Input() position: ModalPositionType;
     @Input() fullscreen?: boolean;
     @Input() backdropDismiss?: boolean = true;
+    @Input() escapeKeyDismiss?: boolean = true;
     @Input() className?: string;
+    @Input() ariaLabel?: string;
+    @Input() ariaDescribedby?: string;
     @ViewChild("modalRef") modalRef: ElementRef;
     toggle: boolean; // toggle is required to enable the open or close animation
 
@@ -75,7 +78,9 @@ export class ModalComponent {
      */
     @HostListener("keyup.esc")
     onEscKey(): void {
-        this.close();
+        if (this.escapeKeyDismiss) {
+            this.close();
+        }
     }
 
     /**
@@ -94,5 +99,15 @@ export class ModalComponent {
         this.modalService.close(this.modalRef);
         this.toggle = false;
         this.modalService.removeComponentFromBody(this.backDropRef);
+    }
+
+    /**
+     * callback when the animation is done
+     * @param event
+     */
+    onAnimationDone(event: AnimationEvent): void {
+        if (event.toState === "open") {
+            setTimeout(() => this.modalRef.nativeElement.focus(), 0);
+        }
     }
 }

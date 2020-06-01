@@ -1,11 +1,15 @@
 <div
-    class="modal fade"
-    [@openClose]="toggle ? 'open' : 'close'"
-    [ngClass]="modalPosition"
-    tabindex="-1"
-    role="dialog"
-    [attr.id]="id"
     #modalRef
+    class="modal fade"
+    role="dialog"
+    aria-modal="true"
+    tabindex="-1"
+    [attr.id]="id"
+    [attr.aria-labelledby]="ariaLabel"
+    [attr.aria-describedby]="ariaDescribedby"
+    [ngClass]="modalPosition"
+    [@openClose]="toggle ? 'open' : 'close'"
+    (@openClose.done)="onAnimationDone($event)"
 >
     <div class="modal-dialog" [ngClass]="size" [class.modal-dialog-centered]="center" role="document">
         <div class="modal-content">
