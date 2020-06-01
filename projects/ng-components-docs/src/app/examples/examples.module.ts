@@ -9,6 +9,11 @@ import { PaginationModule } from "./components/pagination/pagination.module";
 import { ModalModule } from "./components/modals/modals.module";
 import { TextAreaModule } from "./components/textArea/textArea.module";
 import { TextboxGroupModule } from "./components/textboxGroup/textboxGroup.module";
+import { AccordionModule } from "./components/accordion/accordion.module";
+import { ToggleModule } from "./components/toggle/toggle.module";
+import { ChipModule } from "./components/chip/chip.module";
+import { TabsModule } from "./components/tabs/tabs.module";
+import { BreadcrumbModule } from "./components/breadcrumb/breadcrumb.module";
 
 @NgModule({
     declarations: [],
@@ -23,6 +28,11 @@ import { TextboxGroupModule } from "./components/textboxGroup/textboxGroup.modul
         TextAreaModule,
         TextboxGroupModule,
         TextLabelModule,
+        AccordionModule,
+        ToggleModule,
+        ChipModule,
+        TabsModule,
+        BreadcrumbModule,
         ModalModule,
     ],
 })
