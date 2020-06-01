@@ -50,6 +50,7 @@ describe("Component: ModalComponent", () => {
             .then(() => {
                 fixture = TestBed.createComponent(TestComponent);
                 component = fixture.componentInstance;
+                fixture.detectChanges();
             });
     }));
 
@@ -75,9 +76,9 @@ describe("Component: ModalComponent", () => {
     });
 
     it("footer should not be displayed if no select is passed", () => {
-        fixture.detectChanges();
         const debugEl: HTMLElement = fixture.debugElement.nativeElement;
-        expect(getComputedStyle(debugEl.querySelector(".modal-header")).display).toEqual("none");
+        const cssStyle: CSSStyleDeclaration = getComputedStyle(debugEl.querySelector(".modal-header"));
+        expect(cssStyle.display).toEqual("none");
     });
 
     it("should render according to the position", () => {
@@ -95,7 +96,6 @@ describe("Component: ModalComponent", () => {
     });
 
     it("should open the modal when openModal function is called and backdrop is appended to the body", () => {
-        fixture.detectChanges();
         spyOn(component.modalChild, "open");
         fixture.componentInstance.openModal();
         fixture.detectChanges();
@@ -103,24 +103,18 @@ describe("Component: ModalComponent", () => {
         expect(document.querySelector(".modal-backdrop")).toBeDefined();
     });
 
-    it("should close the modal when closeModal function is called", fakeAsync(() => {
-        fixture.detectChanges();
+    it("should close the modal when closeModal function is called", () => {
         spyOn(component.modalChild, "close");
         fixture.componentInstance.closeModal();
         fixture.detectChanges();
         expect(component.modalChild.close).toHaveBeenCalled();
         const debugEl: HTMLElement = fixture.debugElement.nativeElement;
-        expect(getComputedStyle(debugEl.querySelector(".modal")).display).toEqual("none");
-        fixture.whenStable().then(() => {
-            tick(150);
-            expect(document.querySelector(".modal-backdrop")).toBeNull();
-        });
-    }));
+        const cssStyle: CSSStyleDeclaration = getComputedStyle(debugEl.querySelector(".modal"));
+        expect(cssStyle.display).toEqual("none");
+    });
 
     it("should close the modal when backdrop is clicked", async(() => {
-        fixture.detectChanges();
         fixture.componentInstance.openModal();
-        console.log(fixture.componentInstance);
         spyOn(component.modalChild, "onBackdropClick");
         const modal: DebugElement = fixture.debugElement.query(By.css(".modal"));
         modal.nativeElement.click();

@@ -39,9 +39,8 @@ export class ModalComponent {
     @Input() ariaLabel?: string;
     @Input() ariaDescribedby?: string;
     @ViewChild("modalRef") modalRef: ElementRef;
-    toggle: boolean; // toggle is required to enable the open or close animation
-
     backDropRef: ComponentRef<SebModalBackdropComponent>;
+    toggle: boolean; // toggle is required to enable the open or close animation
 
     constructor(private modalService: ModalService) {}
 
@@ -76,9 +75,9 @@ export class ModalComponent {
     /**
      * emit close when escape key is clicked
      */
-    @HostListener("keyup.esc")
-    onEscKey(): void {
-        if (this.escapeKeyDismiss) {
+    @HostListener("keyup", ["$event"])
+    onEscKey(event: KeyboardEvent): void {
+        if (this.escapeKeyDismiss && event.keyCode === 27) {
             this.close();
         }
     }

@@ -19,38 +19,48 @@
 <h5 class="mt-3">Modal Size:</h5>
 <div class="row">
     <div class="col">
-        <button sebng-btn (click)="openModal()">Default Modal</button>
+        <button sebng-btn (click)="openModal({})">Default Modal</button>
     </div>
     <div class="col">
-        <button sebng-btn (click)="openSizeModal('modal-lg')">Large Modal</button>
+        <button sebng-btn (click)="openModal({ size: 'modal-lg' })">Large Modal</button>
     </div>
     <div class="col">
-        <button sebng-btn (click)="openSizeModal('modal-sm')">Small Modal</button>
+        <button sebng-btn (click)="openModal({ size: 'modal-sm' })">Small Modal</button>
     </div>
 </div>
 
 <h5 class="mt-3">Modal Position:</h5>
 <div class="row">
     <div class="col">
-        <button sebng-btn (click)="openFullscreen()">Fullscreen</button>
+        <button sebng-btn (click)="openModal({ fullscreen: true })">Fullscreen</button>
     </div>
 
     <div class="col">
-        <button sebng-btn (click)="openAside('right')">aside right</button>
+        <button sebng-btn (click)="openModal({ position: 'right' })">aside right</button>
     </div>
 
     <div class="col">
-        <button sebng-btn (click)="openAside('left')">aside left</button>
+        <button sebng-btn (click)="openModal({ position: 'left' })">aside left</button>
     </div>
 </div>
 
 <h5 class="mt-3">Vertically centered:</h5>
-<button sebng-btn (click)="openCenteredModal()">Open Modal</button>
+<button sebng-btn (click)="openModal({ center: true })">Open Modal</button>
 
 <h5 class="mt-3">No BackDrop:</h5>
-<button sebng-btn (click)="openWithoutBackdrop()">Open Modal</button>
+<button sebng-btn (click)="openModal({ backdropDismiss: false })">Open Modal</button>
 
-<sebng-modal [size]="size" [position]="position" [center]="center" [fullscreen]="fullscreen" [backdropDismiss]="backdropDismiss">
+<h5 class="mt-3">No Escape Key Dismiss:</h5>
+<button sebng-btn (click)="openModal({ escapeDismiss: false })">Open Modal</button>
+
+<sebng-modal
+    [size]="size"
+    [position]="position"
+    [center]="center"
+    [fullscreen]="fullscreen"
+    [backdropDismiss]="backdropDismiss"
+    [escapeKeyDismiss]="escapeDismiss"
+>
     <div class="custom-header" header>
         Title
     </div>
