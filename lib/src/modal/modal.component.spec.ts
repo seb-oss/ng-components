@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { By } from "@angular/platform-browser";
 
 @Component({
-    template: `<sebng-modal [size]="'modal-lg'" id="test-id" [center]="center" [position]="position" [fullscreen]="fullscreen">
+    template: `<sebng-modal [size]="'modal-lg'" [id]="id" [center]="center" [position]="position" [fullscreen]="fullscreen">
         <div class="custom-body" body>
             Body
         </div>
@@ -20,7 +20,7 @@ import { By } from "@angular/platform-browser";
     </sebng-modal>`,
 })
 class TestComponent {
-    id?: boolean;
+    id?: string;
     size?: ModalSizeType;
     center?: boolean;
     position?: ModalPositionType;
@@ -50,6 +50,7 @@ describe("Component: ModalComponent", () => {
             .then(() => {
                 fixture = TestBed.createComponent(TestComponent);
                 component = fixture.componentInstance;
+                component.id = "test-id";
                 fixture.detectChanges();
             });
     }));
@@ -60,19 +61,21 @@ describe("Component: ModalComponent", () => {
 
     it("should have an id", () => {
         const debugEl: HTMLElement = fixture.debugElement.nativeElement;
-        expect(debugEl.querySelector("#test-id")).toBeDefined();
+        expect(debugEl.querySelector("#test-id")).toBeTruthy();
     });
 
     it("should be large", () => {
         const debugEl: HTMLElement = fixture.debugElement.nativeElement;
-        expect(debugEl.querySelector(".modal-lg")).toBeDefined();
+        component.size = "modal-lg";
+        fixture.detectChanges();
+        expect(debugEl.querySelector(".modal-lg")).toBeTruthy();
     });
 
     it("should be centered", () => {
         component.center = true;
         fixture.detectChanges();
         const debugEl: HTMLElement = fixture.debugElement.nativeElement;
-        expect(debugEl.querySelector(".modal-dialog-centered")).toBeDefined();
+        expect(debugEl.querySelector(".modal-dialog-centered")).toBeTruthy();
     });
 
     it("footer should not be displayed if no select is passed", () => {
@@ -85,14 +88,14 @@ describe("Component: ModalComponent", () => {
         component.position = "left";
         fixture.detectChanges();
         const debugEl: HTMLElement = fixture.debugElement.nativeElement;
-        expect(debugEl.querySelector(".modal-aside-left")).toBeDefined();
+        expect(debugEl.querySelector(".modal-aside-left")).toBeTruthy();
     });
 
     it("should open in fullscreen", () => {
         component.fullscreen = true;
         fixture.detectChanges();
         const debugEl: HTMLElement = fixture.debugElement.nativeElement;
-        expect(debugEl.querySelector(".modal-aside-left")).toBeDefined();
+        expect(debugEl.querySelector(".modal-fullscreen")).toBeTruthy();
     });
 
     it("should open the modal when openModal function is called and backdrop is appended to the body", () => {
@@ -100,7 +103,7 @@ describe("Component: ModalComponent", () => {
         fixture.componentInstance.openModal();
         fixture.detectChanges();
         expect(component.modalChild.open).toHaveBeenCalled();
-        expect(document.querySelector(".modal-backdrop")).toBeDefined();
+        expect(document.querySelector(".modal-backdrop")).toBeTruthy();
     });
 
     it("should close the modal when closeModal function is called", () => {
