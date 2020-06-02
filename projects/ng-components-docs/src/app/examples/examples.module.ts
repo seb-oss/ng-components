@@ -14,6 +14,7 @@ import { ToggleModule } from "./components/toggle/toggle.module";
 import { ChipModule } from "./components/chip/chip.module";
 import { TabsModule } from "./components/tabs/tabs.module";
 import { BreadcrumbModule } from "./components/breadcrumb/breadcrumb.module";
+import { TableModule } from "./components/table/table.module";
 
 @NgModule({
     declarations: [],
@@ -33,6 +34,7 @@ import { BreadcrumbModule } from "./components/breadcrumb/breadcrumb.module";
         ChipModule,
         TabsModule,
         BreadcrumbModule,
+        TableModule,
     ],
 })
 export class ExamplesModule {}
