@@ -71,10 +71,9 @@ describe("Component: RatingComponent", () => {
         fixture.detectChanges();
         const event = new Event("mouseenter");
         ratingComponent.dispatchEvent(event);
-        fixture.whenStable().then(() => {
-            expect(onMouseEnterMock).toHaveBeenCalled();
-            expect(component.ratingComponent.activeList.length).toEqual(5);
-        });
+
+        expect(onMouseEnterMock).toHaveBeenCalled();
+        expect(component.ratingComponent.activeList.length).toEqual(5);
     }));
 
     it("should render and fire click event onclick", async(() => {
@@ -83,9 +82,8 @@ describe("Component: RatingComponent", () => {
         const ratingComponent = fixture.debugElement.nativeElement.querySelector(".star-holder");
         const event = new Event("click");
         ratingComponent.dispatchEvent(event);
-        fixture.whenStable().then(() => {
-            expect(onClickMock).toHaveBeenCalled();
-        });
+
+        expect(onClickMock).toHaveBeenCalled();
     }));
 
     it("should render and fire mouseleave event onMouseLeave", async(() => {
@@ -93,10 +91,9 @@ describe("Component: RatingComponent", () => {
         const onMouseLeaveMock = spyOn(component.ratingComponent, "onMouseLeave").and.callThrough();
         const ratingComponent: Array<DebugElement> = fixture.debugElement.queryAll(By.css(".star-holder"));
         const event = new Event("mouseleave");
-        fixture.whenStable().then(() => {
-            ratingComponent[0].nativeElement.dispatchEvent(event);
-            expect(onMouseLeaveMock).toHaveBeenCalled();
-        });
+
+        ratingComponent[0].nativeElement.dispatchEvent(event);
+        expect(onMouseLeaveMock).toHaveBeenCalled();
     }));
 
     it("onClick event should set the key as the value", async(() => {
@@ -116,9 +113,8 @@ describe("Component: RatingComponent", () => {
         const ratingComponent = fixture.debugElement.nativeElement.querySelector(".star-holder");
         const event = new Event("mouseenter");
         ratingComponent.dispatchEvent(event);
-        fixture.whenStable().then(() => {
-            expect(onMouseEnterMock).toHaveBeenCalled();
-        });
+
+        expect(onMouseEnterMock).toHaveBeenCalled();
     }));
 
     it("should be able to write and update value using the writevalue method", async(() => {
@@ -141,13 +137,12 @@ describe("Component: RatingComponent", () => {
         component.startValue = 4;
 
         fixture.detectChanges();
-        tick();
-        fixture.whenStable().then(() => {
-            expect(registerOnChangeMock).toHaveBeenCalledTimes(1);
-            expect(registerOnTouchedMock).toHaveBeenCalledTimes(1);
-            expect(onMockWriteValue).toHaveBeenCalled();
-            expect(component.startValue).toEqual(component.ratingComponent.value);
-        });
+        tick(50);
+
+        expect(registerOnChangeMock).toHaveBeenCalledTimes(1);
+        expect(registerOnTouchedMock).toHaveBeenCalledTimes(1);
+        expect(onMockWriteValue).toHaveBeenCalled();
+        expect(component.startValue).toEqual(component.ratingComponent.value);
     }));
 
     it("getter and setter values of ratingComponent should get be able to get and set value correctly", () => {
