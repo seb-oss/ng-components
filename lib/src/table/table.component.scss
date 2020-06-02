@@ -1,0 +1,36 @@
+@import "~@sebgroup/bootstrap/scss/variables";
+
+.seb-table {
+    &.fixed-height {
+        height: 200px;
+        overflow: auto;
+        width: 100%;
+        margin-bottom: 1rem;
+
+        table {
+            margin-bottom: 0px;
+        }
+    }
+
+    table {
+        border-collapse: separate !important; /* Don't collapse */
+        border-spacing: 0 !important;
+
+        // thead > tr > th {
+        //     border-bottom: 2px solid $gray-200 !important;
+        // }
+
+        tbody {
+            tr {
+                &:first-child > td {
+                    border-top: none;
+                }
+            }
+        }
+
+        .table-checkbox {
+            width: 1rem;
+            margin: 0 auto;
+        }
+    }
+}

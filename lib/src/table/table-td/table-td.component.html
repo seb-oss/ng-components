@@ -1,0 +1,6 @@
+<span *ngIf="valueType === 'string'">{{ row }}</span>
+<span *ngIf="valueType === 'number'">{{ row }}</span>
+<span *ngIf="valueType === 'datetime'">{{ row | date: "yyyy-MM-dd HH:mm:ss" }}</span>
+<span *ngIf="valueType === 'date'">{{ row | date: "yyyy-MM-dd" }}</span>
+<span *ngIf="!valueType">–</span>
+<span *ngIf="!row">–</span>

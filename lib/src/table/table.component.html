@@ -1,0 +1,22 @@
+<div class="table-responsive seb-table">
+    <table class="table table-sm table-hover">
+        <thead
+            seb-table-header
+            [selectable]="!!selectable"
+            [isAllSelected]="rows?.length && selectedRowIndexes?.length === rows?.length"
+            [list]="headerList"
+            [isSticky]="!!fixedHeight"
+            [sortable]="sortable"
+            (sortClicked)="handleClickSort($event)"
+            (allSelectedClicked)="handleAllSelectedClicked()"
+        ></thead>
+        <tbody
+            seb-table-body
+            [selectable]="!!selectable"
+            [headerList]="headerList"
+            [rows]="rows"
+            [selectedRows]="selectedRowIndexes"
+            (rowClicked)="handleClickRow($event)"
+        ></tbody>
+    </table>
+</div>
