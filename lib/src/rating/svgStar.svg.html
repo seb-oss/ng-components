@@ -1,0 +1,31 @@
+<svg
+    [attr.width]="width"
+    [attr.height]="height"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+>
+    <title *ngIf="title">{{ title }}</title>
+    <defs>
+        <path
+            id="path-selected-1"
+            d="m20,7.29836c-0.1,-0.2 -0.3,-0.3 -0.5,-0.3l-6.9,0l-2.1,-6.59836c-0.1,-0.3 -0.3,-0.4 -0.5,-0.4c-0.2,0 -0.4,0.1 -0.5,0.3l-2.1,6.69836l-6.9,0c-0.2,0 -0.4,0.1 -0.5,0.3c0,0.2 0,0.5 0.2,0.6l5.6,3.90164l-2.1,6.5c-0.1,0.2 -0.06934,0.35791 0.13066,0.55791c0.1,0.1 0.36934,0.14209 0.56934,0.04209l5.6,-4l5.6,4c0.1,0.1 0.5,0.1 0.6,0c0.2,-0.1 0.2,-0.4 0.2,-0.6l-2.1,-6.5l5.6,-3.90164c0.1,-0.1 0.1,-0.4 0.1,-0.6z"
+        />
+    </defs>
+    <g>
+        <rect fill="none" id="canvas_background" height="6.61537" width="6.61537" y="-1" x="-1" />
+    </g>
+    <g>
+        <title *ngIf="title">{{title}}</title>
+        <g fill-rule="evenodd" fill="none" id="Page-1">
+            <g id="Icons-main-navigation/Star-selected/Darkblue">
+                <g id="Icon">
+                    <mask transform="translate(2,2) " id="mask-selected">
+                        <use id="svg_1" xlink:href="#path-selected-1" />
+                    </mask>
+                    <use x="2" y="2" xlink:href="#path-selected-1" [attr.fill]="fill" id="Combined-Shape" />
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

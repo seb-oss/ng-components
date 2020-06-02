@@ -13,6 +13,7 @@
     z-index: $zindex-fixed;
     left: 0;
     top: 0;
+    overflow-y: auto;
     &.active {
         transform: translate3d(0, 0, 0);
         display: block;

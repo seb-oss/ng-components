@@ -13,6 +13,7 @@ import { ROUTES as TOGGLE_ROUTES } from "./examples/components/toggle/toggle.mod
 import { ROUTES as CHIP_ROUTES } from "./examples/components/chip/chip.module";
 import { ROUTES as TABS_ROUTES } from "./examples/components/tabs/tabs.module";
 import { ROUTES as BREADCRUMB_ROUTES } from "./examples/components/breadcrumb/breadcrumb.module";
+import { ROUTES as RATING_ROUTES } from "./examples/components/rating/rating.module";
 
 import { InstallationComponent } from "./components/installation/installation.component";
 
@@ -96,6 +97,10 @@ const routes: Routes = [
             {
                 path: "breadcrumb",
                 children: BREADCRUMB_ROUTES,
+            },
+            {
+                path: "rating",
+                children: RATING_ROUTES,
             },
         ],
     },
