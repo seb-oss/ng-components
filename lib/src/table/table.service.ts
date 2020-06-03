@@ -70,7 +70,6 @@ export class TableService<T extends object> {
     constructor() {}
 
     public registerDatasource(table: Array<T>, config: TableConfig<T> = {}) {
-        console.log("hi", table, config);
         this.table = table;
         this.tableConfig = config;
         this.reloadTable();
@@ -119,11 +118,6 @@ export class TableService<T extends object> {
         this.setupTable(table, sortInfo, maxItems);
 
         this.setupTableHeader(sortInfo, types, labels);
-        console.log(this._sortedTable);
-        console.log(this._paginatedTable);
-        console.log(this._currentTable);
-        console.log(this._tableHeaderList);
-        console.log(this._currentPageIndex);
 
         this.sortedTable.next(this._sortedTable);
         this.paginatedTable.next(this._paginatedTable);

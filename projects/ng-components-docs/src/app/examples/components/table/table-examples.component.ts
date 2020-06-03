@@ -32,14 +32,12 @@ export class TableExamplesComponent implements OnInit {
         // Subscribe to the current table and header list
         this.tableService.currentTable.subscribe({
             next: (value: TableObjectType[]) => {
-                console.log(value);
                 this.rows = [...value];
             },
         });
 
         this.tableService.tableHeaderList.subscribe({
             next: (value: TableHeaderListItem<TableObjectType>[]) => {
-                console.log(value);
                 this.headerList = [...value];
             },
         });
