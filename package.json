@@ -58,7 +58,7 @@
         "@angular/router": "~9.1.1",
         "@datorama/akita": "^4.23.2",
         "@sebgroup/bootstrap": "^5.2.0",
-        "@sebgroup/frontend-tools": "^1.3.0",
+        "@sebgroup/frontend-tools": "^1.4.0",
         "@types/marked": "^0.7.4",
         "core-js": "^3.6.5",
         "lorem-ipsum": "^2.0.3",
