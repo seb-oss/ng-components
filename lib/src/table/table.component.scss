@@ -20,17 +20,25 @@
         //     border-bottom: 2px solid $gray-200 !important;
         // }
 
+        th,
+        td {
+            vertical-align: middle;
+
+            &.table-checkbox {
+                width: 3rem;
+                input {
+                    width: 1rem;
+                    margin: 0 auto;
+                }
+            }
+        }
+
         tbody {
             tr {
                 &:first-child > td {
                     border-top: none;
                 }
             }
-        }
-
-        .table-checkbox {
-            width: 1rem;
-            margin: 0 auto;
         }
     }
 }

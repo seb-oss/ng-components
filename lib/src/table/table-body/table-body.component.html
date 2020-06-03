@@ -1,13 +1,7 @@
-<tr *ngFor="let row of rows; let i = index" class="cursor-pointer" (click)="handleClickRow({ item: row, index: i })">
-    <td *ngIf="selectable" style="width: 3rem;">
-        <input type="checkbox" class="form-control cursor-pointer table-checkbox" [checked]="selectedRows.includes(i)" />
+<tr *ngFor="let row of rows; let i = index" (click)="handleClickRow({ item: row, index: i })">
+    <td *ngIf="selectable" class="table-checkbox">
+        <input type="checkbox" class="form-control" [checked]="selectedRows.includes(i)" />
     </td>
 
-    <td
-        style="vertical-align: middle;"
-        seb-table-td
-        *ngFor="let column of headerList"
-        [row]="row[column.tableKeySelector]"
-        [valueType]="column.valueType"
-    ></td>
+    <td seb-table-td *ngFor="let column of headerList" [row]="row[column.tableKeySelector]" [valueType]="column.valueType"></td>
 </tr>

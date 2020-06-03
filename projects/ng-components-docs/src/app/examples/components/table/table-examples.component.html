@@ -1,1 +1,21 @@
-<seb-table [rows]="rows" [headerList]="headerList"></seb-table>
+<!-- <div class="row">
+    <div class="col">
+        <label>
+            <input type="checkbox" (click)="selectable = !selectable" />
+            Selectable
+        </label>
+    </div>
+
+    <div class="col">
+        <label>
+            <input type="checkbox" (click)="sortable = !sortable" />
+            Sortable
+        </label>
+    </div>
+</div> -->
+
+<div class="row">
+    <div class="col">
+        <seb-table [rows]="rows" [headerList]="headerList" [sortable]="sortable" [selectable]="selectable"></seb-table>
+    </div>
+</div>

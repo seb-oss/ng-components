@@ -1,11 +1,6 @@
 <tr *ngIf="list && list.length">
-    <th *ngIf="selectable" style="width: 3rem;">
-        <input
-            type="checkbox"
-            class="form-control cursor-pointer table-checkbox"
-            [checked]="isAllSelected"
-            (click)="allSelectedClicked.emit()"
-        />
+    <th *ngIf="selectable" class="table-checkbox" (click)="allSelectedClicked.emit()">
+        <input type="checkbox" class="form-control" [checked]="isAllSelected" />
     </th>
 
     <th
@@ -15,7 +10,6 @@
         [class.sort]="sortable"
         [class.sort-asc]="sortable && column.active && column.asc === true"
         [class.sort-desc]="sortable && column.active && column.asc === false"
-        style="background: white; vertical-align: middle;"
         [style.display]="isSticky ? 'sticky' : 'table-cell'"
         scope="col"
         (click)="sortable ? handleClickSort({ column: column.tableKeySelector, isAscending: !column.asc, type: column.valueType }) : null"

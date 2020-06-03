@@ -12,6 +12,9 @@ interface TableObjectType {
     templateUrl: "./table-examples.component.html",
 })
 export class TableExamplesComponent implements OnInit {
+    sortable: boolean;
+    selectable: boolean;
+
     headerList: TableHeaderListItem<TableObjectType>[];
     rows: TableObjectType[];
 

@@ -9,7 +9,7 @@ import { TableHeaderListItem, TableRowClickedEvent, SortInfo } from "./table.mod
 })
 export class TableComponent {
     @Input() headerList: Array<TableHeaderListItem> = [];
-    @Input() sortable?: boolean = true;
+    @Input() sortable?: boolean = false;
     @Input() selectable?: boolean = false;
     @Input() rows: Array<any> = [];
     @Input() fixedHeight?: string;
