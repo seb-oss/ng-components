@@ -8,7 +8,7 @@ export const CUSTOM_RATING_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-    selector: "ac-rating",
+    selector: "sebng-rating",
     templateUrl: "./rating.component.html",
     styleUrls: ["./rating.component.scss"],
     providers: [CUSTOM_RATING_VALUE_ACCESSOR],

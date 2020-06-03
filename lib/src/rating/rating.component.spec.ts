@@ -7,8 +7,8 @@ import { SVGStar, SVGStarHollow } from "./svgStar";
 import { Component, ViewChild, DebugElement } from "@angular/core";
 
 @Component({
-    selector: "tac-radioBtnGroup",
-    template: ` <ac-rating
+    selector: "tac-rating",
+    template: ` <sebng-rating
         [iconWidth]="30"
         [iconHeight]="30"
         [(ngModel)]="startValue"
@@ -17,7 +17,7 @@ import { Component, ViewChild, DebugElement } from "@angular/core";
         [max]="5"
         [showTextValue]="true"
         [tooltipList]="tooltipList"
-    ></ac-rating>`,
+    ></sebng-rating>`,
 })
 class CustomTestClass {
     @ViewChild(RatingComponent) ratingComponent: RatingComponent;
