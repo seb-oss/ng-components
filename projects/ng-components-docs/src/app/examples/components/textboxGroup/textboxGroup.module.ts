@@ -26,12 +26,12 @@ export const ROUTES: Array<Route> = [
                             sources: [
                                 {
                                     name: "textboxGroup.component.html",
-                                    src: require("!raw-loader!./examples/textboxGroup/textboxGroup.component.html"),
+                                    src: require("!raw-loader!./examples/textboxGroup/textboxGroup.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "textboxGroup.component.ts",
-                                    src: require("!raw-loader!./examples/textboxGroup/textboxGroup.component.ts"),
+                                    src: require("!raw-loader!./examples/textboxGroup/textboxGroup.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -43,7 +43,7 @@ export const ROUTES: Array<Route> = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/textboxGroup/textboxGroup.component.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/textboxGroup/textboxGroup.component.ts").default],
                 },
             },
         ],
