@@ -34,10 +34,6 @@ export interface TableHeaderListItem<T extends {} = {}> {
     tableKeySelector: keyof T;
     /** the type of value: string, date or number */
     valueType: TableHeaderListValueType;
-    /** is ascending? */
-    asc: boolean;
-    /** is active (currently selected)? */
-    active: boolean;
 }
 
 /** The object emmited when the table row is clicked */

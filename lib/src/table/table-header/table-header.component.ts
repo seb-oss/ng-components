@@ -8,10 +8,10 @@ import { TableHeaderListItem, SortInfo } from "../table.models";
 export class TableHeaderComponent {
     @Input() list: Array<TableHeaderListItem> = [];
     @Input() isSticky: boolean = false;
-    @Input() sortable?: boolean = true;
+    @Input() sortInfo?: SortInfo;
     @Input() selectable?: boolean = false;
     @Input() isAllSelected?: boolean = false;
-    @Output() sortClicked: EventEmitter<SortInfo> = new EventEmitter();
+    @Output() sortClicked: EventEmitter<string> = new EventEmitter();
     @Output() allSelectedClicked: EventEmitter<void> = new EventEmitter();
 
     // ------------- EVENTS ------------------
@@ -19,7 +19,7 @@ export class TableHeaderComponent {
      * handles the logic for when a header column is clicked
      * @param {SortInfo} value the SortInfo
      */
-    handleClickSort = (value: SortInfo): void => {
+    handleClickSort = (value: string): void => {
         this.sortClicked.emit(value);
     };
 }

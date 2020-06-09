@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { TableHeaderListItem } from "lib/src/table/table.models";
+import { TableHeaderListItem, SortInfo, TableConfig } from "lib/src/table/table.models";
 import { TableService } from "lib/src/table";
 
 interface TableObjectType {
@@ -14,16 +14,17 @@ interface TableObjectType {
     templateUrl: "./table-examples.component.html",
 })
 export class TableExamplesComponent implements OnInit {
-    sortable: boolean;
+    sortInfo: SortInfo<keyof TableObjectType>;
+    types: TableConfig<TableObjectType>["types"] = { amount: "number", validFrom: "date" };
     selectable: boolean;
 
     headerList: TableHeaderListItem<TableObjectType>[];
     rows: TableObjectType[];
 
     data: TableObjectType[] = [
-        { foo: "foo 1", bar: "bar 1", amount: "00034", validFrom: new Date() },
-        { foo: "foo 2", bar: "bar 2", amount: "278392", validFrom: new Date().toString() },
-        { foo: "foo 3", bar: "bar 3", amount: "5530", validFrom: "2020 01 05" },
+        { foo: "C", bar: "bar 1", amount: "00034", validFrom: new Date() },
+        { foo: "A", bar: "bar 2", amount: "278392", validFrom: new Date().toString() },
+        { foo: "B", bar: "bar 3", amount: "5530", validFrom: "2020 01 05" },
     ];
 
     constructor(private tableService: TableService<TableObjectType>) {}
@@ -32,9 +33,12 @@ export class TableExamplesComponent implements OnInit {
         // Register your data with the table service.
         // (Optional): Pass in your config. The service will return
         // the headerList and rows to be displayed with the Table component.
-        this.tableService.registerDatasource(this.data, { types: { amount: "number", validFrom: "date" } });
+        this.tableService.registerDatasource(this.data, {
+            types: this.types,
+            sort: { column: "amount", isAscending: true, type: this.types.amount }, // Initial SORT info
+        });
 
-        // Subscribe to the current table and header list
+        // Subscribe to the current table, header list and sortInfo
         this.tableService.currentTable.subscribe({
             next: (value: TableObjectType[]) => {
                 this.rows = [...value];
@@ -46,5 +50,15 @@ export class TableExamplesComponent implements OnInit {
                 this.headerList = [...value];
             },
         });
+
+        this.tableService.currentSortInfo.subscribe({
+            next: (value: SortInfo<keyof TableObjectType>) => {
+                this.sortInfo = value;
+            },
+        });
+    }
+
+    handleSortClicked(selectedColumn: keyof TableObjectType) {
+        this.tableService.handleChangeSort(selectedColumn);
     }
 }

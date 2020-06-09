@@ -1,13 +1,13 @@
 <div class="table-responsive seb-table">
-    <table class="table table-sm table-hover">
+    <table [class.table-hover]="selectable" class="table table-sm">
         <thead
             seb-table-header
             [selectable]="!!selectable"
             [isAllSelected]="rows?.length && selectedRowIndexes?.length === rows?.length"
             [list]="headerList"
             [isSticky]="!!fixedHeight"
-            [sortable]="sortable"
-            (sortClicked)="handleClickSort($event)"
+            [sortInfo]="sortInfo"
+            (sortClicked)="sortClicked.emit($event)"
             (allSelectedClicked)="handleAllSelectedClicked()"
         ></thead>
         <tbody

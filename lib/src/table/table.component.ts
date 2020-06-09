@@ -9,12 +9,12 @@ import { TableHeaderListItem, TableRowClickedEvent, SortInfo } from "./table.mod
 })
 export class TableComponent {
     @Input() headerList: Array<TableHeaderListItem> = [];
-    @Input() sortable?: boolean = false;
+    @Input() sortInfo?: SortInfo;
     @Input() selectable?: boolean = false;
     @Input() rows: Array<any> = [];
     @Input() fixedHeight?: string;
     @Output() rowClicked: EventEmitter<TableRowClickedEvent> = new EventEmitter();
-    @Output() sortClicked: EventEmitter<SortInfo> = new EventEmitter();
+    @Output() sortClicked: EventEmitter<string> = new EventEmitter();
     @Output() selectedRows: EventEmitter<number[]> = new EventEmitter();
 
     _selectedRowIndexes: number[] = [];
@@ -52,12 +52,4 @@ export class TableComponent {
         }
         this.selectedRows.emit(this._selectedRowIndexes);
     }
-
-    /**
-     * handles the logic for when a header column is clicked
-     * @param {SortInfo} value the SortInfo
-     */
-    handleClickSort = (value: SortInfo): void => {
-        this.sortClicked.emit(value);
-    };
 }

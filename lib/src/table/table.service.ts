@@ -48,6 +48,8 @@ export class TableService<T extends object> {
         this._sortInfo = { ...value };
     }
 
+    @Output() currentSortInfo: BehaviorSubject<SortInfo<keyof T>> = new BehaviorSubject(null);
+
     private columnsList: string[];
 
     /** The Master Table, Sorted */
@@ -109,16 +111,16 @@ export class TableService<T extends object> {
         const table: Array<T> = this.table && this.table.length ? [...this.table] : [];
 
         const maxItems: number = this.calculateMaxItemsPerPage();
-        const sortInfo: SortInfo = this.tableConfig.sort ? this.tableConfig.sort : this.sortInfo;
         const config: TableConfig<T> = this.tableConfig;
         const { types, labels, columns, order }: TableConfig<T> = config;
 
         this.setupColumnsList(columns, table, order);
 
-        this.setupTable(table, sortInfo, maxItems);
+        this.setupTable(table, this.sortInfo, maxItems);
 
-        this.setupTableHeader(sortInfo, types, labels);
+        this.setupTableHeader(types, labels);
 
+        this.currentSortInfo.next(this.sortInfo);
         this.sortedTable.next(this._sortedTable);
         this.paginatedTable.next(this._paginatedTable);
         this.currentTable.next(this._currentTable);
@@ -217,25 +219,21 @@ export class TableService<T extends object> {
 
     /**
      * SETUP TABLE HEADER:
-     * Sets up the table header according to the current master table and it's sort information
-     * @param {SortInfo} sortInfo The information on how to sort the table: column name, type and asc/desc
+     * Sets up the table header according to the current master table and it's config info
      * @param {object} types a REQUIRED map of every column name what type of data it represents
      * @param {object} labels an OPTIONAL map of column names and what label to display as column
      */
-    private setupTableHeader(sortInfo: SortInfo, types: TableConfig<T>["types"], labels?: TableConfig<T>["labels"]): void {
+    private setupTableHeader(types: TableConfig<T>["types"], labels?: TableConfig<T>["labels"]): void {
         const tableHeaderList: Array<TableHeaderListItem<T>> = [];
 
         for (const columnName of this.columnsList) {
             const tableKeySelector: keyof T = columnName as keyof T;
             const label: string = labels && labels[columnName] ? labels[columnName] : readableFromCamelCase(columnName);
-            const valueType: TableHeaderListValueType = types[columnName];
-            const isInitialSort: boolean = sortInfo ? columnName === sortInfo.column : false;
+            const valueType: TableHeaderListValueType = types[columnName] || "string";
             tableHeaderList.push({
                 tableKeySelector,
                 valueType,
                 label,
-                asc: isInitialSort ? sortInfo.isAscending : false,
-                active: isInitialSort,
             });
         }
         this._tableHeaderList = tableHeaderList;
@@ -293,12 +291,20 @@ export class TableService<T extends object> {
 
     // ------------- EVENTS -----------------------
     /**
-     * HANDLE CLICK SORT
-     * Handles the logic for when a header column is clicked
+     * HANDLE CHANGE SORT
+     * Handles the logic for sorting the table (updates the sortInfo and reloads the table)
      * @param {SortInfo} value the SortInfo
      */
-    public handleClickSort = (value: SortInfo<keyof T>): void => {
-        this.sortInfo = value;
+    public handleChangeSort = (selectedColumn: keyof T): void => {
+        let newSortInfo: Partial<SortInfo<keyof T>> = { column: selectedColumn };
+
+        if (this.sortInfo && this.sortInfo?.column === selectedColumn) {
+            newSortInfo.isAscending = !this.sortInfo?.isAscending;
+        } else {
+            newSortInfo.isAscending = true;
+        }
+        newSortInfo.type = this._tableConfig?.types[selectedColumn] || "string";
+        this.sortInfo = newSortInfo as SortInfo<keyof T>;
         this.reloadTable();
     };
 
