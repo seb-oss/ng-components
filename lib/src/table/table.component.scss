@@ -13,8 +13,7 @@
     }
 
     table {
-        th,
-        td {
+        .seb-table-data {
             vertical-align: middle;
 
             &.table-checkbox {

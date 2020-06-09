@@ -3,5 +3,11 @@
         <input type="checkbox" class="form-control" [checked]="selectedRows.includes(i)" />
     </td>
 
-    <td seb-table-td *ngFor="let column of headerList" [row]="row[column.tableKeySelector]" [valueType]="column.valueType"></td>
+    <td
+        *ngFor="let column of headerList"
+        seb-table-td
+        class="seb-table-data"
+        [row]="row[column.tableKeySelector]"
+        [valueType]="column.valueType"
+    ></td>
 </tr>

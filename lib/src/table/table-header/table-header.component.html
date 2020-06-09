@@ -6,7 +6,7 @@
     <th
         *ngFor="let column of list"
         seb-table-th
-        [class.cursor-pointer]="sortable"
+        class="seb-table-data"
         [class.sort]="sortable"
         [class.sort-asc]="sortable && column.active && column.asc === true"
         [class.sort-desc]="sortable && column.active && column.asc === false"
