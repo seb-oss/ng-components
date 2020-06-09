@@ -13,13 +13,6 @@
     }
 
     table {
-        border-collapse: separate !important; /* Don't collapse */
-        border-spacing: 0 !important;
-
-        // thead > tr > th {
-        //     border-bottom: 2px solid $gray-200 !important;
-        // }
-
         th,
         td {
             vertical-align: middle;
