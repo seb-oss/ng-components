@@ -5,6 +5,8 @@ import { TableService } from "lib/src/table";
 interface TableObjectType {
     foo: string;
     bar: string;
+    amount: string;
+    validFrom: string | Date;
 }
 
 @Component({
@@ -19,9 +21,9 @@ export class TableExamplesComponent implements OnInit {
     rows: TableObjectType[];
 
     data: TableObjectType[] = [
-        { foo: "foo 1", bar: "bar 1" },
-        { foo: "foo 2", bar: "bar 2" },
-        { foo: "foo 3", bar: "bar 3" },
+        { foo: "foo 1", bar: "bar 1", amount: "00034", validFrom: new Date() },
+        { foo: "foo 2", bar: "bar 2", amount: "278392", validFrom: new Date().toString() },
+        { foo: "foo 3", bar: "bar 3", amount: "5530", validFrom: "2020 01 05" },
     ];
 
     constructor(private tableService: TableService<TableObjectType>) {}
@@ -30,7 +32,7 @@ export class TableExamplesComponent implements OnInit {
         // Register your data with the table service.
         // (Optional): Pass in your config. The service will return
         // the headerList and rows to be displayed with the Table component.
-        this.tableService.registerDatasource(this.data);
+        this.tableService.registerDatasource(this.data, { types: { amount: "number", validFrom: "date" } });
 
         // Subscribe to the current table and header list
         this.tableService.currentTable.subscribe({

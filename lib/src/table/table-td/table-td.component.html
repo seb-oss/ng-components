@@ -1,6 +1,7 @@
-<span *ngIf="valueType === 'string'">{{ row }}</span>
-<span *ngIf="valueType === 'number'">{{ row }}</span>
-<span *ngIf="valueType === 'datetime'">{{ row | date: "yyyy-MM-dd HH:mm:ss" }}</span>
-<span *ngIf="valueType === 'date'">{{ row | date: "yyyy-MM-dd" }}</span>
-<span *ngIf="!valueType">–</span>
-<span *ngIf="!row">–</span>
+<ng-container [ngSwitch]="valueType">
+    <span *ngSwitchCase="'string'">{{ row }}</span>
+    <span *ngSwitchCase="'number'">{{ row | number }}</span>
+    <span *ngSwitchCase="'datetime'">{{ row | date: "yyyy-MM-dd HH:mm:ss" }}</span>
+    <span *ngSwitchCase="'date'">{{ row | date: "yyyy-MM-dd" }}</span>
+    <span *ngSwitchDefault>–</span>
+</ng-container>
