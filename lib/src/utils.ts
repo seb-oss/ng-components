@@ -1,3 +1,5 @@
+import { capitalize } from "@sebgroup/frontend-tools/dist/capitalize";
+
 /**
  * Creates a human readable text from camel case
  * @param {string} value the camel case string (example "caseId")
@@ -16,17 +18,6 @@ export function readableFromCamelCase(value: string, shouldCapitalizeEvery?: boo
             wordList[0] = capitalize(wordList[0]);
         }
         return [...wordList].join(" ");
-    }
-    return "";
-}
-
-/**
- * Capitalizes (makes the first character uppercase) any string
- * @param value the value to capitalize
- */
-export function capitalize(value: string): string {
-    if (value && value.length) {
-        return `${value.charAt(0).toUpperCase()}${value.slice(1)}`;
     }
     return "";
 }
