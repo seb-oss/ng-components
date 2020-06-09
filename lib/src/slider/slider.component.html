@@ -1,0 +1,57 @@
+<div class="form-group custom-slider" [ngClass]="[className, { disabled: disabled }]">
+    <label *ngIf="label" class="custom-label">{{ label }}</label
+    >}
+    <div class="input-field" [ngClass]="{ 'has-labels': labels?.length, alternative: alternative, normal: !alternative }">
+        <input
+            type="range"
+            [attr.id]="id"
+            [attr.name]="name"
+            [attr.min]="min"
+            [attr.max]="max"
+            [attr.step]="step"
+            value="value"
+            (change)="handleChange($event)"
+            disabled="disabled"
+        />
+        <div class="custom-slider-holder" [ngClass]="[theme, { primary: !theme }]">
+            <div class="custom-slider-track" [ngClass]="{ 'with-transitions': shouldEnableTransition() }">
+                <div class="custom-slider-slider-before"></div>
+                <div class="custom-slider-slider-after" [ngStyle]="activeTrackStyles"></div>
+                <div class="custom-slider-thumb" [ngStyle]="{ left: thumbPosition + '%' }">
+                    <div class="custom-slider-preview" [ngClass]="alwaysShowTooltip | sliderPreviewClasses: tooltipTheme">
+                        {{ tooltipValue || value }}
+                    </div>
+
+                    <ng-container *ngIf="appearance === 'alternative'">
+                        <span class="custom-slider-icon-left">
+                            <svg name="angle-left" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512">
+                                <path
+                                    d="M25.1 247.5l117.8-116c4.7-4.7 12.3-4.7 17 0l7.1 7.1c4.7 4.7 4.7 12.3 0 17L64.7 256l102.2 100.4c4.7 4.7 4.7 12.3 0 17l-7.1 7.1c-4.7 4.7-12.3 4.7-17 0L25 264.5c-4.6-4.7-4.6-12.3.1-17z"
+                                />
+                            </svg>
+                        </span>
+                        <span class="custom-slider-icon-right">
+                            <svg name="angle-right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512">
+                                <path
+                                    d="M166.9 264.5l-117.8 116c-4.7 4.7-12.3 4.7-17 0l-7.1-7.1c-4.7-4.7-4.7-12.3 0-17L127.3 256 25.1 155.6c-4.7-4.7-4.7-12.3 0-17l7.1-7.1c4.7-4.7 12.3-4.7 17 0l117.8 116c4.6 4.7 4.6 12.3-.1 17z"
+                                />
+                            </svg>
+                        </span>
+                    </ng-container>
+                </div>
+
+                <div
+                    *ngFor="let label of labels; index as i"
+                    class="custom-slider-label"
+                    [class.show-ticks]="showTicks"
+                    [ngStyle]="labelsPositions | sliderLabelStyle | async: i"
+                >
+                    <span>{{ label.text }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <slider-up-down [triggerValue]="error">
+        <div class="alert alert-danger">{{ error }}</div>
+    </slider-up-down>
+</div>
