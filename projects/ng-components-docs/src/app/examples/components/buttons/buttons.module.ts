@@ -26,12 +26,12 @@ export const ROUTES: Array<Route> = [
                             sources: [
                                 {
                                     name: "buttons.component.html",
-                                    src: require("!raw-loader!./examples/buttons/buttons.component.html"),
+                                    src: require("!raw-loader!./examples/buttons/buttons.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "buttons.component.ts",
-                                    src: require("!raw-loader!./examples/buttons/buttons.component.ts"),
+                                    src: require("!raw-loader!./examples/buttons/buttons.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -75,7 +75,7 @@ export const ROUTES: Array<Route> = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/button/button.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/button/button.ts").default],
                 },
             },
         ],
