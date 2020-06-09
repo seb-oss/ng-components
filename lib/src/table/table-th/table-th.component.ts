@@ -6,11 +6,4 @@ import { Component, Input } from "@angular/core";
 })
 export class TableTHComponent {
     @Input() label: string;
-    @Input() active: boolean;
-    @Input() ascending: boolean;
-
-    // ------------- CONSTRUCTOR ------------
-    constructor() {}
-
-    // ------------- EVENTS ------------------
 }

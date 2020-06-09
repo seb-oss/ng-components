@@ -14,6 +14,5 @@
         scope="col"
         (click)="sortable ? handleClickSort({ column: column.tableKeySelector, isAscending: !column.asc, type: column.valueType }) : null"
         [label]="column.label"
-        [active]="sortable && column.active"
     ></th>
 </tr>
