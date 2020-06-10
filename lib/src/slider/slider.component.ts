@@ -1,4 +1,16 @@
-import { Input, EventEmitter, Output, OnInit, OnChanges, SimpleChanges, ViewEncapsulation, Component } from "@angular/core";
+import {
+    Input,
+    EventEmitter,
+    Output,
+    OnInit,
+    OnChanges,
+    SimpleChanges,
+    ViewEncapsulation,
+    Component,
+    forwardRef,
+    Provider,
+} from "@angular/core";
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 export type SliderTheme = "primary" | "inverted" | "success" | "danger" | "warning" | "purple";
 export type SliderAppearance = "normal" | "alternative";
@@ -14,13 +26,20 @@ type AppearanceStyleMap = {
     };
 };
 
+const CUSTOM_SLIDER_CONTROL_VALUE_ACCESSOR: Provider = {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => SliderComponent),
+    multi: true,
+};
+
 @Component({
     selector: "sebng-slider",
     templateUrl: "./slider.component.html",
     styleUrls: ["./slider.component.scss"],
     encapsulation: ViewEncapsulation.None,
+    providers: [CUSTOM_SLIDER_CONTROL_VALUE_ACCESSOR],
 })
-export class SliderComponent implements OnInit, OnChanges {
+export class SliderComponent implements OnInit, OnChanges, ControlValueAccessor {
     @Input() alternative?: boolean;
     @Input() alwaysShowTooltip?: boolean;
     @Input() className?: string;
@@ -32,14 +51,13 @@ export class SliderComponent implements OnInit, OnChanges {
     @Input() max?: number;
     @Input() min?: number;
     @Input() name: string;
-    @Output() onChange: EventEmitter<Event> = new EventEmitter<Event>();
+    @Output() onChange: EventEmitter<number> = new EventEmitter<number>();
 
     @Input() showTicks?: boolean;
     @Input() step?: number;
     @Input() theme?: SliderTheme;
     @Input() tooltipTheme?: SliderTheme;
     @Input() tooltipValue?: string;
-    @Input() value: number;
 
     private _min: number = 0;
     private _max: number = 0;
@@ -62,8 +80,8 @@ export class SliderComponent implements OnInit, OnChanges {
 
     set innerMin(value: number) {
         this._min = value;
-        this.setStyleTracks();
         this.setLabelsPositions();
+        this.setStyleTracks();
     }
 
     get innerMax(): number {
@@ -72,8 +90,8 @@ export class SliderComponent implements OnInit, OnChanges {
 
     set innerMax(value: number) {
         this._max = value;
-        this.setStyleTracks();
         this.setLabelsPositions();
+        this.setStyleTracks();
     }
 
     get size(): number {
@@ -85,6 +103,7 @@ export class SliderComponent implements OnInit, OnChanges {
         this.setStyleTracks();
     }
 
+    @Input()
     get appearance(): SliderAppearance {
         return this._appearance;
     }
@@ -117,6 +136,7 @@ export class SliderComponent implements OnInit, OnChanges {
         const maxValue: number = typeof this.max !== "number" ? 100 : this.max;
         this.innerMin = minValue;
         this.innerMax = maxValue;
+
         this.size = this.getSize(minValue, maxValue);
     }
 
@@ -155,6 +175,7 @@ export class SliderComponent implements OnInit, OnChanges {
      * @returns {number} The precentage
      */
     getPercentage(): number {
+        // console.log("The value is " + this.innerMin, this.value)
         if (this.value <= this.innerMin) {
             return 0;
         } else if (this.value >= this.innerMax) {
@@ -224,11 +245,42 @@ export class SliderComponent implements OnInit, OnChanges {
         return this.size / this.step <= maxNumberOfStepsToAllowTransition;
     }
 
-    handleChange(e: Event): void {
-        if (this.onChange) {
-            this.onChange.emit(e);
+    // controlAccessor
+
+    private innerValue: number;
+
+    private onTouchedCallback: () => void;
+    private onChangeCallback: (_: any) => void;
+
+    get value(): number {
+        return this.innerValue;
+    }
+
+    set value(v: number) {
+        if (v !== this.innerValue) {
+            this.innerValue = v;
+            this.onChangeCallback && this.onChangeCallback(v);
+            this.onChange && this.onChange.emit(v);
+            this.thumbPosition = this.getPercentage();
+            this.activeTrackStyles = this.getActiveTrackStyles();
         }
-        e.preventDefault();
+    }
+
+    // accessor props
+    writeValue(val: number) {
+        if (val !== this.innerValue) {
+            this.innerValue = val;
+            this.thumbPosition = this.getPercentage();
+            this.activeTrackStyles = this.getActiveTrackStyles();
+        }
+    }
+
+    registerOnChange(fn: () => void): void {
+        this.onChangeCallback = fn;
+    }
+
+    registerOnTouched(fn: () => void): void {
+        this.onTouchedCallback = fn;
     }
 
     ngOnInit() {
@@ -236,11 +288,17 @@ export class SliderComponent implements OnInit, OnChanges {
         this.size = 0;
         this.labelsPositions = [];
         this.appearance = this.alternative ? "alternative" : "normal";
+
+        this.setSliderRange();
+        this.setStyleTracks();
+        this.setLabelsPositions();
     }
 
     ngOnChanges(changes: SimpleChanges) {
         if (changes.max || changes.min) {
             this.setSliderRange();
+            this.thumbPosition = this.getPercentage();
+            this.activeTrackStyles = this.getActiveTrackStyles();
         }
 
         if (changes.value) {

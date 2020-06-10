@@ -5,6 +5,10 @@ import { ExamplePageComponent } from "../../../components/example-page/example-p
 import { ExampleListComponent } from "../../../components/example-page/example-list/example-list.component";
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
 import { SliderModule as Slider } from "../../../../../../../lib/src/slider";
+import { TextboxGroupModule as textboxGroup } from "../../../../../../../lib/src/textboxGroup";
+import { RadioGroupModule as radioGroup } from "../../../../../../../lib/src/radio-group";
+
+import { FormsModule } from "@angular/forms";
 
 export const ROUTES = [
     { path: "", pathMatch: "full", redirectTo: "examples" },
@@ -51,6 +55,6 @@ export const ROUTES = [
 
 @NgModule({
     declarations: [SliderComponent],
-    imports: [CommonModule, Slider],
+    imports: [CommonModule, Slider, textboxGroup, radioGroup, FormsModule],
 })
 export class SliderModule {}

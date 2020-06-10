@@ -6,8 +6,8 @@ export class SliderPreviewPipe implements PipeTransform {
     transform(alwaysShowTooltip: boolean, tooltipTheme: SliderTheme) {
         return {
             "always-show": alwaysShowTooltip,
-            [tooltipTheme]: tooltipTheme,
             inverted: !tooltipTheme,
+            [tooltipTheme]: !!tooltipTheme,
         };
     }
 }

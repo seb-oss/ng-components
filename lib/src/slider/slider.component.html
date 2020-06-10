@@ -1,7 +1,6 @@
-<div class="form-group custom-slider" [ngClass]="[className, { disabled: disabled }]">
-    <label *ngIf="label" class="custom-label">{{ label }}</label
-    >}
-    <div class="input-field" [ngClass]="{ 'has-labels': labels?.length, alternative: alternative, normal: !alternative }">
+<div class="form-group custom-slider" [ngClass]="className" [class.disabled]="disabled">
+    <label *ngIf="label" class="custom-label">{{ label }}</label>
+    <div class="input-field" [ngClass]="{ 'has-labels': !!labels?.length, alternative: alternative, normal: !alternative }">
         <input
             type="range"
             [attr.id]="id"
@@ -9,11 +8,10 @@
             [attr.min]="min"
             [attr.max]="max"
             [attr.step]="step"
-            value="value"
-            (change)="handleChange($event)"
-            disabled="disabled"
+            [(ngModel)]="value"
+            [disabled]="disabled"
         />
-        <div class="custom-slider-holder" [ngClass]="[theme, { primary: !theme }]">
+        <div class="custom-slider-holder" [ngClass]="theme" [class.primary]="!theme">
             <div class="custom-slider-track" [ngClass]="{ 'with-transitions': shouldEnableTransition() }">
                 <div class="custom-slider-slider-before"></div>
                 <div class="custom-slider-slider-after" [ngStyle]="activeTrackStyles"></div>

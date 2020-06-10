@@ -1,0 +1,125 @@
+<p *ngIf="withInput">Example with input</p>
+<div class="row" *ngIf="withInput">
+    <div class="col">
+        <label class="mt-2">Select a value</label>
+    </div>
+    <div class="col">
+        <sebng-textboxgroup
+            name="slider"
+            type="number"
+            placeholder="Text Box PlaceHolder"
+            rightText="kr"
+            rightText="kr"
+            maxLength="5"
+            [(ngModel)]="slider"
+            (onChange)="onFormChange($event)"
+            [error]="withInputError"
+            showErrorMessage="false"
+            pattern="\d+"
+        ></sebng-textboxgroup>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <sebng-slider
+            name="slider"
+            [(ngModel)]="slider"
+            [min]="min"
+            [max]="max"
+            [step]="step"
+            [appearance]="appearance"
+            [labels]="hasLabels ? sliderLabels : null"
+            [showTicks]="showTicks"
+            [theme]="theme"
+            [error]="withInputError || (hasError ? 'Error message' : null)"
+            [disabled]="disabled"
+            [tooltipTheme]="tooltipTheme"
+            [alternative]="appearance === 'alternative'"
+            (onChange)="onSliderChange($event)"
+            [alwaysShowTooltip]="alwaysShowTooltip"
+        >
+        </sebng-slider>
+    </div>
+</div>
+
+<p>Options</p>
+<div class="row">
+    <div class="col">
+        <sebng-textboxgroup
+            name="min"
+            type="number"
+            [(ngModel)]="min"
+            (onChange)="onFormChange($event, 'min', 'number')"
+            label="Min"
+            [error]="minInputError"
+            pattern="\d+"
+        >
+        </sebng-textboxgroup>
+    </div>
+
+    <div class="col">
+        <sebng-textboxgroup
+            name="max"
+            type="number"
+            [(ngModel)]="max"
+            (onChange)="onFormChange($event, 'max', 'number')"
+            label="Max"
+            [error]="maxInputError"
+            pattern="\d+"
+        >
+        </sebng-textboxgroup>
+    </div>
+    <div class="col">
+        <sebng-textboxgroup
+            name="step"
+            type="number"
+            [(ngModel)]="step"
+            (onChange)="onFormChange($event, 'step', 'number')"
+            label="Step"
+            [error]="stepInputError"
+            pattern="\d+"
+        >
+        </sebng-textboxgroup>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <p>Themes</p>
+        <sebng-radio-group name="theme" [list]="themeList" [(ngModel)]="theme" (ngModelChange)="onThemeChange($event)"> </sebng-radio-group>
+    </div>
+    <div class="col">
+        <p>Tooltip Themes</p>
+
+        <sebng-radio-group
+            name="tooltipTheme"
+            [list]="themeList"
+            [(ngModel)]="tooltipTheme"
+            (ngModelChange)="onFormChange($event, 'tooltipTheme', 'radio')"
+        ></sebng-radio-group>
+    </div>
+    <div class="col">
+        <p>Appearance</p>
+
+        <sebng-radio-group
+            name="appearance"
+            [list]="appearanceList"
+            [(ngModel)]="appearance"
+            (ngModelChange)="onFormChange($event, 'appearance', 'radio')"
+        ></sebng-radio-group>
+    </div>
+    <div class="col">
+        <p>Options</p>
+        <!-- <CheckBox label="Disabled" name={SliderPageStateNames.disabled} checked={this.state.disabled}
+            onChange={this.onFormChange} condensed />
+        <CheckBox label="Has error" name={SliderPageStateNames.hasError} checked={this.state.hasError}
+            onChange={this.onFormChange} condensed />
+        <CheckBox label="Has labels" name={SliderPageStateNames.hasLabels} checked={this.state.hasLabels}
+            onChange={this.onFormChange} condensed />
+        <CheckBox label="Show ticks" name={SliderPageStateNames.showTicks} checked={this.state.showTicks}
+            onChange={this.onFormChange} condensed disabled={!this.state.hasLabels} />
+        <CheckBox label="With Input" name={SliderPageStateNames.withInput} checked={this.state.withInput}
+            onChange={this.onFormChange} condensed />
+        <CheckBox label="Always Show tooltip" name={SliderPageStateNames.alwaysShowTooltip}
+            checked={this.state.alwaysShowTooltip} onChange={this.onFormChange} condensed /> -->
+    </div>
+</div>
