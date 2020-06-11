@@ -25,13 +25,15 @@ export const ROUTES = [
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
-                                    name: "modals.component.html",
-                                    src: require("!raw-loader!./modals.component.html"),
+                                    name: "modal.component.html",
+                                    // @ts-ignore
+                                    src: require("!raw-loader!./modals.component.html").default,
                                     lang: "markup",
                                 },
                                 {
-                                    name: "modals.component.ts",
-                                    src: require("!raw-loader!./modals.component.ts"),
+                                    name: "modal.component.ts",
+                                    // @ts-ignore
+                                    src: require("!raw-loader!./modals.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -43,7 +45,10 @@ export const ROUTES = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/modal/modal.component.ts")],
+                    sources: [
+                        require("!raw-loader!../../../../../../../lib/src/modal/modal.component.ts").default,
+                        require("!raw-loader!../../../../../../../lib/src/modal/modal.service.ts").default,
+                    ],
                 },
             },
         ],

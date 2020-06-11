@@ -6,7 +6,7 @@ import { ROUTES as WIZARD_ROUTES } from "./examples/components/wizard/wizard.mod
 import { ROUTES as TEXTLABEL_ROUTES } from "./examples/components/textLabels/text-labels.module";
 import { ROUTES as DROPDOWN_ROUTES } from "./examples/components/dropdown/dropdown.module";
 import { ROUTES as PAGINATION_ROUTES } from "./examples/components/pagination/pagination.module";
-import { ROUTES as MODALS_ROUTES } from "./examples/components/modals/modals.module";
+import { ROUTES as MODAL_ROUTES } from "./examples/components/modals/modals.module";
 import { ROUTES as TEXTAREA_ROUTES } from "./examples/components/textArea/textArea.module";
 import { ROUTES as TEXTBOXGROUP_ROUTES } from "./examples/components/textboxGroup/textboxGroup.module";
 import { ROUTES as ACCORDION_ROUTES } from "./examples/components/accordion/accordion.module";
@@ -16,6 +16,7 @@ import { ROUTES as TABS_ROUTES } from "./examples/components/tabs/tabs.module";
 import { ROUTES as BREADCRUMB_ROUTES } from "./examples/components/breadcrumb/breadcrumb.module";
 
 import { InstallationComponent } from "./components/installation/installation.component";
+import { sortArray } from "./utils/arrayFunctions";
 
 const routes: Routes = [
     {
@@ -40,69 +41,72 @@ const routes: Routes = [
         data: {
             icon: "cubes",
         },
-        children: [
-            {
-                path: "",
-                redirectTo: "buttons",
-                pathMatch: "full",
-            },
-            {
-                path: "radios",
-                children: RADIOS_ROUTES,
-            },
-            {
-                path: "buttons",
-                children: BUTTONS_ROUTES,
-            },
-            {
-                path: "dropdown",
-                children: DROPDOWN_ROUTES,
-            },
-            {
-                path: "wizard",
-                children: WIZARD_ROUTES,
-            },
-            {
-                path: "textLabel",
-                children: TEXTLABEL_ROUTES,
-            },
-            {
-                path: "pagination",
-                children: PAGINATION_ROUTES,
-            },
-            {
-                path: "modal",
-                children: MODALS_ROUTES,
-            },
-            {
-                path: "textarea",
-                children: TEXTAREA_ROUTES,
-            },
-            {
-                path: "textboxGroup",
-                children: TEXTBOXGROUP_ROUTES,
-            },
-            {
-                path: "accordion",
-                children: ACCORDION_ROUTES,
-            },
-            {
-                path: "toggle",
-                children: TOGGLE_ROUTES,
-            },
-            {
-                path: "chip",
-                children: CHIP_ROUTES,
-            },
-            {
-                path: "tabs",
-                children: TABS_ROUTES,
-            },
-            {
-                path: "breadcrumb",
-                children: BREADCRUMB_ROUTES,
-            },
-        ],
+        children: sortArray(
+            [
+                {
+                    path: "",
+                    redirectTo: "buttons",
+                    pathMatch: "full",
+                },
+                {
+                    path: "radios",
+                    children: RADIOS_ROUTES,
+                },
+                {
+                    path: "buttons",
+                    children: BUTTONS_ROUTES,
+                },
+                {
+                    path: "modal",
+                    children: MODAL_ROUTES,
+                },
+                {
+                    path: "dropdown",
+                    children: DROPDOWN_ROUTES,
+                },
+                {
+                    path: "wizard",
+                    children: WIZARD_ROUTES,
+                },
+                {
+                    path: "textLabel",
+                    children: TEXTLABEL_ROUTES,
+                },
+                {
+                    path: "pagination",
+                    children: PAGINATION_ROUTES,
+                },
+                {
+                    path: "textarea",
+                    children: TEXTAREA_ROUTES,
+                },
+                {
+                    path: "textboxGroup",
+                    children: TEXTBOXGROUP_ROUTES,
+                },
+                {
+                    path: "accordion",
+                    children: ACCORDION_ROUTES,
+                },
+                {
+                    path: "toggle",
+                    children: TOGGLE_ROUTES,
+                },
+                {
+                    path: "chip",
+                    children: CHIP_ROUTES,
+                },
+                {
+                    path: "tabs",
+                    children: TABS_ROUTES,
+                },
+                {
+                    path: "breadcrumb",
+                    children: BREADCRUMB_ROUTES,
+                },
+            ],
+            "path"
+        ),
     },
 ];
 

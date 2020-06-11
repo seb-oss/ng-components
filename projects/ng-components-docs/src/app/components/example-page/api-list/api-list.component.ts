@@ -70,7 +70,6 @@ export class ApiListComponent implements OnInit {
     }
     static extractDescription(sourceCode: string) {
         const regex = /(?:\/\*\*(?<comment>[\s\S][^\/]*)\*\/[^\w])/;
-        console.log(sourceCode, regex.exec(sourceCode));
         return regex.exec(sourceCode);
     }
 

@@ -2,30 +2,15 @@ import { Component, Input, ViewEncapsulation, ComponentRef, HostListener, Elemen
 import { SebModalBackdropComponent } from "./modal.backdrop";
 import { ModalService } from "./modal.service";
 import { ModalSizeType, ModalPositionType } from "./modal.type";
-import { trigger, state, style, transition, animate, AnimationEvent } from "@angular/animations";
+import { AnimationEvent } from "@angular/animations";
+import { fadeInAnimation } from "./animation";
 
 @Component({
     selector: "sebng-modal",
     styleUrls: ["./modal.component.scss"],
     templateUrl: "./modal.component.html",
     encapsulation: ViewEncapsulation.None,
-    animations: [
-        trigger("openClose", [
-            state(
-                "open",
-                style({
-                    display: "block",
-                })
-            ),
-            state(
-                "close",
-                style({
-                    display: "none",
-                })
-            ),
-            transition("open <=> close", [animate(".15s")]),
-        ]),
-    ],
+    animations: [fadeInAnimation],
 })
 export class ModalComponent {
     @Input() id?: string;
@@ -38,6 +23,7 @@ export class ModalComponent {
     @Input() className?: string;
     @Input() ariaLabel?: string;
     @Input() ariaDescribedby?: string;
+    @Input() animationDuration?: string = ".15s";
     @ViewChild("modalRef") modalRef: ElementRef;
     backDropRef: ComponentRef<SebModalBackdropComponent>;
     toggle: boolean; // toggle is required to enable the open or close animation
@@ -80,6 +66,10 @@ export class ModalComponent {
         if (this.escapeKeyDismiss && event.keyCode === 27) {
             this.close();
         }
+    }
+
+    get toggleState(): string {
+        return this.toggle ? "open" : "close";
     }
 
     /**

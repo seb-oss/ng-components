@@ -25,12 +25,12 @@ export const ROUTES = [
                             sources: [
                                 {
                                     name: "breadcrumb.component.html",
-                                    src: require("!raw-loader!./breadcrumb.component.html"),
+                                    src: require("!raw-loader!./breadcrumb.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "breadcrumb.component.ts",
-                                    src: require("!raw-loader!./breadcrumb.component.ts"),
+                                    src: require("!raw-loader!./breadcrumb.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -42,7 +42,7 @@ export const ROUTES = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/breadcrumb/breadcrumb.component.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/breadcrumb/breadcrumb.component.ts").default],
                 },
             },
         ],

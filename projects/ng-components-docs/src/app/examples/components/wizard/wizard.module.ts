@@ -30,22 +30,22 @@ export const ROUTES: Array<Route> = [
                             sources: [
                                 {
                                     name: "wizard.component.html",
-                                    src: require("!raw-loader!./examples/wizard/wizard.component.html"),
+                                    src: require("!raw-loader!./examples/wizard/wizard.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "wizard.component.ts",
-                                    src: require("!raw-loader!./examples/wizard/wizard.component.ts"),
+                                    src: require("!raw-loader!./examples/wizard/wizard.component.ts").default,
                                     lang: "ts",
                                 },
                                 {
                                     name: "wizard-forms.component.html",
-                                    src: require("!raw-loader!./examples/wizard-forms/wizard-forms.component.html"),
+                                    src: require("!raw-loader!./examples/wizard-forms/wizard-forms.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "wizard-forms.component.ts",
-                                    src: require("!raw-loader!./examples/wizard-forms/wizard-forms.component.ts"),
+                                    src: require("!raw-loader!./examples/wizard-forms/wizard-forms.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -57,7 +57,7 @@ export const ROUTES: Array<Route> = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/wizard/wizard.module.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/wizard/wizard.module.ts").default],
                 },
             },
         ],
