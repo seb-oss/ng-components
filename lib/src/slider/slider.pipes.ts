@@ -15,12 +15,27 @@ export class SliderPreviewPipe implements PipeTransform {
 @Pipe({ name: "sliderLabelStyle" })
 export class SliderLabelStylePipe implements PipeTransform {
     transform(labelPositions: Array<RangeSliderLabel>, index: number) {
+        console.log("The apis and code " + index, labelPositions);
         return new Promise((resolve: (reason: any) => void, reject: () => void) => {
             if (labelPositions && index) {
                 resolve({ left: labelPositions[index] });
             } else {
-                reject();
+                resolve({ left: 0 });
             }
+        });
+    }
+}
+
+@Pipe({ name: "sliderErrorStyle" })
+export class SliderErrorStylePipe implements PipeTransform {
+    transform(height: number) {
+        return new Promise((resolve: (reason: any) => void, reject: () => void) => {
+            resolve({
+                overflow: "hidden",
+                height: height + "0px",
+                opacity: height ? 1 : 0,
+                transition: "height 200ms linear, opacity 400ms linear",
+            });
         });
     }
 }

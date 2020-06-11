@@ -42,7 +42,7 @@
                     *ngFor="let label of labels; index as i"
                     class="custom-slider-label"
                     [class.show-ticks]="showTicks"
-                    [ngStyle]="labelsPositions | sliderLabelStyle | async: i"
+                    [ngStyle]="labelsPositions | sliderLabelStyle: i | async"
                 >
                     <span>{{ label.text }}</span>
                 </div>

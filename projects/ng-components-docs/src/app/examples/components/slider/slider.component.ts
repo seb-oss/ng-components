@@ -11,11 +11,11 @@ interface Item<T> {
 @Component({
     selector: "app-slider",
     templateUrl: "./slider.component.html",
+    styleUrls: ["./slider.component.scss"],
 })
 export class SliderComponent implements OnInit {
     appearanceList: Array<Item<SliderAppearance>> = [];
     themeList: Array<Item<SliderTheme>> = [];
-
     alwaysShowTooltip: boolean;
     appearance: SliderAppearance;
     disabled: boolean;
@@ -88,57 +88,38 @@ export class SliderComponent implements OnInit {
         return list;
     }
 
-    onThemeChange(value: number | string | RadioGroupItem) {
+    onRadioChange(value: SliderTheme | RadioGroupItem, name: keyof this) {
+        if (value) {
+            this[name as any] = typeof value === "object" ? ((value as RadioGroupItem)?.key as SliderTheme) : value;
+        } else {
+            this[name] = this[name];
+        }
+    }
+
+    onOptionsChange(value: boolean, name: keyof this) {
         let sliderLabels: Array<RangeSliderLabel>;
-        const min: number = this.min;
-        const max: number = this.max;
 
-        this.theme = value ? ((value as RadioGroupItem).key as SliderTheme) : this.theme;
-
+        this[name as any] = value;
         if (["min", "max", "hasLabels"].indexOf(name as any) !== -1) {
-            const hasLabels = name === "hasLabels" ? this.theme : this.hasLabels;
-            sliderLabels = hasLabels ? this.generateLabels(min, max) : [];
+            const hasLabels = name === "hasLabels" ? this[name] : this.hasLabels;
+            sliderLabels = hasLabels ? this.generateLabels(this.min, this.max) : [];
             sliderLabels && (this.sliderLabels = sliderLabels);
         }
     }
 
-    onFormChange(value: number | string | RadioGroupItem, name: string, type: "checkbox" | "range" | "number" | "radio"): void {
-        let that = this;
-        const newState: Partial<this> = {};
-        let sliderLabels: Array<RangeSliderLabel>;
+    onFormChange(value: number | string | RadioGroupItem, name: string): void {
         const min: number = name === "min" ? Number(value) || 0 : this.min;
         const max: number = name === "max" ? Number(value) || 100 : this.max;
-        switch (type) {
-            case "checkbox":
-                newState[name] = value || true;
-                break;
-            case "range":
-                newState[name] = Number(value) || 0;
-                break;
-            case "number":
-                newState[name] = Number(value) || value;
-                break;
-            default:
-                newState[name] = (value as RadioGroupItem).key;
-                break;
-        }
 
-        if (["min", "max", "hasLabels"].indexOf(name as any) !== -1) {
-            const hasLabels = name === "hasLabels" ? newState[name] : this.hasLabels;
-            sliderLabels = hasLabels ? this.generateLabels(min, max) : [];
-            sliderLabels && (newState.sliderLabels = sliderLabels);
-        }
         if (name === "slider") {
-            if (newState[name] < min) {
-                newState.withInputError = "Cannot be less the minimum";
-            } else if (newState[name] > max) {
-                newState.withInputError = "Cannot exceeded the maximum";
+            if (this.slider < min) {
+                this.withInputError = "Cannot be less the minimum";
+            } else if (this.slider > max) {
+                this.withInputError = "Cannot exceeded the maximum";
             } else {
-                newState.withInputError = "";
+                this.withInputError = "";
             }
         }
-
-        that = { ...this, ...newState };
     }
 
     onSliderChange(value: number) {

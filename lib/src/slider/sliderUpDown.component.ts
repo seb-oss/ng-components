@@ -2,16 +2,7 @@ import { OnChanges, SimpleChanges, Component, Input, ViewEncapsulation, ViewChil
 
 @Component({
     selector: "slider-up-down",
-    template: `<div
-        #sliderUpDownRef
-        class="expand"
-        [ngStyle]="{
-            overflow: 'hidden',
-            height: height,
-            opacity: height ? 1 : 0,
-            transition: 'height 200ms linear, opacity 400ms linear'
-        }"
-    >
+    template: `<div #sliderUpDownRef class="expand" [ngStyle]="height | sliderErrorStyle | async">
         <ng-content></ng-content>
     </div>`,
     encapsulation: ViewEncapsulation.None,
@@ -29,6 +20,7 @@ export class SliderUpDownComponent implements OnChanges, AfterViewInit {
             calculatedHeight += children.item(i).scrollHeight;
         }
         this.height = calculatedHeight;
+        console.log("The heights are ", this.height);
     }
 
     ngAfterViewInit() {

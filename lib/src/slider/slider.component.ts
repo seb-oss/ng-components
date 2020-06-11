@@ -246,7 +246,6 @@ export class SliderComponent implements OnInit, OnChanges, ControlValueAccessor 
     }
 
     // controlAccessor
-
     private innerValue: number;
 
     private onTouchedCallback: () => void;
@@ -299,6 +298,7 @@ export class SliderComponent implements OnInit, OnChanges, ControlValueAccessor 
             this.setSliderRange();
             this.thumbPosition = this.getPercentage();
             this.activeTrackStyles = this.getActiveTrackStyles();
+            this.setLabelsPositions();
         }
 
         if (changes.value) {
