@@ -13,6 +13,12 @@
     }
 
     table {
+        thead.seb-table-fixed-header > tr > th {
+            top: 0;
+            position: sticky;
+            background-color: $white;
+        }
+
         .seb-table-data {
             vertical-align: middle;
         }

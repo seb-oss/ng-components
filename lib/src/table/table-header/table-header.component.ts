@@ -7,7 +7,6 @@ import { TableHeaderListItem, SortInfo } from "../table.models";
 })
 export class TableHeaderComponent {
     @Input() list: Array<TableHeaderListItem> = [];
-    @Input() isSticky: boolean = false;
     @Input() sortInfo?: SortInfo;
     @Input() selectable?: boolean = false;
     @Input() isAllSelected?: boolean = false;

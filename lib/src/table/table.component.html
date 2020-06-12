@@ -1,11 +1,11 @@
-<div class="table-responsive seb-table">
+<div [style.height]="fixedHeight" class="table-responsive seb-table">
     <table [class.table-hover]="selectable" class="table table-sm">
         <thead
+            [class.seb-table-fixed-header]="!!fixedHeight"
             seb-table-header
             [selectable]="!!selectable"
             [isAllSelected]="rows?.length && selectedRowIndexes?.length === rows?.length"
             [list]="headerList"
-            [isSticky]="!!fixedHeight"
             [sortInfo]="sortInfo"
             (sortClicked)="sortClicked.emit($event)"
             (allSelectedClicked)="handleAllSelectedClicked()"

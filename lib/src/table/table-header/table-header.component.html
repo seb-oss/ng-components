@@ -10,7 +10,6 @@
         [class.sort]="!!sortInfo"
         [class.sort-asc]="!!sortInfo && sortInfo.column === column.tableKeySelector && sortInfo.isAscending === true"
         [class.sort-desc]="!!sortInfo && sortInfo.column === column.tableKeySelector && sortInfo.isAscending === false"
-        [style.display]="isSticky ? 'sticky' : 'table-cell'"
         scope="col"
         (click)="!!sortInfo ? handleClickSort(column.tableKeySelector) : null"
         [label]="column.label"
