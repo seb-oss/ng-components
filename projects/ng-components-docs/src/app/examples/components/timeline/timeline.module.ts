@@ -25,12 +25,12 @@ export const ROUTES = [
                             sources: [
                                 {
                                     name: "timeline.component.html",
-                                    src: require("!raw-loader!./timeline.component.html"),
+                                    src: require("!raw-loader!./timeline.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "timeline.component.ts",
-                                    src: require("!raw-loader!./timeline.component.ts"),
+                                    src: require("!raw-loader!./timeline.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -42,7 +42,7 @@ export const ROUTES = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/timeline/timeline.component.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/timeline/timeline.component.ts").default],
                 },
             },
         ],
