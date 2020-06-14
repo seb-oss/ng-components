@@ -1,5 +1,6 @@
 import { Component, Input, forwardRef, ViewEncapsulation, ViewChildren, QueryList, ElementRef, OnInit } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
+import { randomId } from "@sebgroup/frontend-tools/dist/randomId";
 
 export const CUSTOM_RATING_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -48,8 +49,7 @@ export class RatingComponent implements ControlValueAccessor, OnInit {
     ngOnInit() {
         if (this.max) {
             this.randomIds = Array.apply(null, Array(this.max)).map((item: any) => {
-                const identifier = +Math.floor(Math.random() * 100) + new Date().getTime();
-                return "star-" + identifier;
+                return randomId("star-");
             });
         }
     }

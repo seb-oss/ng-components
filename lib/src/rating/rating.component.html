@@ -1,5 +1,5 @@
 <div class="rating-container" [ngClass]="className">
-    <div class="star-rating" [class.readonly]="readOnly" role="radiogroup" aria-labelledby="radioGroup">
+    <div class="star-rating" [class.read-only]="readOnly" role="radiogroup">
         <span
             class="star-holder"
             *ngFor="let item of getList(); let i = index"
@@ -14,7 +14,7 @@
             (click)="onClick(i + 1)"
             #radioItemRefs
         >
-            <span class="star-icon" [attr.key]="i">
+            <span class="star-icon" [attr.key]="i" [attr.aria-labelledby]="randomIds[i]">
                 <svg-star
                     *ngIf="!useHollow"
                     [width]="iconWidth"

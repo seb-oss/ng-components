@@ -25,12 +25,12 @@ export const ROUTES = [
                             sources: [
                                 {
                                     name: "text-labels.component.html",
-                                    src: require("!raw-loader!./text-labels.component.html"),
+                                    src: require("!raw-loader!./text-labels.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "text-labels.component.ts",
-                                    src: require("!raw-loader!./text-labels.component.ts"),
+                                    src: require("!raw-loader!./text-labels.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -42,7 +42,7 @@ export const ROUTES = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/textLabel/textLabel.component.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/textLabel/textLabel.component.ts").default],
                 },
             },
         ],

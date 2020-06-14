@@ -26,12 +26,12 @@ export const ROUTES = [
                             sources: [
                                 {
                                     name: "rating.component.html",
-                                    src: require("!raw-loader!./rating.component.html"),
+                                    src: require("!raw-loader!./rating.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "rating.component.ts",
-                                    src: require("!raw-loader!./rating.component.ts"),
+                                    src: require("!raw-loader!./rating.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -43,7 +43,7 @@ export const ROUTES = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/rating/rating.component.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/rating/rating.component.ts").default],
                 },
             },
         ],
