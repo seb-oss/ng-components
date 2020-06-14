@@ -10,7 +10,6 @@ export class TabsComponent {
     activeTab: number = 0;
 
     onClick(index: number) {
-        console.log("Village ", index);
         this.activeTab = index;
     }
 }

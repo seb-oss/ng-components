@@ -26,12 +26,12 @@ export const ROUTES: Array<Route> = [
                             sources: [
                                 {
                                     name: "dropdowns.component.html",
-                                    src: require("!raw-loader!./examples/dropdowns/dropdowns.component.html"),
+                                    src: require("!raw-loader!./examples/dropdowns/dropdowns.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "dropdowns.component.ts",
-                                    src: require("!raw-loader!./examples/dropdowns/dropdowns.component.ts"),
+                                    src: require("!raw-loader!./examples/dropdowns/dropdowns.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -43,7 +43,7 @@ export const ROUTES: Array<Route> = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/dropdown/dropdown.component.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/dropdown/dropdown.component.ts").default],
                 },
             },
         ],

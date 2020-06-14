@@ -11,3 +11,4 @@ export * from "./pagination/index";
 export * from "./textboxGroup/index";
 export * from "./toggle/index";
 export * from "./progressBar/index";
+export * from "./video/index";
