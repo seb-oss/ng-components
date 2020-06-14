@@ -17,6 +17,7 @@ import { ROUTES as VIDEO_ROUTES } from "./examples/components/video/video.module
 import { ROUTES as BREADCRUMB_ROUTES } from "./examples/components/breadcrumb/breadcrumb.module";
 
 import { InstallationComponent } from "./components/installation/installation.component";
+import { sortArray } from "./utils/arrayFunctions";
 
 const routes: Routes = [
     {
@@ -41,73 +42,76 @@ const routes: Routes = [
         data: {
             icon: "cubes",
         },
-        children: [
-            {
-                path: "",
-                redirectTo: "buttons",
-                pathMatch: "full",
-            },
-            {
-                path: "radios",
-                children: RADIOS_ROUTES,
-            },
-            {
-                path: "buttons",
-                children: BUTTONS_ROUTES,
-            },
-            {
-                path: "modal",
-                children: MODAL_ROUTES,
-            },
-            {
-                path: "dropdown",
-                children: DROPDOWN_ROUTES,
-            },
-            {
-                path: "wizard",
-                children: WIZARD_ROUTES,
-            },
-            {
-                path: "textLabel",
-                children: TEXTLABEL_ROUTES,
-            },
-            {
-                path: "pagination",
-                children: PAGINATION_ROUTES,
-            },
-            {
-                path: "textarea",
-                children: TEXTAREA_ROUTES,
-            },
-            {
-                path: "textboxGroup",
-                children: TEXTBOXGROUP_ROUTES,
-            },
-            {
-                path: "accordion",
-                children: ACCORDION_ROUTES,
-            },
-            {
-                path: "toggle",
-                children: TOGGLE_ROUTES,
-            },
-            {
-                path: "chip",
-                children: CHIP_ROUTES,
-            },
-            {
-                path: "tabs",
-                children: TABS_ROUTES,
-            },
-            {
-                path: "video",
-                children: VIDEO_ROUTES,
-            },
-            {
-                path: "breadcrumb",
-                children: BREADCRUMB_ROUTES,
-            },
-        ],
+        children: sortArray(
+            [
+                {
+                    path: "",
+                    redirectTo: "buttons",
+                    pathMatch: "full",
+                },
+                {
+                    path: "radios",
+                    children: RADIOS_ROUTES,
+                },
+                {
+                    path: "buttons",
+                    children: BUTTONS_ROUTES,
+                },
+                {
+                    path: "modal",
+                    children: MODAL_ROUTES,
+                },
+                {
+                    path: "dropdown",
+                    children: DROPDOWN_ROUTES,
+                },
+                {
+                    path: "wizard",
+                    children: WIZARD_ROUTES,
+                },
+                {
+                    path: "textLabel",
+                    children: TEXTLABEL_ROUTES,
+                },
+                {
+                    path: "pagination",
+                    children: PAGINATION_ROUTES,
+                },
+                {
+                    path: "textarea",
+                    children: TEXTAREA_ROUTES,
+                },
+                {
+                    path: "textboxGroup",
+                    children: TEXTBOXGROUP_ROUTES,
+                },
+                {
+                    path: "accordion",
+                    children: ACCORDION_ROUTES,
+                },
+                {
+                    path: "toggle",
+                    children: TOGGLE_ROUTES,
+                },
+                {
+                    path: "chip",
+                    children: CHIP_ROUTES,
+                },
+                {
+                    path: "tabs",
+                    children: TABS_ROUTES,
+                },
+                {
+                    path: "breadcrumb",
+                    children: BREADCRUMB_ROUTES,
+                },
+                {
+                    path: "video",
+                    children: VIDEO_ROUTES,
+                },
+            ],
+            "path"
+        ),
     },
 ];
 
