@@ -67,10 +67,7 @@ export class RatingComponent implements ControlValueAccessor, OnInit {
     }
 
     setTabIndex(i: number): string {
-        if (i === 0) {
-            return "0";
-        }
-        return Math.floor(this.value) === i + 1 ? "0" : "-1";
+        return i === 0 ? "0" : Math.floor(this.value) === i + 1 ? "0" : "-1";
     }
 
     /**
