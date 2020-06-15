@@ -8,7 +8,7 @@ interface TableObjectType {
     foo: string;
     bar: string;
     amount: string;
-    validFrom: string | Date;
+    validFrom?: string | Date;
     customTemplate?: string;
 }
 
@@ -18,6 +18,8 @@ interface TableObjectType {
 })
 export class TableExamplesComponent implements OnInit, OnDestroy {
     sortInfo: SortInfo<keyof TableObjectType>;
+    curentPage: number = 0;
+    maxItemsPerPage: number = 3;
     types: TableConfig<TableObjectType>["types"] = { amount: "number", validFrom: "date", customTemplate: "custom-html" };
     unsubscribe: Subject<any> = new Subject();
 
@@ -34,6 +36,8 @@ export class TableExamplesComponent implements OnInit, OnDestroy {
             validFrom: "2020 01 05",
             customTemplate: "<code>Custom html</code>",
         },
+        { foo: "E", bar: "bar 5", amount: "11" },
+        { foo: "D", bar: "bar 4", amount: "0.5" },
     ];
 
     constructor(private tableService: TableService<TableObjectType>) {}
@@ -45,6 +49,9 @@ export class TableExamplesComponent implements OnInit, OnDestroy {
         this.tableService.registerDatasource(this.data, {
             types: this.types,
             sort: { column: "amount", isAscending: true, type: this.types.amount }, // Initial SORT info
+            pagination: {
+                maxItems: this.maxItemsPerPage,
+            },
         });
 
         // Subscribe to the current table, header list and sortInfo
@@ -65,10 +72,21 @@ export class TableExamplesComponent implements OnInit, OnDestroy {
                 this.sortInfo = value;
             },
         });
+
+        this.tableService.currentPageIndex.pipe(takeUntil(this.unsubscribe)).subscribe({
+            next: (value: number) => {
+                this.curentPage = value;
+            },
+        });
     }
 
     handleSortClicked(selectedColumn: keyof TableObjectType): void {
         this.tableService.handleChangeSort(selectedColumn);
+        this.handleChangePagination(1);
+    }
+
+    handleChangePagination(newIndex: number): void {
+        this.tableService.handleChangePagination(newIndex);
     }
 
     ngOnDestroy(): void {

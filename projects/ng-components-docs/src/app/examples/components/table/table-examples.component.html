@@ -9,30 +9,28 @@
 
 <div class="row">
     <div class="col-12">
-        <label>Table with sorting</label>
+        <label>Table with sorting and pagination</label>
         <seb-table [rows]="rows" [headerList]="headerList" [sortInfo]="sortInfo" (sortClicked)="handleSortClicked($event)"></seb-table>
+        <sebng-pagination
+            [value]="curentPage + 1"
+            (change)="handleChangePagination($event)"
+            [size]="data.length"
+            [offset]="maxItemsPerPage"
+        ></sebng-pagination>
     </div>
+
     <div class="col-12">
         <label>Table without sorting</label>
         <seb-table [rows]="data" [headerList]="headerList"></seb-table>
     </div>
+
     <div class="col-12">
         <label>Table with selectable rows</label>
         <seb-table [rows]="data" [headerList]="headerList" [selectable]="true"></seb-table>
     </div>
+
     <div class="col-12">
         <label>Table with fixed height (100px)</label>
         <seb-table [rows]="data" [headerList]="headerList" fixedHeight="100px"></seb-table>
-    </div>
-    <div class="col-12">
-        <label>Sortable, selectable table with fixed height (100px)</label>
-        <seb-table
-            [rows]="rows"
-            [headerList]="headerList"
-            [sortInfo]="sortInfo"
-            (sortClicked)="handleSortClicked($event)"
-            [selectable]="true"
-            fixedHeight="100px"
-        ></seb-table>
     </div>
 </div>

@@ -5,6 +5,7 @@ import { ExamplePageComponent } from "../../../components/example-page/example-p
 import { ExampleListComponent } from "../../../components/example-page/example-list/example-list.component";
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
 import { TableModule as TableLibModule } from "../../../../../../../lib/src/table";
+import { PaginationModule as PaginationLibModule } from "../../../../../../../lib/src/pagination";
 
 export const ROUTES = [
     { path: "", pathMatch: "full", redirectTo: "examples" },
@@ -51,6 +52,6 @@ export const ROUTES = [
 
 @NgModule({
     declarations: [TableExamplesComponent],
-    imports: [CommonModule, TableLibModule],
+    imports: [CommonModule, TableLibModule, PaginationLibModule],
 })
 export class TableModule {}
