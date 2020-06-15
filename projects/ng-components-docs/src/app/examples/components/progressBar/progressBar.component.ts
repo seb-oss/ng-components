@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { BarItem } from "lib/src/public_api";
+import { BarItem } from "lib/src/progressBar";
 
 @Component({
     selector: "app-progressBar",
