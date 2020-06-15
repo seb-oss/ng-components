@@ -22,7 +22,7 @@ export const ROUTES: Array<Route> = [
                         path: "toggle",
                         component: ToggleComponent,
                         data: {
-                            title: "Toggle",
+                            title: "Toggle Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {

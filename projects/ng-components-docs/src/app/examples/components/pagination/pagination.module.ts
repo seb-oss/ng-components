@@ -21,7 +21,7 @@ export const ROUTES: Array<Route> = [
                         path: "pagination",
                         component: PaginationComponent,
                         data: {
-                            title: "Pagination",
+                            title: "Pagination Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
