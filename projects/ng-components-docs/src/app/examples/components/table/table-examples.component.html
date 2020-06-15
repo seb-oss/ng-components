@@ -9,12 +9,7 @@
 
 <div class="row">
     <div class="col">
-        <seb-table
-            [rows]="rows"
-            [headerList]="headerList"
-            [sortInfo]="sortInfo"
-            [selectable]="selectable"
-            (sortClicked)="handleSortClicked($event)"
-        ></seb-table>
+        <label>Table with sorting</label>
+        <seb-table [rows]="rows" [headerList]="headerList" [sortInfo]="sortInfo" (sortClicked)="handleSortClicked($event)"></seb-table>
     </div>
 </div>
