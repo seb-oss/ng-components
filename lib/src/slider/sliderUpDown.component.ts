@@ -20,7 +20,6 @@ export class SliderUpDownComponent implements OnChanges, AfterViewInit {
             calculatedHeight += children.item(i).scrollHeight;
         }
         this.height = calculatedHeight;
-        console.log("The heights are ", this.height);
     }
 
     ngAfterViewInit() {

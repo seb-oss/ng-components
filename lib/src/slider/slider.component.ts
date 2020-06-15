@@ -175,7 +175,6 @@ export class SliderComponent implements OnInit, OnChanges, ControlValueAccessor 
      * @returns {number} The precentage
      */
     getPercentage(): number {
-        // console.log("The value is " + this.innerMin, this.value)
         if (this.value <= this.innerMin) {
             return 0;
         } else if (this.value >= this.innerMax) {

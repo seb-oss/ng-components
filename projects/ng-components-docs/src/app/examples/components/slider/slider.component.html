@@ -27,14 +27,14 @@
             [min]="min"
             [max]="max"
             [step]="step"
-            [appearance]="appearance"
+            [appearance]="appearance.key"
             [labels]="hasLabels ? sliderLabels : null"
             [showTicks]="showTicks"
-            [theme]="theme"
+            [theme]="theme.value"
             [error]="withInputError || (hasError ? 'Error message' : null)"
             [disabled]="disabled"
-            [tooltipTheme]="tooltipTheme"
-            [alternative]="appearance === 'alternative'"
+            [tooltipTheme]="tooltipTheme.key"
+            [alternative]="appearance.key === 'alternative'"
             (onChange)="onSliderChange($event)"
             [alwaysShowTooltip]="alwaysShowTooltip"
         >
@@ -85,28 +85,17 @@
 <div class="row">
     <div class="col">
         <p>Themes</p>
-        <sebng-radio-group name="theme" [list]="themeList" [(ngModel)]="theme" (ngModelChange)="onRadioChange($event, 'theme')">
-        </sebng-radio-group>
+        <sebng-radio-group name="theme" [list]="themeList" [(ngModel)]="theme"> </sebng-radio-group>
     </div>
     <div class="col">
         <p>Tooltip Themes</p>
 
-        <sebng-radio-group
-            name="tooltipTheme"
-            [list]="themeList"
-            [(ngModel)]="tooltipTheme"
-            (ngModelChange)="onRadioChange($event, 'tooltipTheme')"
-        ></sebng-radio-group>
+        <sebng-radio-group name="tooltipTheme" [list]="themeList" [(ngModel)]="tooltipTheme"></sebng-radio-group>
     </div>
     <div class="col">
         <p>Appearance</p>
 
-        <sebng-radio-group
-            name="appearance"
-            [list]="appearanceList"
-            [(ngModel)]="appearance"
-            (ngModelChange)="onRadioChange($event, 'appearance')"
-        ></sebng-radio-group>
+        <sebng-radio-group name="appearance" [list]="appearanceList" [(ngModel)]="appearance"></sebng-radio-group>
     </div>
     <div class="col">
         <p>Options</p>

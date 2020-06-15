@@ -17,7 +17,7 @@ export class SliderComponent implements OnInit {
     appearanceList: Array<Item<SliderAppearance>> = [];
     themeList: Array<Item<SliderTheme>> = [];
     alwaysShowTooltip: boolean;
-    appearance: SliderAppearance;
+    appearance: Item<SliderAppearance> = { label: "normal", value: "normal", key: "normal" };
     disabled: boolean;
     hasError: boolean;
     hasLabels: boolean;
@@ -30,8 +30,8 @@ export class SliderComponent implements OnInit {
     sliderLabels: Array<RangeSliderLabel>;
     step: number;
     stepInputError: string;
-    theme: SliderTheme;
-    tooltipTheme: SliderTheme;
+    theme: Item<SliderTheme> = { label: "primary", value: "primary", key: "primary" };
+    tooltipTheme: Item<SliderTheme> = { label: "inverted", value: "inverted", key: "inverted" };
     withInput: boolean;
     withInputError: string;
 
@@ -50,10 +50,7 @@ export class SliderComponent implements OnInit {
             { label: "Alternative (old default)", value: "alternative", key: "alternative" },
         ];
 
-        this.appearance = "normal";
         this.slider = 25;
-        this.theme = "primary";
-        this.tooltipTheme = "inverted";
         this.disabled = false;
         this.hasError = false;
         this.hasLabels = false;
@@ -88,21 +85,10 @@ export class SliderComponent implements OnInit {
         return list;
     }
 
-    onRadioChange(value: SliderTheme | RadioGroupItem, name: keyof this) {
-        if (value) {
-            this[name as any] = typeof value === "object" ? ((value as RadioGroupItem)?.key as SliderTheme) : value;
-        } else {
-            this[name] = this[name];
-        }
-    }
-
     onOptionsChange(value: boolean, name: keyof this) {
-        let sliderLabels: Array<RangeSliderLabel>;
-
-        this[name as any] = value;
-        if (["min", "max", "hasLabels"].indexOf(name as any) !== -1) {
+        if (["min", "max", "hasLabels"].some((obj: string) => obj === name)) {
             const hasLabels = name === "hasLabels" ? this[name] : this.hasLabels;
-            sliderLabels = hasLabels ? this.generateLabels(this.min, this.max) : [];
+            const sliderLabels: Array<RangeSliderLabel> = hasLabels ? this.generateLabels(this.min, this.max) : [];
             sliderLabels && (this.sliderLabels = sliderLabels);
         }
     }
