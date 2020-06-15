@@ -27,12 +27,12 @@ export const ROUTES: Array<Route> = [
                             sources: [
                                 {
                                     name: "textArea.component.html",
-                                    src: require("!raw-loader!./examples/textArea/textArea.component.html"),
+                                    src: require("!raw-loader!./examples/textArea/textArea.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "pagination.component.ts",
-                                    src: require("!raw-loader!./examples/textArea/textArea.component.ts"),
+                                    src: require("!raw-loader!./examples/textArea/textArea.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -44,7 +44,7 @@ export const ROUTES: Array<Route> = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/textArea/textArea.component.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/textArea/textArea.component.ts").default],
                 },
             },
         ],
