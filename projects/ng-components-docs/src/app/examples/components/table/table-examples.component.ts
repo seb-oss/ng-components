@@ -9,6 +9,7 @@ interface TableObjectType {
     bar: string;
     amount: string;
     validFrom: string | Date;
+    customTemplate?: string;
 }
 
 @Component({
@@ -17,7 +18,7 @@ interface TableObjectType {
 })
 export class TableExamplesComponent implements OnInit, OnDestroy {
     sortInfo: SortInfo<keyof TableObjectType>;
-    types: TableConfig<TableObjectType>["types"] = { amount: "number", validFrom: "date" };
+    types: TableConfig<TableObjectType>["types"] = { amount: "number", validFrom: "date", customTemplate: "custom-html" };
     unsubscribe: Subject<any> = new Subject();
 
     headerList: TableHeaderListItem<TableObjectType>[];
@@ -26,7 +27,13 @@ export class TableExamplesComponent implements OnInit, OnDestroy {
     data: TableObjectType[] = [
         { foo: "C", bar: "bar 1", amount: "00034", validFrom: new Date() },
         { foo: "A", bar: "bar 2", amount: "278392", validFrom: new Date().toString() },
-        { foo: "B", bar: "bar 3", amount: "5530", validFrom: "2020 01 05" },
+        {
+            foo: "B",
+            bar: "bar 3",
+            amount: "5530",
+            validFrom: "2020 01 05",
+            customTemplate: "<code>Custom html</code>",
+        },
     ];
 
     constructor(private tableService: TableService<TableObjectType>) {}

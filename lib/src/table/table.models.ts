@@ -1,5 +1,5 @@
 /** The type of a data the values in a column represent  */
-export type TableHeaderListValueType = "number" | "string" | "date" | "datetime" | "bool";
+export type TableHeaderListValueType = "number" | "string" | "date" | "datetime" | "bool" | "custom-html";
 
 /** The Table config object Interface */
 export interface TableConfig<T extends {} = {}> {
