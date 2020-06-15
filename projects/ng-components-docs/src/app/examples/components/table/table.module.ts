@@ -26,12 +26,12 @@ export const ROUTES = [
                             sources: [
                                 {
                                     name: "table-examples.component.html",
-                                    src: require("!raw-loader!./table-examples.component.html"),
+                                    src: require("!raw-loader!./table-examples.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "table-examples.component.ts",
-                                    src: require("!raw-loader!./table-examples.component.ts"),
+                                    src: require("!raw-loader!./table-examples.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -43,7 +43,7 @@ export const ROUTES = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/table/table.component.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/table/table.component.ts").default],
                 },
             },
         ],
