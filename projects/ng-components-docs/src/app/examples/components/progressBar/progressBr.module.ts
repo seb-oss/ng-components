@@ -25,12 +25,12 @@ export const ROUTES = [
                             sources: [
                                 {
                                     name: "ProgressBar.component.html",
-                                    src: require("!raw-loader!./progressBar.component.html"),
+                                    src: require("!raw-loader!./progressBar.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "ProgressBar.component.ts",
-                                    src: require("!raw-loader!./progressBar.component.ts"),
+                                    src: require("!raw-loader!./progressBar.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -42,7 +42,7 @@ export const ROUTES = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/progressBar/progressBar.component.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/progressBar/progressBar.component.ts").default],
                 },
             },
         ],

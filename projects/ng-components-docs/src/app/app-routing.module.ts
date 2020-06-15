@@ -111,7 +111,7 @@ const routes: Routes = [
                     children: VIDEO_ROUTES,
                 },
                 {
-                    path: "prgressbar",
+                    path: "progressbar",
                     children: PROGRESS_BAR_ROUTES,
                 },
             ],

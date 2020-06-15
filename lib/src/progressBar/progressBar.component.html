@@ -1,9 +1,9 @@
-<div class="progress" [ngClass]="className" [attr.id]="id" [ngStyle]="height ? { height: height + 'px' } : null">
+<div class="progress" [ngClass]="className" [attr.id]="id" [style.height.px]="height || null">
     <ng-container *ngIf="multiBars; else singleBar">
         <div
             class="progress-bar"
             *ngFor="let bar of multiBars"
-            [ngClass]="bar.theme | proggressTheme"
+            [ngClass]="bar.theme | progressTheme"
             [class.progress-bar-striped]="bar.striped"
             [class.progress-bar-animated]="bar.animated"
             role="progressbar"
@@ -18,7 +18,7 @@
     <ng-template #singleBar>
         <div
             class="progress-bar"
-            [ngClass]="theme | proggressTheme"
+            [ngClass]="theme | progressTheme"
             [class.progress-bar-striped]="striped"
             [class.progress-bar-animated]="animated"
             role="progressbar"
