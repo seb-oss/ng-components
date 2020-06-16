@@ -21,7 +21,7 @@ export const ROUTES: Array<Route> = [
                         path: "tabs",
                         component: TabsComponent,
                         data: {
-                            title: "Tabs",
+                            title: "Tabs Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
@@ -30,7 +30,7 @@ export const ROUTES: Array<Route> = [
                                     lang: "markup",
                                 },
                                 {
-                                    name: "pagination.component.ts",
+                                    name: "tabs.component.ts",
                                     src: require("!raw-loader!./examples/tabs/tabs.component.ts").default,
                                     lang: "ts",
                                 },
