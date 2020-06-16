@@ -59,11 +59,7 @@ export class RatingComponent implements ControlValueAccessor, OnInit {
      * @returns {Array<number>} An array of ones just to loop through it
      */
     getList(): Array<number> {
-        const list: Array<number> = new Array(this.max);
-        for (let i: number = 0; i < list.length; i++) {
-            list[i] = 1;
-        }
-        return list;
+        return Array(this.max).fill(1);
     }
 
     setTabIndex(i: number): string {
