@@ -25,12 +25,12 @@ export const ROUTES = [
                             sources: [
                                 {
                                     name: "video.component.html",
-                                    src: require("!raw-loader!./video.component.html"),
+                                    src: require("!raw-loader!./video.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "video.component.ts",
-                                    src: require("!raw-loader!./video.component.ts"),
+                                    src: require("!raw-loader!./video.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -42,7 +42,7 @@ export const ROUTES = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/video/video.component.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/video/video.component.ts").default],
                 },
             },
         ],

@@ -21,7 +21,7 @@ export const ROUTES: Array<Route> = [
                         path: "textboxgroup",
                         component: TextboxGroupComponent,
                         data: {
-                            title: "TextboxGroup",
+                            title: "Textbox Group Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
