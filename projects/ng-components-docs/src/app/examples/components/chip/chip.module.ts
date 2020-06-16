@@ -17,10 +17,10 @@ export const ROUTES = [
                 component: ExampleListComponent,
                 children: [
                     {
-                        path: "textLabel",
+                        path: "chip",
                         component: ChipComponent,
                         data: {
-                            title: "Text Label Component",
+                            title: "Chip Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {

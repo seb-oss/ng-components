@@ -22,7 +22,7 @@ export const ROUTES: Array<Route> = [
                         path: "radio-group",
                         component: RadioGroupsComponent,
                         data: {
-                            title: "Radio Group",
+                            title: "Radio Group Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
