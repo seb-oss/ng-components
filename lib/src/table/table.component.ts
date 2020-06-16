@@ -11,16 +11,14 @@ export class TableComponent {
     @Input() headerList: Array<TableHeaderListItem> = [];
     @Input() sortInfo?: SortInfo;
     @Input() selectable?: boolean = false;
+    @Input() isAllSelected?: boolean = false;
     @Input() rows: Array<any> = [];
     @Input() fixedHeight?: string;
+    @Input() selectedRowIndexes: number[] = [];
+
     @Output() rowClicked: EventEmitter<TableRowClickedEvent> = new EventEmitter();
     @Output() sortClicked: EventEmitter<string> = new EventEmitter();
-    @Output() selectedRows: EventEmitter<number[]> = new EventEmitter();
-
-    _selectedRowIndexes: number[] = [];
-    get selectedRowIndexes(): number[] {
-        return this._selectedRowIndexes;
-    }
+    @Output() selectAllClicked: EventEmitter<void> = new EventEmitter();
 
     // ------------- EVENTS ------------------
     /**
@@ -28,16 +26,6 @@ export class TableComponent {
      * @param {TableRowClickedEvent} value the TableRowClickedEvent
      */
     handleClickRow = (value: TableRowClickedEvent): void => {
-        if (this.selectable) {
-            const rowIsSelected: boolean = this._selectedRowIndexes.includes(value.index);
-            if (rowIsSelected) {
-                this._selectedRowIndexes = [...this._selectedRowIndexes.filter(val => val !== value.index)];
-            } else {
-                this._selectedRowIndexes = [...this._selectedRowIndexes];
-                this._selectedRowIndexes.push(value.index);
-            }
-        }
-        this.selectedRows.emit(this._selectedRowIndexes);
         this.rowClicked.emit(value);
     };
 
@@ -45,11 +33,6 @@ export class TableComponent {
      * handles the logic for when the checkbox in the header is selected
      */
     handleAllSelectedClicked(): void {
-        if (this.rows.length && this._selectedRowIndexes.length < this.rows.length) {
-            this._selectedRowIndexes = [...this.rows.map((_, i) => i)];
-        } else {
-            this._selectedRowIndexes = [];
-        }
-        this.selectedRows.emit(this._selectedRowIndexes);
+        this.selectAllClicked.emit();
     }
 }

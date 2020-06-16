@@ -1,4 +1,4 @@
-import { Injectable, Output, EventEmitter } from "@angular/core";
+import { Injectable, Output } from "@angular/core";
 import { TableHeaderListItem, TableConfig, SortInfo, TableHeaderListValueType } from "./table.models";
 // import { readableFromCamelCase } from "@sebgroup/frontend-tools/dist/dateDiff";
 // import { dateDiff } from "@sebgroup/frontend-tools/dist/dateDiff"; // NOTE: try this if sort table by date is not working with current implementation
@@ -49,6 +49,7 @@ export class TableService<T extends object> {
     }
 
     @Output() currentSortInfo: BehaviorSubject<SortInfo<keyof T>> = new BehaviorSubject(null);
+    @Output() isAllSelected: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
     private columnsList: string[];
 
@@ -58,6 +59,9 @@ export class TableService<T extends object> {
     /** The Master Table, Paginated */
     private _paginatedTable: T[][] = [[]];
     @Output() paginatedTable: BehaviorSubject<T[][]> = new BehaviorSubject([[]]);
+    /** The indexes of the selected rows, paginated */
+    private _selectedRows: number[][] = [[]];
+    @Output() selectedRows: BehaviorSubject<number[][]> = new BehaviorSubject([[]]);
     /** The Currently Visible Page of the Sorted and Paginated Master Table */
     private _currentTable: T[] = [];
     @Output() currentTable: BehaviorSubject<T[]> = new BehaviorSubject([]);
@@ -123,6 +127,8 @@ export class TableService<T extends object> {
         this.currentSortInfo.next(this.sortInfo);
         this.sortedTable.next(this._sortedTable);
         this.paginatedTable.next(this._paginatedTable);
+        this.selectedRows.next(this._selectedRows);
+        this.isAllSelected.next(this.checkIsAllSelected());
         this.currentTable.next(this._currentTable);
         this.tableHeaderList.next(this._tableHeaderList);
         this.currentPageIndex.next(this._currentPageIndex);
@@ -178,6 +184,10 @@ export class TableService<T extends object> {
     private setupTable(table: Array<T>, sortInfo: SortInfo, maxItems: number): void {
         this._sortedTable = this.makeSortedTable(table, sortInfo);
         this._paginatedTable = this.makePaginatedTable(this._sortedTable, maxItems);
+        // TODO: Instead of deselecting all rows here keep the selected rows state and mapp it to the newly sorted / paginated table
+        // if (!this._selectedRows || (this._selectedRows && this._selectedRows.length !== this._paginatedTable.length)) {
+        this._selectedRows = [...this._paginatedTable.map(_ => [])];
+        // }
         if (this._currentPageIndex > this._paginatedTable.length - 1) {
             this._currentPageIndex = this._paginatedTable.length - 1;
         }
@@ -267,6 +277,14 @@ export class TableService<T extends object> {
     };
 
     /**
+     * CHECK IS ALL SELECTED
+     * Checks the selected rows of each table and check returns true/false if all rows in every table are selected
+     */
+    private checkIsAllSelected(): boolean {
+        return this._selectedRows.map((e, i) => e?.length === this._paginatedTable[i]?.length).every(e => e === true);
+    }
+
+    /**
      * GET PAGINATION OFFSET
      * Calculates the offset (number of pages displayed) for pagination
      * @returns the offset as integer
@@ -317,9 +335,54 @@ export class TableService<T extends object> {
         const index: number = newIndex - 1;
         if (index >= 0 && index < this._paginatedTable.length) {
             this._currentPageIndex = index;
-            this.reloadTable();
+            this._currentTable = [...this._paginatedTable[this._currentPageIndex]];
+            this.currentPageIndex.next(this._currentPageIndex);
+            this.currentTable.next(this._currentTable);
         } else {
             console.warn("The page index is out of range");
         }
     };
+
+    /**
+     * HANDLE SELECT ROW
+     * Handles the logic for changing the state of a row (selected/not selected)
+     * @param {number} index index of the row of which selection should be toggled
+     */
+    public handleSelectRow = (index: number): void => {
+        if (this._currentPageIndex < 0 || index < 0) {
+            console.warn("Page or row index can not be negative");
+        } else {
+            if (this._selectedRows.length === this._paginatedTable.length) {
+                const rowIsSelected: boolean = this._selectedRows[this._currentPageIndex]?.includes(index);
+                if (rowIsSelected) {
+                    this._selectedRows[this._currentPageIndex] = [
+                        ...this._selectedRows[this._currentPageIndex].filter(val => val !== index),
+                    ];
+                } else {
+                    this._selectedRows[this._currentPageIndex] = [...this._selectedRows[this._currentPageIndex], index];
+                }
+            } else {
+                console.warn("Error: please register table source before consuming the handle methods");
+            }
+            this.selectedRows.next([...this._selectedRows]);
+            this.isAllSelected.next(this.checkIsAllSelected());
+        }
+    };
+
+    /**
+     * handles the logic for toggling the state of selected rows to select all or deselect all
+     */
+    public handleSelectAllRows(): void {
+        if (this._selectedRows.length === this._paginatedTable.length) {
+            if (this.checkIsAllSelected()) {
+                this._selectedRows = [...this._paginatedTable.map(_ => [])];
+            } else {
+                this._selectedRows = [...this._paginatedTable.map(e => [...e?.map((_, i) => i)])];
+            }
+            this.selectedRows.next([...this._selectedRows]);
+            this.isAllSelected.next(this.checkIsAllSelected());
+        } else {
+            console.warn("Error: please register table source before consuming the handle methods");
+        }
+    }
 }

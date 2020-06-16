@@ -2,8 +2,8 @@
     <table [class.table-hover]="selectable" class="table table-sm">
         <thead
             seb-table-header
-            [selectable]="!!selectable"
-            [isAllSelected]="rows?.length && selectedRowIndexes?.length === rows?.length"
+            [selectable]="selectable"
+            [isAllSelected]="isAllSelected"
             [list]="headerList"
             [sortInfo]="sortInfo"
             (sortClicked)="sortClicked.emit($event)"
@@ -11,7 +11,7 @@
         ></thead>
         <tbody
             seb-table-body
-            [selectable]="!!selectable"
+            [selectable]="selectable"
             [headerList]="headerList"
             [rows]="rows"
             [selectedRows]="selectedRowIndexes"

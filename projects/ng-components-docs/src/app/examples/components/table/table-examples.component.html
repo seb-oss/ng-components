@@ -9,8 +9,18 @@
 
 <div class="row">
     <div class="col-12">
-        <label>Table with sorting and pagination</label>
-        <seb-table [rows]="rows" [headerList]="headerList" [sortInfo]="sortInfo" (sortClicked)="handleSortClicked($event)"></seb-table>
+        <label>Table with all features (sort, pagination and select rows)</label>
+        <seb-table
+            [rows]="rows"
+            [headerList]="headerList"
+            [sortInfo]="sortInfo"
+            (sortClicked)="handleSortClicked($event)"
+            [selectable]="true"
+            [isAllSelected]="isAllSelected"
+            [selectedRowIndexes]="selectedRows[curentPage]"
+            (rowClicked)="handleSelectRow($event)"
+            (selectAllClicked)="handleSelectAll()"
+        ></seb-table>
         <sebng-pagination
             [value]="curentPage + 1"
             (change)="handleChangePagination($event)"

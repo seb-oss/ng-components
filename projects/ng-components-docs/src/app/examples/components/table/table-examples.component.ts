@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { TableHeaderListItem, SortInfo, TableConfig } from "lib/src/table/table.models";
+import { TableHeaderListItem, SortInfo, TableConfig, TableRowClickedEvent } from "lib/src/table/table.models";
 import { TableService } from "lib/src/table";
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
@@ -25,6 +25,8 @@ export class TableExamplesComponent implements OnInit, OnDestroy {
 
     headerList: TableHeaderListItem<TableObjectType>[];
     rows: TableObjectType[];
+    selectedRows: number[][] = [[]];
+    isAllSelected: boolean = false;
 
     data: TableObjectType[] = [
         { foo: "C", bar: "bar 1", amount: "00034", validFrom: new Date() },
@@ -78,6 +80,18 @@ export class TableExamplesComponent implements OnInit, OnDestroy {
                 this.curentPage = value;
             },
         });
+
+        this.tableService.selectedRows.pipe(takeUntil(this.unsubscribe)).subscribe({
+            next: (value: number[][]) => {
+                this.selectedRows = value;
+            },
+        });
+
+        this.tableService.isAllSelected.pipe(takeUntil(this.unsubscribe)).subscribe({
+            next: (value: boolean) => {
+                this.isAllSelected = value;
+            },
+        });
     }
 
     handleSortClicked(selectedColumn: keyof TableObjectType): void {
@@ -87,6 +101,14 @@ export class TableExamplesComponent implements OnInit, OnDestroy {
 
     handleChangePagination(newIndex: number): void {
         this.tableService.handleChangePagination(newIndex);
+    }
+
+    handleSelectRow(event: TableRowClickedEvent): void {
+        this.tableService.handleSelectRow(event.index);
+    }
+
+    handleSelectAll(): void {
+        this.tableService.handleSelectAllRows();
     }
 
     ngOnDestroy(): void {
