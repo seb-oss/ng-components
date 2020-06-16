@@ -43,7 +43,10 @@ export const ROUTES = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/table/table.component.ts").default],
+                    sources: [
+                        require("!raw-loader!../../../../../../../lib/src/table/table.component.ts").default,
+                        require("!raw-loader!../../../../../../../lib/src/table/table.service.ts").default,
+                    ],
                 },
             },
         ],
