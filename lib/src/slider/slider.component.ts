@@ -9,6 +9,8 @@ import {
     Component,
     forwardRef,
     Provider,
+    ChangeDetectorRef,
+    AfterContentChecked,
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
@@ -39,7 +41,7 @@ const CUSTOM_SLIDER_CONTROL_VALUE_ACCESSOR: Provider = {
     encapsulation: ViewEncapsulation.None,
     providers: [CUSTOM_SLIDER_CONTROL_VALUE_ACCESSOR],
 })
-export class SliderComponent implements OnInit, OnChanges, ControlValueAccessor {
+export class SliderComponent implements OnInit, OnChanges, AfterContentChecked, ControlValueAccessor {
     @Input() alternative?: boolean;
     @Input() alwaysShowTooltip?: boolean;
     @Input() className?: string;
@@ -69,10 +71,12 @@ export class SliderComponent implements OnInit, OnChanges, ControlValueAccessor 
 
     public thumbPosition: number = 0;
 
-    appearanceSizesMap: AppearanceStyleMap = {
+    private appearanceSizesMap: AppearanceStyleMap = {
         alternative: { width: "27px", offset: "56px" },
         normal: { width: "5px", offset: "24px" },
     };
+
+    constructor(private ref: ChangeDetectorRef) {}
 
     get innerMin(): number {
         return this._min;
@@ -187,7 +191,7 @@ export class SliderComponent implements OnInit, OnChanges, ControlValueAccessor 
 
     /**
      * Calculates the styles needed for the active track
-     * @returns {React.CSSProperties} The active track styles object
+     * @returns {CSSStyleDeclaration} The active track styles object
      */
     getActiveTrackStyles() {
         const calculatedThumbPosition: number = this.getPercentage();
@@ -282,7 +286,6 @@ export class SliderComponent implements OnInit, OnChanges, ControlValueAccessor 
     }
 
     ngOnInit() {
-        this.innerMax = this.max || 100;
         this.size = 0;
         this.labelsPositions = [];
         this.appearance = this.alternative ? "alternative" : "normal";
@@ -290,6 +293,10 @@ export class SliderComponent implements OnInit, OnChanges, ControlValueAccessor 
         this.setSliderRange();
         this.setStyleTracks();
         this.setLabelsPositions();
+    }
+
+    ngAfterContentChecked() {
+        this.ref.detectChanges();
     }
 
     ngOnChanges(changes: SimpleChanges) {
