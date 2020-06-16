@@ -1,0 +1,14 @@
+@import "~@angular/cdk/overlay-prebuilt.css";
+@import "~@sebgroup/bootstrap/scss/variables";
+// @import "~@sebgroup/bootstrap/scss/bootstrap-core/mixins/_reset-text";
+// @import "~@sebgroup/bootstrap/scss/styles/_tooltip";
+.tooltip {
+    // position: relative;
+    min-width: max-content;
+    // margin: 10px 20px;
+    opacity: 1;
+}
+
+.tooltip-reference {
+    z-index: -1;
+}

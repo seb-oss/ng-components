@@ -1,1 +1,7 @@
-<p>tooltip works!</p>
+<div #tooltip class="tooltip bs-tooltip-top" tabindex="-1" role="tooltip" (blur)="onBlur($event)">
+    <div class="arrow"></div>
+    <div class="tooltip-inner">
+        <ng-container *ngIf="isTemplateRef; else defaultContent" [ngTemplateOutlet]="text"></ng-container>
+        <ng-template #defaultContent>{{ text }}</ng-template>
+    </div>
+</div>
