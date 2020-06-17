@@ -14,6 +14,7 @@ import { ROUTES as TOGGLE_ROUTES } from "./examples/components/toggle/toggle.mod
 import { ROUTES as CHIP_ROUTES } from "./examples/components/chip/chip.module";
 import { ROUTES as TABS_ROUTES } from "./examples/components/tabs/tabs.module";
 import { ROUTES as BREADCRUMB_ROUTES } from "./examples/components/breadcrumb/breadcrumb.module";
+import { ROUTES as CHECKBOX_ROUTES } from "./examples/components/checkBox/checkBox.module";
 
 import { InstallationComponent } from "./components/installation/installation.component";
 import { sortArray } from "./utils/arrayFunctions";
@@ -103,6 +104,10 @@ const routes: Routes = [
                 {
                     path: "breadcrumb",
                     children: BREADCRUMB_ROUTES,
+                },
+                {
+                    path: "checkBox",
+                    children: CHECKBOX_ROUTES,
                 },
             ],
             "path"

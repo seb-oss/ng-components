@@ -1,0 +1,29 @@
+<div class="seb-checkbox" [class.border]="error" [class.border-danger]="error">
+    <div class="custom-control custom-checkbox">
+        <input
+            type="checkbox"
+            class="custom-control-input"
+            [class.disabled]="disabled"
+            [id]="id"
+            [name]="name"
+            [(ngModel)]="value"
+            [disabled]="disabled"
+        />
+
+        <label *ngIf="label" class="custom-control-label" [class.disabled]="disabled" [attr.for]="id">
+            <ng-container *ngTemplateOutlet="isString(label) ? stringLabel : label"></ng-container>
+            <ng-template #stringLabel>
+                {{ label }}
+            </ng-template>
+        </label>
+    </div>
+
+    <ng-container *ngTemplateOutlet="isString(description) ? stringDescription : description"></ng-container>
+    <ng-template #stringDescription>
+        <p class="custom-control-description">{{ description }}</p>
+    </ng-template>
+</div>
+<ng-container *ngTemplateOutlet="isString(error) ? stringError : error"></ng-container>
+<ng-template #stringError>
+    <span class="text-danger">{{ error }}</span>
+</ng-template>

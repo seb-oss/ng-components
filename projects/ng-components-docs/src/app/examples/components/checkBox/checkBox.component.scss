@@ -1,0 +1,13 @@
+@import "~@sebgroup/bootstrap/scss/variables";
+
+.grid {
+    display: grid;
+    row-gap: 1rem;
+    sebng-checkbox {
+        width: fit-content;
+        .custom-description {
+            font-size: $font-size-sm;
+            color: $success;
+        }
+    }
+}

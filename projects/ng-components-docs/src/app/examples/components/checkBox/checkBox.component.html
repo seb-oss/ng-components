@@ -1,0 +1,31 @@
+<section class="grid">
+    <sebng-checkbox label="String CheckBox Label" (changeAction)="logMe($event)"></sebng-checkbox>
+
+    <sebng-checkbox [label]="label">
+        <ng-template #label>
+            <div class="custom-label">
+                Custom Checkbox label, please read the link before you agree <a href="www.google.com" target="_blank">read me please</a>
+            </div>
+        </ng-template>
+    </sebng-checkbox>
+
+    <sebng-checkbox label="CheckBox with description" description="Description of CheckBox"></sebng-checkbox>
+
+    <sebng-checkbox label="CheckBox with Custom description" [description]="description">
+        <ng-template #description>
+            <div class="custom-description">I am a custom description <a href="www.google.com" target="_blank">read me please</a></div>
+        </ng-template>
+    </sebng-checkbox>
+
+    <sebng-checkbox label="Disabled CheckBox" disabled></sebng-checkbox>
+
+    <sebng-checkbox label="Error CheckBox" error="Im an error"></sebng-checkbox>
+
+    <sebng-checkbox label="Custom Error CheckBox" [error]="error">
+        <ng-template #error>
+            <div class="text-danger">
+                If you can see the error click on the link <a href="www.google.com" target="_blank">read me please</a>
+            </div>
+        </ng-template>
+    </sebng-checkbox>
+</section>
