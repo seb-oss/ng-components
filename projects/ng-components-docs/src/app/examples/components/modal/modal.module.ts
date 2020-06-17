@@ -19,7 +19,7 @@ export const ROUTES = [
                         path: "modal",
                         component: ModalComponent,
                         data: {
-                            title: "Modal component",
+                            title: "Modal Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
@@ -44,8 +44,6 @@ export const ROUTES = [
                 component: ApiListComponent,
                 data: {
                     sources: [
-                        require("!raw-loader!../../../../../../../lib/src/button/parse-source-example/parse-source-example.component.ts")
-                            .default,
                         require("!raw-loader!../../../../../../../lib/src/modal/modal.ts").default,
                         require("!raw-loader!../../../../../../../lib/src/modal/modal.directives.ts").default,
                         require("!raw-loader!../../../../../../../lib/src/modal/modal.service.ts").default,

@@ -21,7 +21,7 @@ export const ROUTES: Array<Route> = [
                         path: "dropdown",
                         component: DropdownsComponent,
                         data: {
-                            title: "Dropdown",
+                            title: "Dropdown Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
