@@ -11,6 +11,7 @@ import { CommonModule } from "@angular/common";
         <ng-template #error><div class="custom-error">Custom error</div></ng-template>
         <sebng-checkbox
             [id]="id"
+            [className]="className"
             [label]="label"
             [description]="description"
             [error]="error"
@@ -21,10 +22,11 @@ import { CommonModule } from "@angular/common";
 })
 class CheckboxTestComponent {
     label: string | TemplateRef<HTMLElement>;
-    @ViewChild(CheckBoxComponent) checkBoxComponent: CheckBoxComponent;
+    className: string;
     selectedValue: boolean;
-    disabled?: boolean = false;
-    id?: string;
+    disabled: boolean = false;
+    id: string;
+    @ViewChild(CheckBoxComponent) checkBoxComponent: CheckBoxComponent;
 
     onChange(): void {}
 }
@@ -61,6 +63,14 @@ describe("Component: CheckBoxComponent", () => {
         component.id = id;
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css(`#${id}`))).toBeTruthy();
+    });
+
+    it("should have the expected custom classnames", () => {
+        const className: string = "custom-class-name";
+        component.className = className;
+        fixture.detectChanges();
+        const label: DebugElement = fixture.debugElement.query(By.css(`.custom-checkbox.${className}`));
+        expect(label).toBeTruthy();
     });
 
     it("should have the expected custom label", () => {

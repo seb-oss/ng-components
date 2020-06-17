@@ -2,7 +2,7 @@ import { Component, Input, forwardRef, ViewEncapsulation, OnInit, TemplateRef, O
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { randomId } from "@sebgroup/frontend-tools/dist/randomId";
 
-const CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR: Provider = {
+export const CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR: Provider = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => CheckBoxComponent),
     multi: true,
@@ -16,11 +16,11 @@ const CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR: Provider = {
     encapsulation: ViewEncapsulation.None,
 })
 export class CheckBoxComponent implements ControlValueAccessor, OnInit {
+    @Input() label: string | TemplateRef<HTMLElement>;
     @Input() _id?: string;
     @Input() name?: string;
     @Input() className?: string;
     @Input() disabled?: boolean;
-    @Input() label: string | TemplateRef<HTMLElement>;
     @Input() description?: string | TemplateRef<HTMLElement>;
     @Input() error?: string | TemplateRef<HTMLElement>;
     @Output() onChange?: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -45,6 +45,7 @@ export class CheckBoxComponent implements ControlValueAccessor, OnInit {
     set value(v: boolean) {
         if (v !== this.innerValue) {
             this.innerValue = v;
+            console.log("set value");
             this.onChangeCallback && this.onChangeCallback(v);
             this.onTouchedCallback && this.onTouchedCallback();
             this.onChange && this.onChange.emit(v);

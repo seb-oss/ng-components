@@ -30,4 +30,9 @@
             <div class="text-danger">Click on the <a href="www.google.com" target="_blank">error link</a></div>
         </ng-template>
     </sebng-checkbox>
+
+    <form [formGroup]="formGroup" class="inner-grid">
+        <sebng-checkbox label="Accept before you submit" formControlName="checkboxControl" [error]="submitError"></sebng-checkbox>
+        <button sebng-btn (click)="submit()">Submit Form</button>
+    </form>
 </section>

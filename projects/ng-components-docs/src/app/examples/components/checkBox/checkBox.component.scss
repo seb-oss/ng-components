@@ -10,4 +10,12 @@
             color: $success;
         }
     }
+    .inner-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 2fr;
+        min-height: 74px;
+        button {
+            height: fit-content;
+        }
+    }
 }
