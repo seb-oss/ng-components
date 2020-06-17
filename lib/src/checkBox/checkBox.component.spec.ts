@@ -1,33 +1,49 @@
 import { CheckBoxComponent, CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR } from "./checkBox.component";
-import { TestBed, async, ComponentFixture, fakeAsync, tick } from "@angular/core/testing";
+import { TestBed, async, ComponentFixture } from "@angular/core/testing";
 import { DebugElement, Component, ViewChild, TemplateRef } from "@angular/core";
 import { By } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 
 @Component({
-    template: `<sebng-checkbox [label]="label">
-        <ng-template #label><div class="custom-label">Custom Checkbox label</div></ng-template>
-    </sebng-checkbox>`,
+    template: ` <ng-template #label><div class="custom-label">Custom label</div></ng-template>
+        <ng-template #description><div class="custom-description">Custom description</div></ng-template>
+        <ng-template #error><div class="custom-error">Custom error</div></ng-template>
+        <sebng-checkbox
+            [id]="id"
+            [label]="label"
+            [description]="description"
+            [error]="error"
+            [disabled]="disabled"
+            [(ngModel)]="selectedValue"
+            (onChange)="onChange($event)"
+        ></sebng-checkbox>`,
 })
-class TestComponent {
+class CheckboxTestComponent {
     label: string | TemplateRef<HTMLElement>;
+    @ViewChild(CheckBoxComponent) checkBoxComponent: CheckBoxComponent;
+    selectedValue: boolean;
+    disabled?: boolean = false;
+    id?: string;
+
+    onChange(): void {}
 }
 
 describe("Component: CheckBoxComponent", () => {
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
+    let component: CheckboxTestComponent;
+    let fixture: ComponentFixture<CheckboxTestComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [FormsModule, CommonModule],
-            declarations: [CheckBoxComponent, TestComponent],
+            declarations: [CheckBoxComponent, CheckboxTestComponent],
             providers: [CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR],
         })
             .compileComponents()
             .then(() => {
-                fixture = TestBed.createComponent(TestComponent);
+                fixture = TestBed.createComponent(CheckboxTestComponent);
                 component = fixture.componentInstance;
+                fixture.detectChanges();
             });
     }));
 
@@ -35,67 +51,61 @@ describe("Component: CheckBoxComponent", () => {
         expect(component).toBeTruthy();
     });
 
-    it("should have the expected strimg label", () => {
+    it("Should have a random id when property is not specified", () => {
+        const input: DebugElement = fixture.debugElement.query(By.css("input"));
+        expect(input.nativeElement.getAttribute("id")).toBeTruthy();
+    });
+
+    it("Should have a custom id when it's specified", () => {
+        const id: string = "checkboxId";
+        component.id = id;
         fixture.detectChanges();
-        const label: DebugElement = fixture.debugElement.query(By.css("label"));
-        expect(label).toBeTruthy();
-        expect(label.nativeElement.innerHTML).toContain("Custom Checkbox label");
+        expect(fixture.debugElement.query(By.css(`#${id}`))).toBeTruthy();
     });
 
     it("should have the expected custom label", () => {
-        component.label = "checkbox string label" as string;
-        fixture.detectChanges();
-        fixture.whenStable();
-        const label: DebugElement = fixture.debugElement.query(By.css("label"));
+        const label: DebugElement = fixture.debugElement.query(By.css(".custom-label"));
         expect(label).toBeTruthy();
-        console.log(label.nativeElement);
-        expect(label.nativeElement.innerHTML).toContain("checkbox string label");
+        expect(label.nativeElement.innerHTML).toContain("Custom label");
     });
 
-    // it("should render and set the correct label text", async(() => {
-    //     fixture.detectChanges();
-    //     const el: DebugElement = fixture.debugElement.query(By.css("label"));
-    //     expect(el.nativeElement.innerHTML).toEqual("Checkbox Label");
-    // }));
+    it("should have the expected custom description", () => {
+        const label: DebugElement = fixture.debugElement.query(By.css(".custom-description"));
+        expect(label).toBeTruthy();
+        expect(label.nativeElement.innerHTML).toContain("Custom description");
+    });
 
-    // it("should render and fire change event when checkbox is clicked", async(() => {
-    //     component.checkBoxComponent.changeAction = () => {};
-    //     fixture.detectChanges();
-    //     const onChangeMock = spyOn(component.checkBoxComponent, "changeAction");
-    //     const chkBox = fixture.debugElement.nativeElement.querySelector("input#checkboxId1");
-    //     chkBox.click();
-    //     fixture.whenStable().then(() => {
-    //         expect(onChangeMock).toHaveBeenCalled();
-    //     });
-    // }));
+    it("should have the expected error", () => {
+        const label: DebugElement = fixture.debugElement.query(By.css(".custom-error"));
+        expect(label).toBeTruthy();
+        expect(label.nativeElement.innerHTML).toContain("Custom error");
+    });
 
-    // it("should be able to write and update value using the writevalue method", async(() => {
-    //     fixture.detectChanges();
-    //     expect(component.checkBoxComponent.value).toBeNull();
-    //     component.checkBoxComponent.writeValue("new value");
-    //     fixture.detectChanges();
-    //     expect(component.checkBoxComponent.value).toEqual("new value");
-    // }));
+    it("should have the expected error", () => {
+        const label: DebugElement = fixture.debugElement.query(By.css(".custom-error"));
+        expect(label).toBeTruthy();
+        expect(label.nativeElement.innerHTML).toContain("Custom error");
+    });
 
-    // it("should call touch and change events when the value is set", fakeAsync(() => {
-    //     fixture.detectChanges();
-    //     const onChangeEvent = (change: any) => true;
-    //     const registerOnChangeMock = spyOn(component.checkBoxComponent, "registerOnChange").and.callThrough();
-    //     const registerOnTouchedMock = spyOn(component.checkBoxComponent, "registerOnTouched").and.callThrough();
-    //     const onMockWriteValue = spyOn(component.checkBoxComponent, "writeValue").and.callThrough();
+    it("Should disable the element", async () => {
+        component.disabled = true;
+        fixture.detectChanges();
+        const label: DebugElement = fixture.debugElement.query(By.css(".disabled"));
+        expect(label).toBeTruthy();
+    });
 
-    //     component.checkBoxComponent.registerOnChange(onChangeEvent);
+    it("should call writeValue when ngmodel changes", async () => {
+        const ngModelChange = spyOn(component.checkBoxComponent, "writeValue");
+        component.selectedValue = true;
+        fixture.detectChanges();
+        await fixture.whenStable().then(() => expect(ngModelChange).toHaveBeenCalled());
+    });
 
-    //     component.checkBoxComponent.registerOnTouched(onChangeEvent);
-
-    //     component.checkValue = !component.checkValue;
-    //     fixture.detectChanges();
-    //     tick();
-    //     fixture.whenStable().then(() => {
-    //         expect(registerOnChangeMock).toHaveBeenCalledTimes(1);
-    //         expect(registerOnTouchedMock).toHaveBeenCalledTimes(1);
-    //         expect(onMockWriteValue).toHaveBeenCalled();
-    //         expect(component.checkValue).toEqual(component.checkBoxComponent.value);
-    //     });
-    // }));
+    it("should call onChange when checkbox is clicked", async () => {
+        let onChange: jasmine.Spy;
+        onChange = spyOn(component, "onChange");
+        fixture.detectChanges();
+        fixture.debugElement.query(By.css("label")).nativeElement.dispatchEvent(new MouseEvent("click"));
+        await fixture.whenStable().then(() => expect(onChange).toHaveBeenCalled());
+    });
 });

@@ -1,5 +1,9 @@
 <section class="grid">
-    <sebng-checkbox label="String CheckBox Label" (changeAction)="logMe($event)"></sebng-checkbox>
+    <sebng-checkbox label="String CheckBox Label" (onChange)="logMe($event)"></sebng-checkbox>
+
+    <sebng-checkbox label="CheckBox using form control" [formControl]="formcontrol"></sebng-checkbox>
+
+    <sebng-checkbox label="CheckBox using ngModel" [(ngModel)]="model"></sebng-checkbox>
 
     <sebng-checkbox [label]="label">
         <ng-template #label>
@@ -19,13 +23,11 @@
 
     <sebng-checkbox label="Disabled CheckBox" disabled></sebng-checkbox>
 
-    <sebng-checkbox label="Error CheckBox" error="Im an error"></sebng-checkbox>
+    <sebng-checkbox label="Error CheckBox" error="Im a simple error"></sebng-checkbox>
 
     <sebng-checkbox label="Custom Error CheckBox" [error]="error">
         <ng-template #error>
-            <div class="text-danger">
-                If you can see the error click on the link <a href="www.google.com" target="_blank">read me please</a>
-            </div>
+            <div class="text-danger">Click on the <a href="www.google.com" target="_blank">error link</a></div>
         </ng-template>
     </sebng-checkbox>
 </section>

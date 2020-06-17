@@ -204,7 +204,7 @@ export class ApiListComponent implements OnInit {
             .map(property => {
                 return {
                     ...property,
-                    description: ApiListComponent.parseComment(outputs[property.name].comment),
+                    description: ApiListComponent.parseComment(outputs[property.name] && outputs[property.name].comment),
                 };
             });
     }

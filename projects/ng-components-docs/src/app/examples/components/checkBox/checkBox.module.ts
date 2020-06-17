@@ -1,12 +1,14 @@
 import { NgModule } from "@angular/core";
+import { Route } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { CheckBoxComponent } from "./checkBox.component";
 import { ExamplePageComponent } from "../../../components/example-page/example-page.component";
 import { ExampleListComponent } from "../../../components/example-page/example-list/example-list.component";
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
 import { CheckBoxModule as CheckBoxLibModule } from "../../../../../../../lib/src/checkBox";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-export const ROUTES = [
+export const ROUTES: Array<Route> = [
     { path: "", pathMatch: "full", redirectTo: "examples" },
     {
         path: "",
@@ -20,8 +22,7 @@ export const ROUTES = [
                         path: "checkBox",
                         component: CheckBoxComponent,
                         data: {
-                            title: "Modal component",
-                            description: "Additional description for example (optional)",
+                            title: "Checkbox component",
                             sources: [
                                 {
                                     name: "checkBox.component.html",
@@ -53,6 +54,6 @@ export const ROUTES = [
 
 @NgModule({
     declarations: [CheckBoxComponent],
-    imports: [CommonModule, CheckBoxLibModule],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, CheckBoxLibModule],
 })
-export class ModalModule {}
+export class CheckBoxModule {}
