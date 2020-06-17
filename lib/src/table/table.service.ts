@@ -1,7 +1,5 @@
 import { Injectable, Output } from "@angular/core";
 import { TableHeaderListItem, TableConfig, SortInfo, TableHeaderListValueType } from "./table.models";
-// import { readableFromCamelCase } from "@sebgroup/frontend-tools/dist/dateDiff";
-// import { dateDiff } from "@sebgroup/frontend-tools/dist/dateDiff"; // NOTE: try this if sort table by date is not working with current implementation
 import { toDate } from "@sebgroup/frontend-tools/dist/toDate";
 import { readableFromCamelCase } from "../utils";
 import { BehaviorSubject } from "rxjs";
@@ -12,11 +10,11 @@ import { BehaviorSubject } from "rxjs";
 export class TableService<T extends object> {
     // ------------- INITIALISATION -------------
     // ============ TABLE =======================
-    private _table: Array<T>;
-    private get table(): Array<T> {
+    private _table: T[];
+    private get table(): T[] {
         return this._table;
     }
-    private set table(table: Array<T>) {
+    private set table(table: T[]) {
         this._table = table;
     }
 
@@ -70,12 +68,12 @@ export class TableService<T extends object> {
     @Output() currentPageIndex: BehaviorSubject<number> = new BehaviorSubject(0);
     /** The Header List of The Master Table with all the Column Info */
     private _tableHeaderList: Array<TableHeaderListItem<T>> = [];
-    @Output() tableHeaderList: BehaviorSubject<Array<TableHeaderListItem<T>>> = new BehaviorSubject([]);
+    @Output() tableHeaderList: BehaviorSubject<TableHeaderListItem<T>[]> = new BehaviorSubject([]);
 
     // ------------- CONSTRUCTOR ----------------
     constructor() {}
 
-    public registerDatasource(table: Array<T>, config: TableConfig<T> = {}) {
+    public registerDatasource(table: T[], config: TableConfig<T> = {}) {
         this.table = table;
         this.tableConfig = config;
         this.reloadTable();
@@ -112,7 +110,7 @@ export class TableService<T extends object> {
      * Responsible for recalculation (or initialisation) of everything needed for the table including the sort and pagination and rebuilds all the table components
      */
     private reloadTable(): void {
-        const table: Array<T> = this.table && this.table.length ? [...this.table] : [];
+        const table: T[] = this.table && this.table.length ? [...this.table] : [];
 
         const maxItems: number = this.calculateMaxItemsPerPage();
         const config: TableConfig<T> = this.tableConfig;
@@ -153,8 +151,8 @@ export class TableService<T extends object> {
      * @param table the table itself
      * @param order the order or the columns
      */
-    private setupColumnsList(columns: TableConfig<T>["columns"], table: Array<T>, order?: TableConfig<T>["order"]): void {
-        let columnsList: Array<string> = [];
+    private setupColumnsList(columns: TableConfig<T>["columns"], table: T[], order?: TableConfig<T>["order"]): void {
+        let columnsList: string[] = [];
         if (columns && columns.length) {
             columnsList = columns as string[];
         } else {
@@ -177,11 +175,11 @@ export class TableService<T extends object> {
     /**
      * SETUP TABLE:
      * Sets up the sorted, paginated and current page table
-     * @param {Array<T>} table the table
+     * @param {T[]} table the table
      * @param {SortInfo} sortInfo The information on how to sort the table: column name, type and asc/desc
      * @param {number} maxItems The maximum number of items to be displayed per page
      */
-    private setupTable(table: Array<T>, sortInfo: SortInfo, maxItems: number): void {
+    private setupTable(table: T[], sortInfo: SortInfo, maxItems: number): void {
         this._sortedTable = this.makeSortedTable(table, sortInfo);
         this._paginatedTable = this.makePaginatedTable(this._sortedTable, maxItems);
         // TODO: Instead of deselecting all rows here keep the selected rows state and mapp it to the newly sorted / paginated table
@@ -200,7 +198,7 @@ export class TableService<T extends object> {
      * @param sort the sort info
      * @returns The new sorted table
      */
-    private makeSortedTable(table: Array<T>, sort?: SortInfo): Array<T> {
+    private makeSortedTable(table: T[], sort?: SortInfo): T[] {
         if (sort) {
             return this.sortTable(table, sort);
         }
@@ -213,8 +211,8 @@ export class TableService<T extends object> {
      * @param maxItems the number of max items on one page
      * @returns the paginated table as array or arrays
      */
-    private makePaginatedTable(table: Array<T>, maxItems: number): Array<Array<T>> {
-        const paginatedTable = [];
+    private makePaginatedTable(table: T[], maxItems: number): T[][] {
+        const paginatedTable: T[][] = [];
 
         while (table.length > 0) {
             paginatedTable.push(table.splice(0, maxItems));
@@ -253,13 +251,13 @@ export class TableService<T extends object> {
      * Sort the table:
      *
      * This method will sort the table based on the column selected and it's ascending/descending property
-     * @param {Array<T>} table the table to be sorted
+     * @param {T[]} table the table to be sorted
      * @param {SortInfo<keyof T>} sortInfo The information on how to sort the table: column name, type and asc/desc
      * @returns the sorted table
      */
-    private sortTable = (table: Array<T>, sortInfo: SortInfo): Array<T> => {
+    private sortTable = (table: T[], sortInfo: SortInfo): T[] => {
         const { column, isAscending, type }: SortInfo<keyof T> = sortInfo;
-        const newSortedTable: Array<T> = table.sort((a: any, b: any) => {
+        const newSortedTable: T[] = table.sort((a: any, b: any) => {
             // flipping the first and second items based on ascending/descending
             const firstItem: string | Date = isAscending ? a[column] : b[column];
             const secondItem: string | Date = isAscending ? b[column] : a[column];
@@ -293,8 +291,8 @@ export class TableService<T extends object> {
         if (this._paginatedTable) {
             const PTableLength: number = this._paginatedTable.length;
             if (PTableLength > 5) {
-                const offset = Math.round(PTableLength / 2);
-                const max = 10;
+                const offset: number = Math.round(PTableLength / 2);
+                const max: number = 10;
                 if (offset > max) {
                     return max;
                 }

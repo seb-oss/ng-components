@@ -27,10 +27,10 @@
         .table-checkbox {
             width: 3rem;
             vertical-align: middle;
-            input {
+            input.form-control {
                 width: 1rem;
                 margin: auto;
-                min-height: auto !important;
+                min-height: auto;
                 height: 1rem;
             }
         }
