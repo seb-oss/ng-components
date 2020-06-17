@@ -13,6 +13,7 @@ import { ROUTES as ACCORDION_ROUTES } from "./examples/components/accordion/acco
 import { ROUTES as TOGGLE_ROUTES } from "./examples/components/toggle/toggle.module";
 import { ROUTES as CHIP_ROUTES } from "./examples/components/chip/chip.module";
 import { ROUTES as TABS_ROUTES } from "./examples/components/tabs/tabs.module";
+import { ROUTES as VIDEO_ROUTES } from "./examples/components/video/video.module";
 import { ROUTES as BREADCRUMB_ROUTES } from "./examples/components/breadcrumb/breadcrumb.module";
 
 import { InstallationComponent } from "./components/installation/installation.component";
@@ -103,6 +104,10 @@ const routes: Routes = [
                 {
                     path: "breadcrumb",
                     children: BREADCRUMB_ROUTES,
+                },
+                {
+                    path: "video",
+                    children: VIDEO_ROUTES,
                 },
             ],
             "path"

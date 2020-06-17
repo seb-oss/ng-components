@@ -22,7 +22,7 @@ export const ROUTES: Array<Route> = [
                         path: "textArea",
                         component: TextAreaComponent,
                         data: {
-                            title: "TextArea",
+                            title: "Text Area Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
@@ -31,7 +31,7 @@ export const ROUTES: Array<Route> = [
                                     lang: "markup",
                                 },
                                 {
-                                    name: "pagination.component.ts",
+                                    name: "textArea.component.ts",
                                     src: require("!raw-loader!./examples/textArea/textArea.component.ts").default,
                                     lang: "ts",
                                 },
