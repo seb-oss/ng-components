@@ -19,19 +19,19 @@ export const ROUTES = [
                         path: "modal",
                         component: ModalComponent,
                         data: {
-                            title: "Modal component",
+                            title: "Modal Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
                                     name: "modal.component.html",
                                     // @ts-ignore
-                                    src: require("!raw-loader!./examples/modal/modal.component.html"),
+                                    src: require("!raw-loader!./examples/modal/modal.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "modal.component.ts",
                                     // @ts-ignore
-                                    src: require("!raw-loader!./examples/modal/modal.component.ts"),
+                                    src: require("!raw-loader!./examples/modal/modal.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -44,10 +44,9 @@ export const ROUTES = [
                 component: ApiListComponent,
                 data: {
                     sources: [
-                        require("!raw-loader!../../../../../../../lib/src/button/parse-source-example/parse-source-example.component.ts"),
-                        require("!raw-loader!../../../../../../../lib/src/modal/modal.ts"),
-                        require("!raw-loader!../../../../../../../lib/src/modal/modal.directives.ts"),
-                        require("!raw-loader!../../../../../../../lib/src/modal/modal.service.ts"),
+                        require("!raw-loader!../../../../../../../lib/src/modal/modal.ts").default,
+                        require("!raw-loader!../../../../../../../lib/src/modal/modal.directives.ts").default,
+                        require("!raw-loader!../../../../../../../lib/src/modal/modal.service.ts").default,
                     ],
                 },
             },

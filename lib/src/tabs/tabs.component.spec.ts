@@ -70,7 +70,6 @@ describe("TabsComponent", () => {
     });
 
     it("Should fire click event if passed", () => {
-        console.log("Other countries ", fixture.debugElement.queryAll(By.css(".nav-link"))[1]);
         fixture.debugElement.queryAll(By.css(".nav-link"))[1].nativeElement.dispatchEvent(new Event("click"));
         expect(onClick).toHaveBeenCalledTimes(1);
     });

@@ -24,13 +24,13 @@ export const ROUTES = [
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
-                                    name: "text-labels.component.html",
-                                    src: require("!raw-loader!./accordion.component.html"),
+                                    name: "accordion.component.html",
+                                    src: require("!raw-loader!./accordion.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "accordion.component.ts",
-                                    src: require("!raw-loader!./accordion.component.ts"),
+                                    src: require("!raw-loader!./accordion.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -42,7 +42,7 @@ export const ROUTES = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/textLabel/textLabel.component.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/accordion/accordion.component.ts").default],
                 },
             },
         ],

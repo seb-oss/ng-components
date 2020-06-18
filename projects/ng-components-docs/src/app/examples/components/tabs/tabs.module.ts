@@ -21,17 +21,17 @@ export const ROUTES: Array<Route> = [
                         path: "tabs",
                         component: TabsComponent,
                         data: {
-                            title: "Tabs",
+                            title: "Tabs Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
                                     name: "tabs.component.html",
-                                    src: require("!raw-loader!./examples/tabs/tabs.component.html"),
+                                    src: require("!raw-loader!./examples/tabs/tabs.component.html").default,
                                     lang: "markup",
                                 },
                                 {
-                                    name: "pagination.component.ts",
-                                    src: require("!raw-loader!./examples/tabs/tabs.component.ts"),
+                                    name: "tabs.component.ts",
+                                    src: require("!raw-loader!./examples/tabs/tabs.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -43,7 +43,7 @@ export const ROUTES: Array<Route> = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/tabs/tabs.component.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/tabs/tabs.component.ts").default],
                 },
             },
         ],

@@ -1,13 +1,12 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { VideoComponent } from "./video.component";
 import { ExamplePageComponent } from "../../../components/example-page/example-page.component";
 import { ExampleListComponent } from "../../../components/example-page/example-list/example-list.component";
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
-import { Route } from "@angular/router";
-import { TextboxGroupComponent } from "./examples/textboxGroup/textboxGroup.component";
-import { TextboxGroupModule as textboxGroup } from "../../../../../../../lib/src/textboxGroup/textboxGroup.module";
+import { VideoModule as VideoLibModule } from "../../../../../../../lib/src/video";
 
-export const ROUTES: Array<Route> = [
+export const ROUTES = [
     { path: "", pathMatch: "full", redirectTo: "examples" },
     {
         path: "",
@@ -18,20 +17,20 @@ export const ROUTES: Array<Route> = [
                 component: ExampleListComponent,
                 children: [
                     {
-                        path: "textboxgroup",
-                        component: TextboxGroupComponent,
+                        path: "video",
+                        component: VideoComponent,
                         data: {
-                            title: "Textbox Group Component",
+                            title: "Video Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
-                                    name: "textboxGroup.component.html",
-                                    src: require("!raw-loader!./examples/textboxGroup/textboxGroup.component.html").default,
+                                    name: "video.component.html",
+                                    src: require("!raw-loader!./video.component.html").default,
                                     lang: "markup",
                                 },
                                 {
-                                    name: "textboxGroup.component.ts",
-                                    src: require("!raw-loader!./examples/textboxGroup/textboxGroup.component.ts").default,
+                                    name: "video.component.ts",
+                                    src: require("!raw-loader!./video.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -43,7 +42,7 @@ export const ROUTES: Array<Route> = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/textboxGroup/textboxGroup.component.ts").default],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/video/video.component.ts").default],
                 },
             },
         ],
@@ -51,7 +50,7 @@ export const ROUTES: Array<Route> = [
 ];
 
 @NgModule({
-    declarations: [TextboxGroupComponent],
-    imports: [CommonModule, textboxGroup],
+    declarations: [VideoComponent],
+    imports: [CommonModule, VideoLibModule],
 })
-export class TextboxGroupModule {}
+export class VideoModule {}

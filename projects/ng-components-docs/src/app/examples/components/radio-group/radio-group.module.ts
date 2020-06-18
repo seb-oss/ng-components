@@ -22,17 +22,17 @@ export const ROUTES: Array<Route> = [
                         path: "radio-group",
                         component: RadioGroupsComponent,
                         data: {
-                            title: "Radio Group",
+                            title: "Radio Group Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
                                     name: "radio-groups.component.html",
-                                    src: require("!raw-loader!./examples/radio-groups/radio-groups.component.html"),
+                                    src: require("!raw-loader!./examples/radio-groups/radio-groups.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "radio-groups.component.ts",
-                                    src: require("!raw-loader!./examples/radio-groups/radio-groups.component.ts"),
+                                    src: require("!raw-loader!./examples/radio-groups/radio-groups.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -44,7 +44,7 @@ export const ROUTES: Array<Route> = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/radio-group/radio-group.component.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/radio-group/radio-group.component.ts").default],
                 },
             },
         ],

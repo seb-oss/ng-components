@@ -22,17 +22,17 @@ export const ROUTES: Array<Route> = [
                         path: "toggle",
                         component: ToggleComponent,
                         data: {
-                            title: "Toggle",
+                            title: "Toggle Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
                                     name: "toggle.component.html",
-                                    src: require("!raw-loader!./examples/toggle/toggle.component.html"),
+                                    src: require("!raw-loader!./examples/toggle/toggle.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "toggle.component.ts",
-                                    src: require("!raw-loader!./examples/toggle/toggle.component.ts"),
+                                    src: require("!raw-loader!./examples/toggle/toggle.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -44,7 +44,7 @@ export const ROUTES: Array<Route> = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/toggle/toggle.component.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/toggle/toggle.component.ts").default],
                 },
             },
         ],

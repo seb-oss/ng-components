@@ -17,20 +17,20 @@ export const ROUTES = [
                 component: ExampleListComponent,
                 children: [
                     {
-                        path: "textLabel",
+                        path: "chip",
                         component: ChipComponent,
                         data: {
-                            title: "Text Label Component",
+                            title: "Chip Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
                                     name: "chip.component.html",
-                                    src: require("!raw-loader!./chip.component.html"),
+                                    src: require("!raw-loader!./chip.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "chip.component.ts",
-                                    src: require("!raw-loader!./chip.component.ts"),
+                                    src: require("!raw-loader!./chip.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -42,7 +42,7 @@ export const ROUTES = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/chip/chip.component.ts")],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/chip/chip.component.ts").default],
                 },
             },
         ],
