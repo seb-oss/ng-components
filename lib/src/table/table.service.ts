@@ -4,6 +4,10 @@ import { toDate } from "@sebgroup/frontend-tools/dist/toDate";
 import { readableFromCamelCase } from "../utils";
 import { BehaviorSubject } from "rxjs";
 
+interface TableRowWithMeta<T extends object> {
+    row: T;
+    selected: boolean;
+}
 @Injectable({
     providedIn: "root",
 })
@@ -178,14 +182,20 @@ export class TableService<T extends object> {
      * @param {T[]} table the table
      * @param {SortInfo} sortInfo The information on how to sort the table: column name, type and asc/desc
      * @param {number} maxItems The maximum number of items to be displayed per page
+     * @param {number[]} selectedRowIndexes the indexes of the rows selected in the master table
      */
-    private setupTable(table: T[], sortInfo: SortInfo, maxItems: number): void {
-        this._sortedTable = this.makeSortedTable(table, sortInfo);
-        this._paginatedTable = this.makePaginatedTable(this._sortedTable, maxItems);
-        // TODO: Instead of deselecting all rows here keep the selected rows state and mapp it to the newly sorted / paginated table
-        // if (!this._selectedRows || (this._selectedRows && this._selectedRows.length !== this._paginatedTable.length)) {
-        this._selectedRows = [...this._paginatedTable.map(_ => [])];
-        // }
+    private setupTable(table: T[], sortInfo: SortInfo, maxItems: number, selectedRowIndexes?: number[]): void {
+        const tableWithMeta: TableRowWithMeta<T>[] = table.map((row: T, rowIndex: number) => {
+            return { row, selected: !!selectedRowIndexes?.includes(rowIndex) };
+        });
+        const sortedTableWithMeta: TableRowWithMeta<T>[] = this.makeSortedTable(tableWithMeta, sortInfo);
+        this._sortedTable = [...sortedTableWithMeta.map(item => item.row)];
+
+        const paginatedTableWithMeta: TableRowWithMeta<T>[][] = this.makePaginatedTable(sortedTableWithMeta, maxItems);
+        this._paginatedTable = [...paginatedTableWithMeta.map(item => item.map(x => x.row))];
+
+        this._selectedRows = [...paginatedTableWithMeta.map(item => item.map((x, i) => (x.selected ? i : null)).filter(y => y !== null))];
+
         if (this._currentPageIndex > this._paginatedTable.length - 1) {
             this._currentPageIndex = this._paginatedTable.length - 1;
         }
@@ -194,11 +204,11 @@ export class TableService<T extends object> {
 
     /**
      * MAKE SORTED TABLE
-     * @param table that table you wish to sort
+     * @param table the table you wish to sort with meta data
      * @param sort the sort info
      * @returns The new sorted table
      */
-    private makeSortedTable(table: T[], sort?: SortInfo): T[] {
+    private makeSortedTable(table: TableRowWithMeta<T>[], sort?: SortInfo): TableRowWithMeta<T>[] {
         if (sort) {
             return this.sortTable(table, sort);
         }
@@ -207,12 +217,12 @@ export class TableService<T extends object> {
 
     /**
      * MAKE PAGINATED TABLE
-     * @param table the table you wish to paginate
+     * @param table the table you wish to paginate with meta data
      * @param maxItems the number of max items on one page
      * @returns the paginated table as array or arrays
      */
-    private makePaginatedTable(table: T[], maxItems: number): T[][] {
-        const paginatedTable: T[][] = [];
+    private makePaginatedTable(table: TableRowWithMeta<T>[], maxItems: number): TableRowWithMeta<T>[][] {
+        const paginatedTable: TableRowWithMeta<T>[][] = [];
 
         while (table.length > 0) {
             paginatedTable.push(table.splice(0, maxItems));
@@ -232,7 +242,7 @@ export class TableService<T extends object> {
      * @param {object} labels an OPTIONAL map of column names and what label to display as column
      */
     private setupTableHeader(types: TableConfig<T>["types"], labels?: TableConfig<T>["labels"]): void {
-        const tableHeaderList: Array<TableHeaderListItem<T>> = [];
+        const tableHeaderList: TableHeaderListItem<T>[] = [];
 
         for (const columnName of this.columnsList) {
             const tableKeySelector: keyof T = columnName as keyof T;
@@ -251,16 +261,16 @@ export class TableService<T extends object> {
      * Sort the table:
      *
      * This method will sort the table based on the column selected and it's ascending/descending property
-     * @param {T[]} table the table to be sorted
+     * @param {TableRowWithMeta<T>[]} table the table to be sorted with meta data
      * @param {SortInfo<keyof T>} sortInfo The information on how to sort the table: column name, type and asc/desc
      * @returns the sorted table
      */
-    private sortTable = (table: T[], sortInfo: SortInfo): T[] => {
+    private sortTable = (table: TableRowWithMeta<T>[], sortInfo: SortInfo): TableRowWithMeta<T>[] => {
         const { column, isAscending, type }: SortInfo<keyof T> = sortInfo;
-        const newSortedTable: T[] = table.sort((a: any, b: any) => {
+        const newSortedTable: TableRowWithMeta<T>[] = table.sort((a: TableRowWithMeta<T>, b: TableRowWithMeta<T>) => {
             // flipping the first and second items based on ascending/descending
-            const firstItem: string | Date = isAscending ? a[column] : b[column];
-            const secondItem: string | Date = isAscending ? b[column] : a[column];
+            const firstItem: any = isAscending ? a.row[column] : b.row[column];
+            const secondItem: any = isAscending ? b.row[column] : a.row[column];
             switch (type) {
                 case "string":
                     return String(firstItem).toLowerCase().localeCompare(String(secondItem).toLowerCase());
@@ -277,9 +287,19 @@ export class TableService<T extends object> {
     /**
      * CHECK IS ALL SELECTED
      * Checks the selected rows of each table and check returns true/false if all rows in every table are selected
+     * @returns {boolean}
      */
     private checkIsAllSelected(): boolean {
-        return this._selectedRows.map((e, i) => e?.length === this._paginatedTable[i]?.length).every(e => e === true);
+        return this._selectedRows?.map((e, i) => e?.length === this._paginatedTable[i]?.length).every(e => e === true);
+    }
+
+    /**
+     * CHECK HAS SOME SELECTIONS
+     * Checks if any rows (at least 1) are selected
+     * @returns {boolean}
+     */
+    private checkHasSelection(): boolean {
+        return this._selectedRows?.map((e, i) => e?.length > 0).some(e => e === true);
     }
 
     /**
@@ -312,6 +332,19 @@ export class TableService<T extends object> {
      * @param {SortInfo} value the SortInfo
      */
     public handleChangeSort = (selectedColumn: keyof T): void => {
+        let selectedRowIndexes: number[] = [];
+        // check if table has any rows selected
+        if (this._selectedRows && this.checkHasSelection()) {
+            // map them against the current table to get the selected row indexes
+            // and keep the metadata within the scope of this method
+            this._selectedRows.map((selectedRows: number[], pageIndex: number) => {
+                selectedRows?.map((selectedRowsIndex: number) => {
+                    const targetElement: T = this._paginatedTable[pageIndex][selectedRowsIndex];
+                    selectedRowIndexes.push(this.table.indexOf(targetElement));
+                });
+            });
+        }
+
         let newSortInfo: Partial<SortInfo<keyof T>> = { column: selectedColumn };
 
         if (this.sortInfo && this.sortInfo?.column === selectedColumn) {
@@ -321,7 +354,24 @@ export class TableService<T extends object> {
         }
         newSortInfo.type = this._tableConfig?.types[selectedColumn] || "string";
         this.sortInfo = newSortInfo as SortInfo<keyof T>;
-        this.reloadTable();
+
+        // setup the new table
+        const table: T[] = this.table && this.table.length ? [...this.table] : [];
+        const maxItems: number = this.calculateMaxItemsPerPage();
+        this.setupTable(table, this.sortInfo, maxItems, selectedRowIndexes);
+
+        // emmit new data =======
+        // sort info
+        this.currentSortInfo.next(this.sortInfo);
+
+        // tables
+        this.sortedTable.next(this._sortedTable);
+        this.paginatedTable.next(this._paginatedTable);
+        this.currentTable.next(this._currentTable);
+
+        // selected rows
+        this.selectedRows.next(this._selectedRows);
+        this.isAllSelected.next(this.checkIsAllSelected());
     };
 
     /**
