@@ -8,7 +8,7 @@ import { WizardFormsComponent } from "./examples/wizard-forms/wizard-forms.compo
 import { ReactiveFormsModule } from "@angular/forms";
 import { SebWizardModule } from "../../../../../../../lib/src/wizard";
 import { SebButtonModule } from "../../../../../../../lib/src/button";
-import { SebModalModule } from "../../../../../../../lib/src/modal";
+import { ModalModule } from "../../../../../../../lib/src/modal";
 import { WizardComponent } from "./examples/wizard/wizard.component";
 
 export const ROUTES: Array<Route> = [
@@ -66,7 +66,7 @@ export const ROUTES: Array<Route> = [
 
 @NgModule({
     declarations: [WizardFormsComponent, WizardComponent],
-    imports: [CommonModule, ReactiveFormsModule, SebWizardModule, SebButtonModule, SebModalModule],
+    imports: [CommonModule, ReactiveFormsModule, SebWizardModule, SebButtonModule, ModalModule],
     entryComponents: [WizardFormsComponent],
 })
 export class WizardModule {}
