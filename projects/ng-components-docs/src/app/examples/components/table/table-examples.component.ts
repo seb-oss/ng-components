@@ -5,6 +5,7 @@ import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
 
 interface TableObjectType {
+    rowNo: number;
     foo: string;
     bar: string;
     amount: string;
@@ -20,7 +21,8 @@ export class TableExamplesComponent implements OnInit, OnDestroy {
     sortInfo: SortInfo<keyof TableObjectType>;
     curentPage: number = 0;
     maxItemsPerPage: number = 3;
-    types: TableConfig<TableObjectType>["types"] = { amount: "number", validFrom: "date", customTemplate: "custom-html" };
+    types: TableConfig<TableObjectType>["types"] = { amount: "number", validFrom: "date", customTemplate: "custom-html", rowNo: "number" };
+    customLabels: TableConfig<TableObjectType>["labels"] = { rowNo: "#" };
     unsubscribe: Subject<any> = new Subject();
 
     headerList: TableHeaderListItem<TableObjectType>[];
@@ -29,17 +31,18 @@ export class TableExamplesComponent implements OnInit, OnDestroy {
     isAllSelected: boolean = false;
 
     data: TableObjectType[] = [
-        { foo: "C", bar: "bar 1", amount: "00034", validFrom: new Date() },
-        { foo: "A", bar: "bar 2", amount: "278392", validFrom: new Date().toString() },
+        { rowNo: 1, foo: "C", bar: "bar 1", amount: "00034", validFrom: new Date() },
+        { rowNo: 2, foo: "A", bar: "bar 2", amount: "278392", validFrom: new Date().toString() },
         {
+            rowNo: 3,
             foo: "B",
             bar: "bar 3",
             amount: "5530",
             validFrom: "2020 01 05",
             customTemplate: "<code>Custom html</code>",
         },
-        { foo: "E", bar: "bar 5", amount: "11" },
-        { foo: "D", bar: "bar 4", amount: "0.5" },
+        { rowNo: 4, foo: "E", bar: "bar 5", amount: "11" },
+        { rowNo: 5, foo: "D", bar: "bar 4", amount: "0.5" },
     ];
 
     constructor(private tableService: TableService<TableObjectType>) {}
@@ -50,6 +53,7 @@ export class TableExamplesComponent implements OnInit, OnDestroy {
         // the headerList and rows to be displayed with the Table component.
         this.tableService.registerDatasource(this.data, {
             types: this.types,
+            labels: this.customLabels,
             sort: { column: "amount", isAscending: true, type: this.types.amount }, // Initial SORT info
             pagination: {
                 maxItems: this.maxItemsPerPage,
