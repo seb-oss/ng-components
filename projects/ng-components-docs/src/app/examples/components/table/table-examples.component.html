@@ -1,37 +1,28 @@
 <div class="row">
     <div class="col-12">
-        <label>Table with all features (sort, pagination and select rows)</label>
-        <seb-table
-            [rows]="rows"
-            [headerList]="headerList"
-            [sortInfo]="sortInfo"
-            (sortClicked)="handleSortClicked($event)"
-            [selectable]="true"
-            [isAllSelected]="isAllSelected"
-            [selectedRowIndexes]="selectedRows[curentPage]"
-            (rowClicked)="handleSelectRow($event)"
-            (selectAllClicked)="handleSelectAll()"
-        ></seb-table>
-        <sebng-pagination
-            [value]="curentPage + 1"
-            (change)="handleChangePagination($event)"
-            [size]="data.length"
-            [offset]="maxItemsPerPage"
-        ></sebng-pagination>
-    </div>
-
-    <div class="col-12">
-        <label>Table without sorting</label>
+        <label>Simple view only table</label>
         <seb-table [rows]="data" [headerList]="headerList"></seb-table>
     </div>
 
     <div class="col-12">
         <label>Table with selectable rows</label>
-        <seb-table [rows]="data" [headerList]="headerList" [selectable]="true"></seb-table>
+        <seb-table
+            [rows]="rows"
+            [headerList]="headerList"
+            [selectable]="true"
+            [isAllSelected]="isAllSelected"
+            [selectedRowIndexes]="selectedRows[0]"
+            (rowClicked)="handleSelectRow($event)"
+            (selectAllClicked)="handleSelectAll()"
+        ></seb-table>
     </div>
 
     <div class="col-12">
         <label>Table with fixed height (100px)</label>
         <seb-table [rows]="data" [headerList]="headerList" fixedHeight="100px"></seb-table>
+    </div>
+
+    <div class="col-12">
+        <seb-full-table-example></seb-full-table-example>
     </div>
 </div>

@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { TableExamplesComponent } from "./table-examples.component";
+import { FullTableExampleComponent } from "./examples/full-table-example.component";
 import { ExamplePageComponent } from "../../../components/example-page/example-page.component";
 import { ExampleListComponent } from "../../../components/example-page/example-list/example-list.component";
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
@@ -34,6 +35,16 @@ export const ROUTES = [
                                     src: require("!raw-loader!./table-examples.component.ts").default,
                                     lang: "ts",
                                 },
+                                {
+                                    name: "full-table-example.component.html",
+                                    src: require("!raw-loader!./examples/full-table-example.component.html").default,
+                                    lang: "markup",
+                                },
+                                {
+                                    name: "full-table-example.component.ts",
+                                    src: require("!raw-loader!./examples/full-table-example.component.ts").default,
+                                    lang: "ts",
+                                },
                             ],
                         },
                     },
@@ -54,7 +65,7 @@ export const ROUTES = [
 ];
 
 @NgModule({
-    declarations: [TableExamplesComponent],
+    declarations: [TableExamplesComponent, FullTableExampleComponent],
     imports: [CommonModule, TableLibModule, PaginationLibModule],
 })
 export class TableModule {}

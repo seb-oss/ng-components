@@ -14,10 +14,14 @@ interface TableObjectType {
 }
 
 @Component({
-    selector: "seb-table-examples",
-    templateUrl: "./table-examples.component.html",
+    selector: "seb-full-table-example",
+    templateUrl: "./full-table-example.component.html",
+    providers: [TableService],
 })
-export class TableExamplesComponent implements OnInit, OnDestroy {
+export class FullTableExampleComponent implements OnInit, OnDestroy {
+    sortInfo: SortInfo<keyof TableObjectType>;
+    curentPage: number = 0;
+    maxItemsPerPage: number = 3;
     types: TableConfig<TableObjectType>["types"] = { amount: "number", validFrom: "date", customTemplate: "custom-html", rowNo: "number" };
     customLabels: TableConfig<TableObjectType>["labels"] = { rowNo: "#" };
     unsubscribe: Subject<any> = new Subject();
@@ -51,6 +55,10 @@ export class TableExamplesComponent implements OnInit, OnDestroy {
         this.tableService.registerDatasource(this.data, {
             types: this.types,
             labels: this.customLabels,
+            sort: { column: "amount", isAscending: true, type: this.types.amount }, // Initial SORT info
+            pagination: {
+                maxItems: this.maxItemsPerPage,
+            },
         });
 
         // Subscribe to the current table, header list and sortInfo
@@ -66,6 +74,18 @@ export class TableExamplesComponent implements OnInit, OnDestroy {
             },
         });
 
+        this.tableService.currentSortInfo.pipe(takeUntil(this.unsubscribe)).subscribe({
+            next: (value: SortInfo<keyof TableObjectType>) => {
+                this.sortInfo = value;
+            },
+        });
+
+        this.tableService.currentPageIndex.pipe(takeUntil(this.unsubscribe)).subscribe({
+            next: (value: number) => {
+                this.curentPage = value;
+            },
+        });
+
         this.tableService.selectedRows.pipe(takeUntil(this.unsubscribe)).subscribe({
             next: (value: number[][]) => {
                 this.selectedRows = value;
@@ -77,6 +97,15 @@ export class TableExamplesComponent implements OnInit, OnDestroy {
                 this.isAllSelected = value;
             },
         });
+    }
+
+    handleSortClicked(selectedColumn: keyof TableObjectType): void {
+        this.tableService.handleChangeSort(selectedColumn);
+        this.handleChangePagination(1);
+    }
+
+    handleChangePagination(newIndex: number): void {
+        this.tableService.handleChangePagination(newIndex);
     }
 
     handleSelectRow(event: TableRowClickedEvent): void {
