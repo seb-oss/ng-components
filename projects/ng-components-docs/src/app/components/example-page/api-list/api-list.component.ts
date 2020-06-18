@@ -16,7 +16,7 @@ export class ApiListComponent implements OnInit {
     $content: Observable<any>;
 
     static extractInputs(sourceCode: string) {
-        const regex: RegExp = /(?<comment>\/\*\*(?:[\sA-Za-z\*\`\.\,\(\)\/\?\=\:\[\]\&\{\}]*)\*\/)?(?:[\r\n\t\s]*)(?<decorator>\@Input)\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\))(?:[\W]+)(?<accessor>get|set|){1}(?:\W)?(?<name>[^\(][^\:][^\;]+)/g;
+        const regex: RegExp = /(<comment>\/\*\*(?:[\sA-Za-z\*\`\.\,\(\)\/\?\=\:\[\]\&\{\}]*)\*\/)?(?:[\r\n\t\s]*)(<decorator>\@Input)\((?:'|"?)(<alias>.*?)(?:'|")?(?:\))(?:[\W]+)(<accessor>get|set|){1}(?:\W)?(<name>[^\(][^\:][^\;]+)/g;
         let input: RegExpExecArray = regex.exec(sourceCode);
         let inputs = input ? { [input.groups.name]: input.groups } : {};
         while (input !== null) {
@@ -29,7 +29,7 @@ export class ApiListComponent implements OnInit {
     }
 
     static extractOutputs(sourceCode: string) {
-        const regex: RegExp = /(?:\/\*\*(?<comment>[\s\S][^@]+)\*\/[^@]+|)(?<decorator>\@Output)\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\))(?:\W)?(?<name>[^\:]+)/g;
+        const regex: RegExp = /(?:\/\*\*(<comment>[\s\S][^@]+)\*\/[^@]+|)(<decorator>\@Output)\((?:'|"?)(<alias>.*?)(?:'|")?(?:\))(?:\W)?(<name>[^\:]+)/g;
         let output: RegExpExecArray = regex.exec(sourceCode);
         let outputs = output ? { [output.groups.name]: output.groups } : {};
         while (output !== null) {
@@ -42,7 +42,7 @@ export class ApiListComponent implements OnInit {
     }
 
     static extractProperties(sourceCode: string) {
-        const regex: RegExp = /(?<name>[\w\$]+)\:\s(?<type>.[^\;\s]*)(?:\;\s| \=\s)[\'\"]?(?<default>[\w][^\;\/\'\"]*)?[\'\"]?(?:\;?\s?\/\/\s?(?<comment>.*))?/g;
+        const regex: RegExp = /(<name>[\w\$]+)\:\s(<type>.[^\;\s]*)(?:\;\s| \=\s)[\'\"]?(<default>[\w][^\;\/\'\"]*)?[\'\"]?(?:\;?\s?\/\/\s?(<comment>.*))?/g;
         let property: RegExpExecArray = regex.exec(sourceCode);
         let properties = property ? { [property.groups.name]: property.groups } : {};
         while (property !== null) {
@@ -57,7 +57,7 @@ export class ApiListComponent implements OnInit {
         return properties;
     }
     static extractMethods(sourceCode: string) {
-        const regex: RegExp = /(?:\/\*\*(?<comment>[\s\S][^\/]*)\*\/[^\w\@]+|)[^\w\]](?!constructor|Input|Component)(?<name>[a-z]*)\((?<parameters>[^\)]*)\)\:?\s?(?<returns>[\w\<\>]*)/g;
+        const regex: RegExp = /(?:\/\*\*(<comment>[\s\S][^\/]*)\*\/[^\w\@]+|)[^\w\]](?!constructor|Input|Component)(<name>[a-z]*)\((<parameters>[^\)]*)\)\:?\s?(<returns>[\w\<\>]*)/g;
         let method: RegExpExecArray = regex.exec(sourceCode);
         let methods = method ? { [method.groups.name]: method.groups } : {};
         while (method !== null) {
@@ -69,7 +69,7 @@ export class ApiListComponent implements OnInit {
         return methods;
     }
     static extractDescription(sourceCode: string) {
-        const regex = /(?:\/\*\*(?<comment>[\s\S][^\/]*)\*\/[^\w])/;
+        const regex = /(?:\/\*\*(<comment>[\s\S][^\/]*)\*\/[^\w])/;
         return regex.exec(sourceCode);
     }
 
@@ -204,7 +204,7 @@ export class ApiListComponent implements OnInit {
             .map(property => {
                 return {
                     ...property,
-                    description: ApiListComponent.parseComment(outputs[property.name].comment),
+                    description: ApiListComponent.parseComment(outputs[property.name] && outputs[property.name].comment),
                 };
             });
     }
