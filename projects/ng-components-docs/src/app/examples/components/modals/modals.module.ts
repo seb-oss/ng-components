@@ -1,9 +1,11 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ModalComponent } from "./examples/modal/modal.component";
+import { ModalComponent } from "./modals.component";
 import { ExamplePageComponent } from "../../../components/example-page/example-page.component";
 import { ExampleListComponent } from "../../../components/example-page/example-list/example-list.component";
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
+import { ModalModule as ModalLibModule } from "../../../../../../../lib/src/modal";
+import { SebButtonModule } from "../../../../../../../lib/src/button";
 
 export const ROUTES = [
     { path: "", pathMatch: "full", redirectTo: "examples" },
@@ -25,13 +27,13 @@ export const ROUTES = [
                                 {
                                     name: "modal.component.html",
                                     // @ts-ignore
-                                    src: require("!raw-loader!./examples/modal/modal.component.html").default,
+                                    src: require("!raw-loader!./modals.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "modal.component.ts",
                                     // @ts-ignore
-                                    src: require("!raw-loader!./examples/modal/modal.component.ts").default,
+                                    src: require("!raw-loader!./modals.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -44,8 +46,7 @@ export const ROUTES = [
                 component: ApiListComponent,
                 data: {
                     sources: [
-                        require("!raw-loader!../../../../../../../lib/src/modal/modal.ts").default,
-                        require("!raw-loader!../../../../../../../lib/src/modal/modal.directives.ts").default,
+                        require("!raw-loader!../../../../../../../lib/src/modal/modal.component.ts").default,
                         require("!raw-loader!../../../../../../../lib/src/modal/modal.service.ts").default,
                     ],
                 },
@@ -56,6 +57,6 @@ export const ROUTES = [
 
 @NgModule({
     declarations: [ModalComponent],
-    imports: [CommonModule],
+    imports: [CommonModule, ModalLibModule, SebButtonModule],
 })
 export class ModalModule {}
