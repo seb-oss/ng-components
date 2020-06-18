@@ -1,4 +1,4 @@
-<div #tooltip class="tooltip bs-tooltip-top" tabindex="-1" role="tooltip" (blur)="onBlur($event)">
+<div #tooltip @tooltip class="tooltip bs-tooltip-{{ position }}" tabindex="-1" role="tooltip" (blur)="onBlur($event)">
     <div class="arrow"></div>
     <div class="tooltip-inner">
         <ng-container *ngIf="isTemplateRef; else defaultContent" [ngTemplateOutlet]="text"></ng-container>

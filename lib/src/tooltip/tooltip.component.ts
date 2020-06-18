@@ -13,6 +13,7 @@ import {
 import { trigger, transition, style, animate } from "@angular/animations";
 
 export type TooltipTrigger = "hover" | "click" | "focus";
+export type TooltipPosition = "top" | "right" | "bottom" | "left";
 
 @Component({
     selector: "sebng-tooltip",
@@ -30,6 +31,7 @@ export class TooltipComponent implements OnInit {
     @Input() text: string | TemplateRef<any> = "";
     @Input() isTemplateRef: boolean = false;
     @Input() tooltipReference: ElementRef<HTMLDivElement>;
+    @Input() position: TooltipPosition = "top";
     @Output() defocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild("tooltip") tooltip: ElementRef<HTMLDivElement>;

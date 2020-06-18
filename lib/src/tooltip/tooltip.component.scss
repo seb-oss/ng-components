@@ -3,10 +3,22 @@
 // @import "~@sebgroup/bootstrap/scss/bootstrap-core/mixins/_reset-text";
 // @import "~@sebgroup/bootstrap/scss/styles/_tooltip";
 .tooltip {
-    // position: relative;
+    position: relative;
     min-width: max-content;
     // margin: 10px 20px;
     opacity: 1;
+    &.bs-tooltip-top,
+    &.bs-tooltip-bottom {
+        > .arrow {
+            right: calc(50% - 0.4rem);
+        }
+    }
+    &.bs-tooltip-right,
+    &.bs-tooltip-left {
+        > .arrow {
+            top: calc(50% - 0.4rem);
+        }
+    }
 }
 
 .tooltip-reference {
