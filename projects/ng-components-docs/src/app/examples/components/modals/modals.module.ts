@@ -18,7 +18,7 @@ export const ROUTES = [
                 component: ExampleListComponent,
                 children: [
                     {
-                        path: "Modal",
+                        path: "modal",
                         component: ModalComponent,
                         data: {
                             title: "Modal Component",

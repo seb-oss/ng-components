@@ -1,4 +1,4 @@
-import { Component, Input, ViewEncapsulation, ComponentRef, HostListener, ElementRef, ViewChild } from "@angular/core";
+import { Component, Input, ViewEncapsulation, ComponentRef, HostListener, ElementRef, ViewChild, NgZone } from "@angular/core";
 import { SebModalBackdropComponent } from "./modal.backdrop";
 import { ModalService } from "./modal.service";
 import { ModalSizeType, ModalPositionType } from "./modal.type";
@@ -28,7 +28,7 @@ export class ModalComponent {
     backDropRef: ComponentRef<SebModalBackdropComponent>;
     toggle: boolean; // toggle is required to enable the open or close animation
 
-    constructor(private modalService: ModalService) {}
+    constructor(private modalService: ModalService, private _ngZone: NgZone) {}
 
     /**
      * construct the class names that needs to be appended to the modal depending on the inputs requested
@@ -63,7 +63,7 @@ export class ModalComponent {
      */
     @HostListener("keyup", ["$event"])
     onEscKey(event: KeyboardEvent): void {
-        if (this.escapeKeyDismiss && event.keyCode === 27) {
+        if (this.escapeKeyDismiss && event.key.toLowerCase() === "escape") {
             this.close();
         }
     }
@@ -96,7 +96,9 @@ export class ModalComponent {
      */
     onAnimationDone(event: AnimationEvent): void {
         if (event.toState === "open") {
-            setTimeout(() => this.modalRef.nativeElement.focus(), 0);
+            this._ngZone.runOutsideAngular(() => {
+                setTimeout(() => this.modalRef.nativeElement.focus(), 0);
+            });
         }
     }
 }
