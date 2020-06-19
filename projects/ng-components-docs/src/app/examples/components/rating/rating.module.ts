@@ -3,11 +3,11 @@ import { CommonModule } from "@angular/common";
 import { ExamplePageComponent } from "../../../components/example-page/example-page.component";
 import { ExampleListComponent } from "../../../components/example-page/example-list/example-list.component";
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
-import { Route } from "@angular/router";
-import { TextboxGroupComponent } from "./examples/textboxGroup/textboxGroup.component";
-import { TextboxGroupModule as textboxGroup } from "../../../../../../../lib/src/textboxGroup/textboxGroup.module";
+import { RatingModule as Rating } from "../../../../../../../lib/src/rating";
+import { RatingComponent } from "./rating.component";
+import { FormsModule } from "@angular/forms";
 
-export const ROUTES: Array<Route> = [
+export const ROUTES = [
     { path: "", pathMatch: "full", redirectTo: "examples" },
     {
         path: "",
@@ -18,20 +18,20 @@ export const ROUTES: Array<Route> = [
                 component: ExampleListComponent,
                 children: [
                     {
-                        path: "textboxgroup",
-                        component: TextboxGroupComponent,
+                        path: "rating",
+                        component: RatingComponent,
                         data: {
-                            title: "Textbox Group Component",
+                            title: "Rating Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
-                                    name: "textboxGroup.component.html",
-                                    src: require("!raw-loader!./examples/textboxGroup/textboxGroup.component.html").default,
+                                    name: "rating.component.html",
+                                    src: require("!raw-loader!./rating.component.html").default,
                                     lang: "markup",
                                 },
                                 {
-                                    name: "textboxGroup.component.ts",
-                                    src: require("!raw-loader!./examples/textboxGroup/textboxGroup.component.ts").default,
+                                    name: "rating.component.ts",
+                                    src: require("!raw-loader!./rating.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -43,7 +43,7 @@ export const ROUTES: Array<Route> = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/textboxGroup/textboxGroup.component.ts").default],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/rating/rating.component.ts").default],
                 },
             },
         ],
@@ -51,7 +51,7 @@ export const ROUTES: Array<Route> = [
 ];
 
 @NgModule({
-    declarations: [TextboxGroupComponent],
-    imports: [CommonModule, textboxGroup],
+    declarations: [RatingComponent],
+    imports: [CommonModule, FormsModule, Rating],
 })
-export class TextboxGroupModule {}
+export class RatingModule {}

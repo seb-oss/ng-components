@@ -1,0 +1,33 @@
+<div class="progress" [ngClass]="className" [attr.id]="id" [style.height.px]="height || null">
+    <ng-container *ngIf="multiBars; else singleBar">
+        <div
+            class="progress-bar"
+            *ngFor="let bar of multiBars"
+            [ngClass]="bar.theme | progressTheme"
+            [class.progress-bar-striped]="bar.striped"
+            [class.progress-bar-animated]="bar.animated"
+            role="progressbar"
+            [attr.aria-valuenow]="bar.value"
+            [attr.aria-valuemin]="bar.value"
+            [attr.aria-valuemax]="bar.value"
+            [style.width.%]="bar.value"
+        >
+            <span *ngIf="bar.showProgress"> {{ bar.value }}%</span>
+        </div>
+    </ng-container>
+    <ng-template #singleBar>
+        <div
+            class="progress-bar"
+            [ngClass]="theme | progressTheme"
+            [class.progress-bar-striped]="striped"
+            [class.progress-bar-animated]="animated"
+            role="progressbar"
+            [attr.aria-valuenow]="value"
+            [attr.aria-valuemin]="value"
+            [attr.aria-valuemax]="value"
+            [style.width.%]="value"
+        >
+            <span *ngIf="showProgress"> {{ value }}%</span>
+        </div>
+    </ng-template>
+</div>
