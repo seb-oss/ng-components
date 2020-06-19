@@ -5,10 +5,45 @@ variantid: component-button-all
 url: https://sebgroup.github.io/ng-components/components/buttons/examples
 -->
 
-<button sebng-btn>Primary</button>
-<button sebng-btn outline>Outlined</button>
-<button sebng-btn="secondary">Secondary</button>
-<button sebng-btn="light">Light</button>
-<button sebng-btn="link">Link</button>
-<button sebng-btn size="sm">Primary</button>
-<button sebng-btn size="sm" disabled="true">Disabled</button>
+<div class="row">
+    <div class="col">
+        <div class="result p-3" [ngClass]="{ 'bg-warning': theme.key === 'dark', 'bg-dark': theme.key === 'light' }">
+            <sebng-button
+                tag="button"
+                [disabled]="optionSelected('disabled')"
+                [block]="optionSelected('block')"
+                label="Button"
+                tag="button"
+                [size]="size.key"
+                [theme]="theme.key"
+            >
+                Button
+
+                <span *ngIf="optionSelected('icon')" class="ml-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                        <path
+                            d="M12.8 371.2L.2 485.3c-1.7 15.3 11.2 28.2 26.5 26.5l114.2-12.7 352.4-352.4c25-25 25-65.5 0-90.5l-37.5-37.5c-25-25-65.5-25-90.5 0L12.8 371.2zm113.3 97.4L33 478.9l10.3-93.1 271.9-271.9 82.7 82.7-271.8 272zm344.5-344.5L420.7 174 338 91.3l49.9-49.9c12.5-12.5 32.7-12.5 45.3 0l37.5 37.5c12.4 12.4 12.4 32.7-.1 45.2z"
+                        />
+                    </svg>
+                </span>
+            </sebng-button>
+        </div>
+    </div>
+</div>
+
+<div class="row my-4">
+    <div class="col">
+        <p>Themes</p>
+        <sebng-radio-group name="theme" [list]="themeList" [(ngModel)]="theme"> </sebng-radio-group>
+    </div>
+
+    <div class="col">
+        <p>Size</p>
+        <sebng-radio-group name="size" [list]="sizeList" [(ngModel)]="size"> </sebng-radio-group>
+    </div>
+
+    <div class="col">
+        <p>Options</p>
+        <sebng-dropdown [(ngModel)]="selectedOptions" [list]="list" [multi]="true"></sebng-dropdown>
+    </div>
+</div>

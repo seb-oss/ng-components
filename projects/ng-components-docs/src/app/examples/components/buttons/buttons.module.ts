@@ -2,10 +2,14 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ExamplePageComponent } from "../../../components/example-page/example-page.component";
 import { ButtonsComponent } from "./examples/buttons/buttons.component";
-import { SebButtonModule } from "@sebgroup/ng-components";
+import { ButtonModule as SebButtonModule } from "lib/src/button/button.module";
+import { RadioGroupModule } from "lib/src/radio-group/radio-group.module";
+import { DropdownModule } from "lib/src/dropdown/dropdown.module";
+
 import { ExampleListComponent } from "../../../components/example-page/example-list/example-list.component";
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
 import { Route } from "@angular/router";
+import { FormsModule } from "@angular/forms";
 
 export const ROUTES: Array<Route> = [
     { path: "", pathMatch: "full", redirectTo: "examples" },
@@ -21,7 +25,7 @@ export const ROUTES: Array<Route> = [
                         path: "button",
                         component: ButtonsComponent,
                         data: {
-                            title: "Button directive",
+                            title: "Button Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
@@ -37,45 +41,13 @@ export const ROUTES: Array<Route> = [
                             ],
                         },
                     },
-                    {
-                        path: "another-example",
-                        component: ButtonsComponent,
-                        data: {
-                            title: "Another button example (same component)",
-                            description: `Same component used for the sake of showing how multiple examples can be set up.
-                          It's also possible to add html like a <a href="http://www.seb.se" target="blank">link</a>.`,
-                            sources: [
-                                {
-                                    name: "buttons.component.html",
-                                    src: `<div>Some other <strong class="fancy-class">inline</strong> example markup</div>`,
-                                    lang: "markup",
-                                },
-                                {
-                                    name: "buttons.component.js",
-                                    src: `foo(bar: any) => {
-                console.log(bar);
-              }`,
-                                    lang: "js",
-                                },
-                                {
-                                    name: "buttons.component.css",
-                                    src: `
-                .fancy-class {
-                  color: hotpink !important;
-                }
-              `,
-                                    lang: "css",
-                                },
-                            ],
-                        },
-                    },
                 ],
             },
             {
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/button/button.ts").default],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/button/button.component.ts").default],
                 },
             },
         ],
@@ -84,6 +56,6 @@ export const ROUTES: Array<Route> = [
 
 @NgModule({
     declarations: [ButtonsComponent],
-    imports: [CommonModule, SebButtonModule],
+    imports: [CommonModule, SebButtonModule, RadioGroupModule, DropdownModule, FormsModule],
 })
 export class ButtonsModule {}

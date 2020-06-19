@@ -1,0 +1,40 @@
+<ng-container [ngSwitch]="tag">
+    <input
+        [type]="type"
+        *ngSwitchCase="'input'"
+        [ngClass]="theme | buttonClasses: size:block:className"
+        (click)="handleClick($event)"
+        [disabled]="disabled"
+        [attr.id]="id"
+        [attr.name]="name"
+        [attr.active]="active"
+        [value]="label"
+    />
+
+    <a
+        href="#"
+        role="button"
+        *ngSwitchCase="'anchor'"
+        [ngClass]="theme | buttonClasses: size:block:className"
+        (click)="handleClick($event)"
+        [disabled="disabled"
+        [attr.id]="id"
+        [attr.name]="name"
+        [attr.active]="active"
+    >
+        <ng-content></ng-content>
+    </a>
+
+    <button
+        [type]="type"
+        *ngSwitchDefault
+        [ngClass]="theme | buttonClasses: size:block:className"
+        (click)="handleClick($event)"
+        [disabled]="disabled"
+        [attr.id]="id"
+        [attr.name]="name"
+        [attr.active]="active"
+    >
+        <ng-content></ng-content>
+    </button>
+</ng-container>
