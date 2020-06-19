@@ -1,0 +1,51 @@
+<div class="form-group custom-timeline" [ngClass]="className">
+    <div *ngIf="list && list.length && direction === 'vertical'" class="timeline" [class.clickable]="onClick" [ngClass]="direction">
+        <div *ngFor="let item of list; let i = index" class="item-holder">
+            <div [ngClass]="{ 'direction-left': i % 2, 'direction-right': !(i % 2) }">
+                <div class="title-wrapper" (click)="handleClick($event, i)">
+                    <div class="title">{{ item.title }}</div>
+                    <div class="time-wrapper">
+                        <span class="time">{{ item.time }}</span>
+                    </div>
+                    <div class="desc" *ngIf="item.desc">{{ item.desc }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="list && list.length && direction === 'horizontal'" class="timeline" [class.clickable]="onClick" [ngClass]="direction">
+        <div class="row" *ngFor="let loop of items">
+            <ng-container *ngIf="loop === 1">
+                <div *ngFor="let item of topList; let i = index" class="item-holder" [ngStyle]="{ width: 100 / list.length + '%' }">
+                    <div class="direction-top" *ngIf="item">
+                        <div class="title-wrapper" (click)="clickAction && clickAction(i)">
+                            <div class="title">{{ item.title }}</div>
+                            <div class="time-wrapper">
+                                <span class="time">{{ item.time }}</span>
+                            </div>
+                            <div class="desc" *ngIf="item.desc">{{ item.desc }}</div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="loop === 2">
+                <div *ngFor="let item of topList" class="indicator-holder" [ngStyle]="{ width: 100 / list.length + '%' }"></div>
+            </ng-container>
+
+            <ng-container *ngIf="loop === 3">
+                <div *ngFor="let item of bottomList; let i = index" class="item-holder" [ngStyle]="{ width: 100 / list.length + '%' }">
+                    <div *ngIf="item" class="direction-bottom">
+                        <div class="title-wrapper" (click)="clickAction && clickAction(i)">
+                            <div class="title">{{ item.title }}</div>
+                            <div class="time-wrapper">
+                                <span class="time">{{ item.time }}</span>
+                            </div>
+                            <div *ngIf="item.desc" class="desc">{{ item.desc }}</div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>
