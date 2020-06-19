@@ -1,9 +1,14 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { ModalComponent } from "./examples/modal/modal.component";
+import { SliderComponent } from "./slider.component";
 import { ExamplePageComponent } from "../../../components/example-page/example-page.component";
 import { ExampleListComponent } from "../../../components/example-page/example-list/example-list.component";
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
+import { SliderModule as Slider } from "../../../../../../../lib/src/slider";
+import { TextboxGroupModule as textboxGroup } from "../../../../../../../lib/src/textboxGroup";
+import { RadioGroupModule as radioGroup } from "../../../../../../../lib/src/radio-group";
+
+import { FormsModule } from "@angular/forms";
 
 export const ROUTES = [
     { path: "", pathMatch: "full", redirectTo: "examples" },
@@ -16,22 +21,20 @@ export const ROUTES = [
                 component: ExampleListComponent,
                 children: [
                     {
-                        path: "modal",
-                        component: ModalComponent,
+                        path: "slider",
+                        component: SliderComponent,
                         data: {
-                            title: "Modal Component",
+                            title: "Slider Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {
-                                    name: "modal.component.html",
-                                    // @ts-ignore
-                                    src: require("!raw-loader!./examples/modal/modal.component.html").default,
+                                    name: "slider.component.html",
+                                    src: require("!raw-loader!./slider.component.html").default,
                                     lang: "markup",
                                 },
                                 {
-                                    name: "modal.component.ts",
-                                    // @ts-ignore
-                                    src: require("!raw-loader!./examples/modal/modal.component.ts").default,
+                                    name: "slider.component.ts",
+                                    src: require("!raw-loader!./slider.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -43,11 +46,7 @@ export const ROUTES = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [
-                        require("!raw-loader!../../../../../../../lib/src/modal/modal.ts").default,
-                        require("!raw-loader!../../../../../../../lib/src/modal/modal.directives.ts").default,
-                        require("!raw-loader!../../../../../../../lib/src/modal/modal.service.ts").default,
-                    ],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/slider/slider.component.ts").default],
                 },
             },
         ],
@@ -55,7 +54,7 @@ export const ROUTES = [
 ];
 
 @NgModule({
-    declarations: [ModalComponent],
-    imports: [CommonModule],
+    declarations: [SliderComponent],
+    imports: [CommonModule, Slider, textboxGroup, radioGroup, FormsModule],
 })
-export class ModalModule {}
+export class SliderModule {}

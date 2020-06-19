@@ -1,14 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { SebModalService } from "../../../../../../../../../lib/src/modal";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { ModalComponent } from "../../../../../../../../../lib/src/modal/modal.component";
 import { WizardFormsComponent } from "../wizard-forms/wizard-forms.component";
 
 @Component({
     templateUrl: "wizard.component.html",
 })
 export class WizardComponent {
-    constructor(private modal: SebModalService) {}
+    @ViewChild(ModalComponent) modalChild: ModalComponent;
 
     public launchWizardForms() {
-        this.modal.open(WizardFormsComponent, { type: "fullscreen" });
+        this.modalChild.open();
+        // this.modal.open();
     }
 }
