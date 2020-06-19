@@ -1,0 +1,212 @@
+<p *ngIf="withInput">Example with input</p>
+<div class="row" *ngIf="withInput">
+    <div class="col">
+        <label class="mt-2">Select a value</label>
+    </div>
+    <div class="col">
+        <sebng-textboxgroup
+            name="slider"
+            type="number"
+            placeholder="Text Box PlaceHolder"
+            rightText="kr"
+            rightText="kr"
+            maxLength="5"
+            [(ngModel)]="slider"
+            (onChange)="onFormChange($event, 'slider')"
+            [error]="withInputError"
+            showErrorMessage="false"
+            pattern="\d+"
+        ></sebng-textboxgroup>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <sebng-slider
+            name="slider"
+            [(ngModel)]="slider"
+            [min]="min"
+            [max]="max"
+            [step]="step"
+            [appearance]="appearance.key"
+            [labels]="hasLabels ? sliderLabels : null"
+            [showTicks]="showTicks"
+            [theme]="theme.value"
+            [error]="withInputError || (hasError ? 'Error message' : null)"
+            [disabled]="disabled"
+            [tooltipTheme]="tooltipTheme.key"
+            [alternative]="appearance.key === 'alternative'"
+            (onChange)="onSliderChange($event)"
+            [alwaysShowTooltip]="alwaysShowTooltip"
+        >
+        </sebng-slider>
+    </div>
+</div>
+
+<p>Options</p>
+<div class="row">
+    <div class="col">
+        <sebng-textboxgroup
+            name="min"
+            type="number"
+            [(ngModel)]="min"
+            (ngModelChange)="onFormChange($event, 'min')"
+            label="Min"
+            [error]="minInputError"
+            pattern="\d+"
+        >
+        </sebng-textboxgroup>
+    </div>
+
+    <div class="col">
+        <sebng-textboxgroup
+            name="max"
+            type="number"
+            [(ngModel)]="max"
+            (ngModelChange)="onFormChange($event, 'max')"
+            label="Max"
+            [error]="maxInputError"
+            pattern="\d+"
+        >
+        </sebng-textboxgroup>
+    </div>
+    <div class="col">
+        <sebng-textboxgroup
+            name="step"
+            type="number"
+            [(ngModel)]="step"
+            (ngModelChange)="onFormChange($event, 'step')"
+            label="Step"
+            [error]="stepInputError"
+            pattern="\d+"
+        >
+        </sebng-textboxgroup>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <p>Themes</p>
+        <sebng-radio-group name="theme" [list]="themeList" [(ngModel)]="theme"> </sebng-radio-group>
+    </div>
+    <div class="col">
+        <p>Tooltip Themes</p>
+
+        <sebng-radio-group name="tooltipTheme" [list]="themeList" [(ngModel)]="tooltipTheme"></sebng-radio-group>
+    </div>
+    <div class="col">
+        <p>Appearance</p>
+
+        <sebng-radio-group name="appearance" [list]="appearanceList" [(ngModel)]="appearance"></sebng-radio-group>
+    </div>
+    <div class="col">
+        <p>Options</p>
+
+        <div class="form-group custom-checkbox condensed">
+            <div class="input-field">
+                <div class="custom-control">
+                    <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        id="disabled"
+                        name="disabled"
+                        [(ngModel)]="disabled"
+                        (ngModelChange)="onOptionsChange($event, 'disabled')"
+                    />
+                    <label class="custom-control-label" for="disabled">
+                        Disabled
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group custom-checkbox condensed">
+            <div class="input-field">
+                <div class="custom-control">
+                    <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        id="hasError"
+                        name="hasError"
+                        [(ngModel)]="hasError"
+                        (ngModelChange)="onOptionsChange($event, 'hasError')"
+                    />
+                    <label class="custom-control-label" for="hasError">
+                        Has error
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group custom-checkbox condensed">
+            <div class="input-field">
+                <div class="custom-control">
+                    <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        id="hasLabels"
+                        name="hasLabels"
+                        [(ngModel)]="hasLabels"
+                        (ngModelChange)="onOptionsChange($event, 'hasLabels')"
+                    />
+                    <label class="custom-control-label" for="hasLabels">
+                        Has labels
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group custom-checkbox condensed">
+            <div class="input-field">
+                <div class="custom-control">
+                    <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        id="showTicks"
+                        name="showTicks"
+                        disabled
+                        [(ngModel)]="showTicks"
+                        (ngModelChange)="onOptionsChange($event, 'showTicks')"
+                    />
+                    <label class="custom-control-label" for="showTicks">
+                        Show ticks
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group custom-checkbox condensed">
+            <div class="input-field">
+                <div class="custom-control">
+                    <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        id="withInput"
+                        name="withInput"
+                        [(ngModel)]="withInput"
+                        (ngModelChange)="onOptionsChange($event, 'withInput')"
+                    />
+                    <label class="custom-control-label" for="withInput">
+                        With Input
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group custom-checkbox condensed">
+            <div class="input-field">
+                <div class="custom-control">
+                    <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        id="alwaysShowTooltip"
+                        name="alwaysShowTooltip"
+                        [(ngModel)]="alwaysShowTooltip"
+                        (ngModelChange)="onOptionsChange($event, 'alwaysShowTooltip')"
+                    />
+                    <label class="custom-control-label" for="alwaysShowTooltip">
+                        Always show input
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
