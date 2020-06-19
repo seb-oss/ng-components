@@ -15,6 +15,7 @@ import { ROUTES as CHIP_ROUTES } from "./examples/components/chip/chip.module";
 import { ROUTES as TABS_ROUTES } from "./examples/components/tabs/tabs.module";
 import { ROUTES as VIDEO_ROUTES } from "./examples/components/video/video.module";
 import { ROUTES as BREADCRUMB_ROUTES } from "./examples/components/breadcrumb/breadcrumb.module";
+import { ROUTES as SLIDER_ROUTES } from "./examples/components/slider/slider.module";
 import { ROUTES as TIMELINE_ROUTES } from "./examples/components/timeline/timeline.module";
 import { ROUTES as PROGRESS_BAR_ROUTES } from "./examples/components/progressBar/progressBr.module";
 import { ROUTES as RATING_ROUTES } from "./examples/components/rating/rating.module";
@@ -107,6 +108,10 @@ const routes: Routes = [
                 {
                     path: "breadcrumb",
                     children: BREADCRUMB_ROUTES,
+                },
+                {
+                    path: "slider",
+                    children: SLIDER_ROUTES,
                 },
                 {
                     path: "video",
