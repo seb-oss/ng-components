@@ -1,0 +1,18 @@
+@import "~@sebgroup/bootstrap/scss/variables";
+
+.modal {
+    &.static {
+        display: block;
+        position: static;
+    }
+}
+.custom-header {
+    text-align: center;
+    font-size: $h3-font-size;
+    line-height: 1;
+    font-weight: $font-weight-medium;
+}
+.custom-body {
+    position: relative;
+    overflow: auto;
+}
