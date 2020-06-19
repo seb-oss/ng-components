@@ -7,8 +7,10 @@
         [disabled]="disabled"
         [attr.id]="id"
         [attr.name]="name"
-        [active]="active"
         [value]="label"
+        [attr.aria-disabled]="disabled"
+        [attr.aria-pressed]="active"
+        [class.active]="active"
     />
 
     <a
@@ -17,24 +19,28 @@
         *ngSwitchCase="'anchor'"
         [ngClass]="theme | buttonClasses: size:block:className"
         (click)="handleClick($event)"
-        [disabled]="disabled"
+        [class.disabled]="disabled"
         [attr.id]="id"
         [attr.name]="name"
-        [active]="active"
+        [attr.aria-pressed]="active"
+        [class.active]="active"
     >
-        <ng-content></ng-content>
+        <ng-content select="[anchor]"></ng-content>
     </a>
 
     <button
         [type]="type"
         *ngSwitchDefault
         [ngClass]="theme | buttonClasses: size:block:className"
+        data-toggle="button"
+        [attr.aria-pressed]="active"
         (click)="handleClick($event)"
         [disabled]="disabled"
+        [attr.aria-disabled]="disabled"
         [attr.id]="id"
         [attr.name]="name"
-        [active]="active"
+        [class.active]="active"
     >
-        <ng-content></ng-content>
+        <ng-content select="[button]"></ng-content>
     </button>
 </ng-container>
