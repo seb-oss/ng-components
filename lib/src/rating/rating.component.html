@@ -1,0 +1,48 @@
+<div class="rating-container" [ngClass]="className">
+    <div class="star-rating" [class.read-only]="readOnly" role="radiogroup">
+        <span
+            class="star-holder"
+            *ngFor="let item of getList(); let i = index"
+            (mouseenter)="onMouseEnter(i)"
+            (mouseleave)="onMouseLeave(i)"
+            [id]="randomIds[i]"
+            role="radio"
+            [tabindex]="setTabIndex(i)"
+            [attr.aria-checked]="value > i"
+            (keyup)="onKeyup($event, i)"
+            (keydown)="onKeydown($event)"
+            (click)="onClick(i + 1)"
+            #radioItemRefs
+        >
+            <span class="star-icon" [attr.key]="i" [attr.aria-labelledby]="randomIds[i]">
+                <svg-star
+                    *ngIf="!useHollow"
+                    [width]="iconWidth"
+                    [height]="iconHeight"
+                    [fill]="colors[0]"
+                    [title]="tooltipList && tooltipList.length ? tooltipList[i] : null"
+                >
+                </svg-star>
+                <svg-star-hollow
+                    *ngIf="useHollow"
+                    [width]="iconWidth"
+                    [height]="iconHeight"
+                    [fill]="colors[0]"
+                    [title]="tooltipList && tooltipList.length ? tooltipList[i] : null"
+                >
+                </svg-star-hollow>
+                <span class="selected-star-holder" [ngStyle]="{ width: getActiveList()[i] }">
+                    <svg-star
+                        [width]="iconWidth"
+                        [height]="iconHeight"
+                        [fill]="colors[1]"
+                        [title]="tooltipList && tooltipList.length ? tooltipList[i] : null"
+                    >
+                    </svg-star>
+                </span>
+            </span>
+        </span>
+        <div class="displayValue" *ngIf="showValue && !showTextValue">{{ value }}</div>
+        <div class="displayTextValue" *ngIf="showTextValue && tooltipList && tooltipList.length">{{ displayValue }}</div>
+    </div>
+</div>
