@@ -18,7 +18,6 @@ export class ButtonClassesPipe implements PipeTransform {
             classes.push(className);
         }
 
-        console.log("teh outline is " + size, classes);
         return classes;
     }
 }

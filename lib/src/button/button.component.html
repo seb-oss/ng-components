@@ -7,7 +7,7 @@
         [disabled]="disabled"
         [attr.id]="id"
         [attr.name]="name"
-        [attr.active]="active"
+        [active]="active"
         [value]="label"
     />
 
@@ -17,10 +17,10 @@
         *ngSwitchCase="'anchor'"
         [ngClass]="theme | buttonClasses: size:block:className"
         (click)="handleClick($event)"
-        [disabled="disabled"
+        [disabled]="disabled"
         [attr.id]="id"
         [attr.name]="name"
-        [attr.active]="active"
+        [active]="active"
     >
         <ng-content></ng-content>
     </a>
@@ -33,7 +33,7 @@
         [disabled]="disabled"
         [attr.id]="id"
         [attr.name]="name"
-        [attr.active]="active"
+        [active]="active"
     >
         <ng-content></ng-content>
     </button>

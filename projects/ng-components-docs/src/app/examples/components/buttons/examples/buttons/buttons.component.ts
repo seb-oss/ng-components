@@ -39,7 +39,7 @@ export class ButtonsComponent implements OnInit {
             { label: "Dark", value: "dark", key: "dark" },
             { label: "Link", value: "link", key: "link" },
             { label: "Outline danger", value: "outline-danger", key: "outline-danger" },
-            { label: "outline-primary", value: "outline-primary", key: "outline-primary" },
+            { label: "Outline primary", value: "outline-primary", key: "outline-primary" },
         ];
 
         this.sizeList = [
