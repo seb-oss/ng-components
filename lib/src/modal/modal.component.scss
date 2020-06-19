@@ -1,0 +1,7 @@
+.modal-header,
+.modal-body,
+.modal-footer {
+    &:empty {
+        display: none;
+    }
+}
