@@ -10,7 +10,7 @@
             [attr.aria-valuenow]="bar.value"
             [attr.aria-valuemin]="bar.value"
             [attr.aria-valuemax]="bar.value"
-            [ngStyle]="{ width: bar.value + '%' }"
+            [style.width.%]="bar.value"
         >
             <span *ngIf="bar.showProgress"> {{ bar.value }}%</span>
         </div>
