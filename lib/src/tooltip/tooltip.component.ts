@@ -1,15 +1,12 @@
 import {
     Component,
-    OnInit,
     ViewEncapsulation,
     ElementRef,
     Input,
     TemplateRef,
     ViewChild,
-    HostListener,
     Output,
     EventEmitter,
-    AfterContentInit,
     AfterViewInit,
     ChangeDetectorRef,
 } from "@angular/core";
@@ -28,13 +25,14 @@ import { TooltipTheme, TooltipTrigger, TooltipPosition } from "./tooltip-content
     ],
     encapsulation: ViewEncapsulation.None,
 })
-export class TooltipComponent implements OnInit, AfterViewInit {
+export class TooltipComponent implements AfterViewInit {
     @Input() content: string | TemplateRef<any> = "";
     @Input() textReference: string = "";
     @Input() tooltipReference: ElementRef<HTMLDivElement>;
     @Input() trigger: TooltipTrigger = "hover";
     @Input() position: TooltipPosition = "top";
     @Input() theme: TooltipTheme = "default";
+    @Input() className?: string;
     @Output() defocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild("ngContent") contentref: ElementRef<HTMLDivElement>;
@@ -43,9 +41,6 @@ export class TooltipComponent implements OnInit, AfterViewInit {
     hasContent: boolean = true;
 
     constructor(private cdr: ChangeDetectorRef) {}
-    ngOnInit() {
-        // this.isString = this.content instanceof TemplateRef;
-    }
 
     ngAfterViewInit() {
         this.hasContent = this.contentref && this.contentref.nativeElement.childNodes.length > 0;

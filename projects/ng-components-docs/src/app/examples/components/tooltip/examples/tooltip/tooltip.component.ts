@@ -10,12 +10,12 @@ interface ExtendedDropdownItem<T> extends DropdownItem {
     templateUrl: "./tooltip.component.html",
 })
 export class TooltipComponent {
-    triggerList: ExtendedDropdownItem<TooltipTrigger>[] = [
+    triggerList: Array<ExtendedDropdownItem<TooltipTrigger>> = [
         { key: "Hover", value: "hover", label: "Hover" },
         { key: "Click", value: "click", label: "Click" },
         { key: "Focus", value: "focus", label: "Focus" },
     ];
-    positionList: ExtendedDropdownItem<TooltipPosition>[] = [
+    positionList: Array<ExtendedDropdownItem<TooltipPosition>> = [
         { key: "Top", value: "top", label: "Top" },
         { key: "Right", value: "right", label: "Right" },
         { key: "Bottom", value: "bottom", label: "Bottom" },
@@ -29,7 +29,7 @@ export class TooltipComponent {
         { key: "Left-top", value: "left-top", label: "Left-top" },
         { key: "Left-bottom", value: "left-bottom", label: "Left-bottom" },
     ];
-    themeList: ExtendedDropdownItem<TooltipTheme>[] = [
+    themeList: Array<ExtendedDropdownItem<TooltipTheme>> = [
         { key: "Default", value: "default", label: "Default" },
         { key: "Primary", value: "primary", label: "Primary" },
         { key: "Light", value: "light", label: "Light" },

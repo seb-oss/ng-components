@@ -46,10 +46,12 @@ export class TooltipContentComponent implements OnInit {
     @Input() tooltipReference: ElementRef<HTMLDivElement>;
     @Input() position: TooltipPosition = "top";
     @Input() theme: TooltipTheme = "default";
+    @Input() className?: string;
     @Output() defocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild("tooltip") tooltip: ElementRef<HTMLDivElement>;
 
+    /** on tooltip blur */
     onBlur(event: FocusEvent) {
         if (!this.tooltipReference.nativeElement.contains(event.relatedTarget as any)) {
             this.defocus.emit(true);

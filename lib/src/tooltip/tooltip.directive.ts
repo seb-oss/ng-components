@@ -36,6 +36,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
     @Input() trigger: TooltipTrigger = "hover";
     @Input() position: TooltipPosition = "top";
     @Input() theme: TooltipTheme = "default";
+    @Input() className?: string;
 
     @HostBinding("attr.tabindex") tabindex = -1;
 
@@ -99,16 +100,25 @@ export class TooltipDirective implements OnInit, OnDestroy {
         }
     }
 
+    /** get overlay position strategy */
     private getOverlayPositionStrategy(): PositionStrategy {
         const positionStrategy: FlexibleConnectedPositionStrategy = this.overlayPositionBuilder
             .flexibleConnectedTo(this.elementRef)
-            .withPositions([this.getPosition(), this.getOriginPosition("end", "center", "start", "center")]);
-        this.obs = positionStrategy.positionChanges.pipe(distinctUntilChanged((prev, curr) => isEqual(prev, curr))).subscribe(test => {
-            console.log(test);
-        });
+            .withPositions(this.getPosition());
+        this.obs = positionStrategy.positionChanges
+            .pipe(distinctUntilChanged((prev: ConnectedOverlayPositionChange, curr: ConnectedOverlayPositionChange) => isEqual(prev, curr)))
+            .subscribe((newPosition: ConnectedOverlayPositionChange) => {
+                Object.keys(this.placements).map((key: TooltipPosition) => {
+                    if (isEqual(this.placements[key], newPosition.connectionPair)) {
+                        this.position = key;
+                        this.tooltipRef.instance.position = this.position;
+                    }
+                });
+            });
         return positionStrategy;
     }
 
+    /** get overlay origin position */
     private getOriginPosition(
         originX: ConnectedPosition["originX"],
         originY: ConnectedPosition["originY"],
@@ -118,41 +128,84 @@ export class TooltipDirective implements OnInit, OnDestroy {
         return { originX, originY, overlayX, overlayY };
     }
 
-    getPosition(): ConnectedPosition {
+    /** get tooltip position */
+    getPosition(): Array<ConnectedPosition> {
         switch (this.position) {
             case "left":
-                return this.getOriginPosition("start", "center", "end", "center");
+                return [this.placements.left, this.placements.right, this.placements.top, this.placements.bottom];
             case "left-top":
-                return this.getOriginPosition("start", "top", "end", "top");
+                return [
+                    this.placements["left-top"],
+                    this.placements["right-top"],
+                    this.placements["top-left"],
+                    this.placements["bottom-left"],
+                ];
             case "left-bottom":
-                return this.getOriginPosition("start", "bottom", "end", "bottom");
+                return [
+                    this.placements["left-bottom"],
+                    this.placements["right-bottom"],
+                    this.placements["bottom-left"],
+                    this.placements["top-left"],
+                ];
             case "bottom":
-                return this.getOriginPosition("center", "bottom", "center", "top");
+                return [this.placements.bottom, this.placements.top, this.placements.left, this.placements.right];
             case "bottom-left":
-                return this.getOriginPosition("start", "bottom", "start", "top");
+                return [
+                    this.placements["bottom-left"],
+                    this.placements["top-left"],
+                    this.placements["left-bottom"],
+                    this.placements["right-bottom"],
+                ];
             case "bottom-right":
-                return this.getOriginPosition("end", "bottom", "end", "top");
+                return [
+                    this.placements["bottom-right"],
+                    this.placements["top-right"],
+                    this.placements["right-bottom"],
+                    this.placements["left-bottom"],
+                ];
             case "right":
-                return this.getOriginPosition("end", "center", "start", "center");
+                return [this.placements.right, this.placements.left, this.placements.top, this.placements.bottom];
             case "right-top":
-                return this.getOriginPosition("end", "top", "start", "top");
+                return [
+                    this.placements["right-top"],
+                    this.placements["left-top"],
+                    this.placements["top-right"],
+                    this.placements["bottom-right"],
+                ];
             case "right-bottom":
-                return this.getOriginPosition("end", "bottom", "start", "bottom");
+                return [
+                    this.placements["right-bottom"],
+                    this.placements["left-bottom"],
+                    this.placements["bottom-right"],
+                    this.placements["top-right"],
+                ];
             case "top-left":
-                return this.getOriginPosition("start", "top", "start", "bottom");
+                return [
+                    this.placements["top-left"],
+                    this.placements["bottom-left"],
+                    this.placements["left-top"],
+                    this.placements["right-top"],
+                ];
             case "top-right":
-                return this.getOriginPosition("end", "top", "end", "bottom");
+                return [
+                    this.placements["top-right"],
+                    this.placements["bottom-right"],
+                    this.placements["right-top"],
+                    this.placements["left-top"],
+                ];
             default:
-                return this.getOriginPosition("center", "top", "center", "bottom");
+                return [this.placements.top, this.placements.bottom, this.placements.left, this.placements.right];
         }
     }
 
+    /** show tooltip */
     showTooltip() {
         this.tooltipRef = this.overlayRef.attach(new ComponentPortal(TooltipContentComponent));
         this.tooltipRef.instance.content = this.content;
         this.tooltipRef.instance.position = this.position;
         this.tooltipRef.instance.theme = this.theme;
         this.tooltipRef.instance.tooltipReference = this.elementRef;
+        this.tooltipRef.instance.className = this.className;
         this.tooltipRef.instance.defocus.subscribe((ev: boolean) => {
             if (ev) {
                 this.overlayRef.detach();
