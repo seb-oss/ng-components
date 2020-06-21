@@ -9,11 +9,12 @@ import {
     HostListener,
     Output,
     EventEmitter,
+    AfterContentInit,
+    AfterViewInit,
+    ChangeDetectorRef,
 } from "@angular/core";
 import { trigger, transition, style, animate } from "@angular/animations";
-
-export type TooltipTrigger = "hover" | "click" | "focus";
-export type TooltipPosition = "top" | "right" | "bottom" | "left";
+import { TooltipTheme, TooltipTrigger, TooltipPosition } from "./tooltip-content/tooltip-content.component";
 
 @Component({
     selector: "sebng-tooltip",
@@ -27,23 +28,27 @@ export type TooltipPosition = "top" | "right" | "bottom" | "left";
     ],
     encapsulation: ViewEncapsulation.None,
 })
-export class TooltipComponent implements OnInit {
-    @Input() text: string | TemplateRef<any> = "";
-    @Input() isTemplateRef: boolean = false;
+export class TooltipComponent implements OnInit, AfterViewInit {
+    @Input() content: string | TemplateRef<any> = "";
+    @Input() textReference: string = "";
     @Input() tooltipReference: ElementRef<HTMLDivElement>;
+    @Input() trigger: TooltipTrigger = "hover";
     @Input() position: TooltipPosition = "top";
+    @Input() theme: TooltipTheme = "default";
     @Output() defocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    @ViewChild("tooltip") tooltip: ElementRef<HTMLDivElement>;
+    @ViewChild("ngContent") contentref: ElementRef<HTMLDivElement>;
 
-    onBlur(event: FocusEvent) {
-        console.log("test");
-        if (!this.tooltipReference.nativeElement.contains(event.relatedTarget as any)) {
-            this.defocus.emit(true);
-        }
+    stringContent: string = "";
+    hasContent: boolean = true;
+
+    constructor(private cdr: ChangeDetectorRef) {}
+    ngOnInit() {
+        // this.isString = this.content instanceof TemplateRef;
     }
 
-    ngOnInit() {
-        this.isTemplateRef = this.text instanceof TemplateRef;
+    ngAfterViewInit() {
+        this.hasContent = this.contentref && this.contentref.nativeElement.childNodes.length > 0;
+        this.cdr.detectChanges();
     }
 }

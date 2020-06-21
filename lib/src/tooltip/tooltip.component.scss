@@ -1,26 +1,17 @@
-@import "~@angular/cdk/overlay-prebuilt.css";
 @import "~@sebgroup/bootstrap/scss/variables";
-// @import "~@sebgroup/bootstrap/scss/bootstrap-core/mixins/_reset-text";
-// @import "~@sebgroup/bootstrap/scss/styles/_tooltip";
-.tooltip {
-    position: relative;
-    min-width: max-content;
-    // margin: 10px 20px;
-    opacity: 1;
-    &.bs-tooltip-top,
-    &.bs-tooltip-bottom {
-        > .arrow {
-            right: calc(50% - 0.4rem);
-        }
-    }
-    &.bs-tooltip-right,
-    &.bs-tooltip-left {
-        > .arrow {
-            top: calc(50% - 0.4rem);
-        }
+
+$icon-size: 20px;
+
+.seb-default-tooltip {
+    width: $icon-size;
+    height: $icon-size;
+    display: inline-block;
+    > svg {
+        fill: $blue-dark;
+        vertical-align: inherit;
     }
 }
 
-.tooltip-reference {
-    z-index: -1;
+.seb-tooltip-wrapper {
+    display: inline-block;
 }

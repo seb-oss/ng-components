@@ -5,8 +5,8 @@ import { ExampleListComponent } from "../../../components/example-page/example-l
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
 import { Route } from "@angular/router";
 import { TooltipComponent } from "./examples/tooltip/tooltip.component";
-import { TooltipModule as tooltip } from "../../../../../../../lib/src/tooltip/tooltip.module";
 import { FormsModule } from "@angular/forms";
+import { DropdownModule, TooltipModule as TooltipLibModule, TextboxGroupModule } from "lib/src/public_api";
 
 export const ROUTES: Array<Route> = [
     { path: "", pathMatch: "full", redirectTo: "examples" },
@@ -27,12 +27,12 @@ export const ROUTES: Array<Route> = [
                             sources: [
                                 {
                                     name: "tooltip.component.html",
-                                    src: require("!raw-loader!./examples/tooltip/tooltip.component.html"),
+                                    src: require("!raw-loader!./examples/tooltip/tooltip.component.html").default,
                                     lang: "markup",
                                 },
                                 {
                                     name: "tooltip.component.ts",
-                                    src: require("!raw-loader!./examples/tooltip/tooltip.component.ts"),
+                                    src: require("!raw-loader!./examples/tooltip/tooltip.component.ts").default,
                                     lang: "ts",
                                 },
                             ],
@@ -53,6 +53,6 @@ export const ROUTES: Array<Route> = [
 
 @NgModule({
     declarations: [TooltipComponent],
-    imports: [CommonModule, FormsModule, tooltip],
+    imports: [CommonModule, FormsModule, DropdownModule, TextboxGroupModule, TooltipLibModule],
 })
 export class TooltipModule {}
