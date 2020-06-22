@@ -25,6 +25,7 @@ class TestComponent {
     center?: boolean;
     position?: ModalPositionType;
     fullscreen?: boolean;
+    animationDuration?: string = "0";
     @ViewChild(ModalComponent) modalChild: ModalComponent;
 
     closeModal(): void {
