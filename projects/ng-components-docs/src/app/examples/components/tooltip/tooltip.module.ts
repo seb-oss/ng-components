@@ -45,7 +45,6 @@ export const ROUTES: Array<Route> = [
                 component: ApiListComponent,
                 data: {
                     sources: [
-                        require("!raw-loader!../../../../../../../lib/src/tooltip/tooltip-content/tooltip-content.component.ts").default,
                         require("!raw-loader!../../../../../../../lib/src/tooltip/tooltip.directive.ts").default,
                         require("!raw-loader!../../../../../../../lib/src/tooltip/tooltip.component.ts").default,
                     ],
