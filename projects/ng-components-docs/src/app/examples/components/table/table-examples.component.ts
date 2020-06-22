@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { TableHeaderListItem, SortInfo, TableConfig, TableRowClickedEvent } from "lib/src/table/table.models";
-import { TableService } from "lib/src/table";
+import { TableService, TableComponent } from "lib/src/table";
 import { takeUntil } from "rxjs/operators";
 import { Subject } from "rxjs";
+import { DropdownItem } from "lib/src/dropdown";
 
 interface TableObjectType {
     rowNo: number;
@@ -18,6 +19,14 @@ interface TableObjectType {
     templateUrl: "./table-examples.component.html",
 })
 export class TableExamplesComponent implements OnInit, OnDestroy {
+    columnsList: DropdownItem[] = [
+        { key: "foo", value: "foo", label: "Foo" },
+        { key: "bar", value: "bar", label: "Bar" },
+        { key: "amount", value: "amount", label: "Amount" },
+        { key: "validFrom", value: "validFrom", label: "Valid From" },
+        { key: "customTemplate", value: "customTemplate", label: "Custom Template" },
+    ];
+    columns: TableConfig<TableObjectType>["columns"];
     types: TableConfig<TableObjectType>["types"] = { amount: "number", validFrom: "date", customTemplate: "custom-html", rowNo: "number" };
     customLabels: TableConfig<TableObjectType>["labels"] = { rowNo: "#" };
     unsubscribe: Subject<any> = new Subject();
@@ -76,6 +85,19 @@ export class TableExamplesComponent implements OnInit, OnDestroy {
             next: (value: boolean) => {
                 this.isAllSelected = value;
             },
+        });
+    }
+
+    onChangeColumnsList = (list: DropdownItem[]) => {
+        this.changeColumns([...list.map((item: DropdownItem) => item.value)]);
+    };
+
+    changeColumns(columns: TableConfig<TableObjectType>["columns"]) {
+        this.columns = columns;
+        this.tableService.registerDatasource(this.data, {
+            types: this.types,
+            labels: this.customLabels,
+            columns,
         });
     }
 

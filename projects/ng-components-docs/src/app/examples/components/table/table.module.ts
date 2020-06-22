@@ -7,6 +7,7 @@ import { ExampleListComponent } from "../../../components/example-page/example-l
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
 import { TableModule as TableLibModule } from "../../../../../../../lib/src/table";
 import { PaginationModule as PaginationLibModule } from "../../../../../../../lib/src/pagination";
+import { DropdownModule as DropdownLibModule } from "../../../../../../../lib/src/dropdown";
 
 export const ROUTES = [
     { path: "", pathMatch: "full", redirectTo: "examples" },
@@ -66,6 +67,6 @@ export const ROUTES = [
 
 @NgModule({
     declarations: [TableExamplesComponent, FullTableExampleComponent],
-    imports: [CommonModule, TableLibModule, PaginationLibModule],
+    imports: [CommonModule, TableLibModule, PaginationLibModule, DropdownLibModule],
 })
 export class TableModule {}

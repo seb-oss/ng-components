@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input } from "@angular/core";
 import { TableHeaderListItem, SortInfo, TableConfig, TableRowClickedEvent } from "lib/src/table/table.models";
 import { TableService } from "lib/src/table";
 import { takeUntil } from "rxjs/operators";
@@ -19,6 +19,21 @@ interface TableObjectType {
     providers: [TableService],
 })
 export class FullTableExampleComponent implements OnInit, OnDestroy {
+    @Input("columns")
+    set columns(value: TableConfig<TableObjectType>["columns"]) {
+        // Register your data with the table service.
+        // (Optional): Pass in your config. The service will return
+        // the headerList and rows to be displayed with the Table component.
+        this.tableService.registerDatasource(this.data, {
+            types: this.types,
+            labels: this.customLabels,
+            sort: { column: "amount", isAscending: true, type: this.types.amount },
+            pagination: {
+                maxItems: this.maxItemsPerPage,
+            },
+            columns: value,
+        });
+    }
     sortInfo: SortInfo<keyof TableObjectType>;
     curentPage: number = 0;
     maxItemsPerPage: number = 3;
@@ -49,18 +64,6 @@ export class FullTableExampleComponent implements OnInit, OnDestroy {
     constructor(private tableService: TableService<TableObjectType>) {}
 
     ngOnInit(): void {
-        // Register your data with the table service.
-        // (Optional): Pass in your config. The service will return
-        // the headerList and rows to be displayed with the Table component.
-        this.tableService.registerDatasource(this.data, {
-            types: this.types,
-            labels: this.customLabels,
-            sort: { column: "amount", isAscending: true, type: this.types.amount }, // Initial SORT info
-            pagination: {
-                maxItems: this.maxItemsPerPage,
-            },
-        });
-
         // Subscribe to the current table, header list and sortInfo
         this.tableService.currentTable.pipe(takeUntil(this.unsubscribe)).subscribe({
             next: (value: TableObjectType[]) => {
