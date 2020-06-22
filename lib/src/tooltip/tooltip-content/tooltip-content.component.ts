@@ -42,7 +42,6 @@ export type TooltipTheme = "default" | "light" | "primary" | "warning" | "succes
 })
 export class TooltipContentComponent implements OnInit {
     @Input() content: string | TemplateRef<any> = "";
-    @Input() isTemplateRef: boolean = false;
     @Input() tooltipReference: ElementRef<HTMLDivElement>;
     @Input() position: TooltipPosition = "top";
     @Input() theme: TooltipTheme = "default";
@@ -50,6 +49,8 @@ export class TooltipContentComponent implements OnInit {
     @Output() defocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild("tooltip") tooltip: ElementRef<HTMLDivElement>;
+
+    public isTemplateRef: boolean = false;
 
     /** on tooltip blur */
     onBlur(event: FocusEvent) {

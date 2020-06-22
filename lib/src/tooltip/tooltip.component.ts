@@ -33,7 +33,6 @@ export class TooltipComponent implements AfterViewInit {
     @Input() position: TooltipPosition = "top";
     @Input() theme: TooltipTheme = "default";
     @Input() className?: string;
-    @Output() defocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild("ngContent") contentref: ElementRef<HTMLDivElement>;
 

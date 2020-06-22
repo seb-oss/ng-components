@@ -13,13 +13,7 @@ import { FocusMonitor } from "@angular/cdk/a11y";
 @Component({
     selector: "test-sebng-tooltip",
     template: `
-        <sebng-tooltip
-            [content]="content"
-            [className]="className"
-            (defocus)="defocus($event)"
-            [trigger]="trigger"
-            [theme]="theme"
-            [position]="position"
+        <sebng-tooltip [content]="content" [className]="className" [trigger]="trigger" [theme]="theme" [position]="position"
             >Test</sebng-tooltip
         >
     `,
@@ -32,7 +26,6 @@ class TooltipTestComponent {
     trigger: TooltipTrigger = "hover";
     position: TooltipPosition = "top";
     theme: TooltipTheme = "default";
-    defocus(e: Event): void {}
 }
 
 describe("TooltipComponent", () => {
@@ -79,7 +72,7 @@ describe("TooltipComponent", () => {
         overlayContainer.ngOnDestroy();
     }));
 
-    describe("basic", () => {
+    describe("tooltip", () => {
         beforeEach(() => {
             fixture = TestBed.createComponent(TooltipTestComponent);
             component = fixture.componentInstance;
