@@ -11,6 +11,9 @@ interface TestTableDataType {
 describe("TableService", () => {
     let service: TableService<TestTableDataType>;
     let datasource: TestTableDataType[];
+    let pagination: TableConfig["pagination"];
+    let noOfPages: number;
+    let sort: TableConfig<TestTableDataType>["sort"];
 
     beforeEach(() => {
         TestBed.configureTestingModule({});
@@ -22,6 +25,10 @@ describe("TableService", () => {
             { country: "Slovenia", currency: "EUR" },
             { country: "Morocco", currency: "MAD" },
         ];
+        pagination = { maxItems: 2 };
+        noOfPages = Math.round(Math.ceil(datasource.length / pagination.maxItems));
+        sort = { isAscending: true, column: "country", type: "string" };
+
         service.registerDatasource(datasource);
     });
 
@@ -53,8 +60,6 @@ describe("TableService", () => {
     });
 
     it("should handle pagination", () => {
-        const pagination: TableConfig["pagination"] = { maxItems: 2 };
-        const noOfPages: number = Math.round(Math.ceil(datasource.length / pagination.maxItems));
         service.registerDatasource(datasource, { pagination });
         expect(service.paginatedTable.value.length).toBe(noOfPages); // correct number of pages
         expect(service.currentPageIndex.value).toBe(0); // should be page 1 by default
@@ -72,7 +77,6 @@ describe("TableService", () => {
     });
 
     it("should handle sorting", () => {
-        const sort: TableConfig<TestTableDataType>["sort"] = { isAscending: true, column: "country", type: "string" };
         service.registerDatasource(datasource, { sort }); // set initial sort
         expect(service.currentSortInfo.value).toEqual(sort);
         expect(service.sortedTable.value).toEqual(service.currentTable.value);
@@ -87,6 +91,27 @@ describe("TableService", () => {
         expect(service.currentSortInfo.value.column).toEqual("currency");
         expect(service.currentSortInfo.value.isAscending).toEqual(true); // should be initially ascending by default on new column
         expect(service.currentTable.value[service.currentTable.value.length - 1].country).toEqual("Malaysia"); // label of the last row is correct
+    });
+
+    it("should preserve selection on sort and pagination changes", () => {
+        service.registerDatasource(datasource, { sort, pagination }); // set initial sort to country ascending and default pagination config
+        expect(service.currentTable.value).toEqual([datasource[1], datasource[2]]); // initially sorted by country ascending, should expect Iraq and Malaysia
+
+        // select first two rows
+        service.handleSelectRow(0);
+        service.handleSelectRow(1);
+
+        expect(service.selectedRows.value).toEqual([[0, 1], [], []]); // selected rows respects pagination so we should expect this result
+
+        service.handleChangeSort("currency"); // sort by second column - currency
+        service.handleChangePagination(2); // navigate to next page (page 2)
+
+        expect(service.selectedRows.value).toEqual([[1], [], [0]]); // show same rows selected but according to the sort changes
+
+        service.handleChangeSort("country"); // revert sort back
+        service.handleChangePagination(1); // back to page 1
+
+        expect(service.selectedRows.value).toEqual([[0, 1], [], []]); // should be the same as the first check above
     });
 
     it("should respect column order", () => {
