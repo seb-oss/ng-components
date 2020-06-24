@@ -16,33 +16,45 @@
 </div> -->
 
 <div
-    class="input-group mb-3"
+    class="input-group seb-stepper"
     [ngClass]="{
         className: className,
         disabled: disabled
     }"
 >
-    <div class="input-group-prepend">
+    <div class="input-group-prepend stepper-decrement">
         <button
             class="btn btn-secondary"
             type="button"
-            [disabled]="value === min"
-            [class.disabled]="value === min"
+            [disabled]="value <= min || disabled"
+            [class.disabled]="value <= min || disabled"
             (click)="!disabled && decrement()"
         >
-            &#8722;
+            <span>&#8722;</span>
         </button>
     </div>
-    <input [attr.id]="name" type="tel" [min]="min" [max]="max" class="form-control text-center" [(ngModel)]="value" />
-    <div class="input-group-append">
+
+    <input
+        class="form-control stepper-input"
+        [disabled]="disabled"
+        [class.disabled]="disabled"
+        [class.is-invalid]="invalid"
+        [attr.id]="id"
+        type="tel"
+        [attr.min]="min"
+        [attr.max]="max"
+        [(ngModel)]="value"
+    />
+
+    <div class="input-group-append stepper-increment">
         <button
             class="btn btn-secondary"
             type="button"
-            [disabled]="value === max"
-            [class.disabled]="value === max"
+            [disabled]="value >= max || disabled"
+            [class.disabled]="value >= max || disabled"
             (click)="!disabled && increment()"
         >
-            &#43;
+            <span>&#43;</span>
         </button>
     </div>
 </div>

@@ -16,11 +16,12 @@ const CUSTOM_STEPPER_CONTROL_VALUE_ACCESSOR: any = {
 })
 export class StepperComponent implements ControlValueAccessor {
     @Input() className?: string;
-    @Input() name?: string;
+    @Input() id?: string;
     @Input() min?: number = 1;
     @Input() max?: number = 5;
     @Input() step?: number = 1;
     @Input() disabled?: boolean;
+    invalid = false;
 
     // Placeholders for the callbacks which are later provided
     // by the Control Value Accessor
@@ -46,10 +47,13 @@ export class StepperComponent implements ControlValueAccessor {
         return this.innerValue;
     }
     set value(v: number) {
-        if (v !== this.innerValue) {
+        this.invalid = false;
+        if (v >= this.min && v <= this.max) {
             this.innerValue = v;
             this.onChangeCallback && this.onChangeCallback(v);
             this.onTouchedCallback && this.onTouchedCallback();
+        } else {
+            this.invalid = true;
         }
     }
 
