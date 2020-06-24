@@ -24,9 +24,9 @@ class TooltipContentTestComponent {
     tooltipReference: ElementRef<HTMLDivElement>;
     position: TooltipPosition = "top";
     theme: TooltipTheme = "default";
-    className?: string;
+    className?: string = "";
 
-    defocus(value: boolean) {}
+    defocus() {}
 }
 
 describe("TooltipContentComponent", () => {

@@ -36,7 +36,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
     @Input() trigger: TooltipTrigger = "hover";
     @Input() position: TooltipPosition = "top";
     @Input() theme: TooltipTheme = "default";
-    @Input() className?: string;
+    @Input() className?: string = "";
 
     @HostBinding("attr.tabindex") tabindex = -1;
 
@@ -93,11 +93,21 @@ export class TooltipDirective implements OnInit, OnDestroy {
         this.trigger === "focus" && this.showTooltip();
     }
 
+    @HostListener("focusin", ["$event"])
+    showFocusWithin(event: FocusEvent) {
+        if (this.elementRef.nativeElement.contains(event.target)) {
+            this.trigger === "focus" && this.showTooltip();
+        }
+    }
+
+    @HostListener("focusout", ["$event.relatedTarget"])
+    hideFocusOut(relatedTarget: HTMLDivElement) {
+        this.hideTooltip(relatedTarget);
+    }
+
     @HostListener("blur", ["$event.relatedTarget"])
     hideClick(relatedTarget: HTMLDivElement) {
-        if (!relatedTarget || !this.tooltipRef.instance.tooltip.nativeElement.contains(relatedTarget)) {
-            (this.trigger === "click" || this.trigger === "focus") && this.overlayRef.detach();
-        }
+        this.hideTooltip(relatedTarget);
     }
 
     /** get overlay position strategy */
@@ -200,19 +210,27 @@ export class TooltipDirective implements OnInit, OnDestroy {
 
     /** show tooltip */
     showTooltip() {
-        this.tooltipRef = this.overlayRef.attach(new ComponentPortal(TooltipContentComponent));
+        if (!this.overlayRef.hasAttached()) {
+            this.tooltipRef = this.overlayRef.attach(new ComponentPortal(TooltipContentComponent));
+        }
         this.tooltipRef.instance.content = this.content;
         this.tooltipRef.instance.position = this.position;
         this.tooltipRef.instance.theme = this.theme;
         this.tooltipRef.instance.tooltipReference = this.elementRef;
         this.tooltipRef.instance.className = this.className;
-        this.tooltipRef.instance.defocus.subscribe((ev: boolean) => {
-            if (ev) {
-                this.overlayRef.detach();
-            }
-        });
+        this.tooltipRef.instance.defocus.subscribe(() => this.overlayRef.detach());
 
         this.overlayRef.updatePositionStrategy(this.getOverlayPositionStrategy());
         this.overlayRef.updatePosition();
+    }
+
+    /**
+     * hide tooltip
+     * @param relatedTarget target related
+     */
+    hideTooltip(relatedTarget: HTMLDivElement) {
+        if (!relatedTarget || !this.tooltipRef.instance.tooltip.nativeElement.contains(relatedTarget)) {
+            (this.trigger === "click" || this.trigger === "focus") && this.overlayRef.detach();
+        }
     }
 }

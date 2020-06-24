@@ -22,7 +22,7 @@ export const ROUTES: Array<Route> = [
                         path: "tooltip",
                         component: TooltipComponent,
                         data: {
-                            title: "tooltip",
+                            title: "Tooltip Component",
                             description: "Additional description for example (optional)",
                             sources: [
                                 {

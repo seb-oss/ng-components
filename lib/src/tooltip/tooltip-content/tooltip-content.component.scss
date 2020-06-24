@@ -1,7 +1,5 @@
 @import "~@angular/cdk/overlay-prebuilt.css";
 @import "~@sebgroup/bootstrap/scss/variables";
-// @import "~@sebgroup/bootstrap/scss/bootstrap-core/mixins/_reset-text";
-// @import "~@sebgroup/bootstrap/scss/styles/_tooltip";
 
 @mixin tooltip-arrow($arrow-position, $direction, $arrow-width, $padding) {
     padding: #{$padding};

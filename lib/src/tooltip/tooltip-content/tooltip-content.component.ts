@@ -40,26 +40,32 @@ export type TooltipTheme = "default" | "light" | "primary" | "warning" | "succes
     ],
     encapsulation: ViewEncapsulation.None,
 })
-export class TooltipContentComponent implements OnInit {
-    @Input() content: string | TemplateRef<any> = "";
+export class TooltipContentComponent {
     @Input() tooltipReference: ElementRef<HTMLDivElement>;
     @Input() position: TooltipPosition = "top";
     @Input() theme: TooltipTheme = "default";
-    @Input() className?: string;
+    @Input() className?: string = "";
     @Output() defocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild("tooltip") tooltip: ElementRef<HTMLDivElement>;
 
     public isTemplateRef: boolean = false;
+    public _content: string | TemplateRef<any> = "";
+
+    get content(): string | TemplateRef<any> {
+        return this._content;
+    }
+
+    @Input("content")
+    set content(value: string | TemplateRef<any>) {
+        this._content = value;
+        this.isTemplateRef = value instanceof TemplateRef;
+    }
 
     /** on tooltip blur */
     onBlur(event: FocusEvent) {
         if (!this.tooltipReference.nativeElement.contains(event.relatedTarget as any)) {
-            this.defocus.emit(true);
+            this.defocus.emit();
         }
-    }
-
-    ngOnInit() {
-        this.isTemplateRef = this.content instanceof TemplateRef;
     }
 }

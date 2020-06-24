@@ -1,15 +1,14 @@
-<ng-container *ngIf="textReference; else ngContentTemplate">
-    <abbr
-        class="custom-tooltip text-help"
-        [sebng-tooltip]="content"
-        [trigger]="trigger"
-        [position]="position"
-        [theme]="theme"
-        [className]="className"
-    >
-        {{ textReference }}
-    </abbr>
-</ng-container>
+<abbr
+    *ngIf="textReference; else ngContentTemplate"
+    class="custom-tooltip text-help"
+    [sebng-tooltip]="content"
+    [trigger]="trigger"
+    [position]="position"
+    [theme]="theme"
+    [className]="className"
+>
+    {{ textReference }}
+</abbr>
 <ng-template #ngContentTemplate>
     <div
         #ngContent

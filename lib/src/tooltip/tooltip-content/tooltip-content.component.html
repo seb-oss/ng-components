@@ -1,8 +1,8 @@
 <div
     #tooltip
     @tooltip
-    class="custom-tooltip-content tooltip bs-tooltip-{{ position }} {{ theme }}"
-    [ngClass]="className"
+    class="custom-tooltip-content tooltip bs-tooltip-{{ position }}"
+    [ngClass]="[theme, className]"
     tabindex="-1"
     role="tooltip"
     (blur)="onBlur($event)"

@@ -32,7 +32,7 @@ export class TooltipComponent implements AfterViewInit {
     @Input() trigger: TooltipTrigger = "hover";
     @Input() position: TooltipPosition = "top";
     @Input() theme: TooltipTheme = "default";
-    @Input() className?: string;
+    @Input() className?: string = "";
 
     @ViewChild("ngContent") contentref: ElementRef<HTMLDivElement>;
 
