@@ -13,7 +13,7 @@ import { Component, ViewChild } from "@angular/core";
         [step]="step"
         [min]="min"
         [max]="max"
-        name="{{ name }}"
+        id="{{ id }}"
     ></seb-stepper>`,
 })
 class CustomTestClass {
@@ -23,14 +23,14 @@ class CustomTestClass {
     min: number;
     max: number;
     step: number;
-    name: string;
+    id: string;
 
     constructor() {
         this.className = "my-stepper";
         this.min = 1;
         this.max = 10;
         this.stepperValue = 1;
-        this.name = "myStepper";
+        this.id = "myStepper";
     }
 }
 
@@ -61,7 +61,7 @@ describe("Component: StepperComponent", () => {
         fixture.whenStable().then(() => {
             component.stepperValue = 1;
             fixture.detectChanges();
-            expect(fixture.debugElement.query(By.css(".stepper-decrement.disabled"))).toBeTruthy();
+            expect(fixture.debugElement.query(By.css(".stepper-decrement > button:disabled"))).toBeTruthy();
         });
     }));
 
@@ -75,7 +75,7 @@ describe("Component: StepperComponent", () => {
             fixture.detectChanges();
 
             const onIncrementMock = spyOn(component.stepperComponent, "increment");
-            const incrementButton = fixture.debugElement.nativeElement.querySelector(".stepper-increment");
+            const incrementButton = fixture.debugElement.nativeElement.querySelector(".stepper-increment>button");
             const event = new Event("click");
             incrementButton.dispatchEvent(event);
             expect(onIncrementMock).toHaveBeenCalled();
@@ -93,7 +93,7 @@ describe("Component: StepperComponent", () => {
             fixture.detectChanges();
 
             const onDecrementMock = spyOn(component.stepperComponent, "decrement");
-            const decrementButton = fixture.debugElement.nativeElement.querySelector(".stepper-decrement");
+            const decrementButton = fixture.debugElement.nativeElement.querySelector(".stepper-decrement>button");
             const event = new Event("click");
             decrementButton.dispatchEvent(event);
             expect(onDecrementMock).toHaveBeenCalled();
@@ -103,16 +103,16 @@ describe("Component: StepperComponent", () => {
     it("should be able to write and update value using the writevalue method", async(() => {
         fixture.detectChanges();
 
-        expect(component.stepperComponent.value).toBeNull();
+        expect(component.stepperComponent.value).toBe(0); // default is 0
 
-        component.stepperComponent.writeValue(1);
+        component.stepperComponent.writeValue(3);
 
         fixture.detectChanges();
 
-        expect(component.stepperComponent.value).toEqual(1);
+        expect(component.stepperComponent.value).toEqual(3);
     }));
 
-    it("should call touch and change events when the value is set", fakeAsync(() => {
+    it("should call touch and change events when a valid value is set", fakeAsync(() => {
         fixture.detectChanges();
         const onChangeEvent = (change: any) => true;
         const registerOnChangeMock = spyOn(component.stepperComponent, "registerOnChange").and.callThrough();
@@ -123,7 +123,7 @@ describe("Component: StepperComponent", () => {
 
         component.stepperComponent.registerOnTouched(onChangeEvent);
 
-        component.stepperValue = 0;
+        component.stepperValue = 5;
 
         fixture.detectChanges();
         tick();
