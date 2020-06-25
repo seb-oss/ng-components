@@ -6,4 +6,6 @@ import { Component } from "@angular/core";
 })
 export class StepperExamplesComponent {
     control: number = 5;
+    control1: number = 5;
+    errorControl: number = -99;
 }
