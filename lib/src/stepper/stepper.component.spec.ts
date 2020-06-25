@@ -146,4 +146,23 @@ describe("Component: StepperComponent", () => {
         expect(component.stepperComponent.value).toEqual(component.stepperValue);
         expect(component.stepperValue).toEqual(2);
     });
+
+    it("should indicate error when user input is not valid", () => {
+        component.stepperComponent.value = 3;
+        const inputElement: HTMLInputElement = fixture.debugElement.nativeElement.querySelector("input.form-control.stepper-input");
+        const event: Event = new Event("input");
+        inputElement.value = "abc"; // try typing invalid things
+        inputElement.dispatchEvent(event);
+
+        fixture.detectChanges();
+        expect(component.stepperComponent.value).toEqual(component.stepperValue);
+        expect(fixture.debugElement.queryAll(By.css(`.is-invalid`)).length).toBe(1);
+        expect(component.stepperValue).toEqual(3);
+
+        inputElement.value = "4"; //  try to input a valid number within range
+        inputElement.dispatchEvent(event);
+        fixture.detectChanges();
+        expect(fixture.debugElement.queryAll(By.css(`.is-invalid`)).length).toBe(0);
+        expect(component.stepperValue).toBe(4);
+    });
 });

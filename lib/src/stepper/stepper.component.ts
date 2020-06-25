@@ -54,7 +54,7 @@ export class StepperComponent implements ControlValueAccessor {
     set value(v: number) {
         this._invalid = false;
         if (v >= this.min && v <= this.max) {
-            this.innerValue = v;
+            this.innerValue = Number(v);
         } else {
             this._invalid = true;
         }
