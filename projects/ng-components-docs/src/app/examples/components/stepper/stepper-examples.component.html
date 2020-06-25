@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col">
+        <label>Normal</label>
+        <p>min: -5, max: 15, step: 1</p>
+        <seb-stepper id="stepper-normal" [(ngModel)]="control" [min]="-5" [max]="15"></seb-stepper>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <label>Normal</label>
+        <small>min: -5, max: 15, step: 5</small>
+        <seb-stepper id="stepper-normal" [(ngModel)]="control" [min]="-5" [max]="15" [step]="5"></seb-stepper>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <label>Disabled</label>
+        <seb-stepper id="stepper-disabled" [disabled]="true" [(ngModel)]="control" [min]="-5" [max]="15"></seb-stepper>
+    </div>
+</div>
+
+<label>Output value:</label>
+<p>{{ control }}</p>
