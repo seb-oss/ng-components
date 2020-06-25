@@ -15,13 +15,7 @@
     <div class="alert alert-danger">{{error}}</div>
 </div> -->
 
-<div
-    class="input-group seb-stepper"
-    [ngClass]="{
-        className: className,
-        disabled: disabled
-    }"
->
+<div class="input-group seb-stepper" [ngClass]="className">
     <div class="input-group-prepend stepper-decrement">
         <button
             class="btn btn-secondary"

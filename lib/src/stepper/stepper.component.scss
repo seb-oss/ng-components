@@ -1,23 +1,39 @@
 @import "~@sebgroup/bootstrap/scss/variables";
 
+$seb-stepper-size: 2.75rem;
+
 .input-group.seb-stepper {
     margin-bottom: 1rem;
     > input.form-control.stepper-input {
         text-align: center;
+        font-size: $h3-font-size;
+        font-weight: $font-weight-normal;
         max-width: 4rem;
+        padding: 0;
+        height: auto;
     }
     .input-group-prepend.stepper-decrement,
     .input-group-append.stepper-increment {
-        height: 2.75rem;
-        width: 2.75rem;
+        height: $seb-stepper-size;
+        width: $seb-stepper-size;
+
         button.btn.btn-secondary {
-            height: 2.75rem;
-            width: 2.75rem;
+            height: $seb-stepper-size;
+            width: $seb-stepper-size;
             padding: 0;
             margin: 0;
 
+            // TODO: Fix the disabled style bug in SEB Bootstrap input group styles instead
+            // .input-group > .input-group-prepend, .input-group-append
+            // > .btn:not(:hover):not(:active):not(:focus) <--- missing :not(:disabled)
+            &.disabled,
+            &:disabled {
+                color: $btn-disabled-color;
+                background-color: transparent;
+            }
+
             > span {
-                font-size: 38px;
+                font-size: 2.375rem;
                 font-weight: 100;
                 line-height: 0.6;
             }
