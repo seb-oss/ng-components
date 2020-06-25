@@ -24,7 +24,9 @@ export class TimerComponent implements OnInit, OnChanges, OnDestroy {
     public timer: string;
     private innerInterval: NodeJS.Timeout;
 
-    constructor(private changeRef: ChangeDetectorRef) {}
+    constructor(private changeRef: ChangeDetectorRef) {
+        this.timer = "00:00";
+    }
 
     setTimerValue(timeout: number, callback: Function): void {
         this.timer = this.convertMStoTime(timeout);
@@ -66,7 +68,6 @@ export class TimerComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnInit() {
-        this.timer = "00:00";
         if (this.duration !== null && this.duration !== undefined) {
             this.startInterval(this.duration);
         }
