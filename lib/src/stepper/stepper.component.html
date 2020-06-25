@@ -1,20 +1,3 @@
-<!-- <div class="form-group custom-stepper" [ngClass]="{
-        className: className,
-        'has-error': error,
-        'has-warning': warning
-    }">
-    <label class="custom-label">{{label}}</label>
-    <div class="stepper-container" [ngClass]="{'disabled': disabled}">
-        <div class="stepper-decrement" (click)="!disabled && decrement()" [class.disabled]="value === min">&#8722;</div>
-        <div class="stepper-preview"><span>{{value}}</span></div>
-        <div class="stepper-increment" (click)="!disabled && increment()" [class.disabled]="value === max">&#43;</div>
-    </div>
-    <input class="stepper-input" id="{{_id}}" name="{{name}}" type="number" [min]="min" [max]="max" [(ngModel)]="value"
-        [disabled]="disabled" />
-    <div class="alert alert-warning">{{warning}}</div>
-    <div class="alert alert-danger">{{error}}</div>
-</div> -->
-
 <div class="input-group seb-stepper" [ngClass]="className">
     <div class="input-group-prepend stepper-decrement">
         <button
@@ -23,6 +6,8 @@
             [disabled]="value <= min || disabled"
             [class.disabled]="value <= min || disabled"
             (click)="!disabled && decrement()"
+            [attr.aria-controls]="id"
+            aria-labelledby="decrement"
         >
             <span>&#8722;</span>
         </button>
@@ -31,8 +16,10 @@
     <input
         class="form-control stepper-input"
         [disabled]="disabled"
+        [readOnly]="disabled"
         [class.disabled]="disabled"
         [class.is-invalid]="invalid"
+        aria-live="assertive"
         [attr.id]="id"
         type="tel"
         [attr.min]="min"
@@ -47,6 +34,8 @@
             [disabled]="value >= max || disabled"
             [class.disabled]="value >= max || disabled"
             (click)="!disabled && increment()"
+            [attr.aria-controls]="id"
+            aria-labelledby="increment"
         >
             <span>&#43;</span>
         </button>
