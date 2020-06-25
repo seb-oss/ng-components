@@ -57,18 +57,19 @@ describe("Component: StepperComponent", () => {
     });
 
     it("the decrement button should be disabled when value is minimum", () => {
-        component.stepperValue = 1;
-        fixture.detectChanges();
         expect(fixture.debugElement.query(By.css(".stepper-decrement > button:disabled"))).toBeTruthy();
+        component.min = -10;
+        fixture.detectChanges();
+        expect(fixture.debugElement.query(By.css(".stepper-decrement > button:disabled"))).toBeFalsy();
     });
 
     it("should render and call the increment function on increment button clicked", () => {
         component.max = 5;
         fixture.detectChanges();
 
-        const onIncrementMock = spyOn(component.stepperComponent, "increment");
-        const incrementButton = fixture.debugElement.nativeElement.querySelector(".stepper-increment>button");
-        const event = new Event("click");
+        const onIncrementMock: jasmine.Spy = spyOn(component.stepperComponent, "increment");
+        const incrementButton: HTMLButtonElement = fixture.debugElement.nativeElement.querySelector(".stepper-increment>button");
+        const event: Event = new Event("click");
         incrementButton.dispatchEvent(event);
         expect(onIncrementMock).toHaveBeenCalled();
         fixture.detectChanges();
@@ -79,9 +80,9 @@ describe("Component: StepperComponent", () => {
         component.stepperValue = 3;
         fixture.detectChanges();
 
-        const onDecrementMock = spyOn(component.stepperComponent, "decrement");
-        const decrementButton = fixture.debugElement.nativeElement.querySelector(".stepper-decrement>button");
-        const event = new Event("click");
+        const onDecrementMock: jasmine.Spy = spyOn(component.stepperComponent, "decrement");
+        const decrementButton: HTMLButtonElement = fixture.debugElement.nativeElement.querySelector(".stepper-decrement>button");
+        const event: Event = new Event("click");
         decrementButton.dispatchEvent(event);
         expect(onDecrementMock).toHaveBeenCalled();
     });
@@ -97,10 +98,10 @@ describe("Component: StepperComponent", () => {
     });
 
     it("should call touch and change events when a valid value is set", fakeAsync(() => {
-        const onChangeEvent = (change: any) => true;
-        const registerOnChangeMock = spyOn(component.stepperComponent, "registerOnChange").and.callThrough();
-        const registerOnTouchedMock = spyOn(component.stepperComponent, "registerOnTouched").and.callThrough();
-        const onMockWriteValue = spyOn(component.stepperComponent, "writeValue").and.callThrough();
+        const onChangeEvent: Function = (change: any) => true;
+        const registerOnChangeMock: jasmine.Spy = spyOn(component.stepperComponent, "registerOnChange").and.callThrough();
+        const registerOnTouchedMock: jasmine.Spy = spyOn(component.stepperComponent, "registerOnTouched").and.callThrough();
+        const onMockWriteValue: jasmine.Spy = spyOn(component.stepperComponent, "writeValue").and.callThrough();
 
         component.stepperComponent.registerOnChange(onChangeEvent);
 
