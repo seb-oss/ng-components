@@ -11,6 +11,10 @@ $seb-stepper-size: 2.75rem;
         max-width: 4rem;
         padding: 0;
         height: auto;
+
+        &.is-invalid {
+            border-bottom: $danger 1.5px solid;
+        }
     }
     .input-group-prepend.stepper-decrement,
     .input-group-append.stepper-increment {
