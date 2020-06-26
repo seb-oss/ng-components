@@ -5,32 +5,63 @@
 [![Build Status](https://travis-ci.com/sebgroup/ng-components.svg?branch=alpha)](https://travis-ci.com/sebgroup/ng-components)
 [![Stable Version](https://img.shields.io/npm/v/@sebgroup/ng-components/latest.svg)](https://www.npmjs.com/package/@sebgroup/ng-components)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.9.
 
 ## Demo
 
-View demo [here](https://sebgroup.github.io/ng-components/components/buttons/examples)
+View demo [here](https://sebgroup.github.io/ng-components/components)
 
-## Development server
+[![Build status](https://tfs.sebank.se/tfs/MSDE/Spartans/_apis/build/status/AngularComponents/AngularComponents-Build-Verify)](https://tfs.sebank.se/tfs/MSDE/Spartans/_build/latest?definitionId=5938)
 
-Run `npm run docs` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+This is a set of angular modules which are based on SEB's bootstrap theme.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Minimum requirements
+This version of components has been tested and developed on, due to angular dependencies upgrades and their backward compatibility issues, the min requirements to run the current version of the app has changed and will constantly changing.
+-   Angular `8.0.0` or above
 
-## Build
 
-Run `ng build-lib` to build the library. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Installation
+As long as you are connected to SEB network. You should be able to install the NPM package.
+```bash
+npm install @sebgroup/ng-components --save
+```
 
-## Running unit tests
+This project is based on SEB Bootstrap which includes `fonts`, `colors` and `variables`, to make sure everything works fine, please install these dependencies on your project:
+```bash
+npm install @sebgroup/bootstrap --save
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Then make sure you add the Main SEB bootstrap package in your main style.SCSS or index.ts as follows
+`@import '~@sebgroup/bootstrap/scss/bootstrap';`.
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+## Development
+For `Visual Studio Code` users, please install the recommended project plugin
 
-## Further help
+1. To run the project for development: `npm run docs`
+4. To run the unit tests, run: `npm run test`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Usage
+To use a component, you need to import the `Module` in whichever Module you want to use it. For performance/stability benefits we are not combining all the components into single Index, rather they are chunk into their own sub packages, therefore to use a component, you need to import the `Component` sub-module from the `lib` folder, in whichever Class you want to use it. Here is a sample of how to import the `Chip` component in a page which you can then access by its selector.
+
+```javascript
+import { ChipModule } from "@sebgroup/ng-components/lib/Chip";
+@NgModule({
+      imports: [ChipModule]
+})
+export class YourModule { }
+
+ <sebng-chip (onClose)="onClose($event)">Chip Text</sebng-chip>
+```
+
+## Contact us
+For your feedback please contact us via emails below:
+1. yousif.alraheem@seb.se
+2. nuru.salihuabdullahi@seb.se
+3. omar.boudfoust@seb.se
+4. mario.subotic@seb.se
+5. kherphay.chang@seb.se
+
+## For React Users
+For all React users, we are hosting the same version of components [for react](https://github.com/sebgroup/react-components)
