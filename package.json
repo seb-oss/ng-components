@@ -60,7 +60,7 @@
         "@datorama/akita": "^5.0.5",
         "@sebgroup/bootstrap": "^5.3.0",
         "@sebgroup/frontend-tools": "^1.6.0",
-        "@types/marked": "^0.7.4",
+        "@types/marked": "^1.1.0",
         "core-js": "^3.6.5",
         "file-loader": "^6.0.0",
         "lorem-ipsum": "^2.0.3",
