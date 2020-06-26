@@ -62,6 +62,7 @@ For your feedback please contact us via emails below:
 3. omar.boudfoust@seb.se
 4. mario.subotic@seb.se
 5. kherphay.chang@seb.se
+6. robert.hjalmers@seb.se
 
 ## For React Users
 For all React users, we are hosting the same version of components [for react](https://github.com/sebgroup/react-components)
