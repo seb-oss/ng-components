@@ -9,7 +9,7 @@ import { CommonModule } from "@angular/common";
 type ButtonTestItem<T, K> = { value: T; expected: K };
 
 @Component({
-    selector: "test-sebng-chip",
+    selector: "test-sebng-button",
     template: `
         <sebng-button
             tag="button"
