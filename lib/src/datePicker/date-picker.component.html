@@ -1,0 +1,27 @@
+<div class="input-group seb-datepicker" [ngClass]="className">
+    <input
+        [disabled]="disabled"
+        class="form-control seb-datepicker-input"
+        [class.is-invalid]="p.status === 'INVALID'"
+        [placeholder]="placeholder"
+        [(ngModel)]="value"
+        [readonly]="readonly"
+        [minDate]="min"
+        [maxDate]="max"
+        [attr.id]="id"
+        ngbDatepicker
+        #picker="ngbDatepicker"
+        #p="ngModel"
+    />
+
+    <div class="input-group-append seb-datepicker-calendar-icon">
+        <button
+            class="btn btn-secondary"
+            [class.btn-danger]="p.status === 'INVALID'"
+            [disabled]="disabled"
+            (click)="picker.toggle()"
+            type="button"
+            [innerHtml]="icon | safeHtml"
+        ></button>
+    </div>
+</div>
