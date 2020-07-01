@@ -33,7 +33,7 @@ export type TooltipTheme = "default" | "light" | "primary" | "warning" | "succes
     templateUrl: "./tooltip-content.component.html",
     styleUrls: ["./tooltip-content.component.scss"],
     animations: [
-        trigger("tooltip", [
+        trigger("fadeOut", [
             transition(":enter", [style({ opacity: 0 }), animate(300, style({ opacity: 1 }))]),
             transition(":leave", [animate(300, style({ opacity: 0 }))]),
         ]),
