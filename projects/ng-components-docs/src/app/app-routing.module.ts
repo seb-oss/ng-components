@@ -5,6 +5,7 @@ import { ROUTES as BUTTONS_ROUTES } from "./examples/components/buttons/buttons.
 import { ROUTES as WIZARD_ROUTES } from "./examples/components/wizard/wizard.module";
 import { ROUTES as TEXTLABEL_ROUTES } from "./examples/components/textLabels/text-labels.module";
 import { ROUTES as DROPDOWN_ROUTES } from "./examples/components/dropdown/dropdown.module";
+import { ROUTES as DATEPICKER_ROUTES } from "./examples/components/datePicker/date-picker.module";
 import { ROUTES as PAGINATION_ROUTES } from "./examples/components/pagination/pagination.module";
 import { ROUTES as MODAL_ROUTES } from "./examples/components/modals/modals.module";
 import { ROUTES as TEXTAREA_ROUTES } from "./examples/components/textArea/textArea.module";
@@ -68,6 +69,10 @@ const routes: Routes = [
                 {
                     path: "dropdown",
                     children: DROPDOWN_ROUTES,
+                },
+                {
+                    path: "datePicker",
+                    children: DATEPICKER_ROUTES,
                 },
                 {
                     path: "wizard",
