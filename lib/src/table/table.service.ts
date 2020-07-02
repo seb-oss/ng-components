@@ -290,7 +290,7 @@ export class TableService<T extends object> {
      * @returns {boolean}
      */
     private checkIsAllSelected(): boolean {
-        return this._selectedRows?.map((e, i) => e?.length === this._paginatedTable[i]?.length).every(e => e === true);
+        return this._selectedRows?.map((e, i) => e?.length === this._paginatedTable[i]?.length).every(e => e);
     }
 
     /**
@@ -299,7 +299,7 @@ export class TableService<T extends object> {
      * @returns {boolean}
      */
     private checkHasSelection(): boolean {
-        return this._selectedRows?.map((e, i) => e?.length > 0).some(e => e === true);
+        return this._selectedRows?.map(e => e?.length > 0).some(e => e);
     }
 
     /**
