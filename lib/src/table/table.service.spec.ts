@@ -20,7 +20,7 @@ describe("TableService", () => {
         service = TestBed.inject<TableService<TestTableDataType>>(TableService);
         datasource = [
             { country: "Nigeria", currency: "NN" },
-            { country: "Iraq", currency: "ID" },
+            { country: "Iraq", currency: "IQD" },
             { country: "Malaysia", currency: "RM" },
             { country: "Slovenia", currency: "EUR" },
             { country: "Morocco", currency: "MAD" },
