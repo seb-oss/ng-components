@@ -30,7 +30,7 @@ class TableTestComponent {
     @ViewChild(TableComponent) tableComponent: TableComponent;
     rows: TestTableDataType[] = [
         { label: "Nigeria", value: "NN" },
-        { label: "Iraq", value: "ID" },
+        { label: "Iraq", value: "IQD" },
         { label: "Malaysia", value: "RM" },
         { label: "Slovenia", value: "EUR" },
         { label: "Morocco", value: "MAD" },
