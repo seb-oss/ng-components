@@ -6,7 +6,7 @@ import { TableTHComponent } from "./table-th/table-th.component";
 import { TableTDComponent } from "./table-td/table-td.component";
 import { TableHeaderComponent } from "./table-header/table-header.component";
 import { TableBodyComponent } from "./table-body/table-body.component";
-import { SafeHtmlPipe } from "./safe-html.pipe";
+import { SafeHtmlPipe } from "../__utils/safe-html.pipe";
 
 @NgModule({
     imports: [CommonModule, FormsModule],
