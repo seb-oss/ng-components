@@ -9,6 +9,7 @@ export class TableBodyComponent {
     @Input() headerList: Array<TableHeaderListItem> = [];
     @Input() rows: Array<any> = [];
     @Input() selectable?: boolean = false;
+    @Input() dateFormat: string;
     @Input() selectedRows: number[];
     @Output() rowClicked: EventEmitter<TableRowClickedEvent> = new EventEmitter();
 

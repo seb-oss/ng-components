@@ -12,6 +12,7 @@ export class TableComponent {
     @Input() sortInfo?: SortInfo;
     @Input() selectable?: boolean = false;
     @Input() isAllSelected?: boolean = false;
+    @Input() dateFormat: string = "yyyy-MM-dd";
     @Input() rows: Array<any> = [];
     @Input() fixedHeight?: string;
     @Input() selectedRowIndexes: number[] = [];

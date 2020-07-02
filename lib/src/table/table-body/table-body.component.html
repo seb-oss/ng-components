@@ -7,6 +7,7 @@
         *ngFor="let column of headerList"
         seb-table-td
         class="seb-table-data"
+        [dateFormat]="dateFormat"
         [row]="row[column.tableKeySelector]"
         [valueType]="column.valueType"
     ></td>

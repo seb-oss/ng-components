@@ -8,4 +8,5 @@ import { TableHeaderListValueType } from "../table.models";
 export class TableTDComponent {
     @Input() row: {};
     @Input() valueType: TableHeaderListValueType;
+    @Input() dateFormat: string;
 }
