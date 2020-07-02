@@ -93,7 +93,7 @@ export class TableService<T extends object> {
             const types: TableConfig<T>["types"] = this.table.reduce((result, item) => {
                 for (const key in item) {
                     if (item[key]) {
-                        const type = (typeof item[key]).toLowerCase();
+                        const type: string = (typeof item[key]).toLowerCase();
                         if (type === "string" || type === "date" || type === "number") {
                             result[key.toString()] = type;
                         } else {
