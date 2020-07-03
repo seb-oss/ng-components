@@ -2,10 +2,14 @@
     <div class="col-xl">
         <label>Normal</label>
         <sebng-date-picker [(ngModel)]="value"></sebng-date-picker>
-        <code>{{ value | json }}</code>
+        <label><small>Raw output:</small></label>
+        <div class="rounded p-3 bg-dark">
+            <code>{{ value | date }}</code>
+        </div>
+        <hr />
     </div>
 
-    <div class="col-xl">
+    <!-- <div class="col-xl">
         <label>Normal (range - {{ value.year }} only)</label>
         <sebng-date-picker [(ngModel)]="value" [min]="min" [max]="max"></sebng-date-picker>
         <code>{{ value | json }}</code>
@@ -14,10 +18,10 @@
     <div class="col-xl">
         <label>Disabled</label>
         <sebng-date-picker [disabled]="true"></sebng-date-picker>
-    </div>
+    </div> -->
 </div>
 
-<div class="row">
+<!-- <div class="row">
     <div class="col-xl">
         <label>Invalid initial state</label>
         <sebng-date-picker [(ngModel)]="wrongInitialValue"></sebng-date-picker>
@@ -33,4 +37,4 @@
         <label>Readonly Input box</label>
         <sebng-date-picker id="custom-id" [readonly]="true"></sebng-date-picker>
     </div>
-</div>
+</div> -->

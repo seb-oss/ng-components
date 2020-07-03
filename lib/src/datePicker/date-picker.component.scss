@@ -1,27 +1,27 @@
-@import "~@sebgroup/bootstrap/scss/core";
-@import "~@sebgroup/bootstrap/scss/styles/reboot";
-@import "~@sebgroup/bootstrap/scss/styles/custom-forms";
-@import "~@sebgroup/ng-bootstrap/scss/styles/ngb-datepicker";
+@import "~@sebgroup/bootstrap/scss/variables";
 
-.input-group.seb-datepicker {
-    input.form-control.seb-datepicker-input {
-        &.is-invalid {
-            border-bottom: $danger 1.5px solid;
-        }
+::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    background: url(./seb-calendar-icon.svg) no-repeat 0.25rem;
+}
+
+::-webkit-outer-spin-button,
+::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.input-group {
+    input[type="number"] {
+        -moz-appearance: textfield;
     }
-    .btn-light.outside:hover::after {
-        margin-top: -2.7rem; // TODO: Change this value in ng-bootstrap
+    .custom-select {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
     }
-    .input-group-append.seb-datepicker-calendar-icon {
-        button.btn {
-            // TODO: Fix the disabled style bug in SEB Bootstrap input group styles instead
-            &:disabled {
-                color: $btn-disabled-color;
-                background-color: transparent;
-            }
-            svg {
-                fill: currentColor;
-            }
-        }
-    }
+}
+
+.is-invalid {
+    border-bottom: $danger 1.5px solid;
 }

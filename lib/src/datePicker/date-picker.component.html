@@ -1,27 +1,87 @@
-<div class="input-group seb-datepicker" [ngClass]="className">
-    <input
-        [disabled]="disabled"
-        class="form-control seb-datepicker-input"
-        [class.is-invalid]="p.status === 'INVALID'"
-        [placeholder]="placeholder"
-        [(ngModel)]="value"
-        [readonly]="readonly"
-        [minDate]="min"
-        [maxDate]="max"
-        [attr.id]="id"
-        ngbDatepicker
-        #picker="ngbDatepicker"
-        #p="ngModel"
-    />
+<!-- <div class="p-3">
+    <h4>Native: On most supported browsers</h4> -->
 
-    <div class="input-group-append seb-datepicker-calendar-icon">
-        <button
-            class="btn btn-secondary"
-            [class.btn-danger]="p.status === 'INVALID'"
-            [disabled]="disabled"
-            (click)="picker.toggle()"
-            type="button"
-            [innerHtml]="icon | safeHtml"
-        ></button>
-    </div>
-</div>
+<ng-container *ngIf="monthPicker; else datePicker">
+    <ng-container *ngIf="supportsInputOfType('month'); else monthFallback">
+        <input
+            type="month"
+            class="form-control"
+            [class.is-invalid]="!value"
+            [style.padding-right.rem]="0.5"
+            (ngModelChange)="value = toDate($event)"
+            [ngModel]="toInputDateString(value, false) || null"
+        />
+    </ng-container>
+
+    <ng-template #monthFallback>
+        <div class="input-group">
+            <select
+                #s2
+                [class.is-invalid]="!value"
+                (change)="value = toDate(updateUIDate(toUIDate(value), 'month', s2.selectedIndex))"
+                class="custom-select"
+            >
+                <option [disabled]="i === 0" [selected]="toUIDate(value).month === i" *ngFor="let month of months; let i = index">{{
+                    month
+                }}</option>
+            </select>
+            <input
+                [class.is-invalid]="!value"
+                class="form-control rounded-right"
+                type="number"
+                min="1"
+                placeholder="Year"
+                (ngModelChange)="value = toDate(toInputDateString(toDate(updateUIDate(toUIDate(value), 'year', $event)), false))"
+                [ngModel]="toUIDate(value).year || null"
+            />
+        </div>
+    </ng-template>
+</ng-container>
+
+<ng-template #datePicker>
+    <ng-container *ngIf="supportsInputOfType('date'); else dateFallback">
+        <input
+            name="native-input"
+            type="date"
+            class="form-control"
+            [class.is-invalid]="!value"
+            [style.padding-right.rem]="0.5"
+            (ngModelChange)="value = toDate($event)"
+            [ngModel]="toInputDateString(value) || null"
+        />
+    </ng-container>
+
+    <ng-template #dateFallback>
+        <div class="input-group">
+            <input
+                [class.is-invalid]="!value"
+                class="form-control rounded-left"
+                type="number"
+                min="1"
+                max="31"
+                placeholder="Day"
+                (ngModelChange)="value = toDate(updateUIDate(toUIDate(value), 'day', $event))"
+                [ngModel]="toUIDate(value).day || null"
+            />
+            <select
+                #s
+                [class.is-invalid]="!value"
+                (change)="value = toDate(updateUIDate(toUIDate(value), 'month', s.selectedIndex))"
+                class="custom-select"
+            >
+                <option [disabled]="i === 0" [selected]="toUIDate(value).month === i" *ngFor="let month of months; let i = index">{{
+                    month
+                }}</option>
+            </select>
+            <input
+                [class.is-invalid]="!value"
+                class="form-control rounded-right"
+                type="number"
+                min="1"
+                placeholder="Year"
+                (ngModelChange)="value = toDate(updateUIDate(toUIDate(value), 'year', $event))"
+                [ngModel]="toUIDate(value).year || null"
+            />
+        </div>
+    </ng-template>
+</ng-template>
