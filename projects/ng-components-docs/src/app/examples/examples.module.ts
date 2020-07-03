@@ -14,6 +14,7 @@ import { ToggleModule } from "./components/toggle/toggle.module";
 import { ChipModule } from "./components/chip/chip.module";
 import { TabsModule } from "./components/tabs/tabs.module";
 import { BreadcrumbModule } from "./components/breadcrumb/breadcrumb.module";
+import { ProgressIndicatorModule } from "./components/progress-indicator/progress-indicator.module";
 
 @NgModule({
     declarations: [],
@@ -34,6 +35,7 @@ import { BreadcrumbModule } from "./components/breadcrumb/breadcrumb.module";
         TabsModule,
         BreadcrumbModule,
         ModalModule,
+        ProgressIndicatorModule,
     ],
 })
 export class ExamplesModule {}
