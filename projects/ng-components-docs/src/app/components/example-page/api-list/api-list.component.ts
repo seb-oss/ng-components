@@ -97,7 +97,7 @@ export class ApiListComponent implements OnInit {
      */
     static extractProperties(sourceCode: string): ParsedAPI {
         const regex: RegExp = XRegExp(
-            `(?<name>[\\w\\$]+)\\??\\:\\s(?<type>.[^\\;\\s]*)(?:\\;\\s| \\=\\s)[\\'\\"]?(?<default>[\\w][^\\;\\/\\'\\"]*)?[\\'\\"]?(?:\\;?\\s?\\/\\/\\s?(?<comment>.*))?`,
+            `(\\/\\*\\*(?<comment>(?:[\\sA-Za-z\\*\\\`\\.\\,\\(\\)\\/\\?\\=\\:\\[\\]\\&\\{\\}]*))\\*\\/)?(?:[\\r\\n\\t\\s]*)(?<decorator>\\@Input)\\(\\) (?<name>[\\w\\$]+)\\??\\:\\s(?<type>.[^\\;\\s]*)(?:\\;\\s| \\=\\s)[\\'\\"]?(?<default>[\\w][^\\;\\/\\'\\"]*)?[\\'\\"]?`,
             "g"
         );
         return this.formatSourceCode(sourceCode, regex);
@@ -142,7 +142,7 @@ export class ApiListComponent implements OnInit {
                     ? {
                           ...property,
                           default: extractedProperties[property.name].default,
-                          description: ApiListComponent.parseComment(extractedProperties[property.name].comment),
+                          description: ApiListComponent.parseComment(extractedProperties[property.name].comment?.trim()),
                       }
                     : {
                           ...property,

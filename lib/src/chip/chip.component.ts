@@ -10,9 +10,14 @@ import { Component, Input, ViewEncapsulation, EventEmitter, Output } from "@angu
     encapsulation: ViewEncapsulation.None,
 })
 export class ChipComponent {
-    @Input() id?: string; // unique identifier for the chip
-    @Input() className?: string; // CSS class for the component
-
+    /**
+     *  unique identifier
+     */
+    @Input() id?: string;
+    /**
+     *  CSS class
+     */
+    @Input() className?: string;
     /** callback when chip is closed */
     @Output() onClose: EventEmitter<Event> = new EventEmitter();
 
