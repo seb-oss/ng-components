@@ -8,6 +8,8 @@ import { JsonPipe } from "@angular/common";
     providers: [JsonPipe],
 })
 export class DatePickerExamplesComponent {
+    monthPicker: Date;
+    forceCustom: Date;
     value: Date;
     wrongInitialValue: NgbDateStruct = { year: -100, month: 20, day: 77 };
     min: NgbDateStruct;

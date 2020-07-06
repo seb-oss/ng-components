@@ -20,25 +20,37 @@ export class DatePickerComponent implements ControlValueAccessor {
     @Input() placeholder: string = "yyyy-mm-dd";
     @Input() className?: string;
     @Input() monthPicker?: boolean = false;
+    @Input() forceCustom?: boolean = false;
     @Input() readonly?: boolean = false;
     @Input() disabled?: boolean = false;
     @Input() min?: NgbDateStruct;
     @Input() max?: NgbDateStruct;
     @Input() id?: string;
-    months: string[] = ["Month", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    @Input() monthNames: string[] = ["Month", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
     // Placeholders for the callbacks which are later provided
     // by the Control Value Accessor
-    private innerValue: Date = null;
     private onTouchedCallback: () => void;
     private onChangeCallback: (_: any) => void;
 
+    get inputRawValue(): string {
+        if (this.isValidDate(this._value)) {
+            return this._value?.toISOString()?.substr(0, this.monthPicker ? 7 : 10) || "";
+        } else {
+            return "";
+        }
+    }
+    set inputRawValue(v: string) {
+        this.value = new Date(v);
+    }
+
+    private _value: Date = null;
     // get and set accessor----------------------
     get value(): Date | null {
-        return this.innerValue;
+        return this._value;
     }
     set value(v: Date | null) {
-        this.innerValue = v;
+        this._value = v;
         this.onTouchedCallback && this.onTouchedCallback();
         this.onChangeCallback && this.onChangeCallback(v);
     }
@@ -68,6 +80,14 @@ export class DatePickerComponent implements ControlValueAccessor {
         return d && d instanceof Date && !isNaN(d.getTime());
     }
 
+    isValidUIDate(d: UIDate | string): boolean {
+        if (typeof d === "string") {
+            return false;
+        } else {
+            return d && !!d.day && !!d.month && !!d.year;
+        }
+    }
+
     /** Converts from `string` or `Date` to date `string` with format `yyyy-mm-dd` OR `yyyy-mm`*/
     toInputDateString(v: string | Date, includeDay: boolean = true): string | null {
         const regex: RegExp = /\b([0-9])\b/gm;
@@ -94,14 +114,57 @@ export class DatePickerComponent implements ControlValueAccessor {
         return null;
     }
 
-    updateUIDate = (v: UIDate, k: string, i: number): UIDate => {
-        return { ...v, [k]: i };
+    /** updates a single value (year, month or day) in the UIDate object and returns a new object with that value */
+    updateUIDate = (v: UIDate, k: string, i: number, includeDay: boolean = true): UIDate => {
+        return { ...v, day: includeDay ? v.day : 1, [k]: i };
     };
 
+    /** Converts from date `string` with format `yyyy-mm-dd` OR `yyyy-mm` to `UIDate` (object with `UIDate` interface) */
     toUIDate(v: string | Date): UIDate {
         const date: Date = v instanceof Date ? v : new Date(v);
-        if (this.isValidDate(date)) {
-            return { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() };
+        return { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() };
+    }
+
+    /*
+    changeDate(attribute: "day" | "month" | "year", v: number, resetDay: boolean = false) {
+        const date: Date = new Date(this.isValidDate(this.value) ? this.value.getTime() : "0001-01-01");
+        // if (v) {
+        switch (attribute) {
+            case "day":
+                date.setDate(v ? v : 1);
+                break;
+            case "month": {
+                if (resetDay) {
+                    date.setDate(1);
+                }
+                date.setMonth(v - 1);
+                break;
+            }
+            case "year":
+                date.setFullYear(v ? v : 1);
+                break;
+            default:
+                break;
+        }
+        this.value = date;
+        // } else {
+        //     this.value = null;
+        // }
+    }
+
+    getDate(attribute: "day" | "month" | "year"): number {
+        const date: Date = new Date(this.isValidDate(this.value) ? this.value.getTime() : "0001-01-01");
+        switch (attribute) {
+            case "day":
+                return date.getDate() || 1;
+            case "month": {
+                return date.getMonth() + 1;
+            }
+            case "year":
+                return date.getFullYear() || 1;
+            default:
+                return 0;
         }
     }
+    */
 }

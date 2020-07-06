@@ -5,6 +5,9 @@
     cursor: pointer;
     background: url(./seb-calendar-icon.svg) no-repeat 0.25rem;
 }
+input.seb-date-picker-native {
+    padding-right: 0.5rem;
+}
 
 ::-webkit-outer-spin-button,
 ::-webkit-inner-spin-button {
