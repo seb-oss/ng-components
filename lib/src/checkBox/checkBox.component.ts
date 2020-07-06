@@ -15,17 +15,15 @@ export const CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR: Provider = {
     providers: [CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR],
     encapsulation: ViewEncapsulation.None,
 })
-export class CheckBoxComponent implements ControlValueAccessor, OnInit {
+export class CheckBoxComponent implements ControlValueAccessor {
     @Input() label: string | TemplateRef<HTMLElement>;
-    @Input() _id?: string;
+    @Input() _id?: string = randomId("checkbox-");
     @Input() name?: string;
     @Input() className?: string;
     @Input() disabled?: boolean;
     @Input() description?: string | TemplateRef<HTMLElement>;
     @Input() error?: string | TemplateRef<HTMLElement>;
     @Output() onChange?: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-    id: string;
 
     private innerValue: boolean = false;
 
@@ -34,10 +32,6 @@ export class CheckBoxComponent implements ControlValueAccessor, OnInit {
     private onTouchedCallback: () => void;
     private onChangeCallback: (_: any) => void;
 
-    ngOnInit(): void {
-        this.id = this._id || randomId("checkbox-");
-    }
-
     get value(): boolean {
         return this.innerValue;
     }
@@ -45,7 +39,6 @@ export class CheckBoxComponent implements ControlValueAccessor, OnInit {
     set value(v: boolean) {
         if (v !== this.innerValue) {
             this.innerValue = v;
-            console.log("set value");
             this.onChangeCallback && this.onChangeCallback(v);
             this.onTouchedCallback && this.onTouchedCallback();
             this.onChange && this.onChange.emit(v);
