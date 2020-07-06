@@ -1,7 +1,7 @@
 import { Component, Input, ViewEncapsulation, EventEmitter, Output } from "@angular/core";
 
 /**
- * A new component to display a filter
+ * A component to display a filter
  */
 @Component({
     selector: "sebng-chip",

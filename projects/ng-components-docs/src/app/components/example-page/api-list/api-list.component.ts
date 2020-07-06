@@ -34,7 +34,6 @@ interface ParsedAccessorDeclaration extends AccessorDeclaration {
 
 interface ParsedAPI {
     [key: string]: APIInput;
-    // type?: string;
 }
 
 @Component({
