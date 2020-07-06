@@ -1,7 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { from, merge, Observable } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
-import { Declaration, TypescriptParser } from "typescript-parser";
+import {
+    Declaration,
+    TypescriptParser,
+    AccessorDeclaration,
+    ClassDeclaration,
+    PropertyDeclaration,
+    MethodDeclaration,
+    ParameterDeclaration,
+} from "typescript-parser";
 import { File as ParsedFile } from "typescript-parser/resources/File";
 import { ApiSection } from "../../../interfaces/api-section";
 import marked from "marked";
@@ -15,6 +23,18 @@ interface APIInput {
     accessor?: string;
     name?: string;
     optional?: string;
+    default?: any;
+    type?: string;
+    private?: string;
+}
+
+interface ParsedAccessorDeclaration extends AccessorDeclaration {
+    isOptional?: boolean;
+}
+
+interface ParsedAPI {
+    [key: string]: APIInput;
+    // type?: string;
 }
 
 @Component({
@@ -26,8 +46,13 @@ export class ApiListComponent implements OnInit {
     constructor(private route: ActivatedRoute) {}
     $content: Observable<any>;
 
+    /**
+     * extract input/output/properties to object
+     * @param sourceCode string of source code
+     * @param regex regular expression
+     */
     static formatSourceCode(sourceCode: string, regex: RegExp) {
-        let parsedInputs: any = {};
+        let parsedObject: any = {};
         (XRegExp.match(sourceCode, regex) as Array<any>).forEach(element => {
             const parsedArray: XRegExp.ExecArray = XRegExp.exec(element, regex);
             const inputs: APIInput = {};
@@ -37,63 +62,88 @@ export class ApiListComponent implements OnInit {
                     inputs[key] = parsedArray[key];
                 });
             if (!!inputs.name) {
-                parsedInputs = { ...parsedInputs, [inputs.name]: inputs };
+                parsedObject = { ...parsedObject, [inputs.name]: inputs };
             }
         });
-        return parsedInputs;
+        return parsedObject;
     }
 
-    static extractInputs(sourceCode: string) {
-        const regex = XRegExp(
+    /**
+     * extract input with comment from source code
+     * @param sourceCode string of source code
+     */
+    static extractInputs(sourceCode: string): ParsedAPI {
+        const regex: RegExp = XRegExp(
             `(\\/\\*\\*(?<comment>(?:[\\sA-Za-z\\*\\\`\\.\\,\\(\\)\\/\\?\\=\\:\\[\\]\\&\\{\\}]*))\\*\\/)?(?:[\\r\\n\\t\\s]*)(?<decorator>\\@Input)\\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\\))(?:[\\W]+)(?<accessor>get|set|){1}(?:\\W)?(?<name>[^:?\\(]+)(?<optional>[?]?)+`,
             "g"
         );
         return this.formatSourceCode(sourceCode, regex);
     }
 
-    static extractOutputs(sourceCode: string) {
-        const regex = XRegExp(
-            `(?:\\/\\*\\*(?<comment>[\\s\\S][^@]+)\\*\\/[^@]+|)(?<decorator>\\@Output)\\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\\))(?:\\W)?(?<name>[^\\:?]+)(?<optional>[?]?)+`,
+    /**
+     * extract output with comment from source code
+     * @param sourceCode string of source code
+     */
+    static extractOutputs(sourceCode: string): ParsedAPI {
+        const regex: RegExp = XRegExp(
+            `(?:\\/\\*\\*(?<comment>[\\s\\S][^@]+)\\*\\/[^@]+|)(?<decorator>\\@Output)\\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\\))(?:\\W)?(?<name>[^\\:?]+)+`,
             "g"
         );
         return this.formatSourceCode(sourceCode, regex);
     }
 
-    static extractProperties(sourceCode: string) {
-        const regex = XRegExp(
-            `(?<name>[\\w\\$]+)(?<optional>\\??)\\:\\s(?<type>.[^\\;\\s]*)(?:\\;\\s| \\=\\s)[\\'\\"]?(?<default>[\\w][^\\;\\/\\'\\"]*)?[\\'\\"]?(?:\\;?\\s?\\/\\/\\s?(?<comment>.*))?`,
+    /**
+     * extract property with comment from source code
+     * @param sourceCode string of source code
+     */
+    static extractProperties(sourceCode: string): ParsedAPI {
+        const regex: RegExp = XRegExp(
+            `(?<name>[\\w\\$]+)\\??\\:\\s(?<type>.[^\\;\\s]*)(?:\\;\\s| \\=\\s)[\\'\\"]?(?<default>[\\w][^\\;\\/\\'\\"]*)?[\\'\\"]?(?:\\;?\\s?\\/\\/\\s?(?<comment>.*))?`,
             "g"
         );
         return this.formatSourceCode(sourceCode, regex);
     }
-    static extractMethods(sourceCode: string) {
-        const regex = XRegExp(
-            `(?:\\/\\*\\*(?<comment>[\\s\\S][^\\/]*)\\*\\/[^\\w\\@]+|)[^\\w\\]](?!constructor|Input|Component)(?<name>[a-z]*)\\((?<parameters>[^\\)]*)\\)\\:?\\s?(?<returns>[\\w\\<\\>]*)`,
+
+    /**
+     * extract method with comment from source code
+     * @param sourceCode string of source code
+     */
+    static extractMethods(sourceCode: string): ParsedAPI {
+        const regex: RegExp = XRegExp(
+            `(?:\\/\\*\\*(?<comment>[\\s\\S][^\\/]*)\\*\\/[^\\w\\@]+|)(?!constructor|Input|Component)(?<private>(private )?)(?<name>[a-zA-Z]*)\\((?<parameters>[^\\)]*)\\)\\:?\\s?(?<returns>[\\w\\<\\>]*)`,
             "g"
         );
         return this.formatSourceCode(sourceCode, regex);
     }
-    static extractDescription(sourceCode: string) {
-        const regex = XRegExp(`(?:\\/\\*\\*(?<comment>[\\s\\S][^\\/]*)\\*\\/[^\\w])`, "g");
+
+    /**
+     * extract component description from source code
+     * @param sourceCode string of source code
+     */
+    static extractDescription(sourceCode: string): XRegExp.ExecArray {
+        const regex: RegExp = XRegExp(`(?:\\/\\*\\*(?<comment>[\\s\\S][^\\/]*)\\*\\/[^\\w])`, "g");
         return XRegExp.exec(sourceCode, regex);
     }
 
-    static parseProperties(properties: Array<any>, extractedProperties: any): Array<any> {
+    /**
+     * parse properties
+     * @param properties array of PropertyDeclaration
+     * @param extractedProperties parsed API
+     */
+    static parseProperties(properties: Array<PropertyDeclaration>, extractedProperties: ParsedAPI): Array<PropertyDeclaration> {
         return properties
             .filter(
-                property =>
+                (property: PropertyDeclaration) =>
                     property.type &&
                     property.type.indexOf("EventEmitter") === -1 && // remove properties of type event emitter (Outputs)
                     property.name.substring(0, 1) !== "_" // remove private properties
             )
-            .map(property => {
+            .map((property: PropertyDeclaration) => {
                 return extractedProperties[property.name]
                     ? {
                           ...property,
                           default: extractedProperties[property.name].default,
-                          type: extractedProperties[property.name].type,
                           description: ApiListComponent.parseComment(extractedProperties[property.name].comment),
-                          isOptional: extractedProperties[property.name]?.optional === "?",
                       }
                     : {
                           ...property,
@@ -101,38 +151,48 @@ export class ApiListComponent implements OnInit {
             });
     }
 
-    static parseMethods(methods: Array<any>, extractedMethods: any): Array<any> {
+    /**
+     * parse methods
+     * @param methods array of MethodDeclaration
+     * @param extractedMethods parsed API
+     */
+    static parseMethods(methods: Array<MethodDeclaration>, extractedMethods: ParsedAPI): Array<MethodDeclaration> {
         return methods
             .filter(
-                property =>
-                    property.name.substring(0, 2) !== "ng" && property.name.substring(0, 1) !== "_" // remove angular lifecycle methods
+                (property: MethodDeclaration) =>
+                    property.name.substring(0, 2) !== "ng" &&
+                    property.name.substring(0, 1) !== "_" &&
+                    !extractedMethods[property.name]?.private?.length
             ) // remove private methods
-            .map(method => {
+            .map((method: MethodDeclaration) => {
                 return {
                     ...method,
-                    functionCall:
-                        method.name +
-                        "(" +
-                        (extractedMethods[method.name]
-                            ? extractedMethods[method.name].parameters
-                            : method.parameters
-                                  .map(param => param.name + ": " + param.type)
-                                  .toString()
-                                  .replace(/,/g, ", ")) +
-                        ")",
+                    functionCall: `${method.name}(${method.parameters
+                        .map((param: ParameterDeclaration) => param.name + ": " + param.type)
+                        .toString()
+                        .replace(/,/g, ", ")})`,
                     description: extractedMethods[method.name]
-                        ? ApiListComponent.parseComment(extractedMethods[method.name].comment.trim())
+                        ? ApiListComponent.parseComment(extractedMethods[method.name].comment?.trim())
                         : "n/a",
                 };
             });
     }
 
-    static parseComment(comment: string) {
+    /**
+     * parse comment
+     * @param comment string of comment
+     */
+    static parseComment(comment: string): string {
         return comment ? marked(comment.replace(/\*\/+|\/\*+|\*\s+|[\t\r\n]/g, "")) : "n/a";
     }
 
-    static sortInputs(a, b) {
-        const isSet = a.constructor.name === "SetterDeclaration";
+    /**
+     * sort input
+     * @param a AccessorDeclaration
+     * @param b AccessorDeclaration
+     */
+    static sortInputs(a: AccessorDeclaration, b: AccessorDeclaration) {
+        const isSet: boolean = a.constructor.name === "SetterDeclaration";
         return isSet ? -1 : 0;
     }
 
@@ -144,74 +204,95 @@ export class ApiListComponent implements OnInit {
         this.$content = merge(...obs).pipe(reduce((previous: any, current: any) => [...previous, ...current], []));
     }
 
-    parseSourceFile(source: string): Observable<ApiSection[]> {
-        const description = ApiListComponent.extractDescription(source);
-        const inputs = ApiListComponent.extractInputs(source);
-        const outputs = ApiListComponent.extractOutputs(source);
-        const properties = ApiListComponent.extractProperties(source);
-        const methods = ApiListComponent.extractMethods(source);
-        const tsParser = new TypescriptParser();
-        return from(tsParser.parseSource(source)).pipe(map(res => this.parse(res, description, inputs, outputs, properties, methods)));
+    /**
+     * parse source file
+     * @param source string of source code
+     */
+    parseSourceFile(source: string): Observable<Array<ApiSection>> {
+        const description: XRegExp.ExecArray = ApiListComponent.extractDescription(source);
+        const inputs: ParsedAPI = ApiListComponent.extractInputs(source);
+        const outputs: ParsedAPI = ApiListComponent.extractOutputs(source);
+        const properties: ParsedAPI = ApiListComponent.extractProperties(source);
+        const methods: ParsedAPI = ApiListComponent.extractMethods(source);
+        const tsParser: TypescriptParser = new TypescriptParser();
+        return from(tsParser.parseSource(source)).pipe(
+            map((res: ParsedFile) => this.parse(res, description, inputs, outputs, properties, methods))
+        );
     }
 
-    parse(file: ParsedFile, description: any, inputs: any, outputs: any, properties: any, methods: any): Array<ApiSection> {
+    /**
+     * parse source code file to api
+     * @param file parsed file
+     * @param description extracted description
+     * @param inputs extracted inputs
+     * @param outputs extracted outputs
+     * @param properties extracted properties
+     * @param methods extracted methods
+     */
+    parse(
+        file: ParsedFile,
+        description: XRegExp.ExecArray,
+        inputs: ParsedAPI,
+        outputs: ParsedAPI,
+        properties: ParsedAPI,
+        methods: ParsedAPI
+    ): Array<ApiSection> {
         return file.declarations
-            .filter(declaration => declaration.constructor.name === "ClassDeclaration")
-            .reduce((previous, current: any) => {
-                const declaration: Declaration = current;
+            .filter((declaration: Declaration) => declaration.constructor.name === "ClassDeclaration")
+            .reduce((previous: Array<ApiSection>, current: ClassDeclaration) => {
+                const declaration: ClassDeclaration = current;
                 const section: ApiSection = {
                     description: description ? ApiListComponent.parseComment(description.comment) : "n/a",
                     name: declaration.name,
-                    // @ts-ignore
                     inputs: this.parseInputs(declaration.accessors, inputs),
-                    // @ts-ignore
                     outputs: this.parseOutputs(declaration.properties, outputs),
-                    // @ts-ignore
-                    properties: ApiListComponent.parseProperties(
-                        // @ts-ignore
-                        declaration.properties,
-                        properties
-                    ),
-                    // @ts-ignore
+                    properties: ApiListComponent.parseProperties(declaration.properties, properties),
                     methods: ApiListComponent.parseMethods(declaration.methods, methods),
                 };
-                const isEmpty = !Object.entries(section)
-                    .filter(key => Array.isArray(key[1]))
-                    .some(key => key[1].length > 0);
+                const isEmpty: boolean = !Object.entries(section)
+                    .filter((key: [string, any]) => Array.isArray(key[1]))
+                    .some((key: [string, any]) => key[1].length > 0);
                 return isEmpty ? [...previous] : [...previous, section];
             }, []);
     }
 
-    parseInputs(accessors: Array<any>, inputs: any): Array<any> {
-        return accessors.sort(ApiListComponent.sortInputs).reduce((previous, current: any) => {
-            const input = previous.find(i => i.name === current.name);
-            if (input) {
-                input.type = current.type;
-                return [...previous];
-            }
-            console.log(inputs, current, inputs[current.name]?.comment);
-            return [
-                ...previous,
-                {
-                    ...current,
-                    alias: inputs[current.name]?.alias,
-                    description: ApiListComponent.parseComment(inputs[current.name]?.comment.trim()),
-                    isOptional: inputs[current.name]?.optional === "?",
-                },
-            ];
-        }, []);
+    /**
+     * parse inputs
+     * @param accessors array of AccessorDeclaration
+     * @param inputs extracted api
+     */
+    parseInputs(accessors: Array<AccessorDeclaration>, inputs: ParsedAPI): Array<AccessorDeclaration> {
+        return accessors
+            .sort(ApiListComponent.sortInputs)
+            .reduce((previous: Array<ParsedAccessorDeclaration>, current: AccessorDeclaration) => {
+                const input: ParsedAccessorDeclaration = previous.find((i: ParsedAccessorDeclaration) => i.name === current.name);
+                if (!!input) {
+                    input.type = current.type;
+                    return [...previous];
+                }
+                return [
+                    ...previous,
+                    {
+                        ...current,
+                        alias: inputs[current.name]?.alias,
+                        description: ApiListComponent.parseComment(inputs[current.name]?.comment?.trim()),
+                        isOptional: inputs[current.name]?.optional === "?",
+                    },
+                ];
+            }, []);
     }
 
-    parseOutputs(properties: Array<any>, outputs: any): Array<any> {
+    /**
+     * parse outputs
+     * @param accessors array of PropertyDeclaration
+     * @param outputs extracted api
+     */
+    parseOutputs(properties: Array<PropertyDeclaration>, outputs: ParsedAPI): Array<PropertyDeclaration> {
         return properties
-            .filter(property => property.type && property.type.indexOf("EventEmitter") !== -1)
-            .map(property => {
-                console.log(outputs);
-                return {
-                    ...property,
-                    description: outputs[property.name] && ApiListComponent.parseComment(outputs[property.name].comment.trim()),
-                    isOptional: outputs[property.name]?.optional === "?",
-                };
-            });
+            .filter((property: PropertyDeclaration) => property.type && property.type.indexOf("EventEmitter") !== -1)
+            .map((property: PropertyDeclaration) => ({
+                ...property,
+                description: outputs[property.name] && ApiListComponent.parseComment(outputs[property.name].comment?.trim()),
+            }));
     }
 }
