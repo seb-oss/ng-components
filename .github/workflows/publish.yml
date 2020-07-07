@@ -24,7 +24,7 @@ jobs:
       run: npm ci
 
     - name: building
-      run: npm run build-lib
+      run: npm run build
     
     - name: preparing to publish
       run: npm config set //registry.npmjs.org/:_authToken=$NPM_TOKEN
