@@ -24,6 +24,8 @@ export class ModalComponent {
     escapeDismiss: boolean = true;
     @ViewChild(MC) modalChild: MC;
 
+    hasImage: boolean;
+
     /**
      * open Modal with different possibilities
      * All inputs have a default value, so calling this function will open the modal in default mode
@@ -42,6 +44,7 @@ export class ModalComponent {
         this.fullscreen = fullscreen;
         this.backdropDismiss = backdropDismiss;
         this.escapeDismiss = escapeDismiss;
+        this.hasImage = position && size === "modal-lg";
         this.modalChild.open();
     }
 
