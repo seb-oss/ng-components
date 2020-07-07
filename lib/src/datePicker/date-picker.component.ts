@@ -44,15 +44,6 @@ export class DatePickerComponent implements ControlValueAccessor {
         this.value = new Date(v);
     }
 
-    get customPickerValue(): UIDate {
-        const year: number = Number(this.inputRawValue.substr(0, 4));
-        const month: number = Number(this.inputRawValue.substr(5, 2));
-        const day: number = Number(this.inputRawValue.substr(8, 2));
-        // console.log(this.inputRawValue);
-        // console.log(month);
-        return { day, month, year };
-    }
-
     private _customPickerDay: number;
     get customPickerDay(): number {
         if (this._customPickerDay && typeof this._customPickerDay === "number") {
@@ -66,6 +57,22 @@ export class DatePickerComponent implements ControlValueAccessor {
             const date = new Date(this.value.getFullYear(), this.value.getMonth(), v);
             this.value = date;
             this._customPickerDay = date.getDate();
+        }
+    }
+
+    private _customPickerMonth: number;
+    get customPickerMonth(): number {
+        if (this._customPickerMonth && typeof this._customPickerMonth === "number") {
+            return this._customPickerMonth;
+        } else {
+            return Number(this.inputRawValue.substr(5, 2));
+        }
+    }
+    set customPickerMonth(v: number) {
+        if (v !== null && v !== this._customPickerMonth && v > 0 && v <= 12) {
+            const date = new Date(this.value.getFullYear(), v - 1, this.value.getDate());
+            this.value = date;
+            this._customPickerMonth = date.getMonth() + 1;
         }
     }
 

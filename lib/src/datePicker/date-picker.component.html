@@ -36,15 +36,19 @@
             [(ngModel)]="customPickerDay"
         />
         <select
-            #s
-            [class.is-invalid]="!value"
+            #monthInput
+            [class.is-invalid]="monthInput.selectedIndex !== customPickerMonth || !isValidDate(value)"
             [class.rounded-left]="monthPicker"
-            (change)="value = toDate(updateUIDate(toUIDate(value), 'month', s.selectedIndex, !monthPicker))"
+            [(ngModel)]="customPickerMonth"
             class="custom-select"
         >
-            <option [disabled]="i === 0" [selected]="toUIDate(value).month === i" *ngFor="let month of monthNames; let i = index">{{
-                month
-            }}</option>
+            <option
+                [disabled]="i === 0"
+                [value]="i"
+                [selected]="i === monthInput.selectedIndex"
+                *ngFor="let month of monthNames; let i = index"
+                >{{ month }}
+            </option>
         </select>
         <input
             #yearInput
