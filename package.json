@@ -7,7 +7,7 @@
         "docs": "ng serve ng-components-docs",
         "build": "ng build",
         "build-lib": "ng build ng-components",
-        "build-docs": "ng build ng-components-docs --base-href https://sebgroup.github.io/ng-components/ && copyfiles -f projects/ng-components-docs/src/404.html dist/ng-components-docs && npm run gen-dl-files",
+        "build-docs": "ng build ng-components-docs --base-href / && copyfiles -f projects/ng-components-docs/src/404.html dist/ng-components-docs && npm run gen-dl-files",
         "test": "ng test ng-components",
         "lint": "ng lint",
         "e2e": "ng e2e",
@@ -62,6 +62,7 @@
         "@sebgroup/bootstrap": "^5.3.0",
         "@sebgroup/frontend-tools": "^1.6.0",
         "@types/marked": "^1.1.0",
+        "classlist.js": "^1.1.20150312",
         "core-js": "^3.6.5",
         "file-loader": "^6.0.0",
         "lorem-ipsum": "^2.0.3",
@@ -70,6 +71,7 @@
         "rxjs": "^6.6.0",
         "tslib": "^1.13.0",
         "typescript-parser": "^2.6.1",
+        "web-animations-js": "^2.3.2",
         "zone.js": "~0.10.2"
     },
     "devDependencies": {
