@@ -11,7 +11,7 @@ import { Component, Input, ViewEncapsulation, EventEmitter, Output } from "@angu
 })
 export class ChipComponent {
     /**
-     *  unique identifier
+     * unique identifier
      */
     @Input() id?: string;
     /**

@@ -26,6 +26,7 @@ interface APIInput {
     default?: any;
     type?: string;
     private?: string;
+    skip?: string;
 }
 
 interface ParsedAccessorDeclaration extends AccessorDeclaration {
@@ -73,7 +74,7 @@ export class ApiListComponent implements OnInit {
      */
     static extractInputs(sourceCode: string): ParsedAPI {
         const regex: RegExp = XRegExp(
-            `(\\/\\*\\*(?<comment>(?:[\\sA-Za-z\\*\\\`\\.\\,\\(\\)\\/\\?\\=\\:\\[\\]\\&\\{\\}]*))\\*\\/)?(?:[\\r\\n\\t\\s]*)(?<decorator>\\@Input)\\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\\))(?:[\\W]+)(?<accessor>get|set|){1}(?:\\W)?(?<name>[^:?\\(]+)(?<optional>[?]?)+`,
+            `(\\/\\*\\*(?<skip>[\\s\\S]* <!-- skip -->[\\s\\S])?(?<comment>(?:[\\sA-Za-z\\*\\\`\\.\\,\\(\\)\\/\\?\\=\\:\\[\\]\\&\\{\\}]*))\\*\\/)?(?:[\\r\\n\\t\\s]*)(?<decorator>\\@Input)\\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\\))(?:[\\W]+)(?<accessor>get|set|){1}(?:\\W)?(?<name>[^:?\\(]+)(?<optional>[?]?)+`,
             "g"
         );
         return this.formatSourceCode(sourceCode, regex);
@@ -85,7 +86,7 @@ export class ApiListComponent implements OnInit {
      */
     static extractOutputs(sourceCode: string): ParsedAPI {
         const regex: RegExp = XRegExp(
-            `(?:\\/\\*\\*(?<comment>[\\s\\S][^@]+)\\*\\/[^@]+|)(?<decorator>\\@Output)\\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\\))(?:\\W)?(?<name>[^\\:?]+)+`,
+            `(?:\\/\\*\\*(?<skip>[\\s\\S]* <!-- skip -->[\\s\\S])?(?<comment>[\\s\\S][^@]+)\\*\\/[^@]+|)(?<decorator>\\@Output)\\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\\))(?:\\W)?(?<name>[^\\:?]+)+`,
             "g"
         );
         return this.formatSourceCode(sourceCode, regex);
@@ -97,7 +98,7 @@ export class ApiListComponent implements OnInit {
      */
     static extractProperties(sourceCode: string): ParsedAPI {
         const regex: RegExp = XRegExp(
-            `(\\/\\*\\*(?<comment>(?:[\\sA-Za-z\\*\\\`\\.\\,\\(\\)\\/\\?\\=\\:\\[\\]\\&\\{\\}]*))\\*\\/)?(?:[\\r\\n\\t\\s]*)(?<decorator>\\@Input)\\(\\) (?<name>[\\w\\$]+)\\??\\:\\s(?<type>.[^\\;\\s]*)(?:\\;\\s| \\=\\s)[\\'\\"]?(?<default>[\\w][^\\;\\/\\'\\"]*)?[\\'\\"]?`,
+            `(\\/\\*\\*(?<skip>[\\s\\S]* <!-- skip -->[\\s\\S])?(?<comment>(?:[\\sA-Za-z\\*\\\`\\.\\,\\(\\)\\/\\?\\=\\:\\[\\]\\&\\{\\}]*))\\*\\/)?(?:[\\r\\n\\t\\s]*)(?<decorator>\\@Input)\\(\\) (?<name>[\\w\\$]+)\\??\\:\\s(?<type>.[^\\;\\s]*)(?:\\;\\s| \\=\\s)[\\'\\"]?(?<default>[\\w][^\\;\\/\\'\\"]*)?[\\'\\"]?`,
             "g"
         );
         return this.formatSourceCode(sourceCode, regex);
@@ -109,7 +110,7 @@ export class ApiListComponent implements OnInit {
      */
     static extractMethods(sourceCode: string): ParsedAPI {
         const regex: RegExp = XRegExp(
-            `(?:\\/\\*\\*(?<comment>[\\s\\S][^\\/]*)\\*\\/[^\\w\\@]+|)(?!constructor|Input|Component)(?<private>(private )?)(?<name>[a-zA-Z]*)\\((?<parameters>[^\\)]*)\\)\\:?\\s?(?<returns>[\\w\\<\\>]*)`,
+            `(?:\\/\\*\\*(?<skip>[\\s\\S]* <!-- skip -->[\\s\\S])?(?<comment>[\\s\\S][^\\/]*)\\*\\/[^\\w\\@]+|)(?!constructor|Input|Component)(?<private>(private )?)(?<name>[a-zA-Z]*)\\((?<parameters>[^\\)]*)\\)\\:?\\s?(?<returns>[\\w\\<\\>]*)`,
             "g"
         );
         return this.formatSourceCode(sourceCode, regex);
@@ -135,7 +136,8 @@ export class ApiListComponent implements OnInit {
                 (property: PropertyDeclaration) =>
                     property.type &&
                     property.type.indexOf("EventEmitter") === -1 && // remove properties of type event emitter (Outputs)
-                    property.name.substring(0, 1) !== "_" // remove private properties
+                    property.name.substring(0, 1) !== "_" && // remove private properties
+                    !extractedProperties[property.name]?.skip?.length
             )
             .map((property: PropertyDeclaration) => {
                 return extractedProperties[property.name]
@@ -161,7 +163,8 @@ export class ApiListComponent implements OnInit {
                 (property: MethodDeclaration) =>
                     property.name.substring(0, 2) !== "ng" &&
                     property.name.substring(0, 1) !== "_" &&
-                    !extractedMethods[property.name]?.private?.length
+                    !extractedMethods[property.name]?.private?.length &&
+                    !extractedMethods[property.name]?.skip?.length
             ) // remove private methods
             .map((method: MethodDeclaration) => {
                 return {
@@ -265,7 +268,7 @@ export class ApiListComponent implements OnInit {
             .sort(ApiListComponent.sortInputs)
             .reduce((previous: Array<ParsedAccessorDeclaration>, current: AccessorDeclaration) => {
                 const input: ParsedAccessorDeclaration = previous.find((i: ParsedAccessorDeclaration) => i.name === current.name);
-                if (!!input) {
+                if (!!input || !inputs[input.name]?.skip?.length) {
                     input.type = current.type;
                     return [...previous];
                 }
@@ -288,7 +291,10 @@ export class ApiListComponent implements OnInit {
      */
     parseOutputs(properties: Array<PropertyDeclaration>, outputs: ParsedAPI): Array<PropertyDeclaration> {
         return properties
-            .filter((property: PropertyDeclaration) => property.type && property.type.indexOf("EventEmitter") !== -1)
+            .filter(
+                (property: PropertyDeclaration) =>
+                    property.type && property.type.indexOf("EventEmitter") !== -1 && !outputs[property.name]?.skip?.length
+            )
             .map((property: PropertyDeclaration) => ({
                 ...property,
                 description: outputs[property.name] && ApiListComponent.parseComment(outputs[property.name].comment?.trim()),
