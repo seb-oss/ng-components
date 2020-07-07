@@ -35,7 +35,6 @@ import { TooltipModule } from "./components/tooltip/tooltip.module";
         TabsModule,
         BreadcrumbModule,
         TooltipModule,
-        ModalModule,
     ],
 })
 export class ExamplesModule {}
