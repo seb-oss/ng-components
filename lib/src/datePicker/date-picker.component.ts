@@ -34,14 +34,56 @@ export class DatePickerComponent implements ControlValueAccessor {
     private onChangeCallback: (_: any) => void;
 
     get inputRawValue(): string {
-        if (this.isValidDate(this._value)) {
-            return this._value?.toISOString()?.substr(0, this.monthPicker ? 7 : 10) || "";
+        if (this.isValidDate(this.value)) {
+            return this.value?.toISOString()?.substr(0, this.monthPicker ? 7 : 10) || "";
         } else {
             return "";
         }
     }
     set inputRawValue(v: string) {
         this.value = new Date(v);
+    }
+
+    get customPickerValue(): UIDate {
+        const year: number = Number(this.inputRawValue.substr(0, 4));
+        const month: number = Number(this.inputRawValue.substr(5, 2));
+        const day: number = Number(this.inputRawValue.substr(8, 2));
+        // console.log(this.inputRawValue);
+        // console.log(month);
+        return { day, month, year };
+    }
+
+    private _customPickerDay: number;
+    get customPickerDay(): number {
+        if (this._customPickerDay && typeof this._customPickerDay === "number") {
+            return this._customPickerDay;
+        } else {
+            return Number(this.inputRawValue.substr(8, 2));
+        }
+    }
+    set customPickerDay(v: number) {
+        if (v !== null && v !== this._customPickerDay && v > 0 && v <= 31) {
+            const date = new Date(this.value.getFullYear(), this.value.getMonth(), v);
+            this.value = date;
+            this._customPickerDay = date.getDate();
+        }
+    }
+
+    private _customPickerYear: number;
+    get customPickerYear(): number {
+        if (this._customPickerYear && typeof this._customPickerYear === "number") {
+            return this._customPickerYear;
+        } else {
+            return Number(this.inputRawValue.substr(0, 4));
+        }
+    }
+    set customPickerYear(v: number) {
+        if (v !== this._customPickerYear) {
+            const date = new Date(0, this.value.getMonth(), this.value.getDate());
+            date.setFullYear(v);
+            this.value = date;
+            this._customPickerYear = date.getFullYear();
+        }
     }
 
     private _value: Date = null;

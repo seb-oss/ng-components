@@ -1,27 +1,39 @@
 <ng-container *ngIf="monthPicker; else datePicker">
     <ng-container *ngIf="!forceCustom && supportsInputOfType('month'); else dateFallback">
-        <input type="month" class="form-control seb-date-picker-native" [class.is-invalid]="!value" [(ngModel)]="inputRawValue" />
+        <input
+            type="month"
+            class="form-control seb-date-picker-native"
+            [class.is-invalid]="!isValidDate(value)"
+            [(ngModel)]="inputRawValue"
+        />
     </ng-container>
 </ng-container>
 
 <ng-template #datePicker>
     <ng-container *ngIf="!forceCustom && supportsInputOfType('date'); else dateFallback">
-        <input type="date" class="form-control seb-date-picker-native" [class.is-invalid]="!value" [(ngModel)]="inputRawValue" />
+        <input
+            type="date"
+            class="form-control seb-date-picker-native"
+            [class.is-invalid]="!isValidDate(value)"
+            [(ngModel)]="inputRawValue"
+        />
     </ng-container>
 </ng-template>
+
+<!-- {{ customPickerValue | json }} -->
 
 <ng-template #dateFallback>
     <div class="input-group">
         <input
+            #dayInput
             [style.display]="monthPicker ? 'none' : 'inherit'"
-            [class.is-invalid]="!inputRawValue"
+            [class.is-invalid]="dayInput.valueAsNumber !== customPickerDay || !isValidDate(value)"
             class="form-control"
             type="number"
             min="1"
             max="31"
             placeholder="Day"
-            (ngModelChange)="value = toDate(updateUIDate(toUIDate(value), 'day', $event))"
-            [ngModel]="toUIDate(value).day || null"
+            [(ngModel)]="customPickerDay"
         />
         <select
             #s
@@ -35,13 +47,13 @@
             }}</option>
         </select>
         <input
-            [class.is-invalid]="!value"
+            #yearInput
+            [class.is-invalid]="yearInput.valueAsNumber !== customPickerYear || !isValidDate(value)"
             class="form-control"
             type="number"
             min="1"
             placeholder="Year"
-            (ngModelChange)="value = toDate(updateUIDate(toUIDate(value), 'year', $event, !monthPicker))"
-            [ngModel]="toUIDate(value).year || null"
+            [(ngModel)]="customPickerYear"
         />
     </div>
 </ng-template>
