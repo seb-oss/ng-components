@@ -30,7 +30,7 @@
         "start": "ng serve",
         "docs": "ng serve ng-components-docs",
         "prebuild": "npm run clean",
-        "build": "ng build",
+        "build": "ng build --prod",
         "build-docs": "ng build ng-components-docs --base-href $npm_config_homepage",
         "postbuild-docs": "copyfiles -f projects/ng-components-docs/src/404.html dist/ng-components-docs && npm run gen-dl-files",
         "test": "ng test ng-components --no-watch --code-coverage",
