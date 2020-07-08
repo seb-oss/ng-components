@@ -23,4 +23,26 @@
         </div>
         <hr />
     </div>
+
+    <div class="col-xl">
+        <label>Range</label>
+        <div class="row">
+            <div class="col">
+                <small>From:</small>
+                <sebng-date-picker [(ngModel)]="rangeFrom" [monthPicker]="monthPicker" [forceCustom]="forceCustom" [max]="rangeTo">
+                </sebng-date-picker>
+            </div>
+
+            <div class="col">
+                <small>To:</small>
+                <sebng-date-picker [(ngModel)]="rangeTo" [monthPicker]="monthPicker" [forceCustom]="forceCustom" [min]="rangeFrom">
+                </sebng-date-picker>
+            </div>
+        </div>
+        <label><small>Raw output:</small></label>
+        <div class="rounded p-3 bg-dark">
+            <code>{{ rangeFrom }} - {{ rangeTo }}</code>
+        </div>
+        <hr />
+    </div>
 </div>

@@ -13,10 +13,13 @@ export class DatePickerExamplesComponent {
     min: Date;
     max: Date;
 
+    rangeFrom: Date;
+    rangeTo: Date;
+
     constructor() {
-        const today: Date = new Date();
-        this.value = today;
-        this.min = new Date(today.getFullYear(), 0, today.getDate());
-        this.max = new Date(today.getFullYear(), 11, today.getDate());
+        // const today: Date = new Date();
+        // this.value = today;
+        // this.min = new Date(today.getFullYear() - 3, 3, today.getDate());
+        // this.max = new Date(today.getFullYear() + 1, 6, today.getDate());
     }
 }
