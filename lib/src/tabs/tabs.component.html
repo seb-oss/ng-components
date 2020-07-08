@@ -10,7 +10,6 @@
                     (keydown)="onKeyDown($event, tabIndex)"
                     role="tab"
                     [attr.aria-selected]="tabIndex === activeTab"
-                    aria-controls="link-{{ item.text }}"
                     tabIndex="0"
                 >
                     {{ item.text }}
