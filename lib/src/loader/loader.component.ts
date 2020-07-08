@@ -24,8 +24,8 @@ export class LoaderComponent {
     @Input() srText?: string;
     /** Show or hide the loader. Default is `true` */
     @Input() toggle?: boolean;
-
+    /** HTML role value. Default is `status`  */
     @Input() role?: string = "status";
-
+    /** Element class name */
     @Input() className?: string;
 }
