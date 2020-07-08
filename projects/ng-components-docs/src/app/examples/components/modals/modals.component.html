@@ -32,20 +32,27 @@
 <h5 class="mt-3">Modal Position:</h5>
 <div class="row">
     <div class="col">
-        <button sebng-btn (click)="openModal({ fullscreen: true })">Fullscreen</button>
+        <button sebng-btn (click)="openModal({ position: 'right' })">aside right</button>
     </div>
 
     <div class="col">
-        <button sebng-btn (click)="openModal({ position: 'right' })">aside right</button>
+        <button sebng-btn (click)="openModal({ position: 'right', size: 'modal-lg' })">aside right large</button>
     </div>
 
     <div class="col">
         <button sebng-btn (click)="openModal({ position: 'left' })">aside left</button>
     </div>
+
+    <div class="col">
+        <button sebng-btn (click)="openModal({ position: 'left', size: 'modal-lg' })">aside left large</button>
+    </div>
 </div>
 
 <h5 class="mt-3">Vertically centered:</h5>
 <button sebng-btn (click)="openModal({ center: true })">Open Modal</button>
+
+<h5 class="mt-3">Full Screen:</h5>
+<button sebng-btn (click)="openModal({ fullscreen: true })">Open Modal</button>
 
 <h5 class="mt-3">No BackDrop:</h5>
 <button sebng-btn (click)="openModal({ backdropDismiss: false })">Open Modal</button>
@@ -66,7 +73,8 @@
     </div>
 
     <div class="custom-body" body>
-        Body
+        <img *ngIf="hasImage; else simpleBody" src="https://via.placeholder.com/500" />
+        <ng-template #simpleBody>Body</ng-template>
     </div>
 
     <div class="custom-footer" footer>
