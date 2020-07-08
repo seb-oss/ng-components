@@ -111,9 +111,37 @@ export class DatePickerComponent implements ControlValueAccessor {
         return this._value;
     }
     set value(v: Date | null) {
-        this._value = v;
+        this.isDateInRange(
+            v,
+            () => {
+                this._value = v;
+            },
+            () => {
+                this._value = new Date("");
+            }
+        );
         this.onTouchedCallback && this.onTouchedCallback();
-        this.onChangeCallback && this.onChangeCallback(v);
+        this.onChangeCallback && this.onChangeCallback(this._value);
+    }
+
+    isDateInRange(d: Date, success?: () => void, fail?: () => void) {
+        if (!this.min && !this.max) {
+            success && success();
+        } else if (this.min && d >= this.min) {
+            if (this.max && d <= this.max) {
+                success && success();
+            } else {
+                fail && fail();
+            }
+        } else if (this.max && d <= this.max) {
+            if (this.min && d >= this.min) {
+                success && success();
+            } else {
+                fail && fail();
+            }
+        } else {
+            fail && fail();
+        }
     }
 
     // From ControlValueAccessor interfaces--------------
