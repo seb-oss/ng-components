@@ -4,7 +4,7 @@ import { TimerComponent } from "./timer.component";
 import { ExamplePageComponent } from "../../../components/example-page/example-page.component";
 import { ExampleListComponent } from "../../../components/example-page/example-list/example-list.component";
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
-import { TimerlModule as TimerLibModule } from "../../../../../../../lib/src/timer";
+import { TimerModule as TimerLibModule } from "../../../../../../../lib/src/timer";
 
 export const ROUTES = [
     { path: "", pathMatch: "full", redirectTo: "examples" },

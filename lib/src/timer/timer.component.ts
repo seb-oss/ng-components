@@ -1,29 +1,32 @@
-import {
-    Component,
-    Input,
-    ViewEncapsulation,
-    Output,
-    EventEmitter,
-    OnInit,
-    OnDestroy,
-    OnChanges,
-    SimpleChanges,
-    ChangeDetectorRef,
-} from "@angular/core";
+import { Component, Input, ViewEncapsulation, Output, EventEmitter, ChangeDetectorRef } from "@angular/core";
 import { timer, Observable } from "rxjs";
-import { map, takeWhile, tap, finalize } from "rxjs/operators";
+import { map, takeWhile, finalize } from "rxjs/operators";
 
 @Component({
     selector: "sebng-timer",
     templateUrl: "./timer.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class TimerComponent implements OnInit, OnChanges {
+export class TimerComponent {
     @Input() id?: string;
     @Input() className?: string;
-    @Output() callback = new EventEmitter<void>();
-    @Input() duration: number;
+    @Output() onTimerEnd = new EventEmitter<void>();
+
     public timer: Observable<string>;
+
+    private _duration: number;
+
+    @Input()
+    get duration() {
+        return this._duration;
+    }
+
+    set duration(value: number) {
+        this._duration = value;
+        if (value !== null && value !== undefined) {
+            this.setTimerValue();
+        }
+    }
 
     constructor(private changeRef: ChangeDetectorRef) {}
 
@@ -40,22 +43,8 @@ export class TimerComponent implements OnInit, OnChanges {
                     (date.getUTCSeconds() < 10 ? "0" + date.getUTCSeconds() : date.getUTCSeconds())
                 );
             }),
-            finalize(() => this.callback && this.callback.emit())
+            finalize(() => this.onTimerEnd && this.onTimerEnd.emit())
         );
-    }
-
-    ngOnInit() {
-        if (this.duration !== null && this.duration !== undefined) {
-            this.setTimerValue();
-        }
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes.duration) {
-            if (changes.duration.currentValue !== null && changes.duration.currentValue !== undefined) {
-                this.setTimerValue();
-            }
-        }
     }
 
     ngAfterContentChecked() {

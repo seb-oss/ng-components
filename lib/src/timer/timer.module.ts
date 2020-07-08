@@ -7,4 +7,4 @@ import { TimerComponent } from "./timer.component";
     imports: [CommonModule],
     exports: [TimerComponent],
 })
-export class TimerlModule {}
+export class TimerModule {}
