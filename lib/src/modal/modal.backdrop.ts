@@ -1,5 +1,5 @@
 import { Component, HostBinding, OnDestroy } from "@angular/core";
-import { trigger, state, style, transition, animate } from "@angular/animations";
+import { trigger, style, transition, animate } from "@angular/animations";
 
 @Component({
     template: "",

@@ -1,0 +1,46 @@
+@import "~@sebgroup/bootstrap/scss/variables";
+
+.seb-table {
+    &.seb-table-fixed-height {
+        margin-bottom: 1rem;
+
+        table {
+            margin-bottom: 0px;
+
+            // Fix the styles for the sticky header
+            border-collapse: separate;
+            border-spacing: 0;
+
+            > thead > tr > th {
+                top: 0;
+                position: sticky;
+                background-color: $white;
+            }
+        }
+    }
+
+    table {
+        .seb-table-data {
+            vertical-align: middle;
+        }
+
+        .table-checkbox {
+            width: 3rem;
+            vertical-align: middle;
+            input.form-control {
+                width: 1rem;
+                margin: auto;
+                min-height: auto;
+                height: 1rem;
+            }
+        }
+
+        tbody {
+            tr {
+                &:first-child > td {
+                    border-top: none;
+                }
+            }
+        }
+    }
+}

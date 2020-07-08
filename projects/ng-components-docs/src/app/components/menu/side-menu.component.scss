@@ -19,6 +19,11 @@
         display: block;
         z-index: $zindex-fixed;
     }
+    > .menu-header {
+        position: sticky;
+        top: 0;
+        background-color: $dark;
+    }
 }
 @include media-breakpoint-down(sm) {
     .side-nav.active {
