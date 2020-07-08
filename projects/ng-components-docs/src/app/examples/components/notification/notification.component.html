@@ -1,0 +1,53 @@
+<p>Simple example</p>
+
+<div class="row">
+    <div class="col">
+        <sebng-notification
+            [toggle]="notification1Toggle"
+            title="Notification Title"
+            [message]="description"
+            dismissable="false"
+            (onDismiss)="onDismiss()"
+        ></sebng-notification>
+        <button sebng-btn (click)="onToggle(!notification1Toggle)">Toggle</button>
+    </div>
+</div>
+
+<p>Notification with actions</p>
+<div class="row">
+    <div class="col">
+        <sebng-notification
+            [toggle]="notification2Toggle"
+            title="Notification Title"
+            [message]="description"
+            [actions]="notificationActions"
+            (onDismiss)="onDismiss()"
+            persist="true"
+            position="bottom-right"
+            theme="primary"
+        ></sebng-notification>
+        <button sebng-btn (click)="onToggle2(!notification2Toggle)">With Actions</button>
+    </div>
+</div>
+
+<p>Bar notification</p>
+<div class="row">
+    <div class="col">
+        <sebng-notification
+            [toggle]="notification3Toggle"
+            (onClick)="onNotificationClick()"
+            dismissable="true"
+            (onDismiss)="onDismiss()"
+            [style]="'bar'"
+            position="bottom"
+            theme="danger"
+        >
+            <div className="notification-message">
+                <button *ngIf="description" class="btn btn-sm btn-secondary text-light px-1 py-0" (onClick)="(null)">
+                    Click here
+                </button>
+            </div>
+        </sebng-notification>
+        <button sebng-btn (click)="onToggle3(!notification3Toggle)">Bar</button>
+    </div>
+</div>
