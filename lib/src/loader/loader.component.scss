@@ -12,7 +12,7 @@ $offset: 200;
 $duration: 1.5s;
 $duration-sq: 1.2s;
 
-.rc.loader {
+.ac.loader {
     color: $green;
     &:not(.loader-cover):not(.loader-fullscreen) {
         display: inline-flex;
@@ -102,6 +102,6 @@ $duration-sq: 1.2s;
 }
 
 /* Loader inside other components should inherit their color */
-.rc .rc.loader {
+.ac .ac.loader {
     color: inherit;
 }

@@ -5,7 +5,7 @@ import { LoaderSize, LoaderType } from "./loader.component";
 export class LoaderClassesPipe implements PipeTransform {
     transform(size: LoaderSize, cover: boolean, fullscreen: boolean, type: LoaderType, backdrop: boolean, className) {
         return {
-            rc: true,
+            ac: true,
             loader: true,
             "loader-cover": cover,
             "loader-fullscreen": fullscreen && !cover,
