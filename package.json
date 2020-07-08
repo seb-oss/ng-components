@@ -68,7 +68,7 @@
         "prismjs": "^1.20.0",
         "rxjs": "^6.6.0",
         "tslib": "^1.13.0",
-        "typescript-parser": "github:omarVodiaK/node-typescript-parser",
+        "typescript-parser-es5": "^1.0.0",
         "web-animations-js": "^2.3.2",
         "zone.js": "~0.10.2"
     },

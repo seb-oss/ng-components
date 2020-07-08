@@ -3,14 +3,14 @@ const fs = require("fs");
 const globby = require("globby");
 const mustache = require("mustache");
 const htmlFrontMatter = require("html-frontmatter");
-const TypescriptParser = require("typescript-parser").TypescriptParser;
+const TypescriptParser = require("typescript-parser-es5").TypescriptParser;
 const dlhelper = require("./design-library-helper");
 
 // The purpose of this function is to find the component example modules from the demo site.
 // It will then parse those files and extract the routes declaration. This will then be used to locate the HTML-files used in the example.
 // In the next step, the HTML-files that contain a front-matter section will be converted to markdown files and saved to a directory.
 // Lastly a content index json file will be created.
-const generateDLFiles = async function() {
+const generateDLFiles = async function () {
     const parser = new TypescriptParser();
     const exampleModuleFiles = await globby(path.join(__dirname, "../src/app/examples/components/**/*.module.ts"));
 

@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { from, merge, Observable } from "rxjs";
 import { ActivatedRoute } from "@angular/router";
-import { Declaration, TypescriptParser } from "typescript-parser";
-import { File as ParsedFile } from "typescript-parser/resources/File";
+import { Declaration, TypescriptParser } from "typescript-parser-es5";
+import { File as ParsedFile } from "typescript-parser-es5/resources/File";
 import { ApiSection } from "../../../interfaces/api-section";
 import marked from "marked";
 import { map, reduce } from "rxjs/operators";
