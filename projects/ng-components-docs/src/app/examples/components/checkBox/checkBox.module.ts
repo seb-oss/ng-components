@@ -7,7 +7,7 @@ import { ExampleListComponent } from "../../../components/example-page/example-l
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
 import { CheckBoxModule as CheckBoxLibModule } from "../../../../../../../lib/src/checkBox";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { SebButtonModule } from "../../../../../../../lib/src/button";
+import { ButtonModule } from "../../../../../../../lib/src/button";
 
 export const ROUTES: Array<Route> = [
     { path: "", pathMatch: "full", redirectTo: "examples" },
@@ -55,6 +55,6 @@ export const ROUTES: Array<Route> = [
 
 @NgModule({
     declarations: [CheckBoxComponent],
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, CheckBoxLibModule, SebButtonModule],
+    imports: [CommonModule, FormsModule, ReactiveFormsModule, CheckBoxLibModule, ButtonModule],
 })
 export class CheckBoxModule {}
