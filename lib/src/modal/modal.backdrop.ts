@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnDestroy } from "@angular/core";
+import { Component, HostBinding, OnDestroy, NgModule } from "@angular/core";
 import { trigger, style, transition, animate } from "@angular/animations";
 
 @Component({
@@ -23,3 +23,8 @@ export class SebModalBackdropComponent implements OnDestroy {
         this.fadeState = false;
     }
 }
+
+@NgModule({
+    declarations: [SebModalBackdropComponent],
+})
+export class SebModalBackdropModule {}

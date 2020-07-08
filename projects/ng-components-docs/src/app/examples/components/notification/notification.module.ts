@@ -1,15 +1,12 @@
 import { NgModule } from "@angular/core";
-import { Route } from "@angular/router";
 import { CommonModule } from "@angular/common";
-import { CheckBoxComponent } from "./checkBox.component";
+import { NotificationComponent } from "./notification.component";
 import { ExamplePageComponent } from "../../../components/example-page/example-page.component";
 import { ExampleListComponent } from "../../../components/example-page/example-list/example-list.component";
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
-import { CheckBoxModule as CheckBoxLibModule } from "../../../../../../../lib/src/checkBox";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { ButtonModule } from "../../../../../../../lib/src/button";
+import { NotificationModule as NotificationlLibModule } from "../../../../../../../lib/src/notification";
 
-export const ROUTES: Array<Route> = [
+export const ROUTES = [
     { path: "", pathMatch: "full", redirectTo: "examples" },
     {
         path: "",
@@ -20,21 +17,20 @@ export const ROUTES: Array<Route> = [
                 component: ExampleListComponent,
                 children: [
                     {
-                        path: "checkBox",
-                        component: CheckBoxComponent,
+                        path: "notification",
+                        component: NotificationComponent,
                         data: {
-                            title: "Checkbox component",
+                            title: "Notification Component",
+                            description: "Additional description for example (optional)",
                             sources: [
                                 {
-                                    name: "checkBox.component.html",
-                                    // @ts-ignore
-                                    src: require("!raw-loader!./checkBox.component.html").default,
+                                    name: "notification.component.html",
+                                    src: require("!raw-loader!./notification.component.html"),
                                     lang: "markup",
                                 },
                                 {
-                                    name: "checkBox.component.ts",
-                                    // @ts-ignore
-                                    src: require("!raw-loader!./checkBox.component.ts").default,
+                                    name: "text-labels.component.ts",
+                                    src: require("!raw-loader!./notification.component.ts"),
                                     lang: "ts",
                                 },
                             ],
@@ -46,7 +42,7 @@ export const ROUTES: Array<Route> = [
                 path: "api",
                 component: ApiListComponent,
                 data: {
-                    sources: [require("!raw-loader!../../../../../../../lib/src/checkBox/checkBox.component.ts").default],
+                    sources: [require("!raw-loader!../../../../../../../lib/src/notification/notification.component.ts")],
                 },
             },
         ],
@@ -54,7 +50,7 @@ export const ROUTES: Array<Route> = [
 ];
 
 @NgModule({
-    declarations: [CheckBoxComponent],
-    imports: [CommonModule, FormsModule, ReactiveFormsModule, CheckBoxLibModule, ButtonModule],
+    declarations: [NotificationComponent],
+    imports: [CommonModule, NotificationlLibModule],
 })
-export class CheckBoxModule {}
+export class NotificationModule {}

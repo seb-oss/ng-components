@@ -7,7 +7,7 @@ import { Route } from "@angular/router";
 import { WizardFormsComponent } from "./examples/wizard-forms/wizard-forms.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { SebWizardModule } from "../../../../../../../lib/src/wizard";
-import { SebButtonModule } from "../../../../../../../lib/src/button";
+import { ButtonModule as SebButtonModule } from "../../../../../../../lib/src/button";
 import { ModalModule } from "../../../../../../../lib/src/modal";
 import { WizardComponent } from "./examples/wizard/wizard.component";
 
