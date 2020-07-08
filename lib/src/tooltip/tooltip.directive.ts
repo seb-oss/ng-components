@@ -29,19 +29,38 @@ import { isEqual } from "lodash";
 type Placement = {
     [K in TooltipPosition]: ConnectedPosition;
 };
-
+/**
+ * A text label that acts as a helper to a specific item
+ */
 @Directive({ selector: "[sebng-tooltip]" })
 export class TooltipDirective implements OnInit, OnDestroy {
+    /**
+     * content of tooltip
+     */
     @Input("sebng-tooltip") content: string | TemplateRef<any> = "";
+    /**
+     * tooltip trigger method
+     */
     @Input() trigger: TooltipTrigger = "hover";
+    /**
+     * tooltip position
+     */
     @Input() position: TooltipPosition = "top";
+    /**
+     * tooltip theme
+     */
     @Input() theme: TooltipTheme = "default";
+    /**
+     * CSS class
+     */
     @Input() className?: string = "";
 
     @HostBinding("attr.tabindex") tabindex = -1;
-
+    /** <!-- skip --> */
     private overlayRef: OverlayRef;
+    /** <!-- skip --> */
     private tooltipRef: ComponentRef<TooltipContentComponent>;
+    /** <!-- skip --> */
     private placements: Placement = {
         left: this.getOriginPosition("start", "center", "end", "center"),
         "left-top": this.getOriginPosition("start", "top", "end", "top"),
@@ -56,6 +75,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
         "top-right": this.getOriginPosition("end", "top", "end", "bottom"),
         top: this.getOriginPosition("center", "top", "center", "bottom"),
     };
+    /** <!-- skip --> */
     private obs: Subscription;
 
     constructor(private overlay: Overlay, private overlayPositionBuilder: OverlayPositionBuilder, private elementRef: ElementRef) {}
@@ -71,11 +91,13 @@ export class TooltipDirective implements OnInit, OnDestroy {
     }
 
     @HostListener("mouseenter")
+    /** <!-- skip --> */
     showHover() {
         this.trigger === "hover" && this.showTooltip();
     }
 
     @HostListener("mouseout", ["$event"])
+    /** <!-- skip --> */
     hideHover(event: MouseEvent) {
         if (this.elementRef.nativeElement.contains(event.relatedTarget)) {
             return;
@@ -84,16 +106,19 @@ export class TooltipDirective implements OnInit, OnDestroy {
     }
 
     @HostListener("click")
+    /** <!-- skip --> */
     showClick() {
         this.trigger === "click" && this.showTooltip();
     }
 
     @HostListener("focus")
+    /** <!-- skip --> */
     showFocus() {
         this.trigger === "focus" && this.showTooltip();
     }
 
     @HostListener("focusin", ["$event"])
+    /** <!-- skip --> */
     showFocusWithin(event: FocusEvent) {
         if (this.elementRef.nativeElement.contains(event.target)) {
             this.trigger === "focus" && this.showTooltip();
@@ -101,11 +126,13 @@ export class TooltipDirective implements OnInit, OnDestroy {
     }
 
     @HostListener("focusout", ["$event.relatedTarget"])
+    /** <!-- skip --> */
     hideFocusOut(relatedTarget: HTMLDivElement) {
         this.hideTooltip(relatedTarget);
     }
 
     @HostListener("blur", ["$event.relatedTarget"])
+    /** <!-- skip --> */
     hideClick(relatedTarget: HTMLDivElement) {
         this.hideTooltip(relatedTarget);
     }
@@ -138,7 +165,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
         return { originX, originY, overlayX, overlayY };
     }
 
-    /** get tooltip position */
+    /** <!-- skip --> get tooltip position */
     getPosition(): Array<ConnectedPosition> {
         switch (this.position) {
             case "left":
@@ -208,7 +235,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
         }
     }
 
-    /** show tooltip */
+    /** <!-- skip --> show tooltip */
     showTooltip() {
         if (!this.overlayRef.hasAttached()) {
             this.tooltipRef = this.overlayRef.attach(new ComponentPortal(TooltipContentComponent));
@@ -225,6 +252,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
     }
 
     /**
+     * <!-- skip -->
      * hide tooltip
      * @param relatedTarget target related
      */
