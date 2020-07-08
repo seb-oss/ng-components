@@ -1,0 +1,11 @@
+.tech-stack {
+    >[class*=col] {
+        display: flex;
+        flex-direction: column;
+        >*:first-child {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+        }
+    }
+}

@@ -1,0 +1,11 @@
+.docs-wrapper {
+    overflow-x: hidden;
+    display: grid;
+    display:-ms-grid;
+    grid-template-areas: "aside main";
+    grid-template-columns: auto 1fr;
+    -ms-grid-columns: auto 1fr;
+    .content-wrapper {
+        padding: 0 1rem;
+    }
+}

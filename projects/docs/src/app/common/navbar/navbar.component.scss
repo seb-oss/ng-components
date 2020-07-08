@@ -1,0 +1,20 @@
+.navbar {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    > .navbar-brand {
+        padding-left: 0;
+        &::before {
+            content: none;
+        }
+    }
+    > .nav {
+        &.nav-dark {
+            a {
+                color: white;
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
