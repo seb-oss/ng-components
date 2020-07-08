@@ -40,7 +40,7 @@ export class DatePickerComponent implements ControlValueAccessor {
     }
 
     getStringFromDate(d: Date): string {
-        if (this.isValidDate(this.value)) {
+        if (this.isValidDate(d)) {
             return d?.toISOString()?.substr(0, this.monthPicker ? 7 : 10) || "";
         } else {
             return "";
@@ -128,13 +128,13 @@ export class DatePickerComponent implements ControlValueAccessor {
         if (!this.min && !this.max) {
             success && success();
         } else if (this.min && d >= this.min) {
-            if (this.max && d <= this.max) {
+            if (!this.max || (this.max && d <= this.max)) {
                 success && success();
             } else {
                 fail && fail();
             }
         } else if (this.max && d <= this.max) {
-            if (this.min && d >= this.min) {
+            if (!this.min || (this.min && d >= this.min)) {
                 success && success();
             } else {
                 fail && fail();
@@ -166,7 +166,7 @@ export class DatePickerComponent implements ControlValueAccessor {
     }
 
     isValidDate(d: Date): boolean {
-        return d && d instanceof Date && !isNaN(d.getTime());
+        return !!(d && d instanceof Date && !isNaN(d.getTime()));
     }
 
     // isValidUIDate(d: UIDate | string): boolean {

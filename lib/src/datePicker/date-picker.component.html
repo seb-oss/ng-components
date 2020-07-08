@@ -5,8 +5,8 @@
             class="form-control seb-date-picker-native"
             [ngClass]="className"
             [class.is-invalid]="!isValidDate(value)"
-            [min]="getStringFromDate(min)"
-            [max]="getStringFromDate(max)"
+            [attr.min]="getStringFromDate(min)"
+            [attr.max]="getStringFromDate(max)"
             [(ngModel)]="inputRawValue"
         />
     </ng-container>
@@ -19,8 +19,8 @@
             class="form-control seb-date-picker-native"
             [ngClass]="className"
             [class.is-invalid]="!isValidDate(value)"
-            [min]="getStringFromDate(min)"
-            [max]="getStringFromDate(max)"
+            [attr.min]="getStringFromDate(min)"
+            [attr.max]="getStringFromDate(max)"
             [(ngModel)]="inputRawValue"
         />
     </ng-container>
