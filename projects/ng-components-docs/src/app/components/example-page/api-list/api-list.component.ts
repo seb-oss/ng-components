@@ -185,6 +185,7 @@ export class ApiListComponent implements OnInit {
                 input.type = current.type;
                 return [...previous];
             }
+            console.log(inputs);
             return [
                 ...previous,
                 {
