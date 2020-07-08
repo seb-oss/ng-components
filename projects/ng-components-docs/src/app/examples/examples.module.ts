@@ -24,7 +24,6 @@ import { TooltipModule } from "./components/tooltip/tooltip.module";
         CommonModule,
         RadioGroupModule,
         ButtonsModule,
-        ModalModule,
         DropdownModule,
         WizardModule,
         PaginationModule,
