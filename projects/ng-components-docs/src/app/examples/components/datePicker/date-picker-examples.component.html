@@ -1,25 +1,41 @@
 <div class="row">
     <div class="col-xl">
-        <label>
-            <input type="checkbox" [(ngModel)]="monthPicker" />
-            Month picker
-        </label>
-        <label>
-            <input type="checkbox" [(ngModel)]="forceCustom" />
-            Show custom
-        </label>
+        <div class="custom-control custom-slide-toggle">
+            <input type="checkbox" class="custom-control-input" id="monthPicker" [(ngModel)]="monthPicker" />
+            <label class="custom-control-label" for="monthPicker">Show month picker(s)</label>
+        </div>
     </div>
+
     <div class="col-xl">
-        <p>min: {{ min | date }}</p>
-        <p>max: {{ max | date }}</p>
+        <div class="custom-control custom-slide-toggle">
+            <input type="checkbox" class="custom-control-input" id="forceCustom" [(ngModel)]="forceCustom" />
+            <label class="custom-control-label" for="forceCustom">Show fallback custom picker(s)</label>
+        </div>
     </div>
+</div>
+
+<hr />
+
+<div class="row">
     <div class="col-xl">
         <label>Normal</label>
-        <sebng-date-picker [(ngModel)]="value" [monthPicker]="monthPicker" [forceCustom]="forceCustom" [min]="min" [max]="max">
+        <sebng-date-picker [(ngModel)]="normal" [monthPicker]="monthPicker" [forceCustom]="forceCustom"> </sebng-date-picker>
+        <label><small>Raw output:</small></label>
+        <div class="rounded p-3 bg-dark">
+            <code>{{ normal }}</code>
+        </div>
+        <hr />
+    </div>
+
+    <div class="col-xl">
+        <label
+            >Limited to dates between <small>{{ min | date }} and {{ max | date }}</small></label
+        >
+        <sebng-date-picker [(ngModel)]="limited" [monthPicker]="monthPicker" [forceCustom]="forceCustom" [min]="min" [max]="max">
         </sebng-date-picker>
         <label><small>Raw output:</small></label>
         <div class="rounded p-3 bg-dark">
-            <code>{{ value }}</code>
+            <code>{{ limited }}</code>
         </div>
         <hr />
     </div>

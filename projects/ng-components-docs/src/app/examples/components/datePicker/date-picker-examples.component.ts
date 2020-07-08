@@ -7,9 +7,10 @@ import { JsonPipe } from "@angular/common";
     providers: [JsonPipe],
 })
 export class DatePickerExamplesComponent {
-    monthPicker: Date;
-    forceCustom: Date;
-    value: Date;
+    monthPicker: boolean;
+    forceCustom: boolean;
+    normal: Date;
+    limited: Date;
     min: Date;
     max: Date;
 
@@ -17,9 +18,10 @@ export class DatePickerExamplesComponent {
     rangeTo: Date;
 
     constructor() {
-        // const today: Date = new Date();
-        // this.value = today;
-        // this.min = new Date(today.getFullYear() - 3, 3, today.getDate());
-        // this.max = new Date(today.getFullYear() + 1, 6, today.getDate());
+        const today: Date = new Date();
+        this.normal = today;
+        this.limited = today;
+        this.min = new Date(today.getFullYear() - 3, 3, today.getDate());
+        this.max = new Date(today.getFullYear() + 1, 6, today.getDate());
     }
 }
