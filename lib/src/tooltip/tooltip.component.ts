@@ -13,6 +13,9 @@ import {
 import { trigger, transition, style, animate } from "@angular/animations";
 import { TooltipTheme, TooltipTrigger, TooltipPosition } from "./tooltip-content/tooltip-content.component";
 
+/**
+ * A text label that acts as a helper to a specific item
+ */
 @Component({
     selector: "sebng-tooltip",
     templateUrl: "./tooltip.component.html",
@@ -26,19 +29,27 @@ import { TooltipTheme, TooltipTrigger, TooltipPosition } from "./tooltip-content
     encapsulation: ViewEncapsulation.None,
 })
 export class TooltipComponent implements AfterViewInit {
+    /** content of tooltip */
     @Input() content: string | TemplateRef<any> = "";
+    /** tooltip text reference with default SEB style */
     @Input() textReference: string = "";
+    /** tooltip reference which also can be passed with ngcontent */
     @Input() tooltipReference: ElementRef<HTMLDivElement>;
+    /** tooltip trigger method */
     @Input() trigger: TooltipTrigger = "hover";
+    /** tooltip position */
     @Input() position: TooltipPosition = "top";
+    /**  tooltip theme */
     @Input() theme: TooltipTheme = "default";
+    /** CSS class */
     @Input() className?: string = "";
-
+    /** <!-- skip --> */
     @ViewChild("ngContent") contentref: ElementRef<HTMLDivElement>;
-
+    /** <!-- skip --> */
     stringContent: string = "";
+    /** <!-- skip --> */
     hasContent: boolean = true;
-
+    /** <!-- skip --> */
     constructor(private cdr: ChangeDetectorRef) {}
 
     ngAfterViewInit() {

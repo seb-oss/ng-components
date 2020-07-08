@@ -1,0 +1,43 @@
+<div class="input-group seb-stepper" [ngClass]="className">
+    <div class="input-group-prepend stepper-decrement">
+        <button
+            class="btn btn-secondary"
+            type="button"
+            [disabled]="value <= min || disabled"
+            [class.disabled]="value <= min || disabled"
+            (click)="!disabled && decrement()"
+            [attr.aria-controls]="id"
+            aria-labelledby="decrement"
+        >
+            <span>&#8722;</span>
+        </button>
+    </div>
+
+    <input
+        class="form-control stepper-input"
+        [disabled]="disabled"
+        [readOnly]="disabled"
+        [class.disabled]="disabled"
+        [class.is-invalid]="invalid"
+        aria-live="assertive"
+        [attr.id]="id"
+        type="tel"
+        [attr.min]="min"
+        [attr.max]="max"
+        [(ngModel)]="value"
+    />
+
+    <div class="input-group-append stepper-increment">
+        <button
+            class="btn btn-secondary"
+            type="button"
+            [disabled]="value >= max || disabled"
+            [class.disabled]="value >= max || disabled"
+            (click)="!disabled && increment()"
+            [attr.aria-controls]="id"
+            aria-labelledby="increment"
+        >
+            <span>&#43;</span>
+        </button>
+    </div>
+</div>
