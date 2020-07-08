@@ -70,14 +70,14 @@ describe("Component: DatePickerComponent", () => {
     it("should be able to write and update value using the writevalue method", async(() => {
         fixture.detectChanges();
 
-        expect(component.datePickerComponent.value).toBeNull();
+        expect(isNaN(component.datePickerComponent.value.getTime())).toBeTrue(); // Is invalid date
 
-        const expectedObj: Date = new Date("2010-01-01");
+        const expectedObj: Date = new Date();
         component.datePickerComponent.writeValue(expectedObj);
 
         fixture.detectChanges();
 
-        expect(component.datePickerComponent.value).toEqual(expectedObj);
+        expect(component.datePickerComponent.value.getTime()).toBe(expectedObj.getTime());
     }));
 
     it("should call touch and change events when the value is set", fakeAsync(() => {
