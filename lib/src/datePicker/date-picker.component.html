@@ -8,6 +8,7 @@
             [attr.min]="getStringFromDate(min)"
             [attr.max]="getStringFromDate(max)"
             [(ngModel)]="inputRawValue"
+            [disabled]="disabled"
         />
     </ng-container>
 </ng-container>
@@ -22,6 +23,7 @@
             [attr.min]="getStringFromDate(min)"
             [attr.max]="getStringFromDate(max)"
             [(ngModel)]="inputRawValue"
+            [disabled]="disabled"
         />
     </ng-container>
 </ng-template>
@@ -38,15 +40,17 @@
             max="31"
             placeholder="Day"
             [(ngModel)]="customDay"
+            [disabled]="disabled"
         />
         <select
             #monthInput
+            class="custom-select"
             [class.is-invalid]="!isValidDate(value)"
             [class.rounded-left]="monthPicker"
             [(ngModel)]="customMonth"
-            class="custom-select"
+            [disabled]="disabled"
         >
-            <option [disabled]="i === 0" [value]="i" *ngFor="let month of monthNames; let i = index">{{ month }} </option>
+            <option [disabled]="disabled || i === 0" [value]="i" *ngFor="let month of monthNames; let i = index"> {{ month }} </option>
         </select>
         <input
             #yearInput
@@ -56,6 +60,7 @@
             min="1"
             placeholder="Year"
             [(ngModel)]="customYear"
+            [disabled]="disabled"
         />
     </div>
 </ng-template>

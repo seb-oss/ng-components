@@ -4,7 +4,6 @@ import { By } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
-import { SafeHtmlPipe } from "./safe-html.pipe";
 
 @Component({
     selector: "tac-datePicker",
@@ -46,7 +45,7 @@ describe("Component: DatePickerComponent", () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [FormsModule, CommonModule],
-            declarations: [DatePickerComponent, CustomTestClass, SafeHtmlPipe],
+            declarations: [DatePickerComponent, CustomTestClass],
             providers: [],
         })
             .compileComponents()

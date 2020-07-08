@@ -1,19 +1,3 @@
-export interface UIDate {
-    day: number;
-    month: number;
-    year: number;
-}
-
-export function uiDateToString(uiDate: UIDate): string {
-    const { year, month, day }: UIDate = uiDate;
-
-    if (areNumbers([year, month, day])) {
-        return `${year}-${padNumber(month)}-${padNumber(day)}`;
-    }
-    console.warn(`Could not convert UIDate with year ${year}, month ${month} and day ${day} to string`);
-    return "";
-}
-
 export function padNumber(value: number, isYear: boolean = false): string {
     if (isNumber(value)) {
         return isYear ? `0000${value}`.substr(-4, 4) : `00${value}`.substr(-2, 2);
