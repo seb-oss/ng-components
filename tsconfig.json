@@ -1,20 +1,23 @@
+/*
+  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
+  It is not intended to be used to perform a compilation.
+
+  To learn more about this file see: https://angular.io/config/solution-tsconfig.
+*/
 {
-    "compileOnSave": false,
-    "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "baseUrl": "./",
-        "downlevelIteration": true,
-        "outDir": "./dist/out-tsc",
-        "sourceMap": true,
-        "declaration": false,
-        "module": "esnext",
-        "moduleResolution": "node",
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "importHelpers": true,
-        "target": "es5",
-        "types": ["node", "jasmine"],
-        "typeRoots": ["node_modules/@types"],
-        "lib": ["es2018", "dom"]
-    }
+    "files": [],
+    "references": [
+        {
+            "path": "./lib/tsconfig.lib.json"
+        },
+        {
+            "path": "./lib/tsconfig.spec.json"
+        },
+        {
+            "path": "./projects/ng-components-docs/tsconfig.app.json"
+        },
+        {
+            "path": "./projects/ng-components-docs/tsconfig.spec.json"
+        }
+    ]
 }

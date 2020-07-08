@@ -153,32 +153,6 @@
                     }
                 }
             }
-        },
-        "ng-components-docs-e2e": {
-            "root": "projects/ng-components-docs-e2e/",
-            "projectType": "application",
-            "prefix": "",
-            "architect": {
-                "e2e": {
-                    "builder": "@angular-devkit/build-angular:protractor",
-                    "options": {
-                        "protractorConfig": "projects/ng-components-docs-e2e/protractor.conf.js",
-                        "devServerTarget": "ng-components-docs:serve"
-                    },
-                    "configurations": {
-                        "production": {
-                            "devServerTarget": "ng-components-docs:serve:production"
-                        }
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": "projects/ng-components-docs-e2e/tsconfig.e2e.json",
-                        "exclude": ["**/node_modules/**"]
-                    }
-                }
-            }
         }
     },
     "defaultProject": "ng-components",
