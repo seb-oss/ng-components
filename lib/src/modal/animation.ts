@@ -2,16 +2,16 @@ import { trigger, animate, transition, style, state } from "@angular/animations"
 
 export const fadeInAnimation = trigger("openClose", [
     state(
-        "open",
+        "block",
         style({
             display: "block",
         })
     ),
     state(
-        "close",
+        "none",
         style({
             display: "none",
         })
     ),
-    transition("open <=> close", [animate("{{ time }}")]),
+    transition("none => block", [style({ display: "block" }), animate("{{ time }}")]),
 ]);

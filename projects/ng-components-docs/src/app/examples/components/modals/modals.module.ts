@@ -4,8 +4,8 @@ import { ModalComponent } from "./modals.component";
 import { ExamplePageComponent } from "../../../components/example-page/example-page.component";
 import { ExampleListComponent } from "../../../components/example-page/example-list/example-list.component";
 import { ApiListComponent } from "../../../components/example-page/api-list/api-list.component";
-import { ModalModule as ModalLibModule } from "../../../../../../../lib/src/modal";
-import { ButtonModule as SebButtonModule } from "../../../../../../../lib/src/button";
+import { ModalModule as ModalLibModule } from "lib/src/modal";
+import { ButtonModule as SebButtonModule } from "lib/src/button";
 
 export const ROUTES = [
     { path: "", pathMatch: "full", redirectTo: "examples" },

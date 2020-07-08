@@ -19,46 +19,46 @@
 <h5 class="mt-3">Modal Size:</h5>
 <div class="row">
     <div class="col">
-        <button sebng-btn (click)="openModal({})">Default Modal</button>
+        <sebng-button (click)="openModal({})" label="Default Modal"></sebng-button>
     </div>
     <div class="col">
-        <button sebng-btn (click)="openModal({ size: 'modal-lg' })">Large Modal</button>
+        <sebng-button (click)="openModal({ size: 'modal-lg' })" label="Large Modal"></sebng-button>
     </div>
     <div class="col">
-        <button sebng-btn (click)="openModal({ size: 'modal-sm' })">Small Modal</button>
+        <sebng-button (click)="openModal({ size: 'modal-sm' })" label="Small Modal"></sebng-button>
     </div>
 </div>
 
 <h5 class="mt-3">Modal Position:</h5>
 <div class="row">
     <div class="col">
-        <button sebng-btn (click)="openModal({ position: 'right' })">aside right</button>
+        <sebng-button (click)="openModal({ position: 'right' })" label="aside right"></sebng-button>
     </div>
 
     <div class="col">
-        <button sebng-btn (click)="openModal({ position: 'right', size: 'modal-lg' })">aside right large</button>
+        <sebng-button (click)="openModal({ position: 'right', size: 'modal-lg' })" label="aside right large"> </sebng-button>
     </div>
 
     <div class="col">
-        <button sebng-btn (click)="openModal({ position: 'left' })">aside left</button>
+        <sebng-button (click)="openModal({ position: 'left' })" label="aside left"></sebng-button>
     </div>
 
     <div class="col">
-        <button sebng-btn (click)="openModal({ position: 'left', size: 'modal-lg' })">aside left large</button>
+        <sebng-button sebng-btn (click)="openModal({ position: 'left', size: 'modal-lg' })" label="aside left large"> </sebng-button>
     </div>
 </div>
 
 <h5 class="mt-3">Vertically centered:</h5>
-<button sebng-btn (click)="openModal({ center: true })">Open Modal</button>
+<sebng-button (click)="openModal({ center: true })" label="Open Modal"></sebng-button>
 
 <h5 class="mt-3">Full Screen:</h5>
-<button sebng-btn (click)="openModal({ fullscreen: true })">Open Modal</button>
+<sebng-button (click)="openModal({ fullscreen: true })" label="Open Modal"></sebng-button>
 
 <h5 class="mt-3">No BackDrop:</h5>
-<button sebng-btn (click)="openModal({ backdropDismiss: false })">Open Modal</button>
+<sebng-button (click)="openModal({ backdropDismiss: false })" label="Open Modal"></sebng-button>
 
 <h5 class="mt-3">No Escape Key Dismiss:</h5>
-<button sebng-btn (click)="openModal({ escapeDismiss: false })">Open Modal</button>
+<sebng-button (click)="openModal({ escapeDismiss: false })" label="Open Modal"></sebng-button>
 
 <sebng-modal
     [size]="size"

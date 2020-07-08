@@ -69,7 +69,7 @@ export class ModalComponent {
     }
 
     get toggleState(): string {
-        return this.toggle ? "open" : "close";
+        return this.toggle ? "block" : "none";
     }
 
     /**
