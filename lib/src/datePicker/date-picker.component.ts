@@ -68,10 +68,8 @@ export class DatePickerComponent implements ControlValueAccessor {
         return this._customDay;
     }
     set customDay(v: number) {
-        if (typeof v === "number") {
-            this._customDay = Number(v);
-            this.trySaveDate();
-        }
+        this._customDay = v ? Number(v) : null;
+        this.trySaveDate();
     }
 
     private _customMonth: number;
@@ -84,7 +82,7 @@ export class DatePickerComponent implements ControlValueAccessor {
         return this._customMonth;
     }
     set customMonth(v: number) {
-        this._customMonth = Number(v);
+        this._customMonth = v ? Number(v) : null;
         this.trySaveDate();
     }
 
@@ -98,7 +96,7 @@ export class DatePickerComponent implements ControlValueAccessor {
         return this._customYear;
     }
     set customYear(v: number) {
-        this._customYear = Number(v);
+        this._customYear = v ? Number(v) : null;
         this.trySaveDate();
     }
 
