@@ -14,7 +14,7 @@
     />
 
     <a
-        href="#"
+        [attr.href]="href"
         role="button"
         *ngSwitchCase="'anchor'"
         [ngClass]="theme | buttonClasses: size:block:className"

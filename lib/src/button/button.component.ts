@@ -26,6 +26,7 @@ export class ButtonComponent implements OnInit {
     @Input() disabled?: boolean;
     @Input() active?: boolean;
     @Input() block?: boolean;
+    @Input() href?: string;
 
     @Output() onClick: EventEmitter<Event> = new EventEmitter();
 

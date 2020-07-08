@@ -6,17 +6,9 @@ export class ButtonClassesPipe implements PipeTransform {
     transform(theme: ButtonTheme, size?: ButtonSize, block?: boolean, className?: string): Array<string> {
         const classes: Array<string> = ["btn", `btn-${theme}`];
 
-        if (size) {
-            classes.push(`btn-${size}`);
-        }
-
-        if (Boolean(block)) {
-            classes.push("btn-block");
-        }
-
-        if (className) {
-            classes.push(className);
-        }
+        !!size && classes.push(`btn-${size}`);
+        !!block && classes.push("btn-block");
+        !!className && classes.push(className);
 
         return classes;
     }
