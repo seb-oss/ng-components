@@ -1,55 +1,54 @@
 {
-    "name": "ng-components-docs-and-demo",
-    "version": "1.0.0",
-    "scripts": {
-        "ng": "ng",
-        "start": "ng serve",
-        "docs": "ng serve ng-components-docs",
-        "build": "ng build",
-        "build-lib": "ng build ng-components",
-        "build-docs": "ng build ng-components-docs --base-href https://sebgroup.github.io/ng-components/ && copyfiles -f projects/ng-components-docs/src/404.html dist/ng-components-docs && npm run gen-dl-files",
-        "test": "ng test ng-components",
-        "lint": "ng lint",
-        "e2e": "ng e2e",
-        "commit": "git-cz",
-        "travis-deploy-once": "travis-deploy-once --pro",
-        "semantic-release": "semantic-release",
-        "package-lock-sanitizer": "package-lock-sanitizer && git add package-lock.json",
-        "format:fix": "pretty-quick --staged",
-        "format:check": "pretty-quick --check --verbose",
-        "format:all": "prettier --write \"**/*.{ts,html,json,scss,md}\"",
-        "gen-dl-files": "node projects/ng-components-docs/designlibrary-config/generate-dl-config.js"
-    },
-    "private": true,
+    "name": "@sebgroup/ng-components",
+    "version": "0.0.0-semantically-released",
+    "description": "A set of Angular components based on SEB design",
+    "license": "Apache-2.0",
+    "keywords": [
+        "ng",
+        "angular",
+        "components",
+        "javascript",
+        "typescript",
+        "frontend",
+        "ui"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/sebgroup/ng-components.git"
     },
-    "release": {
-        "pkgRoot": "dist/sebgroup/ng-components"
+    "bugs": {
+        "url": "https://github.com/sebgroup/ng-components/issues"
     },
+    "homepage": "https://sebgroup.github.io/ng-components/",
     "config": {
         "commitizen": {
             "path": "./node_modules/cz-conventional-changelog"
         }
     },
-    "commitlint": {
-        "extends": [
-            "@commitlint/config-conventional"
-        ]
-    },
-    "husky": {
-        "hooks": {
-            "commit-msg": "commitlint --edit",
-            "pre-commit": "run-s format:fix package-lock-sanitizer"
-        }
-    },
-    "publishConfig": {
-        "access": "public"
+    "scripts": {
+        "clean": "rimraf dist/*",
+        "start": "ng serve",
+        "docs": "ng serve ng-components-docs",
+        "prebuild": "npm run clean",
+        "build": "ng build --prod",
+        "build-docs": "ng build ng-components-docs --base-href $npm_config_homepage",
+        "postbuild-docs": "copyfiles -f projects/ng-components-docs/src/404.html dist/ng-components-docs && npm run gen-dl-files",
+        "test": "ng test ng-components --no-watch --code-coverage",
+        "lint": "ng lint",
+        "commit": "git-cz",
+        "travis-deploy-once": "travis-deploy-once --pro",
+        "semantic-release": "semantic-release",
+        "package-lock-sanitizer": "package-lock-sanitizer",
+        "postpackage-lock-sanitizer": "git add package-lock.json",
+        "format:fix": "pretty-quick --staged",
+        "format:check": "pretty-quick --check --verbose",
+        "format:all": "prettier --write \"**/*.{ts,html,json,scss,md}\"",
+        "gen-dl-files": "node projects/ng-components-docs/designlibrary-config/generate-dl-config.js"
     },
     "dependencies": {
         "@angular-builders/custom-webpack": "^9.1.0",
         "@angular/animations": "~9.1.1",
+        "@angular/cdk": "^9.2.4",
         "@angular/common": "~9.1.1",
         "@angular/compiler": "~9.1.1",
         "@angular/core": "~9.1.1",
@@ -57,33 +56,33 @@
         "@angular/platform-browser": "~9.1.1",
         "@angular/platform-browser-dynamic": "~9.1.1",
         "@angular/router": "~9.1.1",
-        "@datorama/akita": "^4.23.2",
+        "@datorama/akita": "^5.1.1",
         "@sebgroup/bootstrap": "^5.3.0",
         "@sebgroup/frontend-tools": "^1.6.0",
-        "@types/marked": "^0.7.4",
+        "@types/marked": "^1.1.0",
         "core-js": "^3.6.5",
         "file-loader": "^6.0.0",
         "lorem-ipsum": "^2.0.3",
-        "marked": "^1.0.0",
+        "marked": "^1.1.0",
         "prismjs": "^1.20.0",
-        "rxjs": "^6.5.5",
+        "rxjs": "^6.6.0",
         "tslib": "^1.13.0",
         "typescript-parser": "^2.6.1",
         "zone.js": "~0.10.2"
     },
     "devDependencies": {
-        "@angular-devkit/build-angular": "~0.901.8",
-        "@angular-devkit/build-ng-packagr": "~0.901.8",
-        "@angular/cli": "~9.1.8",
+        "@angular-devkit/build-angular": "~0.901.10",
+        "@angular-devkit/build-ng-packagr": "~0.901.9",
+        "@angular/cli": "~9.1.10",
         "@angular/compiler-cli": "~9.1.1",
-        "@angular/language-service": "~9.1.11",
-        "@commitlint/cli": "^8.3.5",
-        "@commitlint/config-conventional": "^8.3.4",
-        "@datorama/akita-ng-router-store": "^5.1.0",
-        "@datorama/akita-ngdevtools": "^4.0.0",
-        "@types/jasmine": "^3.5.10",
+        "@angular/language-service": "~10.0.2",
+        "@commitlint/cli": "^9.0.1",
+        "@commitlint/config-conventional": "^9.0.1",
+        "@datorama/akita-ng-router-store": "^5.1.6",
+        "@datorama/akita-ngdevtools": "^5.0.3",
+        "@types/jasmine": "^3.5.11",
         "@types/jasminewd2": "^2.0.8",
-        "@types/node": "^14.0.13",
+        "@types/node": "^14.0.19",
         "angular-exemplify": "^3.1.4",
         "codelyzer": "^5.2.2",
         "commitizen": "^4.1.2",
@@ -109,11 +108,30 @@
         "pretty-quick": "^2.0.1",
         "protractor": "7.0.0",
         "raw-loader": "^4.0.1",
-        "semantic-release": "^17.0.8",
+        "rimraf": "^3.0.2",
+        "semantic-release": "^17.1.1",
         "travis-deploy-once": "^5.0.11",
         "ts-node": "^8.10.2",
         "tslint": "6.1.2",
         "tslint-config-prettier": "^1.18.0",
         "typescript": "^3.8.3"
+    },
+    "release": {
+        "pkgRoot": "dist/sebgroup/ng-components"
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-conventional"
+        ]
+    },
+    "husky": {
+        "hooks": {
+            "commit-msg": "commitlint --edit",
+            "pre-commit": "run-s format:fix package-lock-sanitizer"
+        }
+    },
+    "publishConfig": {
+        "registry": "https://registry.npmjs.org/",
+        "access": "public"
     }
 }

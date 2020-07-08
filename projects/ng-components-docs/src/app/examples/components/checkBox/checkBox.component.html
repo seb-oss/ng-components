@@ -1,0 +1,38 @@
+<section class="grid">
+    <sebng-checkbox label="String CheckBox Label" (onChange)="logMe($event)"></sebng-checkbox>
+
+    <sebng-checkbox label="CheckBox using form control" [formControl]="formcontrol"></sebng-checkbox>
+
+    <sebng-checkbox label="CheckBox using ngModel" [(ngModel)]="model"></sebng-checkbox>
+
+    <sebng-checkbox [label]="label">
+        <ng-template #label>
+            <div class="custom-label">
+                Custom Checkbox label, please read the link before you agree <a href="www.google.com" target="_blank">read me please</a>
+            </div>
+        </ng-template>
+    </sebng-checkbox>
+
+    <sebng-checkbox label="CheckBox with description" description="Description of CheckBox"></sebng-checkbox>
+
+    <sebng-checkbox label="CheckBox with Custom description" [description]="description">
+        <ng-template #description>
+            <div class="custom-description">I am a custom description <a href="www.google.com" target="_blank">read me please</a></div>
+        </ng-template>
+    </sebng-checkbox>
+
+    <sebng-checkbox label="Disabled CheckBox" disabled></sebng-checkbox>
+
+    <sebng-checkbox label="Error CheckBox" error="Im a simple error"></sebng-checkbox>
+
+    <sebng-checkbox label="Custom Error CheckBox" [error]="error">
+        <ng-template #error>
+            <div class="text-danger">Click on the <a href="www.google.com" target="_blank">error link</a></div>
+        </ng-template>
+    </sebng-checkbox>
+
+    <form [formGroup]="formGroup" class="inner-grid">
+        <sebng-checkbox label="Accept before you submit" formControlName="checkboxControl" [error]="submitError"></sebng-checkbox>
+        <button sebng-btn (click)="submit()">Submit Form</button>
+    </form>
+</section>

@@ -1,6 +1,6 @@
 import { ModalComponent } from "./modal.component";
 import { ModalService } from "./modal.service";
-import { TestBed, async, ComponentFixture, fakeAsync, tick } from "@angular/core/testing";
+import { TestBed, async, ComponentFixture } from "@angular/core/testing";
 import { Component, ViewChild, DebugElement } from "@angular/core";
 import { ModalSizeType, ModalPositionType } from "./modal.type";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -39,6 +39,7 @@ class TestComponent {
 describe("Component: ModalComponent", () => {
     let component: TestComponent;
     let fixture: ComponentFixture<TestComponent>;
+    let modalService: ModalService;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -50,6 +51,7 @@ describe("Component: ModalComponent", () => {
             .then(() => {
                 fixture = TestBed.createComponent(TestComponent);
                 component = fixture.componentInstance;
+                modalService = TestBed.get(ModalService);
                 component.id = "test-id";
                 fixture.detectChanges();
             });
@@ -99,11 +101,16 @@ describe("Component: ModalComponent", () => {
     });
 
     it("should open the modal when openModal function is called and backdrop is appended to the body", () => {
-        spyOn(component.modalChild, "open");
+        const modalSpy: jasmine.Spy = spyOn(component.modalChild, "open").and.callThrough();
+        const modalServiceSpy: jasmine.Spy = spyOn(modalService, "appendComponentToBody").and.callThrough();
         fixture.componentInstance.openModal();
         fixture.detectChanges();
-        expect(component.modalChild.open).toHaveBeenCalled();
-        expect(document.querySelector(".modal-backdrop")).toBeTruthy();
+        expect(modalSpy).toHaveBeenCalled();
+        expect(modalServiceSpy).toHaveBeenCalled();
+        fixture.whenRenderingDone().then(() => {
+            fixture.detectChanges();
+            expect(document.querySelector(".modal-backdrop")).toBeTruthy();
+        });
     });
 
     it("should close the modal when closeModal function is called", () => {

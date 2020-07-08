@@ -14,6 +14,9 @@ import { ToggleModule } from "./components/toggle/toggle.module";
 import { ChipModule } from "./components/chip/chip.module";
 import { TabsModule } from "./components/tabs/tabs.module";
 import { BreadcrumbModule } from "./components/breadcrumb/breadcrumb.module";
+import { CheckBoxModule } from "./components/checkBox/checkBox.module";
+import { TableModule } from "./components/table/table.module";
+import { TooltipModule } from "./components/tooltip/tooltip.module";
 
 @NgModule({
     declarations: [],
@@ -33,6 +36,9 @@ import { BreadcrumbModule } from "./components/breadcrumb/breadcrumb.module";
         ChipModule,
         TabsModule,
         BreadcrumbModule,
+        CheckBoxModule,
+        TableModule,
+        TooltipModule,
         ModalModule,
     ],
 })
