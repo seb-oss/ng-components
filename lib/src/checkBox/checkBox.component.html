@@ -1,4 +1,4 @@
-<div class="seb-checkbox" [class.border]="error" [class.border-danger]="error">
+<div class="seb-checkbox" [ngClass]="{ 'border border-danger': error }">
     <div class="custom-control custom-checkbox" [ngClass]="className">
         <input type="checkbox" class="custom-control-input" [id]="_id" [name]="name" [(ngModel)]="value" [disabled]="disabled" />
 
