@@ -11,10 +11,6 @@
 $offset: 200;
 $duration: 1.5s;
 $duration-sq: 1.2s;
-$loader-xs: 1rem;
-$loader-sm: 2.125rem;
-$loader-md: 4.063rem;
-$loader-lg: 6.25rem;
 
 .rc.loader {
     color: $green;
@@ -44,16 +40,16 @@ $loader-lg: 6.25rem;
         background-color: rgba($black, 0.55);
     }
     &.loader-xs {
-        @include setLoaderSize($loader-xs);
+        @include setLoaderSize($spinner-xs-size);
     }
     &.loader-sm {
-        @include setLoaderSize($loader-sm);
+        @include setLoaderSize($spinner-sm-size);
     }
     &.loader-md {
-        @include setLoaderSize($loader-md);
+        @include setLoaderSize($spinner-md-size);
     }
     &.loader-lg {
-        @include setLoaderSize($loader-lg);
+        @include setLoaderSize($spinner-lg-size);
     }
     &.loader-spinner {
         > svg {

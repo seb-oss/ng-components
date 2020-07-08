@@ -3,7 +3,7 @@ import { LoaderSize, LoaderType } from "./loader.component";
 
 @Pipe({ name: "loaderClasses" })
 export class LoaderClassesPipe implements PipeTransform {
-    transform(size: LoaderSize, cover: boolean, fullscreen: boolean, type: LoaderType, backdrop: boolean) {
+    transform(size: LoaderSize, cover: boolean, fullscreen: boolean, type: LoaderType, backdrop: boolean, className) {
         return {
             rc: true,
             loader: true,
@@ -12,6 +12,7 @@ export class LoaderClassesPipe implements PipeTransform {
             "loader-backdrop": backdrop,
             [`loader-${size}`]: size,
             [`loader-${type}`]: type,
+            [className]: !!className,
         };
     }
 }
