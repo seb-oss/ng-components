@@ -141,6 +141,7 @@
                         "karmaConfig": "projects/ng-components-docs/karma.conf.js",
                         "styles": ["projects/ng-components-docs/src/styles.scss"],
                         "scripts": [],
+                        "codeCoverage": true,
                         "assets": ["projects/ng-components-docs/src/favicon.ico", "projects/ng-components-docs/src/assets"]
                     }
                 },
