@@ -1,7 +1,7 @@
 import { Component, Input, forwardRef, ViewEncapsulation } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
-import { UIDate, uiDateToString } from "./formatters";
+import { UIDate, uiDateToString, padNumber } from "./formatters";
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -44,53 +44,62 @@ export class DatePickerComponent implements ControlValueAccessor {
         this.value = new Date(v);
     }
 
-    private _customPickerDay: number;
-    get customPickerDay(): number {
-        if (this._customPickerDay && typeof this._customPickerDay === "number") {
-            return this._customPickerDay;
-        } else {
-            return Number(this.inputRawValue.substr(8, 2));
-        }
-    }
-    set customPickerDay(v: number) {
-        if (v !== null && v !== this._customPickerDay && v > 0 && v <= 31) {
-            const date = new Date(this.value.getFullYear(), this.value.getMonth(), v);
+    trySaveDate() {
+        const day: number = this.customDay;
+        const month: number = this.customMonth;
+        const year: number = this.customYear;
+        const dateString: string = `${padNumber(year, true)}-${padNumber(month)}-${padNumber(day)}`;
+        const date: Date = new Date(dateString);
+        const m: number = date.getMonth() + 1;
+        if (date.getFullYear() === year && m === month && date.getDate() === day) {
             this.value = date;
-            this._customPickerDay = date.getDate();
+        } else {
+            this.value = new Date("");
         }
     }
 
-    private _customPickerMonth: number;
-    get customPickerMonth(): number {
-        if (this._customPickerMonth && typeof this._customPickerMonth === "number") {
-            return this._customPickerMonth;
-        } else {
-            return Number(this.inputRawValue.substr(5, 2));
+    private _customDay: number;
+    get customDay(): number {
+        if (this._customDay === undefined) {
+            const value: number = Number(this.inputRawValue.substr(8, 2));
+            this._customDay = value;
+            return this._customDay;
         }
+        return this._customDay;
     }
-    set customPickerMonth(v: number) {
-        if (v !== null && v !== this._customPickerMonth && v > 0 && v <= 12) {
-            const date = new Date(this.value.getFullYear(), v - 1, this.value.getDate());
-            this.value = date;
-            this._customPickerMonth = date.getMonth() + 1;
+    set customDay(v: number) {
+        if (typeof v === "number") {
+            this._customDay = Number(v);
+            this.trySaveDate();
         }
     }
 
-    private _customPickerYear: number;
-    get customPickerYear(): number {
-        if (this._customPickerYear && typeof this._customPickerYear === "number") {
-            return this._customPickerYear;
-        } else {
-            return Number(this.inputRawValue.substr(0, 4));
+    private _customMonth: number;
+    get customMonth(): number {
+        if (this._customMonth === undefined) {
+            const value: number = Number(this.inputRawValue.substr(5, 2));
+            this._customMonth = value;
+            return this._customMonth;
         }
+        return this._customMonth;
     }
-    set customPickerYear(v: number) {
-        if (v !== this._customPickerYear) {
-            const date = new Date(0, this.value.getMonth(), this.value.getDate());
-            date.setFullYear(v);
-            this.value = date;
-            this._customPickerYear = date.getFullYear();
+    set customMonth(v: number) {
+        this._customMonth = Number(v);
+        this.trySaveDate();
+    }
+
+    private _customYear: number;
+    get customYear(): number {
+        if (this._customYear === undefined) {
+            const value: number = Number(this.inputRawValue.substr(0, 4));
+            this._customYear = value;
+            return this._customYear;
         }
+        return this._customYear;
+    }
+    set customYear(v: number) {
+        this._customYear = Number(v);
+        this.trySaveDate();
     }
 
     private _value: Date = null;
@@ -129,50 +138,50 @@ export class DatePickerComponent implements ControlValueAccessor {
         return d && d instanceof Date && !isNaN(d.getTime());
     }
 
-    isValidUIDate(d: UIDate | string): boolean {
-        if (typeof d === "string") {
-            return false;
-        } else {
-            return d && !!d.day && !!d.month && !!d.year;
-        }
-    }
+    // isValidUIDate(d: UIDate | string): boolean {
+    //     if (typeof d === "string") {
+    //         return false;
+    //     } else {
+    //         return d && !!d.day && !!d.month && !!d.year;
+    //     }
+    // }
 
     /** Converts from `string` or `Date` to date `string` with format `yyyy-mm-dd` OR `yyyy-mm`*/
-    toInputDateString(v: string | Date, includeDay: boolean = true): string | null {
-        const regex: RegExp = /\b([0-9])\b/gm;
-        const date: Date = v instanceof Date ? v : new Date(v);
-        const subst: string = `0$1`;
+    // toInputDateString(v: string | Date, includeDay: boolean = true): string | null {
+    //     const regex: RegExp = /\b([0-9])\b/gm;
+    //     const date: Date = v instanceof Date ? v : new Date(v);
+    //     const subst: string = `0$1`;
 
-        if (this.isValidDate(date)) {
-            return `${date.getFullYear()}-${date.getMonth() + 1}${includeDay ? `-${date.getDate()}` : ""}`.replace(regex, subst);
-        }
+    //     if (this.isValidDate(date)) {
+    //         return `${date.getFullYear()}-${date.getMonth() + 1}${includeDay ? `-${date.getDate()}` : ""}`.replace(regex, subst);
+    //     }
 
-        return null;
-    }
+    //     return null;
+    // }
 
     /** Converts from date `string` with format `yyyy-mm-dd` OR `yyyy-mm` to `Date` object */
-    toDate(v: string | null | UIDate): Date | null {
-        if (v) {
-            if (typeof v === "string" && v.length) {
-                const date: Date = new Date(v);
-                return this.isValidDate(date) ? date : null;
-            } else {
-                return this.toDate(uiDateToString(v as UIDate));
-            }
-        }
-        return null;
-    }
+    // toDate(v: string | null | UIDate): Date | null {
+    //     if (v) {
+    //         if (typeof v === "string" && v.length) {
+    //             const date: Date = new Date(v);
+    //             return this.isValidDate(date) ? date : null;
+    //         } else {
+    //             return this.toDate(uiDateToString(v as UIDate));
+    //         }
+    //     }
+    //     return null;
+    // }
 
     /** updates a single value (year, month or day) in the UIDate object and returns a new object with that value */
-    updateUIDate = (v: UIDate, k: string, i: number, includeDay: boolean = true): UIDate => {
-        return { ...v, day: includeDay ? v.day : 1, [k]: i };
-    };
+    // updateUIDate = (v: UIDate, k: string, i: number, includeDay: boolean = true): UIDate => {
+    //     return { ...v, day: includeDay ? v.day : 1, [k]: i };
+    // };
 
     /** Converts from date `string` with format `yyyy-mm-dd` OR `yyyy-mm` to `UIDate` (object with `UIDate` interface) */
-    toUIDate(v: string | Date): UIDate {
-        const date: Date = v instanceof Date ? v : new Date(v);
-        return { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() };
-    }
+    // toUIDate(v: string | Date): UIDate {
+    //     const date: Date = v instanceof Date ? v : new Date(v);
+    //     return { year: date.getFullYear(), month: date.getMonth() + 1, day: date.getDate() };
+    // }
 
     /*
     changeDate(attribute: "day" | "month" | "year", v: number, resetDay: boolean = false) {

@@ -14,9 +14,9 @@ export function uiDateToString(uiDate: UIDate): string {
     return "";
 }
 
-export function padNumber(value: number): string {
+export function padNumber(value: number, isYear: boolean = false): string {
     if (isNumber(value)) {
-        return `0${value}`.slice(-2);
+        return isYear ? `0000${value}`.substr(-4, 4) : `00${value}`.substr(-2, 2);
     } else {
         return "";
     }
