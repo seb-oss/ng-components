@@ -1,11 +1,13 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { SebButtonDirective } from "./button";
-import { ParseSourceExampleComponent } from "./parse-source-example/parse-source-example.component";
+import { ButtonComponent } from "./button.component";
+import { FormsModule } from "@angular/forms";
+
+import { ButtonClassesPipe } from "./button.pipes";
 
 @NgModule({
-    imports: [CommonModule],
-    declarations: [SebButtonDirective, ParseSourceExampleComponent],
-    exports: [SebButtonDirective],
+    declarations: [ButtonComponent, ButtonClassesPipe],
+    imports: [CommonModule, FormsModule],
+    exports: [ButtonComponent],
 })
-export class SebButtonModule {}
+export class ButtonModule {}

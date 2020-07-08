@@ -13,7 +13,10 @@ import { AccordionModule } from "./components/accordion/accordion.module";
 import { ToggleModule } from "./components/toggle/toggle.module";
 import { ChipModule } from "./components/chip/chip.module";
 import { TabsModule } from "./components/tabs/tabs.module";
+import { NotificationModule } from "./components/notification/notification.module";
 import { BreadcrumbModule } from "./components/breadcrumb/breadcrumb.module";
+import { CheckBoxModule } from "./components/checkBox/checkBox.module";
+import { TableModule } from "./components/table/table.module";
 import { TooltipModule } from "./components/tooltip/tooltip.module";
 
 @NgModule({
@@ -22,7 +25,6 @@ import { TooltipModule } from "./components/tooltip/tooltip.module";
         CommonModule,
         RadioGroupModule,
         ButtonsModule,
-        ModalModule,
         DropdownModule,
         WizardModule,
         PaginationModule,
@@ -33,7 +35,10 @@ import { TooltipModule } from "./components/tooltip/tooltip.module";
         ToggleModule,
         ChipModule,
         TabsModule,
+        NotificationModule,
         BreadcrumbModule,
+        CheckBoxModule,
+        TableModule,
         TooltipModule,
     ],
 })
