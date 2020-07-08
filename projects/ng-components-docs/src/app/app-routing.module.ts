@@ -18,6 +18,7 @@ import { ROUTES as BREADCRUMB_ROUTES } from "./examples/components/breadcrumb/br
 import { ROUTES as CHECKBOX_ROUTES } from "./examples/components/checkBox/checkBox.module";
 import { ROUTES as TABLE_ROUTES } from "./examples/components/table/table.module";
 import { ROUTES as SLIDER_ROUTES } from "./examples/components/slider/slider.module";
+import { ROUTES as STEPPER_ROUTES } from "./examples/components/stepper/stepper.module";
 import { ROUTES as TIMELINE_ROUTES } from "./examples/components/timeline/timeline.module";
 import { ROUTES as PROGRESS_BAR_ROUTES } from "./examples/components/progressBar/progressBr.module";
 import { ROUTES as RATING_ROUTES } from "./examples/components/rating/rating.module";
@@ -116,6 +117,10 @@ const routes: Routes = [
                 {
                     path: "slider",
                     children: SLIDER_ROUTES,
+                },
+                {
+                    path: "stepper",
+                    children: STEPPER_ROUTES,
                 },
                 {
                     path: "video",
