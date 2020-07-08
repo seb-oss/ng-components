@@ -1,0 +1,17 @@
+<tr *ngIf="list && list.length">
+    <th *ngIf="selectable" class="table-checkbox" (click)="allSelectedClicked.emit()">
+        <input type="checkbox" class="form-control" [checked]="isAllSelected" />
+    </th>
+
+    <th
+        *ngFor="let column of list"
+        seb-table-th
+        class="seb-table-data"
+        [class.sort]="!!sortInfo"
+        [class.sort-asc]="!!sortInfo && sortInfo.column === column.tableKeySelector && sortInfo.isAscending === true"
+        [class.sort-desc]="!!sortInfo && sortInfo.column === column.tableKeySelector && sortInfo.isAscending === false"
+        scope="col"
+        (click)="!!sortInfo ? handleClickSort(column.tableKeySelector) : null"
+        [label]="column.label"
+    ></th>
+</tr>
