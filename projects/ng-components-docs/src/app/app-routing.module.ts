@@ -15,11 +15,13 @@ import { ROUTES as CHIP_ROUTES } from "./examples/components/chip/chip.module";
 import { ROUTES as TABS_ROUTES } from "./examples/components/tabs/tabs.module";
 import { ROUTES as VIDEO_ROUTES } from "./examples/components/video/video.module";
 import { ROUTES as BREADCRUMB_ROUTES } from "./examples/components/breadcrumb/breadcrumb.module";
+import { ROUTES as CHECKBOX_ROUTES } from "./examples/components/checkBox/checkBox.module";
 import { ROUTES as TABLE_ROUTES } from "./examples/components/table/table.module";
 import { ROUTES as SLIDER_ROUTES } from "./examples/components/slider/slider.module";
 import { ROUTES as TIMELINE_ROUTES } from "./examples/components/timeline/timeline.module";
 import { ROUTES as PROGRESS_BAR_ROUTES } from "./examples/components/progressBar/progressBr.module";
 import { ROUTES as RATING_ROUTES } from "./examples/components/rating/rating.module";
+import { ROUTES as LOADER_ROUTES } from "./examples/components/loader/loader.module";
 import { ROUTES as TOOLTIP_ROUTES } from "./examples/components/tooltip/tooltip.module";
 
 import { InstallationComponent } from "./components/installation/installation.component";
@@ -120,6 +122,10 @@ const routes: Routes = [
                     children: VIDEO_ROUTES,
                 },
                 {
+                    path: "checkBox",
+                    children: CHECKBOX_ROUTES,
+                {,
+                }
                     path: "table",
                     children: TABLE_ROUTES,
                 },
@@ -134,6 +140,10 @@ const routes: Routes = [
                 {
                     path: "rating",
                     children: RATING_ROUTES,
+                },
+                {
+                    path: "loader",
+                    children: LOADER_ROUTES,
                 },
                 {
                     path: "tooltip",
