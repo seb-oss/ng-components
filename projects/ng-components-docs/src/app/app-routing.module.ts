@@ -124,8 +124,8 @@ const routes: Routes = [
                 {
                     path: "checkBox",
                     children: CHECKBOX_ROUTES,
-                {,
-                }
+                },
+                {
                     path: "table",
                     children: TABLE_ROUTES,
                 },
