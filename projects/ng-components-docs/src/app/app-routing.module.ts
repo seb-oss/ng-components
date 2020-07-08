@@ -20,6 +20,7 @@ import { ROUTES as SLIDER_ROUTES } from "./examples/components/slider/slider.mod
 import { ROUTES as TIMELINE_ROUTES } from "./examples/components/timeline/timeline.module";
 import { ROUTES as PROGRESS_BAR_ROUTES } from "./examples/components/progressBar/progressBr.module";
 import { ROUTES as RATING_ROUTES } from "./examples/components/rating/rating.module";
+import { ROUTES as TOOLTIP_ROUTES } from "./examples/components/tooltip/tooltip.module";
 
 import { InstallationComponent } from "./components/installation/installation.component";
 import { sortArray } from "./utils/arrayFunctions";
@@ -133,6 +134,10 @@ const routes: Routes = [
                 {
                     path: "rating",
                     children: RATING_ROUTES,
+                },
+                {
+                    path: "tooltip",
+                    children: TOOLTIP_ROUTES,
                 },
             ],
             "path"

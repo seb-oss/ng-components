@@ -15,6 +15,7 @@ import { ChipModule } from "./components/chip/chip.module";
 import { TabsModule } from "./components/tabs/tabs.module";
 import { BreadcrumbModule } from "./components/breadcrumb/breadcrumb.module";
 import { TableModule } from "./components/table/table.module";
+import { TooltipModule } from "./components/tooltip/tooltip.module";
 
 @NgModule({
     declarations: [],
@@ -35,6 +36,7 @@ import { TableModule } from "./components/table/table.module";
         TabsModule,
         BreadcrumbModule,
         TableModule,
+        TooltipModule,
         ModalModule,
     ],
 })
