@@ -4,7 +4,6 @@ import { By } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
-import { NgbModule, NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import { SafeHtmlPipe } from "./safe-html.pipe";
 
 @Component({
@@ -21,22 +20,18 @@ import { SafeHtmlPipe } from "./safe-html.pipe";
 })
 class CustomTestClass {
     @ViewChild(DatePickerComponent) datePickerComponent: DatePickerComponent;
-    dateValue: NgbDateStruct | string;
-    startDate: NgbDateStruct;
-    endDate: NgbDateStruct;
+    dateValue: Date;
+    startDate: Date;
+    endDate: Date;
     id: string;
     placeholder: string;
     className: string;
 
     constructor() {
         const today: Date = new Date();
-        this.dateValue = {
-            year: today.getFullYear(),
-            month: today.getMonth() + 1,
-            day: today.getDate(),
-        };
-        this.startDate = { ...this.dateValue, month: 1, day: 1 };
-        this.endDate = { ...this.dateValue, month: 12, day: 31 };
+        this.dateValue = today;
+        this.startDate = new Date(today.getFullYear(), 0, today.getDate());
+        this.endDate = new Date(today.getFullYear(), 11, today.getDate());
 
         this.id = "my-datepicker";
         this.className = "my-class";
@@ -50,7 +45,7 @@ describe("Component: DatePickerComponent", () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [NgbModule, FormsModule, CommonModule],
+            imports: [FormsModule, CommonModule],
             declarations: [DatePickerComponent, CustomTestClass, SafeHtmlPipe],
             providers: [],
         })
@@ -77,11 +72,12 @@ describe("Component: DatePickerComponent", () => {
 
         expect(component.datePickerComponent.value).toBeNull();
 
-        component.datePickerComponent.writeValue("new value");
+        const expectedObj: Date = new Date("2010-01-01");
+        component.datePickerComponent.writeValue(expectedObj);
 
         fixture.detectChanges();
 
-        expect(component.datePickerComponent.value).toEqual("new value");
+        expect(component.datePickerComponent.value).toEqual(expectedObj);
     }));
 
     it("should call touch and change events when the value is set", fakeAsync(() => {
@@ -95,12 +91,7 @@ describe("Component: DatePickerComponent", () => {
 
         component.datePickerComponent.registerOnTouched(onChangeEvent);
 
-        const date: NgbDateStruct = { ...(component.dateValue as NgbDateStruct) };
-        component.dateValue = {
-            year: date.year - 1,
-            month: date.month - 1,
-            day: date.day - 1,
-        };
+        component.dateValue = new Date();
 
         fixture.detectChanges();
         tick();
@@ -114,13 +105,9 @@ describe("Component: DatePickerComponent", () => {
 
     it("getter and setter values of datePicker should get be able to get and set value correctly", done => {
         fixture.detectChanges();
-        const date: NgbDateStruct = { ...(component.dateValue as NgbDateStruct) };
-        let expectedValue: NgbDateStruct;
-        component.datePickerComponent.value = expectedValue = {
-            year: date.year - 1,
-            month: date.month - 1,
-            day: date.day - 1,
-        };
+
+        let expectedValue: Date;
+        component.datePickerComponent.value = expectedValue = new Date();
 
         // do not call detectChanges here again, doing so will refresh the component
 

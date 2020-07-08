@@ -1,6 +1,5 @@
 import { Component, Input, forwardRef, ViewEncapsulation } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
-import { NgbDateStruct } from "@ng-bootstrap/ng-bootstrap";
 import { UIDate, uiDateToString, padNumber } from "./formatters";
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
@@ -23,8 +22,8 @@ export class DatePickerComponent implements ControlValueAccessor {
     @Input() forceCustom?: boolean = false;
     @Input() readonly?: boolean = false;
     @Input() disabled?: boolean = false;
-    @Input() min?: NgbDateStruct;
-    @Input() max?: NgbDateStruct;
+    @Input() min?: Date;
+    @Input() max?: Date;
     @Input() id?: string;
     @Input() monthNames: string[] = ["Month", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
