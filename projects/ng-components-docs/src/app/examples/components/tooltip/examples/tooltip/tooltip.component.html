@@ -1,0 +1,68 @@
+<div class="row">
+    <div class="col">
+        <div class="row">
+            <sebng-dropdown class="col" [(ngModel)]="trigger" [label]="'Trigger Method'" [list]="triggerList"> </sebng-dropdown>
+            <sebng-dropdown class="col" [(ngModel)]="theme" [label]="'Theme'" [list]="themeList"></sebng-dropdown>
+            <sebng-dropdown class="col" [(ngModel)]="position" [label]="'Position'" [list]="positionList"> </sebng-dropdown>
+        </div>
+        <!-- actual example code-->
+        <div class="row pt-3">
+            <div class="col">
+                Using directive:
+                <abbr
+                    class="text-help"
+                    [sebng-tooltip]="'Im a tooltip string'"
+                    [trigger]="trigger.value"
+                    [position]="position.value"
+                    [theme]="theme.value"
+                    >I contain a tooltip</abbr
+                >
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col">
+                Pass content as template Using directive:
+                <abbr
+                    class="text-help"
+                    [sebng-tooltip]="tooltipTemplate"
+                    [trigger]="trigger.value"
+                    [position]="position.value"
+                    [theme]="theme.value"
+                    >I contain a tooltip</abbr
+                >
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col">
+                Using default component:
+                <sebng-tooltip [trigger]="trigger.value" [position]="position.value" content="this is a tooltip" [theme]="theme.value">
+                </sebng-tooltip>
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col">
+                Using component to display tooltip reference text in SEB design:
+                <sebng-tooltip
+                    [trigger]="trigger.value"
+                    [position]="position.value"
+                    content="this is a tooltip"
+                    [textReference]="'I contain a tooltip'"
+                    [theme]="theme.value"
+                >
+                </sebng-tooltip>
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col">
+                Using component to display custom template as tooltip reference:
+                <sebng-tooltip [trigger]="trigger.value" [position]="position.value" content="this is a tooltip" [theme]="theme.value">
+                    <button class="btn btns-sm btn-primary">I'm a button with tooltip</button>
+                </sebng-tooltip>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #tooltipTemplate>
+    <div>I'm a tooltip in template</div>
+</ng-template>

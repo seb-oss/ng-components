@@ -1,22 +1,13 @@
-import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { SebModalComponent } from "./modal";
-import { SebModalService } from "./modal.service";
+import { ModalComponent } from "./modal.component";
 import { SebModalBackdropComponent } from "./modal.backdrop";
-import { SebModalBodyDirective, SebModalFooterDirective, SebModalHeaderDirective, SebModalTitleDirective } from "./modal.directives";
+import { CommonModule } from "@angular/common";
+import { ModalService } from "./modal.service";
 
 @NgModule({
     imports: [CommonModule],
-    declarations: [
-        SebModalComponent,
-        SebModalBackdropComponent,
-        SebModalTitleDirective,
-        SebModalHeaderDirective,
-        SebModalBodyDirective,
-        SebModalFooterDirective,
-    ],
-    exports: [SebModalTitleDirective, SebModalHeaderDirective, SebModalBodyDirective, SebModalFooterDirective],
-    entryComponents: [SebModalComponent, SebModalBackdropComponent],
-    providers: [SebModalService],
+    declarations: [ModalComponent, SebModalBackdropComponent],
+    exports: [ModalComponent, SebModalBackdropComponent],
+    providers: [ModalService],
 })
-export class SebModalModule {}
+export class ModalModule {}
