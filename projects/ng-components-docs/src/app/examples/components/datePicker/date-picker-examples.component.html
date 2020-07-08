@@ -61,4 +61,15 @@
         </div>
         <hr />
     </div>
+
+    <div class="col-xl">
+        <label>Disabled</label>
+        <sebng-date-picker [(ngModel)]="disabled" [monthPicker]="monthPicker" [forceCustom]="forceCustom" [disabled]="true">
+        </sebng-date-picker>
+        <label><small>Raw output:</small></label>
+        <div class="rounded p-3 bg-dark">
+            <code>{{ disabled }}</code>
+        </div>
+        <hr />
+    </div>
 </div>
