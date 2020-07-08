@@ -15,6 +15,7 @@ import { ROUTES as CHIP_ROUTES } from "./examples/components/chip/chip.module";
 import { ROUTES as TABS_ROUTES } from "./examples/components/tabs/tabs.module";
 import { ROUTES as VIDEO_ROUTES } from "./examples/components/video/video.module";
 import { ROUTES as BREADCRUMB_ROUTES } from "./examples/components/breadcrumb/breadcrumb.module";
+import { ROUTES as CHECKBOX_ROUTES } from "./examples/components/checkBox/checkBox.module";
 import { ROUTES as TABLE_ROUTES } from "./examples/components/table/table.module";
 import { ROUTES as SLIDER_ROUTES } from "./examples/components/slider/slider.module";
 import { ROUTES as TIMELINE_ROUTES } from "./examples/components/timeline/timeline.module";
@@ -122,6 +123,10 @@ const routes: Routes = [
                     children: VIDEO_ROUTES,
                 },
                 {
+                    path: "checkBox",
+                    children: CHECKBOX_ROUTES,
+                {,
+                }
                     path: "table",
                     children: TABLE_ROUTES,
                 },
