@@ -1,0 +1,25 @@
+<div class="{{ notificationClassNames }}">
+    <div class="content-wrapper" [class.clickable]="onClick" (click)="handleClick($event)">
+        <div class="notification-title" *ngIf="showNotificationTitle">{{ title }}</div>
+        <div class="notification-message" *ngIf="message">{{ message }}</div>
+        <ng-content></ng-content>
+
+        <div *ngIf="showNotificationBody" class="actions-wrapper" [class.partitioned]="actions.length === 2">
+            <ng-container *ngFor="let item of actions">
+                <div class="action-wrapper">
+                    <button class="btn btn-sm btn-secondary notification-action" (click)="item.action()">
+                        {{ item.text }}
+                    </button>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="dismiss-btn" *ngIf="dismissable" (click)="dismiss()">
+        <svg name="times" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+            <path
+                d="M217.5 256l137.2-137.2c4.7-4.7 4.7-12.3 0-17l-8.5-8.5c-4.7-4.7-12.3-4.7-17 0L192 230.5 54.8 93.4c-4.7-4.7-12.3-4.7-17 0l-8.5 8.5c-4.7 4.7-4.7 12.3 0 17L166.5 256 29.4 393.2c-4.7 4.7-4.7 12.3 0 17l8.5 8.5c4.7 4.7 12.3 4.7 17 0L192 281.5l137.2 137.2c4.7 4.7 12.3 4.7 17 0l8.5-8.5c4.7-4.7 4.7-12.3 0-17L217.5 256z"
+            />
+        </svg>
+    </div>
+</div>

@@ -13,6 +13,7 @@ import { ROUTES as ACCORDION_ROUTES } from "./examples/components/accordion/acco
 import { ROUTES as TOGGLE_ROUTES } from "./examples/components/toggle/toggle.module";
 import { ROUTES as CHIP_ROUTES } from "./examples/components/chip/chip.module";
 import { ROUTES as TABS_ROUTES } from "./examples/components/tabs/tabs.module";
+import { ROUTES as NOTIFICATION_ROUTES } from "./examples/components/notification/notification.module";
 import { ROUTES as VIDEO_ROUTES } from "./examples/components/video/video.module";
 import { ROUTES as BREADCRUMB_ROUTES } from "./examples/components/breadcrumb/breadcrumb.module";
 import { ROUTES as CHECKBOX_ROUTES } from "./examples/components/checkBox/checkBox.module";
@@ -126,6 +127,10 @@ const routes: Routes = [
                 {
                     path: "video",
                     children: VIDEO_ROUTES,
+                },
+                {
+                    path: "notification",
+                    children: NOTIFICATION_ROUTES,
                 },
                 {
                     path: "checkBox",
