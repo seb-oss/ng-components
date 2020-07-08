@@ -13,14 +13,17 @@ import { ROUTES as ACCORDION_ROUTES } from "./examples/components/accordion/acco
 import { ROUTES as TOGGLE_ROUTES } from "./examples/components/toggle/toggle.module";
 import { ROUTES as CHIP_ROUTES } from "./examples/components/chip/chip.module";
 import { ROUTES as TABS_ROUTES } from "./examples/components/tabs/tabs.module";
+import { ROUTES as NOTIFICATION_ROUTES } from "./examples/components/notification/notification.module";
 import { ROUTES as VIDEO_ROUTES } from "./examples/components/video/video.module";
 import { ROUTES as BREADCRUMB_ROUTES } from "./examples/components/breadcrumb/breadcrumb.module";
 import { ROUTES as CHECKBOX_ROUTES } from "./examples/components/checkBox/checkBox.module";
 import { ROUTES as TABLE_ROUTES } from "./examples/components/table/table.module";
 import { ROUTES as SLIDER_ROUTES } from "./examples/components/slider/slider.module";
+import { ROUTES as STEPPER_ROUTES } from "./examples/components/stepper/stepper.module";
 import { ROUTES as TIMELINE_ROUTES } from "./examples/components/timeline/timeline.module";
 import { ROUTES as PROGRESS_BAR_ROUTES } from "./examples/components/progressBar/progressBr.module";
 import { ROUTES as RATING_ROUTES } from "./examples/components/rating/rating.module";
+import { ROUTES as TIMER_ROUTES } from "./examples/components/timer/timer.module";
 import { ROUTES as LOADER_ROUTES } from "./examples/components/loader/loader.module";
 import { ROUTES as TOOLTIP_ROUTES } from "./examples/components/tooltip/tooltip.module";
 
@@ -118,8 +121,16 @@ const routes: Routes = [
                     children: SLIDER_ROUTES,
                 },
                 {
+                    path: "stepper",
+                    children: STEPPER_ROUTES,
+                },
+                {
                     path: "video",
                     children: VIDEO_ROUTES,
+                },
+                {
+                    path: "notification",
+                    children: NOTIFICATION_ROUTES,
                 },
                 {
                     path: "checkBox",
@@ -140,6 +151,10 @@ const routes: Routes = [
                 {
                     path: "rating",
                     children: RATING_ROUTES,
+                },
+                {
+                    path: "timer",
+                    children: TIMER_ROUTES,
                 },
                 {
                     path: "loader",
