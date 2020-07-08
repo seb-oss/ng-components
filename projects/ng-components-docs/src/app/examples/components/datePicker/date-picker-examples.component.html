@@ -1,15 +1,22 @@
 <div class="row">
-    <label>
-        <input type="checkbox" [(ngModel)]="monthPicker" />
-        Month picker
-    </label>
-    <label>
-        <input type="checkbox" [(ngModel)]="forceCustom" />
-        Show custom
-    </label>
+    <div class="col-xl">
+        <label>
+            <input type="checkbox" [(ngModel)]="monthPicker" />
+            Month picker
+        </label>
+        <label>
+            <input type="checkbox" [(ngModel)]="forceCustom" />
+            Show custom
+        </label>
+    </div>
+    <div class="col-xl">
+        <p>min: {{ min | date }}</p>
+        <p>max: {{ max | date }}</p>
+    </div>
     <div class="col-xl">
         <label>Normal</label>
-        <sebng-date-picker [(ngModel)]="value" [monthPicker]="monthPicker" [forceCustom]="forceCustom"> </sebng-date-picker>
+        <sebng-date-picker [(ngModel)]="value" [monthPicker]="monthPicker" [forceCustom]="forceCustom" [min]="min" [max]="max">
+        </sebng-date-picker>
         <label><small>Raw output:</small></label>
         <div class="rounded p-3 bg-dark">
             <code>{{ value }}</code>

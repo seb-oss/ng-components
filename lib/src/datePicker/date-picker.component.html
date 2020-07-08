@@ -5,6 +5,8 @@
             class="form-control seb-date-picker-native"
             [ngClass]="className"
             [class.is-invalid]="!isValidDate(value)"
+            [min]="getStringFromDate(min)"
+            [max]="getStringFromDate(max)"
             [(ngModel)]="inputRawValue"
         />
     </ng-container>
@@ -14,16 +16,18 @@
     <ng-container *ngIf="!forceCustom && supportsInputOfType('date'); else dateFallback">
         <input
             type="date"
-            [ngClass]="className"
             class="form-control seb-date-picker-native"
+            [ngClass]="className"
             [class.is-invalid]="!isValidDate(value)"
+            [min]="getStringFromDate(min)"
+            [max]="getStringFromDate(max)"
             [(ngModel)]="inputRawValue"
         />
     </ng-container>
 </ng-template>
 
 <ng-template #dateFallback>
-    <div class="input-group">
+    <div class="input-group" [ngClass]="className">
         <input
             #dayInput
             [style.display]="monthPicker ? 'none' : 'inherit'"

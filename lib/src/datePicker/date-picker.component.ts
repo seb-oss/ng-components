@@ -33,18 +33,22 @@ export class DatePickerComponent implements ControlValueAccessor {
     private onChangeCallback: (_: any) => void;
 
     get inputRawValue(): string {
-        if (this.isValidDate(this.value)) {
-            return this.value?.toISOString()?.substr(0, this.monthPicker ? 7 : 10) || "";
-        } else {
-            return "";
-        }
+        return this.getStringFromDate(this.value);
     }
     set inputRawValue(v: string) {
         this.value = new Date(v);
     }
 
+    getStringFromDate(d: Date): string {
+        if (this.isValidDate(this.value)) {
+            return d?.toISOString()?.substr(0, this.monthPicker ? 7 : 10) || "";
+        } else {
+            return "";
+        }
+    }
+
     trySaveDate() {
-        const day: number = this.customDay;
+        const day: number = this.monthPicker ? 1 : this.customDay;
         const month: number = this.customMonth;
         const year: number = this.customYear;
         const dateString: string = `${padNumber(year, true)}-${padNumber(month)}-${padNumber(day)}`;
@@ -60,15 +64,17 @@ export class DatePickerComponent implements ControlValueAccessor {
     private _customDay: number;
     get customDay(): number {
         if (this._customDay === undefined) {
-            const value: number = Number(this.inputRawValue.substr(8, 2));
+            const value: number = this.monthPicker ? 1 : Number(this.inputRawValue.substr(8, 2));
             this._customDay = value;
             return this._customDay;
         }
         return this._customDay;
     }
     set customDay(v: number) {
-        this._customDay = v ? Number(v) : null;
-        this.trySaveDate();
+        if (!this.monthPicker) {
+            this._customDay = v ? Number(v) : null;
+            this.trySaveDate();
+        }
     }
 
     private _customMonth: number;
