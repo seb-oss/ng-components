@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { urls } from "../../../configs";
 
 const SIDE_MENU_STORAGE_KEY = "";
@@ -8,7 +8,7 @@ const SIDE_MENU_STORAGE_KEY = "";
   templateUrl: "./side-menu.component.html",
   styleUrls: ["./side-menu.component.scss"]
 })
-export class SideMenuComponent implements OnInit {
+export class SideMenuComponent {
   urls: NavsURLs = urls;
   // isMobile: boolean = useMediaQuery("(max-width: 420px)");
   isMobile: boolean = false;
@@ -18,10 +18,4 @@ export class SideMenuComponent implements OnInit {
   highlighted: number = -1;
   listRef: HTMLElement = null;
   inputFocus: boolean = false;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

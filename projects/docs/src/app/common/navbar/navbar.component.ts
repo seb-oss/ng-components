@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { urls } from "../../../configs";
 
 @Component({
@@ -6,12 +6,6 @@ import { urls } from "../../../configs";
   templateUrl: "./navbar.component.html",
   styleUrls: ["./navbar.component.scss"]
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
   urls: NavsURLs = urls;
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }
