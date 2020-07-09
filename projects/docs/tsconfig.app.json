@@ -3,12 +3,13 @@
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
         "outDir": "../../out-tsc/app",
-        "types": [],
         "resolveJsonModule": true,
         "allowSyntheticDefaultImports": true,
         "paths": {
             "@pkg": ["package.json"]
-        }
+        },
+        "typeRoots": ["node_modules/@types"],
+        "types": ["node"],
     },
     "files": ["src/main.ts", "src/polyfills.ts"],
     "include": ["src/**/*.d.ts", "src/**/*.module.ts", "src/**/*.component.ts"]

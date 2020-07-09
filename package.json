@@ -47,6 +47,9 @@
     "bootstrap-icons": "^1.0.0-alpha5",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
+    "typescript-parser": "^2.6.1",
+    "typescript-parser-es5": "^1.0.0",
+    "xregexp": "^4.3.0",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
@@ -69,6 +72,7 @@
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "protractor": "~7.0.0",
+    "raw-loader": "^4.0.1",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~3.9.5"
