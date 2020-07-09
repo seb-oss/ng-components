@@ -6,7 +6,7 @@ import { TableHeaderListValueType } from "../table.models";
     templateUrl: "./table-td.component.html",
 })
 export class TableTDComponent {
-    @Input() row: {};
+    @Input() row: any;
     @Input() valueType: TableHeaderListValueType;
     @Input() dateFormat: string;
 }

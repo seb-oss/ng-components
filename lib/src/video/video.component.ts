@@ -36,7 +36,7 @@ export class VideoComponent implements OnInit, OnChanges {
             : "&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0";
         src += this.loop ? "&amp;loop=1" : "&amp;loop=0";
         src += this.autoplay ? "&amp;autoplay=1" : "&amp;autoplay=0";
-        console.log("The source is ", src);
+
         this.videoSrc = this.sanitizer.bypassSecurityTrustResourceUrl(src);
     }
 

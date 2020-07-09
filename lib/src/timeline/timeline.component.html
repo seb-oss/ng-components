@@ -18,7 +18,7 @@
             <ng-container *ngIf="loop === 1">
                 <div *ngFor="let item of topList; let i = index" class="item-holder" [ngStyle]="{ width: 100 / list.length + '%' }">
                     <div class="direction-top" *ngIf="item">
-                        <div class="title-wrapper" (click)="clickAction && clickAction(i)">
+                        <div class="title-wrapper" (click)="handleClick($event, i)">
                             <div class="title">{{ item.title }}</div>
                             <div class="time-wrapper">
                                 <span class="time">{{ item.time }}</span>
@@ -36,7 +36,7 @@
             <ng-container *ngIf="loop === 3">
                 <div *ngFor="let item of bottomList; let i = index" class="item-holder" [ngStyle]="{ width: 100 / list.length + '%' }">
                     <div *ngIf="item" class="direction-bottom">
-                        <div class="title-wrapper" (click)="clickAction && clickAction(i)">
+                        <div class="title-wrapper" (click)="handleClick($event, i)">
                             <div class="title">{{ item.title }}</div>
                             <div class="time-wrapper">
                                 <span class="time">{{ item.time }}</span>
