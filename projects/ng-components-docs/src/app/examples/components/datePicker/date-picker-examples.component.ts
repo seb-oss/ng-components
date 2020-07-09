@@ -10,6 +10,7 @@ export class DatePickerExamplesComponent {
     monthPicker: boolean;
     forceCustom: boolean;
     normal: Date;
+    withLocale: Date;
     limited: Date;
     disabled: Date;
     min: Date;
@@ -18,9 +19,12 @@ export class DatePickerExamplesComponent {
     rangeFrom: Date;
     rangeTo: Date;
 
+    localeCode: string = "en-US";
+
     constructor() {
         const today: Date = new Date();
         this.normal = today;
+        this.withLocale = today;
         this.limited = today;
         this.disabled = today;
         this.min = new Date(today.getFullYear() - 3, 3, today.getDate());

@@ -28,6 +28,24 @@
     </div>
 
     <div class="col-xl">
+        <label>Custom picker with locale code</label>
+        <div class="row">
+            <div class="col-3">
+                <input class="form-control" [style.width.rem]="10" type="test" [(ngModel)]="localeCode" placeholder="xx-XX" />
+            </div>
+            <div class="col-9">
+                <sebng-date-picker [localeCode]="localeCode" [(ngModel)]="withLocale" [monthPicker]="monthPicker" [forceCustom]="true">
+                </sebng-date-picker>
+            </div>
+        </div>
+        <label><small>Raw output:</small></label>
+        <div class="rounded p-3 bg-dark">
+            <code>{{ withLocale }}</code>
+        </div>
+        <hr />
+    </div>
+
+    <div class="col-xl">
         <label
             >Limited to dates between <small>{{ min | date }} and {{ max | date }}</small></label
         >
