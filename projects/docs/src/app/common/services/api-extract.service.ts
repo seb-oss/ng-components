@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import XRegExp from "xregexp";
 import { Observable, from, merge } from "rxjs";
 import { map, reduce } from "rxjs/operators";
-import { File as ParsedFile } from "typescript-parser/resources/File";
+import { File as ParsedFile } from "typescript-parser-es5/resources/File";
 import {
     Declaration,
     TypescriptParser,
@@ -11,7 +11,7 @@ import {
     PropertyDeclaration,
     MethodDeclaration,
     ParameterDeclaration,
-} from "typescript-parser";
+} from "typescript-parser-es5";
 
 export interface ApiSection {
     name: string;
@@ -205,7 +205,7 @@ export class APIExtractService {
     }
 
     initParse(sourceFileUrl: string): void {
-        console.log(this.parseSourceFile(require(`!raw-loader!${sourceFileUrl}`).default));
+        console.log(this.parseSourceFile(require(`!raw-loader!${sourceFileUrl}`)?.default));
         // this.$content = merge(...obs).pipe(reduce((previous: any, current: any) => [...previous, ...current], []));
     }
 
