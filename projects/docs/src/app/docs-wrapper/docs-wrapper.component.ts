@@ -1,15 +1,17 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
-  selector: "app-docs-wrapper",
-  templateUrl: "./docs-wrapper.component.html",
-  styleUrls: ["./docs-wrapper.component.scss"]
+    selector: "app-docs-wrapper",
+    template: `
+        <div class="docs-wrapper">
+            <app-side-menu></app-side-menu>
+
+            <div class="content-wrapper">
+                <router-outlet></router-outlet>
+                <app-footer></app-footer>
+            </div>
+        </div>
+    `,
+    styleUrls: ["./docs-wrapper.component.scss"]
 })
-export class DocsWrapperComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}
+export class DocsWrapperComponent { }

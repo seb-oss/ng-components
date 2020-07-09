@@ -3,6 +3,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
 import { DocsWrapperComponent } from "./docs-wrapper/docs-wrapper.component";
 import { GettingStartedComponent } from "./getting-started/getting-started.component";
+import { DocPageComponent } from "./doc-page/doc-page.component";
 
 const routes: Routes = [
     { path: "", component: HomeComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
         children: [
             { path: "", redirectTo: "getting-started", pathMatch: "full" },
             { path: "getting-started", component: GettingStartedComponent },
+            { path: ":component", component: DocPageComponent }
         ]
     },
 ];
@@ -20,4 +22,4 @@ const routes: Routes = [
     imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

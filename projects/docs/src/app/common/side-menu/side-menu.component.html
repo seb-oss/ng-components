@@ -1,10 +1,6 @@
 <aside class="side-menu" [class.opened]="toggle" [class.closed]="!toggle" [class.mobile]="isMobile">
     <div class="toggle">
-        <svg width="1em" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 14">
-            <path id="menu" fill-rule="evenodd"
-                d="M947,253H925a1,1,0,0,1,0-2h22A1,1,0,0,1,947,253Zm0-6H925a1,1,0,0,1,0-2h22A1,1,0,0,1,947,247Zm-22,10h22a1,1,0,0,1,0,2H925A1,1,0,0,1,925,257Z"
-                transform="translate(-924 -245)" />
-        </svg>
+        <app-bars-icon></app-bars-icon>
     </div>
     <div class="sidemenu-content">
         <h5 class="header mr-5">SEB Angular Components</h5>
@@ -12,12 +8,12 @@
         <nav class="components-list">
             <a [routerLink]="['/']" class="list-item">Home</a>
             <a [routerLink]="['/docs/getting-started']" routerLinkActive="highlighted" class="list-item">Getting Started</a>
-            <a href="{{urls.releases}}" target="_blank" class="list-item">
-                <ng-container *ngTemplateOutlet="external"></ng-container>
+            <a [href]="urls.releases" target="_blank" class="list-item">
+                <app-external-link-icon size="0.8em"></app-external-link-icon>
                 Release notes
             </a>
-            <a href="{{urls.issues}}" target="_blank" class="list-item">
-                <ng-container *ngTemplateOutlet="external"></ng-container>
+            <a [href]="urls.issues" target="_blank" class="list-item">
+                <app-external-link-icon size="0.8em"></app-external-link-icon>
                 Issues
             </a>
         </nav>
@@ -62,13 +58,3 @@
         </nav>
     </div>
 </aside>
-
-<ng-template #external>
-    <svg width="0.8em" height="0.8em" viewBox="0 0 16 16" class="bi bi-box-arrow-up-right ml-1" fill="currentColor"
-        xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd"
-            d="M1.5 13A1.5 1.5 0 0 0 3 14.5h8a1.5 1.5 0 0 0 1.5-1.5V9a.5.5 0 0 0-1 0v4a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 0 0-1H3A1.5 1.5 0 0 0 1.5 5v8zm7-11a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0V2.5H9a.5.5 0 0 1-.5-.5z" />
-        <path fill-rule="evenodd"
-            d="M14.354 1.646a.5.5 0 0 1 0 .708l-8 8a.5.5 0 0 1-.708-.708l8-8a.5.5 0 0 1 .708 0z" />
-    </svg>
-</ng-template>

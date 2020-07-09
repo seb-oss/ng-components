@@ -1,0 +1,18 @@
+<div class="form-group custom-toggle" [ngClass]="className">
+    <div class="custom-control custom-slide-toggle">
+        <input
+            class="custom-control-input"
+            [attr.id]="internalId"
+            [attr.name]="name"
+            type="checkbox"
+            [(ngModel)]="value"
+            [attr.disabled]="disabled"
+            [attr.aria-checked]="!!value"
+            tabIndex="0"
+            role="switch"
+        />
+        <label class="custom-control-label" [attr.htmlFor]="internalId">
+            {{ label }}
+        </label>
+    </div>
+</div>

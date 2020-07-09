@@ -1,6 +1,9 @@
+@import "~@sebgroup/bootstrap/scss/core";
+
 .navbar {
     padding-left: 2rem;
     padding-right: 2rem;
+    background-color: $gray-800;
     > .navbar-brand {
         padding-left: 0;
         &::before {

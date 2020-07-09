@@ -1,16 +1,17 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
-  selector: "app-footer",
-  templateUrl: "./footer.component.html",
-  styleUrls: ["./footer.component.scss"]
+    selector: "app-footer",
+    template: `
+        <footer class="container">
+            <nav class="navbar">
+                <span class="navbar-brand">Developed with ❤️ by </span>
+                <span class="navbar-text">{{version}}</span>
+            </nav>
+        </footer>
+    `,
+    styleUrls: ["./footer.component.scss"]
 })
-export class FooterComponent implements OnInit {
-  version: string = "v1.0.3";
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class FooterComponent {
+    version: string = "v1.0.3";
 }
