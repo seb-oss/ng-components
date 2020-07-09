@@ -10,7 +10,7 @@ aside.side-menu {
     box-shadow: $shadow;
     white-space: nowrap;
     width: auto;
-    height: 100%;
+    height: 100vh;
     overflow-y: auto;
     &.closed {
         > .sidemenu-content {

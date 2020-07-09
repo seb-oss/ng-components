@@ -47,6 +47,7 @@
         "bootstrap-icons": "^1.0.0-alpha5",
         "rxjs": "~6.5.5",
         "tslib": "^2.0.0",
+        "web-animations-js": "^2.3.2",
         "zone.js": "~0.10.3"
     },
     "devDependencies": {
@@ -57,6 +58,7 @@
         "@types/jasmine": "~3.5.0",
         "@types/jasminewd2": "~2.0.3",
         "@types/node": "^12.11.1",
+        "classlist.js": "^1.1.20150312",
         "codelyzer": "^6.0.0-next.1",
         "jasmine-core": "~3.5.0",
         "jasmine-spec-reporter": "~5.0.0",

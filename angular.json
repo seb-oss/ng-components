@@ -59,7 +59,9 @@
               "projects/ng-components/tsconfig.lib.json",
               "projects/ng-components/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
@@ -107,7 +109,8 @@
               "projects/docs/src/assets"
             ],
             "styles": [
-              "projects/docs/src/styles.scss"
+              "projects/docs/src/styles/mixins.scss",
+              "projects/docs/src/styles/styles.scss"
             ],
             "scripts": []
           },
@@ -171,7 +174,8 @@
               "projects/docs/src/assets"
             ],
             "styles": [
-              "projects/docs/src/styles.scss"
+              "projects/docs/src/styles/styles.scss",
+              "projects/docs/src/styles/mixins.scss"
             ],
             "scripts": []
           }
