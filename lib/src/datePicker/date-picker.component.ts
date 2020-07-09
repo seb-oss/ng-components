@@ -23,7 +23,52 @@ export class DatePickerComponent implements ControlValueAccessor {
     @Input() disabled?: boolean = false;
     @Input() min?: Date;
     @Input() max?: Date;
-    @Input() monthNames: string[] = ["Month", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    private _localeCode: string;
+    @Input("localeCode")
+    set localeCode(v: string) {
+        this._localeCode = v;
+        const date: Date = new Date(2012, 0, 1);
+        const locale = new Intl.DateTimeFormat(this.localeCode, { month: "long" });
+        // console.log(locale.resolvedOptions());
+        const customPickerOrder: string[] = new Intl.DateTimeFormat(this.localeCode)
+            .formatToParts(new Date())
+            .map(e => e.type)
+            .filter(x => x !== "literal");
+
+        this._customPickerOrder = customPickerOrder;
+        // console.log(customPickerOrder);
+        const monthNames: string[] = ["Month"];
+        [...Array(12)].map((_, i) => {
+            date.setMonth(i);
+            monthNames.push(locale.format(date));
+            // console.log(locale.format(date));
+        });
+        this._monthNames = monthNames;
+    }
+    get localeCode() {
+        return this._localeCode;
+    }
+
+    private _monthNames: string[];
+    get monthNames(): string[] {
+        return this._monthNames;
+    }
+
+    private _customPickerOrder: string[];
+    get customPickerOrder(): string[] {
+        return this._customPickerOrder;
+    }
+
+    constructor() {
+        const myLocale = this.getLocale();
+        // console.log(myLocale);
+        this.localeCode = myLocale;
+    }
+
+    getLocale() {
+        return navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language;
+    }
 
     // Placeholders for the callbacks which are later provided
     // by the Control Value Accessor
@@ -61,7 +106,7 @@ export class DatePickerComponent implements ControlValueAccessor {
 
     private _customDay: number;
     get customDay(): number {
-        if (this._customDay === undefined) {
+        if (this._customDay === undefined && !!this.inputRawValue) {
             const value: number = this.monthPicker ? 1 : Number(this.inputRawValue.substr(8, 2));
             this._customDay = value;
             return this._customDay;
@@ -77,7 +122,7 @@ export class DatePickerComponent implements ControlValueAccessor {
 
     private _customMonth: number;
     get customMonth(): number {
-        if (this._customMonth === undefined) {
+        if (this._customMonth === undefined && !!this.inputRawValue) {
             const value: number = Number(this.inputRawValue.substr(5, 2));
             this._customMonth = value;
             return this._customMonth;
@@ -91,7 +136,7 @@ export class DatePickerComponent implements ControlValueAccessor {
 
     private _customYear: number;
     get customYear(): number {
-        if (this._customYear === undefined) {
+        if (this._customYear === undefined && !!this.inputRawValue) {
             const value: number = Number(this.inputRawValue.substr(0, 4));
             this._customYear = value;
             return this._customYear;
