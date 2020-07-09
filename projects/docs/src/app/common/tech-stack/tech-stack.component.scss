@@ -1,11 +1,15 @@
 .tech-stack {
-    >[class*=col] {
+    > [class*="col"] {
         display: flex;
         flex-direction: column;
-        >*:first-child {
+        > *:first-child {
             flex-grow: 1;
             display: flex;
             align-items: center;
+        }
+        h3,
+        h5 {
+            text-align: center;
         }
     }
 }

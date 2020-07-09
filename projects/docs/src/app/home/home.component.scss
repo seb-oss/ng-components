@@ -1,0 +1,49 @@
+@import "~@sebgroup/bootstrap/scss/core";
+
+main {
+    #getting-started {
+        background-color: $green-darker;
+        color: white;
+        text-align: center;
+        margin-bottom: 0;
+        padding: 8rem 2rem;
+        > .container {
+            > h1 {
+                color: white;
+                font-weight: bold;
+            }
+        }
+    }
+
+    #features {
+        > .container {
+            padding-bottom: 3rem;
+            > h2 {
+                text-align: center;
+                padding-top: 3rem;
+                padding-bottom: 3rem;
+            }
+            > .row {
+                > [class*="col"] {
+                    h4 {
+                        margin-bottom: 2rem;
+                    }
+                }
+            }
+        }
+    }
+
+    #technical-stack {
+        background-color: $gray-300;
+        > .container {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+    }
+
+    #contributors {
+        img.avatar {
+            border-radius: 50%;
+        }
+    }
+}
