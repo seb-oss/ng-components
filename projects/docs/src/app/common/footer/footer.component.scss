@@ -1,5 +1,10 @@
+@import "~@sebgroup/bootstrap/scss/core";
+
 footer {
+    padding: 0.5rem 0 1rem;
+    border-top: 1px solid $gray-300;
     > nav {
+        flex-direction: row-reverse;
         > .navbar-brand {
             padding-right: 2rem;
             padding-left: 1rem;
