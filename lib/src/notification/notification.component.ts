@@ -118,7 +118,7 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     /** Dismiss the notification */
-    private dismiss(): void {
+    public dismiss(): void {
         this.clearTimer();
         this.onDismiss && this.onDismiss.emit();
     }

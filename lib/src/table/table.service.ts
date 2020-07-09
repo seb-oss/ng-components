@@ -1,7 +1,7 @@
 import { Injectable, Output } from "@angular/core";
 import { TableHeaderListItem, TableConfig, SortInfo, TableHeaderListValueType } from "./table.models";
 import { toDate } from "@sebgroup/frontend-tools/dist/toDate";
-import { readableFromCamelCase } from "../utils";
+import { readableFromCamelCase } from "./utils";
 import { BehaviorSubject } from "rxjs";
 
 interface TableRowWithMeta<T extends object> {

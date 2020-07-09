@@ -14,7 +14,7 @@ export class SliderPreviewPipe implements PipeTransform {
 
 @Pipe({ name: "sliderLabelStyle" })
 export class SliderLabelStylePipe implements PipeTransform {
-    transform(labelPositions: Array<RangeSliderLabel>, index: number) {
+    transform(labelPositions: Array<string>, index: number) {
         return new Promise((resolve: (reason: any) => void, reject: () => void) => {
             if (labelPositions) {
                 resolve({ left: labelPositions[index] });
