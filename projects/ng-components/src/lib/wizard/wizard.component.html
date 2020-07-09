@@ -1,0 +1,43 @@
+<nav class="p-3 bg-light" style="min-width: 200px">
+    <ng-container *ngIf="wizardTitle" [ngTemplateOutlet]="wizardTitle!.template"></ng-container>
+    <ol class="list-group list-group-ordered d-none d-md-block mt-2" *ngIf="!hideNavigation">
+        <ng-container *ngFor="let wizardStep of wizardSteps; let i = index">
+            <li
+                class="list-group-item-action"
+                (click)="select(wizardStep)"
+                *ngIf="!wizardStep!.hideFromNavigation"
+                [attr.tabindex]="i"
+                [class.active]="i === selectedIndex"
+                [class.disabled]="disabledWizardStep(i)"
+                [class.list-group-item-success]="wizardStep.completed || wizardStep.interacted"
+            >
+                <ng-container *ngIf="wizardStep.wizardStepLabel" [ngTemplateOutlet]="wizardStep!.wizardStepLabel!.template"></ng-container>
+            </li>
+        </ng-container>
+    </ol>
+    <ng-container *ngFor="let wizardStep of wizardSteps; let i = index">
+        <div class="d-xs-block d-sm-block d-md-none" *ngIf="!wizardStep!.hideFromNavigation && i === selectedIndex">
+            <div class="h3 mb-0 mt-2">
+                <ng-container *ngIf="wizardStep.wizardStepLabel" [ngTemplateOutlet]="wizardStep!.wizardStepLabel!.template"></ng-container>
+            </div>
+            <ng-container *ngIf="wizardStep.wizardStepLabelDesc">
+                <div class="text-muted">
+                    <ng-container
+                        [ngTemplateOutlet]="wizardStep!.wizardStepLabelDesc!.template"
+                        [ngTemplateOutletContext]="{
+                            $implicit: { currentStep: i + 1, totalSteps: wizardSteps?.length }
+                        }"
+                    ></ng-container>
+                </div>
+            </ng-container>
+        </div>
+    </ng-container>
+</nav>
+<ng-container *ngFor="let wizardStep of wizardSteps; let i = index">
+    <section
+        [ngClass]="selectedIndex === i && 'p-3 bg-white flex-grow-1'"
+        [ngStyle]="selectedIndex !== i && { height: '0', width: '0', overflow: 'hidden' }"
+    >
+        <ng-container [ngTemplateOutlet]="wizardStep?.wizardStepContent"></ng-container>
+    </section>
+</ng-container>

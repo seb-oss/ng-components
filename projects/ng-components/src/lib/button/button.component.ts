@@ -3,12 +3,14 @@ import { Component, Input, ViewEncapsulation, EventEmitter, Output, OnInit } fro
 export type ButtonTheme = "primary" | "secondary" | "danger" | "outline-primary" | "outline-danger" | "dark" | "light" | "link";
 
 export type ButtonSize = "lg" | "md" | "sm";
+export type ButtonIconPosition = "right" | "left";
 
 export type ButtonTypes = "submit" | "button" | "reset";
 export type ButtonTags = "input" | "button" | "anchor";
 
 @Component({
     selector: "sebng-button",
+    styleUrls: ["./button.component.scss"],
     templateUrl: "./button.component.html",
     encapsulation: ViewEncapsulation.None,
 })
@@ -26,14 +28,14 @@ export class ButtonComponent implements OnInit {
     @Input() block?: boolean;
     @Input() href?: string;
 
-    @Output() btnClick: EventEmitter<Event> = new EventEmitter();
+    @Output() onClick: EventEmitter<Event> = new EventEmitter();
 
-    ngOnInit(): void {
+    ngOnInit() {
         this.type = this.type || "button";
         this.theme = this.theme || "primary";
     }
 
     handleClick(e: Event): void {
-        this.btnClick && this.btnClick.emit(e);
+        this.onClick && this.onClick.emit(e);
     }
 }
