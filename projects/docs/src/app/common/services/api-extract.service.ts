@@ -115,7 +115,6 @@ export class APIExtractService {
             `(?:\\/\\*\\*(?<skip>[\\s\\S]* <!-- skip -->[\\s\\S])?(?<comment>[\\s\\S][^\\/]*)\\*\\/[^\\w\\@]+|)(?!constructor|Input|Component)(?<private>(private )?)(?<name>[a-zA-Z^@]*)\\((?<parameters>[^\\)]*)\\)\\:?\\s?(?<returns>[\\w\\<\\>]*)`,
             "g"
         );
-        console.log(this.formatSourceCode(sourceCode, regex));
         return this.formatSourceCode(sourceCode, regex);
     }
 
@@ -204,9 +203,8 @@ export class APIExtractService {
         return isSet ? -1 : 0;
     }
 
-    initParse(sourceFileUrl: string): void {
-        console.log(this.parseSourceFile(require(`!raw-loader!${sourceFileUrl}`)?.default));
-        // this.$content = merge(...obs).pipe(reduce((previous: any, current: any) => [...previous, ...current], []));
+    initParse(sourceFileUrl: any): Observable<Array<ApiSection>> {
+        return this.parseSourceFile(sourceFileUrl?.default);
     }
 
     /**

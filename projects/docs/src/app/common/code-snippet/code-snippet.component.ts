@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from "@angular/core";
-import { APIExtractService } from "../services/api-extract.service";
+import { Component, Input } from "@angular/core";
 
 @Component({
     selector: "app-code-snippet",
@@ -10,13 +9,6 @@ import { APIExtractService } from "../services/api-extract.service";
     `,
     styleUrls: ["./code-snippet.component.scss"]
 })
-export class CodeSnippetComponent implements OnInit {
+export class CodeSnippetComponent {
     @Input() lang?: string = "";
-
-    constructor(private apiSrv: APIExtractService) {
-    }
-
-    ngOnInit() {
-      this.apiSrv.initParse("./../footer/footer.component");
-    }
 }

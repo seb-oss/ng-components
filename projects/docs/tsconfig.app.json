@@ -5,12 +5,10 @@
         "outDir": "../../out-tsc/app",
         "paths": {
             "@pkg": ["package.json"],
-            "fs": ["projects/ng-components/src/button/*"],
-            "os": ["projects/ng-components/src/button/*"],
-            "path": ["projects/ng-components/src/button/*"]
+            "@sebgroup/ng-components/*": ["projects/ng-components/src/lib/*"],
         },
         "types": ["node"],
     },
     "files": ["src/main.ts", "src/polyfills.ts"],
-    "include": ["src/**/*.d.ts", "src/**/*.module.ts", "src/**/*.component.ts"]
+    "include": ["src/**/*.d.ts", "src/**/*.module.ts", "src/**/*.component.ts", "../ng-components/src/*"]
 }
