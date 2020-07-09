@@ -1,0 +1,12 @@
+footer {
+    > nav {
+        > .navbar-brand {
+            padding-right: 2rem;
+            padding-left: 1rem;
+            &:before {
+                right: 0;
+                left: auto;
+            }
+        }
+    }
+}

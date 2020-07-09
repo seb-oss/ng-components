@@ -10,20 +10,7 @@ import { Component } from "@angular/core";
             </nav>
         </footer>
     `,
-    styles: [`
-        footer {
-            > nav {
-                > .navbar-brand {
-                    padding-right: 2rem;
-                    padding-left: 1rem;
-                    &:before {
-                        right: 0;
-                        left: auto;
-                    }
-                }
-            }
-        }
-    `]
+    styleUrls: ["./footer.component.scss"]
 })
 export class FooterComponent {
     version: string = "v1.0.3";
