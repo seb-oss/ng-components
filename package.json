@@ -28,6 +28,7 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve docs",
+        "commit": "git-cz",
         "build": "ng build ng-components --prod",
         "test": "ng test ng-components",
         "lint": "ng lint ng-components",
@@ -67,6 +68,8 @@
         "@types/node": "^12.11.1",
         "classlist.js": "^1.1.20150312",
         "codelyzer": "^6.0.0-next.1",
+        "commitizen": "^4.1.2",
+        "cz-conventional": "0.0.2",
         "jasmine-core": "~3.5.0",
         "jasmine-spec-reporter": "~5.0.0",
         "karma": "~5.0.0",
