@@ -1,17 +1,18 @@
 @import "~@sebgroup/bootstrap/scss/core";
 
 $shadow: 0 3px 6px rgba(black, 0.16), 0 3px 6px rgba(black, 0.23);
+$shadow-light: 0 3px 6px rgba(black, 0.16);
 
 aside.side-menu {
     position: relative;
     background-color: $gray-300;
     grid-area: aside;
+    grid-column: 1;
     -ms-grid-column: 1;
     box-shadow: $shadow;
     white-space: nowrap;
     width: auto;
     height: 100vh;
-    overflow-y: auto;
     &.closed {
         > .sidemenu-content {
             padding: 1.25rem 0rem;
@@ -105,31 +106,6 @@ aside.side-menu {
             margin: 0 auto 10px;
             box-shadow: $shadow;
         }
-        > .header {
-            text-align: center;
-        }
-        > .sidemenu-search.input-box-group {
-            > .input-group {
-                .input-box-group-wrapper {
-                    direction: ltr;
-                    &:hover {
-                        box-shadow: $shadow;
-                    }
-                    transition: box-shadow 100ms linear;
-                    border-radius: 20px;
-                    > input {
-                        background-color: transparent;
-                    }
-                }
-            }
-            &.in-focus {
-                > .input-group {
-                    .input-box-group-wrapper {
-                        box-shadow: $shadow;
-                    }
-                }
-            }
-        }
         > nav.components-list {
             overflow: hidden;
             > a.list-item {
@@ -166,6 +142,32 @@ aside.side-menu {
     hr {
         margin-right: -1.25rem;
         margin-left: -1.25rem;
+    }
+}
+
+::ng-deep .sidemenu-search {
+    direction: ltr;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    > .input-group {
+        .input-box-group-wrapper {
+            direction: ltr;
+            transition: all 100ms linear;
+            border-radius: 20px;
+            &:hover {
+                box-shadow: $shadow-light;
+            }
+            > input {
+                background-color: transparent;
+            }
+        }
+    }
+    &.in-focus {
+        > .input-group {
+            .input-box-group-wrapper {
+                box-shadow: $shadow-light;
+            }
+        }
     }
 }
 

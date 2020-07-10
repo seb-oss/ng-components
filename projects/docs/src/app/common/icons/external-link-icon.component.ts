@@ -17,7 +17,7 @@ import { Component, Input } from "@angular/core";
             />
             <path fill-rule="evenodd" d="M14.354 1.646a.5.5 0 0 1 0 .708l-8 8a.5.5 0 0 1-.708-.708l8-8a.5.5 0 0 1 .708 0z" />
         </svg>
-    `
+    `,
 })
 export class ExternalLinkIconComponent {
     @Input() size: string = "1em";

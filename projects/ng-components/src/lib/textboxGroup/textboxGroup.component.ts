@@ -72,12 +72,12 @@ export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnCh
     public internalId: string;
     public displayError: boolean;
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.internalId = this.id ? this.id : this.label ? randomId("tbg-") : null;
         this.displayError = false;
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.id || changes.label) {
             this.internalId = changes.id ? changes.id?.currentValue : randomId("tbg-");
         }
@@ -109,35 +109,35 @@ export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnCh
     }
 
     // event
-    handleBlur(e: MouseEvent) {
+    handleBlur(e: MouseEvent): void {
         this.onBlur?.emit(e);
     }
 
-    handleKeyUp(e: KeyboardEvent) {
+    handleKeyUp(e: KeyboardEvent): void {
         this.onKeyUp?.emit(e);
     }
 
-    handleKeyDown(e: KeyboardEvent) {
+    handleKeyDown(e: KeyboardEvent): void {
         this.onKeyDown?.emit(e);
     }
 
-    handleFocus(e: MouseEvent) {
+    handleFocus(e: MouseEvent): void {
         this.onFocus?.emit(e);
     }
 
-    handleKeyPress(e: KeyboardEvent) {
+    handleKeyPress(e: KeyboardEvent): void {
         this.onKeyPress?.emit(e);
     }
 
-    handleLeftIconClick(e: MouseEvent) {
+    handleLeftIconClick(e: MouseEvent): void {
         this.onLeftClick?.emit(e);
     }
 
-    handleRightIconClick(e: MouseEvent) {
+    handleRightIconClick(e: MouseEvent): void {
         this.onRightClick?.emit(e);
     }
     // accessor props
-    writeValue(val: Value) {
+    writeValue(val: Value): void {
         if (val !== this.innerValue) {
             this.innerValue = val;
         }
