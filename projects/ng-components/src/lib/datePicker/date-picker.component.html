@@ -42,7 +42,7 @@
                         type="number"
                         min="1"
                         max="31"
-                        placeholder="Day"
+                        [placeholder]="unitNames.day"
                         [(ngModel)]="customDay"
                         [disabled]="disabled"
                     />
@@ -68,7 +68,7 @@
                     class="form-control"
                     type="number"
                     min="1"
-                    placeholder="Year"
+                    [placeholder]="unitNames.year"
                     [(ngModel)]="customYear"
                     [disabled]="disabled"
                 />

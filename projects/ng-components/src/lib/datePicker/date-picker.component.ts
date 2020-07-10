@@ -24,21 +24,36 @@ export class DatePickerComponent implements ControlValueAccessor {
     @Input() min?: Date;
     @Input() max?: Date;
 
+    unitNames: { month: string; day: string; year: string } = {
+        month: "Month",
+        day: "Day",
+        year: "Year",
+    };
+
     private _localeCode: string;
     @Input("localeCode")
     set localeCode(v: string) {
         this._localeCode = v;
         const date: Date = new Date(2012, 0, 1);
         const locale = new Intl.DateTimeFormat(this.localeCode, { month: "long" });
+        const rtf: any = this.getRelativeTimeFormat(this.localeCode);
         // console.log(locale.resolvedOptions());
         const customPickerOrder: string[] = new Intl.DateTimeFormat(this.localeCode)
             .formatToParts(new Date())
             .map(e => e.type)
             .filter(x => x !== "literal");
 
+        customPickerOrder.map(unit => {
+            this.unitNames[unit] =
+                rtf
+                    .formatToParts(1, unit)
+                    .filter(x => x.type === "literal")[1]
+                    ?.value?.trim() || unit;
+        });
+
         this._customPickerOrder = customPickerOrder;
         // console.log(customPickerOrder);
-        const monthNames: string[] = ["Month"];
+        const monthNames: string[] = [this.unitNames.month];
         [...Array(12)].map((_, i) => {
             date.setMonth(i);
             monthNames.push(locale.format(date));
@@ -62,12 +77,18 @@ export class DatePickerComponent implements ControlValueAccessor {
 
     constructor() {
         const myLocale = this.getLocale();
-        // console.log(myLocale);
         this.localeCode = myLocale;
     }
 
     getLocale() {
         return navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language;
+    }
+
+    getRelativeTimeFormat(code: string) {
+        if ((Intl as any).RelativeTimeFormat) {
+            return new (Intl as any).RelativeTimeFormat(code);
+        }
+        return null;
     }
 
     // Placeholders for the callbacks which are later provided
