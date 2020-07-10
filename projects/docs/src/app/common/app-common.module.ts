@@ -8,9 +8,10 @@ import { CommonModule } from "@angular/common";
 import { BarsIconComponent } from "./icons/bars-icon.component";
 import { ExternalLinkIconComponent } from "./icons/external-link-icon.component";
 import { SearchIconComponent } from "./icons/search-icon.component";
+import { NotFoundComponent } from "./not-found/not-found.component";
 
 @NgModule({
-    declarations: [BarsIconComponent, ExternalLinkIconComponent, SearchIconComponent],
+    declarations: [BarsIconComponent, ExternalLinkIconComponent, SearchIconComponent, NotFoundComponent],
     imports: [FooterModule, CodeSnippetModule, TechStackModule, BrowserModule, RouterModule, CommonModule],
     exports: [
         FooterModule,

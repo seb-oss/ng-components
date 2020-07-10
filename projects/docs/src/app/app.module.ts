@@ -6,12 +6,14 @@ import { GettingStartedComponent } from "./getting-started/getting-started.compo
 import { HomeModule } from "./home/home.module";
 import { AppCommonModule } from "./common/app-common.module";
 import { DocPageComponent } from "./doc-page/doc-page.component";
+import { AccordionPageComponent } from "./pages/accordion-page/accordion-page.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     GettingStartedComponent,
     DocPageComponent,
+    AccordionPageComponent,
   ],
   imports: [
     HomeModule,
