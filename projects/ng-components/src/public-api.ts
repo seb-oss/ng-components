@@ -8,6 +8,7 @@ export * from "./lib/button";
 export * from "./lib/checkBox";
 export * from "./lib/chip";
 export * from "./lib/dropdown";
+export * from "./lib/datePicker";
 export * from "./lib/loader";
 export * from "./lib/modal";
 export * from "./lib/notification";
@@ -28,4 +29,3 @@ export * from "./lib/toggle";
 export * from "./lib/tooltip";
 export * from "./lib/video";
 export * from "./lib/wizard";
-

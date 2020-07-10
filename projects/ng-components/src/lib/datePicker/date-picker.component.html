@@ -1,0 +1,78 @@
+<ng-container *ngIf="monthPicker; else datePicker">
+    <ng-container *ngIf="!forceCustom && supportsInputOfType('month'); else dateFallback">
+        <input
+            type="month"
+            class="form-control seb-date-picker-native"
+            [ngClass]="className"
+            [class.is-invalid]="!isValidDate(value)"
+            [attr.min]="getStringFromDate(min)"
+            [attr.max]="getStringFromDate(max)"
+            [(ngModel)]="inputRawValue"
+            [disabled]="disabled"
+        />
+    </ng-container>
+</ng-container>
+
+<ng-template #datePicker>
+    <ng-container *ngIf="!forceCustom && supportsInputOfType('date'); else dateFallback">
+        <input
+            type="date"
+            class="form-control seb-date-picker-native"
+            [ngClass]="className"
+            [class.is-invalid]="!isValidDate(value)"
+            [attr.min]="getStringFromDate(min)"
+            [attr.max]="getStringFromDate(max)"
+            [(ngModel)]="inputRawValue"
+            [disabled]="disabled"
+        />
+    </ng-container>
+</ng-template>
+
+<ng-template #dateFallback>
+    <div class="input-group" [ngClass]="className">
+        <ng-container *ngFor="let unit of customPickerOrder; let unitIndex = index">
+            <ng-container [ngSwitch]="unit">
+                <ng-container *ngIf="!monthPicker">
+                    <input
+                        *ngSwitchCase="'day'"
+                        #dayInput
+                        [style.display]="monthPicker ? 'none' : 'inherit'"
+                        [class.is-invalid]="!isValidDate(value)"
+                        class="form-control"
+                        type="number"
+                        min="1"
+                        max="31"
+                        placeholder="Day"
+                        [(ngModel)]="customDay"
+                        [disabled]="disabled"
+                    />
+                </ng-container>
+                <select
+                    *ngSwitchCase="'month'"
+                    #monthInput
+                    class="custom-select"
+                    [class.is-invalid]="!isValidDate(value)"
+                    [class.rounded-left]="unitIndex === 0"
+                    [class.rounded-right]="unitIndex === customPickerOrder.length - 1"
+                    [(ngModel)]="customMonth"
+                    [disabled]="disabled"
+                >
+                    <option [disabled]="disabled || i === 0" [value]="i" *ngFor="let month of monthNames; let i = index">
+                        {{ month }}
+                    </option>
+                </select>
+                <input
+                    *ngSwitchCase="'year'"
+                    #yearInput
+                    [class.is-invalid]="!isValidDate(value)"
+                    class="form-control"
+                    type="number"
+                    min="1"
+                    placeholder="Year"
+                    [(ngModel)]="customYear"
+                    [disabled]="disabled"
+                />
+            </ng-container>
+        </ng-container>
+    </div>
+</ng-template>
