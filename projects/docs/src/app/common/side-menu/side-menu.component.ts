@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { urls } from "../../../configs";
+import components from "../../../assets/components-list.json";
 
 const SIDE_MENU_STORAGE_KEY = "SIDEMENU";
 
@@ -25,10 +26,10 @@ export class SideMenuComponent implements OnInit, OnDestroy {
     toggle: boolean = getToggle();
     highlighted: number = -1;
     listRef: HTMLElement = null;
-    inputFocus: boolean = false;
+    components: Array<ComponentsListItem> = components.sort((a, b) => (a.name > b.name ? 1 : -1));
 
     ngOnInit(): void {
-        console.log(this.toggle);
+        // console.log(this.toggle);
     }
 
     onToggleClick(): void {

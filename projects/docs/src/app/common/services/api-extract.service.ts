@@ -13,34 +13,8 @@ import {
     ParameterDeclaration,
 } from "typescript-parser-es5";
 
-export interface ApiSection {
-    name: string;
-    description: string;
-    inputs?: Array<any>;
-    outputs?: Array<any>;
-    methods?: Array<any>;
-    properties?: Array<any>;
-}
-
-interface APIInput {
-    comment?: string;
-    decorator?: string;
-    alias?: string;
-    accessor?: string;
-    name?: string;
-    optional?: string;
-    default?: any;
-    type?: string;
-    private?: string;
-    skip?: string;
-}
-
 interface ParsedAccessorDeclaration extends AccessorDeclaration {
     isOptional?: boolean;
-}
-
-interface ParsedAPI {
-    [key: string]: APIInput;
 }
 
 @Injectable()

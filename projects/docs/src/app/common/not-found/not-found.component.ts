@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
     selector: "app-not-found",
@@ -10,8 +10,8 @@ import { Component, OnInit } from "@angular/core";
         </div>
     `,
 })
-export class NotFoundComponent implements OnInit {
-    constructor() {}
-
-    ngOnInit(): void {}
+export class NotFoundComponent {
+    constructor() {
+        document.title = "Page not found! - SEB Angular Components";
+    }
 }

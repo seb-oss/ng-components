@@ -21,11 +21,12 @@
         <h4>Components</h4>
         <sebng-textboxgroup
             className="sidemenu-search"
-            [ngClass]="{ 'in-focus': inputFocus }"
             name="search"
             type="search"
-            ([ngModel])="(search)"
+            [(ngModel)]="search"
             placeholder="Type to search"
+            (focus)="inputFocus = true"
+            (blur)="inputFocus = false"
             rightIcon="<svg width='1em' height='1em' fill='currentColor' viewBox='0 0 16 16' class='bi bi-search' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z' /><path fill-rule='evenodd' d='M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z' /></svg>"
         ></sebng-textboxgroup>
         <!-- <TextBoxGroup
@@ -49,6 +50,15 @@
             }
         /> -->
         <nav class="components-list">
+            <a
+                class="list-item"
+                *ngFor="let comp of components | searched: search; let i = index"
+                [routerLink]="comp.path"
+                routerLinkActive="active"
+                [attr.data-value]="i"
+            >
+                {{ comp.name }}
+            </a>
             <!-- <DisplayList
                 list={listOfComponents
                     .filter((item: SideBarItem) => {

@@ -8,11 +8,11 @@ import { CommonModule } from "@angular/common";
 import { BarsIconComponent } from "./icons/bars-icon.component";
 import { ExternalLinkIconComponent } from "./icons/external-link-icon.component";
 import { SearchIconComponent } from "./icons/search-icon.component";
-import { NotFoundComponent } from "./not-found/not-found.component";
+import { DocPageModule } from "../doc-page/doc-page.module";
 
 @NgModule({
-    declarations: [BarsIconComponent, ExternalLinkIconComponent, SearchIconComponent, NotFoundComponent],
-    imports: [FooterModule, CodeSnippetModule, TechStackModule, BrowserModule, RouterModule, CommonModule],
+    declarations: [BarsIconComponent, ExternalLinkIconComponent, SearchIconComponent],
+    imports: [FooterModule, CodeSnippetModule, TechStackModule, BrowserModule, RouterModule, CommonModule, DocPageModule],
     exports: [
         FooterModule,
         CodeSnippetModule,
@@ -23,6 +23,7 @@ import { NotFoundComponent } from "./not-found/not-found.component";
         BarsIconComponent,
         ExternalLinkIconComponent,
         SearchIconComponent,
+        DocPageModule,
     ],
 })
 export class AppCommonModule {}

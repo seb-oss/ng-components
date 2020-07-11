@@ -108,6 +108,7 @@ aside.side-menu {
         }
         > nav.components-list {
             overflow: hidden;
+            padding-bottom: 2rem;
             > a.list-item {
                 padding: 6px 0;
                 font-weight: bold;
@@ -145,7 +146,7 @@ aside.side-menu {
     }
 }
 
-::ng-deep .sidemenu-search {
+::ng-deep .form-group.input-box-group.sidemenu-search {
     direction: ltr;
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
@@ -153,19 +154,12 @@ aside.side-menu {
         .input-box-group-wrapper {
             direction: ltr;
             transition: all 100ms linear;
-            border-radius: 20px;
-            &:hover {
+            &:hover,
+            &:focus-within {
                 box-shadow: $shadow-light;
             }
             > input {
                 background-color: transparent;
-            }
-        }
-    }
-    &.in-focus {
-        > .input-group {
-            .input-box-group-wrapper {
-                box-shadow: $shadow-light;
             }
         }
     }

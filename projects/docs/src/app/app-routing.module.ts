@@ -3,8 +3,8 @@ import { Routes, RouterModule } from "@angular/router";
 import { HomeComponent } from "./home/home.component";
 import { DocsWrapperComponent } from "./docs-wrapper/docs-wrapper.component";
 import { GettingStartedComponent } from "./getting-started/getting-started.component";
-import { DocPageComponent } from "./doc-page/doc-page.component";
 import { NotFoundComponent } from "./common/not-found/not-found.component";
+import { AccordionPageComponent } from "./pages/accordion-page/accordion-page.component";
 
 const routes: Routes = [
     { path: "", component: HomeComponent },
@@ -14,7 +14,7 @@ const routes: Routes = [
         children: [
             { path: "", redirectTo: "getting-started", pathMatch: "full" },
             { path: "getting-started", component: GettingStartedComponent },
-            { path: "accordion", component: DocPageComponent },
+            { path: "accordion", component: AccordionPageComponent },
         ],
     },
     { path: "**", component: NotFoundComponent },

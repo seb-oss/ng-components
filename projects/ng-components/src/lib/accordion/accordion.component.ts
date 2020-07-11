@@ -45,14 +45,23 @@ export interface AccordionProps {
     encapsulation: ViewEncapsulation.None,
 })
 export class AccordionComponent implements OnInit, OnChanges, AfterViewInit, AfterViewChecked, OnDestroy {
+    /** Element class name */
     @Input() className?: string;
+    /** Custom accordion toggle icon */
     @Input() customIcon?: string;
+    /** Custom accordion toggle icon when expanded */
     @Input() customIconExpanded?: string;
+    /** Accordion toggle icon position */
     @Input() iconPosition?: "left" | "right";
+    /** Accordion toggle icon rotation angle */
     @Input() iconRotation?: AccordionIconRotation;
+    /** Element ID */
     @Input() id?: string;
+    /** List of accordion items to render */
     @Input() list: Array<AccrodionListItem>;
+    /** Alternative accordion design, rendered headers as links */
     @Input() alternative?: boolean;
+    /** The index of the default expanded accordion */
     @Input() activeIndex?: number;
 
     @ViewChildren("accordionItemRefs") accordionItemRefs: QueryList<ElementRef>;
@@ -68,8 +77,8 @@ export class AccordionComponent implements OnInit, OnChanges, AfterViewInit, Aft
 
     constructor(private changeDetector: ChangeDetectorRef) {}
 
-    //helper functions
-    constructIds() {
+    /** helper functions */
+    constructIds(): void {
         this.idList = this.list.map(() => randomId("accordion-"));
     }
 
@@ -139,21 +148,21 @@ export class AccordionComponent implements OnInit, OnChanges, AfterViewInit, Aft
         }
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.constructIds();
         this.constructClassName();
         this.constructItemClassName();
         this.heightList = Array(this.list?.length).fill(0);
     }
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.toggle(this.activeIndex);
         this.aacordionRefSubscription = this.accordionItemRefs.changes.subscribe(() => {
             this.toggle(this.activeIndex);
         });
     }
 
-    ngAfterViewChecked() {
+    ngAfterViewChecked(): void {
         this.changeDetector.detectChanges();
     }
 
@@ -161,7 +170,7 @@ export class AccordionComponent implements OnInit, OnChanges, AfterViewInit, Aft
         this.aacordionRefSubscription.unsubscribe();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.list) {
             this.constructIds();
         }

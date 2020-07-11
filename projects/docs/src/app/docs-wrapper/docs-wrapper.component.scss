@@ -17,5 +17,8 @@
         height: 100vh;
         overflow-y: auto;
         -ms-grid-column: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 }
