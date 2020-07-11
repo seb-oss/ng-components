@@ -1,0 +1,17 @@
+<div class="playground card">
+    <nav class="nav">
+        <a
+            class="nav-link"
+            *ngFor="let item of navs; let i = index"
+            [class.active]="activeTab === i"
+            [attr.data-value]="i"
+            (click)="switchTab($event)"
+            >{{ item }}</a
+        >
+    </nav>
+    <div class="apis-title">APIs</div>
+    <div class="example">
+        <ng-content></ng-content>
+    </div>
+    <div class="controls">Controls</div>
+</div>

@@ -1,27 +1,20 @@
 import { NgModule } from "@angular/core";
-import { AppRoutingModule } from "./app-routing.module";
-import { DocsWrapperModule } from "./docs-wrapper/docs-wrapper.module";
 import { AppComponent } from "./app.component";
-import { GettingStartedComponent } from "./getting-started/getting-started.component";
 import { HomeModule } from "./home/home.module";
-import { AppCommonModule } from "./common/app-common.module";
-import { DocPageComponent } from "./doc-page/doc-page.component";
-import { AccordionPageComponent } from "./pages/accordion-page/accordion-page.component";
+import { Routes, RouterModule } from "@angular/router";
+import { CommonModule } from "@angular/common";
+import { BrowserModule } from "@angular/platform-browser";
+
+const routes: Routes = [
+    { path: "", loadChildren: () => import("./home/home.module").then(m => m.HomeModule) },
+    { path: "docs", loadChildren: () => import("./docs-wrapper/docs-wrapper.module").then(m => m.DocsWrapperModule) },
+    { path: "**", loadChildren: () => import("./common/not-found/not-found.module").then(m => m.NotFoundModule) },
+];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    GettingStartedComponent,
-    DocPageComponent,
-    AccordionPageComponent,
-  ],
-  imports: [
-    HomeModule,
-    DocsWrapperModule,
-    AppRoutingModule,
-    AppCommonModule,
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [CommonModule, BrowserModule, RouterModule.forRoot(routes), HomeModule],
+    exports: [RouterModule],
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

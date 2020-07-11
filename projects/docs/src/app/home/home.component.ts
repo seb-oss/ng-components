@@ -10,6 +10,7 @@ import { Subscription } from "rxjs";
 export class HomeComponent implements OnInit, OnDestroy {
     httpSub: Subscription;
     contributors: any;
+
     constructor(private http: HttpClient) {
         document.title = "SEB Angular Components";
     }

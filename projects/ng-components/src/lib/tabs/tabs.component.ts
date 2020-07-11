@@ -1,4 +1,5 @@
-import { Component, Input, ViewEncapsulation, TemplateRef, ViewChildren, QueryList, ElementRef, EventEmitter, Output } from "@angular/core";
+import { Component, Input, TemplateRef, ViewChildren, QueryList, ElementRef, forwardRef } from "@angular/core";
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 
 export interface TabsListItem {
     text: string;
@@ -7,65 +8,68 @@ export interface TabsListItem {
 
 @Component({
     selector: "sebng-tabs",
-    styleUrls: ["./tabs.component.scss"],
     templateUrl: "./tabs.component.html",
-    encapsulation: ViewEncapsulation.None,
+    styles: [
+        `
+            .nav-tabs > .nav-item.active > .nav-link.active {
+                cursor: default;
+            }
+        `,
+    ],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => TabsComponent),
+            multi: true,
+        },
+    ],
 })
-export class TabsComponent {
+export class TabsComponent implements ControlValueAccessor {
     @Input() id?: string;
     @Input() label?: string | TemplateRef<HTMLElement>;
     @Input() className?: string;
-
-    @Input() activeTab: number;
     @Input() list: Array<TabsListItem>;
-    @Output() onClick = new EventEmitter<number>();
 
     @ViewChildren("tabListRefs") tabListRefs: QueryList<ElementRef>;
+
+    private _value: number;
 
     /**
      * Handles on tab click event
      * @param {React.MouseEvent<HTMLAnchorElement>} e Click event
      * @param {number} index The index of the tab clicked
      */
-    handleClick(e: Event, index: number): void {
-        if (this.onClick && !this.list[index].disabled) {
-            this.onClick.emit(index);
+    handleClick(e: MouseEvent): void {
+        e.preventDefault();
+        const index: number = parseFloat((e.target as HTMLAnchorElement).dataset.value);
+        this.value = index;
+    }
+
+    // Whatever name for this (myValue) you choose here, use it in the .html file.
+    get value(): number {
+        return this._value;
+    }
+
+    @Input("value") set value(v: number) {
+        if (v !== this._value && !isNaN(v)) {
+            this._value = v;
+            this.onChange(v);
         }
     }
 
-    /**
-     * Handle on keydown event to support accessibility
-     * @param {KeyboardEvent<HTMLAnchorElement>} e Key down event
-     */
-    onKeyDown(e: KeyboardEvent, index: number): void {
-        if (this.activeTab < this.list.length && this.activeTab >= 0) {
-            const previousTabIsEnabled = this.list[this.activeTab - 1] && !this.list[this.activeTab - 1].disabled;
-            if ((e.key.toLowerCase() === "arrowleft" || e.key.toLowerCase() === "arrowdown") && previousTabIsEnabled && this.onClick) {
-                const selectedHtml: ElementRef = this.tabListRefs.toArray()[this.activeTab - 1];
-                selectedHtml.nativeElement.setAttribute("aria-selected", "true");
-                selectedHtml.nativeElement.setAttribute("tabIndex", "0");
-                selectedHtml.nativeElement.setAttribute("class", "nav-link active");
-                selectedHtml.nativeElement.focus();
-                this.onClick.emit(this.activeTab - 1);
-            } else if (
-                (e.key.toLowerCase() === "arrowright" || e.key.toLowerCase() === "arrowup") &&
-                !this.list[this.activeTab + 1].disabled &&
-                this.onClick
-            ) {
-                const selectedHtml: ElementRef = this.tabListRefs.toArray()[this.activeTab + 1];
-                selectedHtml.nativeElement.setAttribute("aria-selected", "true");
-                selectedHtml.nativeElement.setAttribute("tabIndex", "0");
-                selectedHtml.nativeElement.setAttribute("class", "nav-link active");
-                selectedHtml.nativeElement.focus();
-                this.onClick.emit(this.activeTab + 1);
-            } else if (e.key.toLowerCase() === "enter" || e.key === " " || e.key.toLowerCase() === "space") {
-                const selectedHtml: ElementRef = this.tabListRefs.toArray()[index];
-                selectedHtml.nativeElement.setAttribute("aria-selected", "true");
-                selectedHtml.nativeElement.setAttribute("tabIndex", "0");
-                selectedHtml.nativeElement.setAttribute("class", "nav-link active");
-                selectedHtml.nativeElement.focus();
-                this.onClick.emit(index);
-            }
-        }
+    onChange = (_: any) => {};
+    onTouched = () => {};
+
+    writeValue(value: any): void {
+        this.value = value;
+    }
+    registerOnChange(fn: any): void {
+        this.onChange = fn;
+    }
+    registerOnTouched(fn: any): void {
+        this.onTouched = fn;
+    }
+    setDisabledState?(isDisabled: boolean): void {
+        throw new Error("Method not implemented.");
     }
 }

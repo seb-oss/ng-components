@@ -1,0 +1,15 @@
+<div class="doc-page container">
+    <h1>{{ name }}</h1>
+    <p>{{ description }}</p>
+    <sebng-tabs [list]="tabList" [(ngModel)]="section" (ngModelChange)="afterTabChange($event)"></sebng-tabs>
+
+    <app-playground *ngIf="section === 0">
+        <ng-content select="[example]"></ng-content>
+    </app-playground>
+
+    <app-playground-controls *ngIf="section === 0">
+        <ng-content select="[controls]"></ng-content>
+    </app-playground-controls>
+
+    <app-doc-apis *ngIf="section === 1" [inputs]="inputs" [outputs]="outputs"></app-doc-apis>
+</div>

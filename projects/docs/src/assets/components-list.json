@@ -1,187 +1,187 @@
 [
     {
         "name": "Textbox",
-        "path": "textbox",
+        "path": "/docs/textbox",
         "filePath": "pages/TextBoxPage"
     },
     {
         "name": "TextboxGroup",
-        "path": "textboxgroup",
+        "path": "/docs/textboxgroup",
         "filePath": "pages/TextBoxGroupPage"
     },
     {
         "name": "Textarea",
-        "path": "textarea",
+        "path": "/docs/textarea",
         "filePath": "pages/TextAreaPage"
     },
     {
         "name": "Textlabel",
-        "path": "textlabel",
+        "path": "/docs/textlabel",
         "filePath": "pages/TextLabelPage"
     },
     {
         "name": "Checkbox",
-        "path": "checkbox",
+        "path": "/docs/checkbox",
         "filePath": "pages/CheckBoxPage"
     },
     {
         "name": "Dropdown",
-        "path": "dropdown",
+        "path": "/docs/dropdown",
         "filePath": "pages/DropdownPage"
     },
     {
         "name": "Datepicker",
-        "path": "datepicker",
+        "path": "/docs/datepicker",
         "filePath": "pages/DatepickerPage"
     },
     {
         "name": "Radio Group",
-        "path": "radiogroup",
+        "path": "/docs/radiogroup",
         "filePath": "pages/RadioGroupPage"
     },
     {
         "name": "Radio Button",
-        "path": "radiobtn",
+        "path": "/docs/radiobtn",
         "filePath": "pages/RadioButtonPage"
     },
     {
         "name": "Rating",
-        "path": "rating",
+        "path": "/docs/rating",
         "filePath": "pages/RatingPage"
     },
     {
         "name": "Toggle",
-        "path": "toggle",
+        "path": "/docs/toggle",
         "filePath": "pages/TogglePage"
     },
     {
         "name": "Slider",
-        "path": "slider",
+        "path": "/docs/slider",
         "filePath": "pages/SliderPage"
     },
     {
         "name": "Stepper",
-        "path": "stepper",
+        "path": "/docs/stepper",
         "filePath": "pages/StepperPage"
     },
     {
         "name": "Timepicker",
-        "path": "timepicker",
+        "path": "/docs/timepicker",
         "filePath": "pages/TimepickerPage"
     },
     {
         "name": "Image Cropper",
-        "path": "imagecropper",
+        "path": "/docs/imagecropper",
         "filePath": "pages/ImageCropperPage"
     },
     {
         "name": "Button",
-        "path": "button",
+        "path": "/docs/button",
         "filePath": "pages/ButtonPage"
     },
     {
         "name": "Button Group",
-        "path": "buttongroup",
+        "path": "/docs/buttongroup",
         "filePath": "pages/ButtonGroupPage"
     },
     {
         "name": "Chip",
-        "path": "chip",
+        "path": "/docs/chip",
         "filePath": "pages/ChipPage"
     },
     {
         "name": "Tooltip",
-        "path": "tooltip",
+        "path": "/docs/tooltip",
         "filePath": "pages/TooltipPage"
     },
     {
         "name": "Loader",
-        "path": "loader",
+        "path": "/docs/loader",
         "filePath": "pages/LoaderPage"
     },
     {
         "name": "Progress Bar",
-        "path": "progressbar",
+        "path": "/docs/progressbar",
         "filePath": "pages/ProgressBarPage"
     },
     {
         "name": "Carousel",
-        "path": "carousel",
+        "path": "/docs/carousel",
         "filePath": "pages/CarouselPage"
     },
     {
         "name": "Pagination/DotNav",
-        "path": "pagination",
+        "path": "/docs/pagination",
         "filePath": "pages/PaginationPage"
     },
     {
         "name": "Timeline",
-        "path": "timeline",
+        "path": "/docs/timeline",
         "filePath": "pages/TimelinePage"
     },
     {
         "name": "Step Tracker",
-        "path": "steptracker",
+        "path": "/docs/steptracker",
         "filePath": "pages/StepTrackerPage"
     },
     {
         "name": "Breadcrumb",
-        "path": "breadcrumb",
+        "path": "/docs/breadcrumb",
         "filePath": "pages/BreadcrumbPage"
     },
     {
         "name": "Accordion",
-        "path": "accordion",
+        "path": "/docs/accordion",
         "filePath": "pages/AccordionPage"
     },
     {
         "name": "Tabs",
-        "path": "tabs",
+        "path": "/docs/tabs",
         "filePath": "pages/TabsPage"
     },
     {
         "name": "Notification",
-        "path": "notification",
+        "path": "/docs/notification",
         "filePath": "pages/NotificationPage"
     },
     {
         "name": "Feedback Indicator",
-        "path": "feedback-indicator",
+        "path": "/docs/feedback-indicator",
         "filePath": "pages/FeedbackIndicatorPage"
     },
     {
         "name": "Table",
-        "path": "table",
+        "path": "/docs/table",
         "filePath": "pages/TablePage"
     },
     {
         "name": "Modal",
-        "path": "modal",
+        "path": "/docs/modal",
         "filePath": "pages/ModalPage"
     },
     {
         "name": "Charts",
-        "path": "chart",
+        "path": "/docs/chart",
         "filePath": "pages/ChartPage"
     },
     {
         "name": "Image",
-        "path": "image",
+        "path": "/docs/image",
         "filePath": "pages/ImagePage"
     },
     {
         "name": "DivImage",
-        "path": "div-image",
+        "path": "/docs/div-image",
         "filePath": "pages/DivImagePage"
     },
     {
         "name": "Video Holder",
-        "path": "video",
+        "path": "/docs/video",
         "filePath": "pages/VideoPage"
     },
     {
         "name": "Timer",
-        "path": "timer",
+        "path": "/docs/timer",
         "filePath": "pages/TimerPage"
     }
 ]

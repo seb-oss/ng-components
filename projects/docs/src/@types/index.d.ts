@@ -48,8 +48,36 @@ declare interface ApiSection {
     description: string;
     inputs?: Array<any>;
     outputs?: Array<any>;
-    methods?: Array<any>;
-    properties?: Array<any>;
+    methods?: Array<APIOutputs>;
+    properties?: Array<APIInputs>;
+}
+
+declare interface APIInputs {
+    default: any;
+    description: string;
+    end: number;
+    isOptional: boolean;
+    isStatic: boolean;
+    name: string;
+    start: number;
+    type: string;
+    visibility: any;
+}
+
+declare interface APIOutputs {
+    description: string;
+    end: number;
+    functionCall: string;
+    isAbstract: boolean;
+    isAsync: boolean;
+    isOptional: boolean;
+    isStatic: boolean;
+    name: string;
+    parameters: any[];
+    start: number;
+    type: string;
+    variables: any[];
+    visibility: undefined;
 }
 
 declare interface APIInput {

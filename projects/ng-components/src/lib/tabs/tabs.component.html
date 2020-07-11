@@ -1,20 +1,19 @@
-<div class="custom-tabs" [ngClass]="className" [attr.id]="id">
-    <ul class="nav nav-tabs" role="tablist" aria-label="tabs">
-        <ng-container *ngFor="let item of list; let tabIndex = index">
-            <li className="nav-item" [ngClass]="{ active: tabIndex === activeTab, disabled: item.disabled }">
-                <a
-                    #tabListRefs
-                    class="nav-link"
-                    [ngClass]="{ active: tabIndex === activeTab, disabled: item.disabled }"
-                    (click)="handleClick($event, tabIndex)"
-                    (keydown)="onKeyDown($event, tabIndex)"
-                    role="tab"
-                    [attr.aria-selected]="tabIndex === activeTab"
-                    tabIndex="0"
-                >
-                    {{ item.text }}
-                </a>
-            </li>
-        </ng-container>
-    </ul>
-</div>
+<ul class="nav nav-tabs" [ngClass]="className" [attr.id]="id" role="tablist" aria-label="tabs">
+    <li *ngFor="let item of list; let i = index" class="nav-item" [ngClass]="{ active: i === value, disabled: item.disabled }">
+        <a
+            #tabListRefs
+            class="nav-link"
+            [class.disabled]="item.disabled"
+            [class.active]="i === value"
+            [attr.data-value]="i"
+            (click)="handleClick($event)"
+            role="tab"
+            [attr.aria-selected]="i === value"
+            href="#"
+            [tabIndex]="0"
+            [attr.disabled]="item.disabled"
+        >
+            {{ item.text }}
+        </a>
+    </li>
+</ul>

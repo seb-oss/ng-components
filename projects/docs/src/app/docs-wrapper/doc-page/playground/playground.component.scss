@@ -1,0 +1,51 @@
+@import "~@sebgroup/bootstrap/scss/core";
+
+.playground.card {
+    margin-top: 2rem;
+    border-radius: 10px;
+    display: grid;
+    background-color: darken($gray-100, 2%);
+    overflow: hidden;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+        "nav apistitle"
+        "example controls";
+
+    > * {
+        display: flex;
+        align-items: center;
+    }
+
+    > .nav {
+        padding: 0rem 0.5rem;
+        background-color: $gray-300;
+        .nav-link {
+            padding: 0.5rem 0;
+            margin: 0 1rem;
+            border-bottom: 3px solid transparent;
+            &.active {
+                border-bottom-color: $green-dark;
+            }
+            &:not(.active) {
+                cursor: pointer;
+            }
+        }
+    }
+
+    > .apis-title {
+        padding: 0.5rem 1.5rem;
+        background-color: $gray-300;
+        grid-area: "apistitle";
+        font-weight: 500;
+    }
+
+    > .example {
+        padding: 1rem 1.5rem;
+        grid-area: "example";
+    }
+
+    > .controls {
+        padding: 1rem 1.5rem;
+        grid-area: "controls";
+    }
+}

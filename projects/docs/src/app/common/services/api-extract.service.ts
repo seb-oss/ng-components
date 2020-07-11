@@ -223,8 +223,8 @@ export class APIExtractService {
                     name: declaration.name,
                     inputs: this.parseInputs(declaration.accessors, inputs),
                     outputs: this.parseOutputs(declaration.properties, outputs),
-                    properties: APIExtractService.parseProperties(declaration.properties, properties),
-                    methods: APIExtractService.parseMethods(declaration.methods, methods),
+                    properties: APIExtractService.parseProperties(declaration.properties, properties) as any,
+                    methods: APIExtractService.parseMethods(declaration.methods, methods) as any,
                 };
                 const isEmpty: boolean = !Object.entries(section)
                     .filter((key: [string, any]) => Array.isArray(key[1]))

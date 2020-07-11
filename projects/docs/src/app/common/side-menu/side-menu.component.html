@@ -24,56 +24,22 @@
             name="search"
             type="search"
             [(ngModel)]="search"
+            (ngModelChange)="highlighted = -1"
+            (keyup)="searchNavigations($event)"
             placeholder="Type to search"
-            (focus)="inputFocus = true"
-            (blur)="inputFocus = false"
             rightIcon="<svg width='1em' height='1em' fill='currentColor' viewBox='0 0 16 16' class='bi bi-search' xmlns='http://www.w3.org/2000/svg'><path fill-rule='evenodd' d='M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z' /><path fill-rule='evenodd' d='M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z' /></svg>"
         ></sebng-textboxgroup>
-        <!-- <TextBoxGroup
-            class={"sidemenu-search" + (inputFocus ? " in-focus" : "")}
-            name="search"
-            type="search"
-            value={search}
-            onChange={searchComponents}
-            placeholder="Type to search"
-            onKeyUp={searchNavigations}
-            onFocus={() => setInputFocus(true)}
-            onBlur={() => setInputFocus(false)}
-            rightIcon={
-                <svg xmlns="http://www.w3.org/2000/svg" width="24.03" height="24" viewBox="0 0 24.03 24">
-                    <path
-                        fillRule="evenodd"
-                        d="M1221,240a9,9,0,1,1-9,9A9,9,0,0,1,1221,240Zm0,2a7,7,0,1,1-7,7A7,7,0,0,1,1221,242Zm6.71,12.282,8.01,7.984a1.011,1.011,0,0,1-1.43,1.428l-8.01-7.984A1.011,1.011,0,0,1,1227.71,254.282Z"
-                        transform="translate(-1212 -240)"
-                    />
-                </svg>
-            }
-        /> -->
-        <nav class="components-list">
+        <nav class="components-list" #listRef>
             <a
                 class="list-item"
                 *ngFor="let comp of components | searched: search; let i = index"
+                [class.highlighted]="highlighted === i"
                 [routerLink]="comp.path"
                 routerLinkActive="active"
                 [attr.data-value]="i"
             >
                 {{ comp.name }}
             </a>
-            <!-- <DisplayList
-                list={listOfComponents
-                    .filter((item: SideBarItem) => {
-                        if (search) {
-                            return item.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
-                        } else {
-                            return true;
-                        }
-                    })
-                    .map((item: SideBarItem, index: number) => (
-                        <NavLink class={"list-item" + (highlighted === index ? " highlighted" : "")} key={index} to={item.path} activeclass="active" data-value={index}>
-                            {item.name}
-                        </NavLink>
-                    ))}
-            /> -->
         </nav>
     </div>
 </aside>
