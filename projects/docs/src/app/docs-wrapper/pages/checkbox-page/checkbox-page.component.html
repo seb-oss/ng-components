@@ -1,0 +1,15 @@
+<app-doc-page [importString]="importString">
+    <ng-container example>
+        <sebng-checkbox
+            label="Checkbox label"
+            [description]="showDescription && 'with optional description'"
+            [(ngModel)]="model"
+        ></sebng-checkbox>
+    </ng-container>
+    <ng-container controls>
+        <label>
+            Show description
+            <input type="checkbox" [(ngModel)]="showDescription" />
+        </label>
+    </ng-container>
+</app-doc-page>

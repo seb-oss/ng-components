@@ -15,31 +15,13 @@ import {
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { fromEvent, Subscription } from "rxjs";
 
-export interface DropdownItem {
-    /** The label or text to be displayed in the list */
-    label: string;
-    /** any value which should be tied to the item */
-    value: any;
-    /** The id or the unique key of the item */
-    key: string;
-}
-
-interface UniqueItem {
-    id: string;
-    optionItem: DropdownItem;
-    selected: boolean;
-}
-
-interface DisplayItem extends UniqueItem {
-    className: string;
-}
-
 const CUSTOM_DROPDOWN_CONTROL_VALUE_ACCESSOR: Provider = {
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => DropdownComponent),
     multi: true,
 };
 
+/** A dropdown allows the user to select an option from a list. Dropdowns enables users to make a quick selection of the available options for a specific entry. */
 @Component({
     selector: "sebng-dropdown",
     templateUrl: "./dropdown.component.html",
@@ -494,4 +476,23 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     registerOnTouched(fn: any): void {
         this.onTouchedCallback = fn;
     }
+}
+
+export interface DropdownItem {
+    /** The label or text to be displayed in the list */
+    label: string;
+    /** any value which should be tied to the item */
+    value: any;
+    /** The id or the unique key of the item */
+    key: string;
+}
+
+interface UniqueItem {
+    id: string;
+    optionItem: DropdownItem;
+    selected: boolean;
+}
+
+interface DisplayItem extends UniqueItem {
+    className: string;
 }

@@ -1,3 +1,7 @@
 .doc-page {
     margin-top: 3rem;
+
+    ::ng-deep .nav-tabs {
+        margin-bottom: 2rem;
+    }
 }
