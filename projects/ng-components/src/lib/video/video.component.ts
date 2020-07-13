@@ -3,6 +3,7 @@ import { SafeResourceUrl, DomSanitizer } from "@angular/platform-browser";
 
 export type VideoSourceType = "stream" | "local";
 
+/** A video component is an Angular component for playing videos */
 @Component({
     selector: "sebng-video",
     templateUrl: "./video.component.html",
@@ -10,23 +11,34 @@ export type VideoSourceType = "stream" | "local";
     encapsulation: ViewEncapsulation.None,
 })
 export class VideoComponent implements OnInit, OnChanges {
+    /** Allow video to be played in full screen mode */
     @Input() allowFullScreen?: boolean;
+    /** Play video automatically */
     @Input() autoplay?: boolean;
+    /** Element class name */
     @Input() className?: string;
+    /** Element height */
     @Input() height: string;
+    /** Element ID */
     @Input() id?: string;
+    /** Loop video */
     @Input() loop?: boolean;
+    /** Element name */
     @Input() name: string;
+    /** Show video controls */
     @Input() showControls?: boolean;
+    /** Show video information */
     @Input() showInfo?: boolean;
+    /** Video source type */
     @Input() sourceType: VideoSourceType;
+    /** Element width */
     @Input() width: string;
-
+    /** Element source */
     @Input() src: string;
 
     public videoSrc: SafeResourceUrl;
 
-    constructor(private sanitizer: DomSanitizer) {}
+    constructor(private sanitizer: DomSanitizer) { }
 
     generateVideoSrc(): void {
         let src = this.src + "?html5=1&amp;rel=0";
