@@ -1,0 +1,37 @@
+<div class="card">
+    <table *ngIf="inputs?.length" class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Property</th>
+                <th>Type</th>
+                <th>Descrption</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let input of inputs">
+                <td>{{ input.name }}</td>
+                <td>{{ input.type }}</td>
+                <td>{{ input.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="card">
+    <table *ngIf="outputs?.length" class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Method</th>
+                <th>Params</th>
+                <th>Descrption</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let output of outputs">
+                <td>{{ output.name }}</td>
+                <td>{{ output.type }}</td>
+                <td>{{ output.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

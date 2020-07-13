@@ -12,6 +12,8 @@ import {
     ChangeDetectorRef,
     AfterViewChecked,
     OnDestroy,
+    Output,
+    EventEmitter,
 } from "@angular/core";
 import { randomId } from "@sebgroup/frontend-tools/dist/randomId";
 import { Subscription } from "rxjs";
