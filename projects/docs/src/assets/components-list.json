@@ -70,11 +70,6 @@
         "filePath": "pages/TimepickerPage"
     },
     {
-        "name": "Image Cropper",
-        "path": "/docs/imagecropper",
-        "filePath": "pages/ImageCropperPage"
-    },
-    {
         "name": "Button",
         "path": "/docs/button",
         "filePath": "pages/ButtonPage"
@@ -135,11 +130,6 @@
         "filePath": "pages/NotificationPage"
     },
     {
-        "name": "Feedback Indicator",
-        "path": "/docs/feedback-indicator",
-        "filePath": "pages/FeedbackIndicatorPage"
-    },
-    {
         "name": "Table",
         "path": "/docs/table",
         "filePath": "pages/TablePage"
@@ -148,16 +138,6 @@
         "name": "Modal",
         "path": "/docs/modal",
         "filePath": "pages/ModalPage"
-    },
-    {
-        "name": "Image",
-        "path": "/docs/image",
-        "filePath": "pages/ImagePage"
-    },
-    {
-        "name": "DivImage",
-        "path": "/docs/div-image",
-        "filePath": "pages/DivImagePage"
     },
     {
         "name": "Video Holder",
