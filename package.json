@@ -20,11 +20,6 @@
         "url": "https://github.com/sebgroup/ng-components/issues"
     },
     "homepage": "https://sebgroup.github.io/ng-components/",
-    "config": {
-        "commitizen": {
-            "path": "./node_modules/cz-conventional-changelog"
-        }
-    },
     "scripts": {
         "ng": "ng",
         "start": "ng serve docs",
@@ -71,6 +66,7 @@
         "codelyzer": "^6.0.0-next.1",
         "commitizen": "^4.1.2",
         "cz-conventional": "0.0.2",
+        "husky": "^4.2.5",
         "jasmine-core": "~3.5.0",
         "jasmine-spec-reporter": "~5.0.0",
         "karma": "~5.0.0",
@@ -79,7 +75,6 @@
         "karma-jasmine": "~3.3.0",
         "karma-jasmine-html-reporter": "^1.5.0",
         "ng-packagr": "^10.0.0",
-        "npm-run-all": "^4.1.5",
         "package-lock-sanitizer": "^1.0.1",
         "prettier": "^2.0.5",
         "pretty-quick": "^2.0.1",
@@ -88,6 +83,11 @@
         "ts-node": "~8.3.0",
         "tslint": "~6.1.0",
         "typescript": "~3.9.5"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
     },
     "commitlint": {
         "extends": [
