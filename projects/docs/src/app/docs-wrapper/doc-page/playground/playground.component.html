@@ -9,9 +9,20 @@
             >{{ item }}</a
         >
     </nav>
-    <h4 class="apis-title">APIs</h4>
-    <div class="example">
-        <ng-content></ng-content>
+
+    <h4 class="apis-title">Try it out</h4>
+
+    <div class="example" *ngIf="activeTab === 0">
+        <ng-content select="[example]"></ng-content>
     </div>
-    <div class="controls">Controls</div>
+
+    <div class="code" *ngIf="activeTab === 1">
+        <code>
+            <ng-content select="[code]"></ng-content>
+        </code>
+    </div>
+
+    <div class="controls">
+        <ng-content select="[controls]"></ng-content>
+    </div>
 </div>

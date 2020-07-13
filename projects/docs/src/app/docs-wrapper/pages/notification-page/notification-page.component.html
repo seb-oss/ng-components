@@ -1,0 +1,8 @@
+<app-doc-page [importString]="importString">
+    <ng-container example>
+        <button class="btn btn-primary" (click)="toggle = !toggle">Toggle notification</button>
+
+        <sebng-notification [toggle]="toggle" title="Notification Title" [message]="'message'" [dismissable]="false"></sebng-notification>
+    </ng-container>
+    <ng-container controls> </ng-container>
+</app-doc-page>

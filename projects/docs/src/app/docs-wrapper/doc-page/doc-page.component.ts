@@ -17,7 +17,8 @@ export class DocPageComponent implements OnInit, OnDestroy {
     description: string;
     inputs: Array<APIInputs>;
     outputs: Array<APIOutputs>;
-    tabList: Array<TabsListItem> = [{ text: "Playground" }, { text: "APIs" }, { text: "Notes", disabled: true }];
+    tabList: Array<TabsListItem> = [{ text: "Playground" }, { text: "APIs" }];
+    tabListWithNotes: Array<TabsListItem> = [{ text: "Playground" }, { text: "APIs" }, { text: "Notes" }];
 
     @Input() importString: string;
 

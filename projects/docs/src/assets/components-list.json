@@ -95,7 +95,7 @@
         "filePath": "pages/ProgressBarPage"
     },
     {
-        "name": "Pagination/DotNav",
+        "name": "Pagination",
         "path": "/docs/pagination",
         "filePath": "pages/PaginationPage"
     },
