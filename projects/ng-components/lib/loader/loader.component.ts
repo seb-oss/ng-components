@@ -3,6 +3,7 @@ import { Component, ViewEncapsulation, Input } from "@angular/core";
 export type LoaderSize = "xs" | "sm" | "md" | "lg";
 export type LoaderType = "spinner" | "square";
 
+/** Loader components gathered in one place. A loader alerts a user to wait for an activity to complete. */
 @Component({
     selector: "sebng-loader",
     styleUrls: ["./loader.component.scss"],
@@ -11,9 +12,9 @@ export type LoaderType = "spinner" | "square";
 })
 export class LoaderComponent {
     /** Loader size. Supported sizes: `xs`, `sm`, `md`, `lg` */
-    @Input() size?: LoaderSize;
+    @Input() size?: LoaderSize = "md";
     /** Loader types. Supportes types: `spinner`, `square` */
-    @Input() type?: LoaderType;
+    @Input() type?: LoaderType = "spinner";
     /** Have the loader take over it's parent */
     @Input() cover?: boolean;
     /** Have the loader take over the screen */

@@ -5,7 +5,7 @@ import { Component, OnInit } from "@angular/core";
     templateUrl: "./datepicker-page.component.html",
 })
 export class DatepickerPageComponent implements OnInit {
-    importString: string = require("!raw-loader!@sebgroup/ng-components/date-picker/date-picker.component");
+    importString: string = require("!raw-loader!@sebgroup/ng-components/datePicker/date-picker.component");
     model: Date;
 
     constructor() {
