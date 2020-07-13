@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { CheckBoxModule } from "@sebgroup/ng-components/checkbox";
+import { CheckBoxModule } from "@sebgroup/ng-components/checkBox";
 import { CheckboxPageComponent } from "./checkbox-page.component";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";

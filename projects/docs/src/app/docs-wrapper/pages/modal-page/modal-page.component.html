@@ -1,13 +1,22 @@
 <app-doc-page [importString]="importString">
     <ng-container example>
         <button class="btn btn-primary" (click)="openModal()">Open Modal</button>
-        <sebng-modal>
+        <sebng-modal
+            [id]="'test'"
+            [size]="size"
+            [position]="position"
+            [center]="center"
+            [fullscreen]="fullscreen"
+            [backdropDismiss]="backdropDismiss"
+            [escapeKeyDismiss]="escapeDismiss"
+        >
             <div class="custom-header" header>
                 Title
             </div>
 
             <div class="custom-body" body>
-                Body
+                <img *ngIf="hasImage; else simpleBody" src="https://via.placeholder.com/500" />
+                <ng-template #simpleBody>Body</ng-template>
             </div>
 
             <div class="custom-footer" footer>
@@ -17,5 +26,36 @@
             </div>
         </sebng-modal>
     </ng-container>
-    <ng-container controls> </ng-container>
+    <ng-container controls>
+        <div class="row">
+            <div class="col-12">
+                size:
+                <select [(ngModel)]="size">
+                    <option value="">default</option>
+                    <option value="modal-lg">modal-lg</option>
+                    <option value="modal-sm">modal-sm</option>
+                </select>
+            </div>
+            <div class="col-12">
+                position:
+                <select [(ngModel)]="position">
+                    <option value="">default</option>
+                    <option value="right">right</option>
+                    <option value="left">left</option>
+                </select>
+            </div>
+            <div class="col-12">
+                <sebng-checkbox label="centered" [(ngModel)]="center"></sebng-checkbox>
+            </div>
+            <div class="col-12">
+                <sebng-checkbox label="fullscreen" [(ngModel)]="fullscreen"></sebng-checkbox>
+            </div>
+            <div class="col-12">
+                <sebng-checkbox label="Enable backdrop dismiss" [(ngModel)]="backdropDismiss"></sebng-checkbox>
+            </div>
+            <div class="col-12">
+                <sebng-checkbox label="Enable escape key dismiss" [(ngModel)]="escapeDismiss"></sebng-checkbox>
+            </div>
+        </div>
+    </ng-container>
 </app-doc-page>
