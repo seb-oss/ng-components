@@ -19,7 +19,7 @@ interface ParsedAccessorDeclaration extends AccessorDeclaration {
 
 @Injectable()
 export class APIExtractService {
-    constructor() {}
+    constructor() { }
     $content: Observable<any>;
 
     /**
@@ -97,7 +97,10 @@ export class APIExtractService {
      * @param sourceCode string of source code
      */
     static extractDescription(sourceCode: string): XRegExp.ExecArray {
-        const regex: RegExp = XRegExp(`(?:\\/\\*\\*(?<comment>[\\s\\S][^\\/]*)\\*\\/[^\\w])`, "g");
+        const regex: RegExp = XRegExp(
+            `(?:\\/\\*\\*(?<comment>[\\s\\S][^\\/]*)\\*\\/[^\\w\\@]+|)(?<decorator>(\\@Component|\\@Directive))`,
+            "g"
+        );
         return XRegExp.exec(sourceCode, regex);
     }
 
@@ -119,13 +122,13 @@ export class APIExtractService {
             .map((property: PropertyDeclaration) => {
                 return extractedProperties[property.name]
                     ? {
-                          ...property,
-                          default: extractedProperties[property.name].default,
-                          description: APIExtractService.parseComment(extractedProperties[property.name].comment?.trim()),
-                      }
+                        ...property,
+                        default: extractedProperties[property.name].default,
+                        description: APIExtractService.parseComment(extractedProperties[property.name].comment?.trim()),
+                    }
                     : {
-                          ...property,
-                      };
+                        ...property,
+                    };
             });
     }
 
@@ -165,6 +168,18 @@ export class APIExtractService {
      */
     static parseComment(comment: string): string {
         return comment ? comment.replace(/\*\/+|\/\*+|\*\s+|[\t\r\n]/g, "") : "n/a";
+    }
+
+    /**
+     * parse output type
+     * @param type output type
+     */
+    static parseOutputType(type: string): APIInput {
+        const regex: RegExp = XRegExp(
+            `(EventEmitter<(?<type>[a-zA-Z]+)>)`,
+            "g"
+        );
+        return XRegExp.exec(type, regex);
     }
 
     /**
@@ -270,9 +285,12 @@ export class APIExtractService {
                 (property: PropertyDeclaration) =>
                     property.type && property.type.indexOf("EventEmitter") !== -1 && !outputs[property.name]?.skip?.length
             )
-            .map((property: PropertyDeclaration) => ({
-                ...property,
-                description: outputs[property.name] && APIExtractService.parseComment(outputs[property.name].comment?.trim()),
-            }));
+            .map((property: PropertyDeclaration) => {
+                return {
+                    ...property,
+                    type: APIExtractService.parseOutputType(property.type)?.type || "n/a",
+                    description: outputs[property.name] && APIExtractService.parseComment(outputs[property.name].comment?.trim()),
+                };
+            });
     }
 }
