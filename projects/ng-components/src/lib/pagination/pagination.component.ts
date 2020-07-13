@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, ViewEncapsulation } from "@angular/core";
 
+/** The Pagination component is used to separate long sets of data so that it is easier for a user to consume information. To change the current page simply click on the page number. */
 @Component({
     selector: "sebng-pagination",
     templateUrl: "./pagination.component.html",

@@ -1,0 +1,12 @@
+<app-doc-page [importString]="importString">
+    <ng-container example>
+        <sebng-pagination
+            [value]="pagination"
+            (change)="pagination = $event"
+            [size]="60"
+            [offset]="6"
+            [pagingLength]="7"
+        ></sebng-pagination>
+    </ng-container>
+    <ng-container controls> </ng-container>
+</app-doc-page>
