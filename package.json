@@ -31,9 +31,10 @@
         "commit": "git-cz",
         "build": "ng build ng-components --prod",
         "test": "ng test ng-components",
+        "sanitize": "package-lock-sanitizer && git add package-lock.json",
         "lint": "ng lint ng-components",
         "e2e": "ng e2e ng-components",
-        "format:fix": "pretty-quick --staged",
+        "format:staged": "pretty-quick --staged --verbose",
         "format:check": "pretty-quick --check --verbose",
         "format:all": "prettier --write \"**/*.{ts,html,json,scss,md}\""
     },
@@ -79,6 +80,7 @@
         "karma-jasmine-html-reporter": "^1.5.0",
         "ng-packagr": "^10.0.0",
         "npm-run-all": "^4.1.5",
+        "package-lock-sanitizer": "^1.0.1",
         "prettier": "^2.0.5",
         "pretty-quick": "^2.0.1",
         "protractor": "~7.0.0",
@@ -95,7 +97,7 @@
     "husky": {
         "hooks": {
             "commit-msg": "commitlint --edit",
-            "pre-commit": "run-s format:fix package-lock-sanitizer"
+            "pre-commit": "npm run sanitize && npm run format:staged"
         }
     },
     "browser": {
