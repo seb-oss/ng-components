@@ -8,12 +8,10 @@ import { Component, Input } from "@angular/core";
             .card {
                 border-radius: 10px;
                 overflow: hidden;
+                margin-bottom: 1rem;
             }
             .card table {
                 margin: 0;
-            }
-            .card:not(:first-child) {
-                margin-top: 1rem;
             }
         `,
     ],
