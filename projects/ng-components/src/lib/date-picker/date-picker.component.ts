@@ -8,6 +8,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     multi: true,
 };
 
+/** Date pickers simplify the task of selecting a date in a visual representation of a calendar. */
 @Component({
     selector: "sebng-date-picker",
     templateUrl: "./date-picker.component.html",
