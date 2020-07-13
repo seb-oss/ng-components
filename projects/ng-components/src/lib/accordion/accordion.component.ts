@@ -37,7 +37,7 @@ export interface AccordionProps {
     alternative?: boolean;
     activeIndex?: number;
 }
-
+/** Accordions show and hide information that is not necessary at all time with one click. */
 @Component({
     selector: "sebng-accordion",
     templateUrl: "./accordion.component.html",

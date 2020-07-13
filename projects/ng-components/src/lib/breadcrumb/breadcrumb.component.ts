@@ -5,6 +5,7 @@ export interface ClickProps {
     e: MouseEvent;
 }
 
+/** A breadcrumb is a secondary navigation showing the website hierarchy. */
 @Component({
     selector: "sebng-breadcrumb",
     templateUrl: "./breadcrumb.component.html",

@@ -4,6 +4,21 @@ import { SideMenuModule } from "../common/side-menu/side-menu.module";
 import { Routes, RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { FooterModule } from "../common/footer/footer.module";
+import components from "../../assets/components-list.json";
+
+function getComponentPageRoutes(): Routes {
+    return components.map(({ path, name, filePath }) => {
+        const componentNameLowercase: string = path.replace("/docs/", "");
+        return {
+            path: componentNameLowercase,
+            component: DocsWrapperComponent,
+            loadChildren: () =>
+                import(`./pages/${componentNameLowercase}-page/${componentNameLowercase}-page.module`).then(
+                    m => m && m[`${name.replace(" ", "")}PageModule`]
+                ),
+        };
+    });
+}
 
 const routes: Routes = [
     { path: "", redirectTo: "getting-started", pathMatch: "full" },
@@ -12,11 +27,7 @@ const routes: Routes = [
         component: DocsWrapperComponent,
         loadChildren: () => import("./getting-started/getting-started.module").then(m => m.GettingStartedModule),
     },
-    {
-        path: "accordion",
-        component: DocsWrapperComponent,
-        loadChildren: () => import("./pages/accordion-page/accordion-page.module").then(m => m.AccordionPageModule),
-    },
+    ...getComponentPageRoutes(),
 ];
 
 @NgModule({
