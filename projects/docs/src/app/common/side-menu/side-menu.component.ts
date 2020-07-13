@@ -49,7 +49,6 @@ export class SideMenuComponent implements OnInit, OnDestroy {
     }
 
     searchNavigations(e: KeyboardEvent): void {
-        console.log("BEFORE", this.highlighted);
         let highlightedItem: number;
         let children: HTMLCollectionOf<HTMLAnchorElement>;
         switch (e.key.toLowerCase()) {
@@ -99,7 +98,6 @@ export class SideMenuComponent implements OnInit, OnDestroy {
                 }
                 break;
         }
-        console.log("AFTER", this.highlighted);
     }
 
     ngOnDestroy(): void {}

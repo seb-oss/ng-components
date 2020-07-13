@@ -13,7 +13,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     toggleSideMenu = (e: KeyboardEvent) => {
         if (e.ctrlKey && e.key === "`") {
-            console.log("NOW");
+            // TODO: implement this console.log("NOW");
         }
     };
 
