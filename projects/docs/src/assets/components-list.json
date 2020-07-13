@@ -80,11 +80,6 @@
         "filePath": "pages/ButtonPage"
     },
     {
-        "name": "Button Group",
-        "path": "/docs/buttongroup",
-        "filePath": "pages/ButtonGroupPage"
-    },
-    {
         "name": "Chip",
         "path": "/docs/chip",
         "filePath": "pages/ChipPage"
