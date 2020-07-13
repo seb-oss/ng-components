@@ -11,9 +11,9 @@
             "@styles/*": ["projects/docs/src/styles/*"],
             "@assets/*": ["projects/docs/src/assets/*"],
             "@env/*": ["projects/docs/src/environments/*"],
-            "@sebgroup/ng-components/*": ["projects/ng-components/src/lib/*"]
+            "@sebgroup/ng-components/*": ["projects/ng-components/lib/*"]
         },
         "types": ["node"]
     },
-    "include": ["src/**/*.d.ts", "src/**/*.ts", "../ng-components/src/*"]
+    "include": ["src/**/*.d.ts", "src/**/*.ts", "../ng-components/src/*", "../ng-components/test.ts", "../ng-components/public-api.ts"]
 }

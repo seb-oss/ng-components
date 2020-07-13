@@ -1,4 +1,4 @@
-<nav class="p-3 bg-light" style="min-width: 200px">
+<nav class="p-3 bg-light" style="min-width: 200px;">
     <ng-container *ngIf="wizardTitle" [ngTemplateOutlet]="wizardTitle!.template"></ng-container>
     <ol class="list-group list-group-ordered d-none d-md-block mt-2" *ngIf="!hideNavigation">
         <ng-container *ngFor="let wizardStep of wizardSteps; let i = index">
