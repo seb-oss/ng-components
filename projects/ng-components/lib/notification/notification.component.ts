@@ -9,6 +9,7 @@ export interface NotificationAction {
     action: () => void;
 }
 
+/** An alert which pops up on the page to inform the user of an event which occured and optionally provide actions to perform. */
 @Component({
     selector: "sebng-notification",
     templateUrl: "./notification.component.html",

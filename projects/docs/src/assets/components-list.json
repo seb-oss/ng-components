@@ -95,7 +95,7 @@
         "filePath": "pages/ProgressBarPage"
     },
     {
-        "name": "Pagination/DotNav",
+        "name": "Pagination",
         "path": "/docs/pagination",
         "filePath": "pages/PaginationPage"
     },
@@ -140,7 +140,7 @@
         "filePath": "pages/ModalPage"
     },
     {
-        "name": "Video Holder",
+        "name": "Video",
         "path": "/docs/video",
         "filePath": "pages/VideoPage"
     },

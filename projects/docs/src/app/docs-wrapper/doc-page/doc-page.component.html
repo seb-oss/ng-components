@@ -1,15 +1,24 @@
+<span class="d-none" #contentNotes><ng-content select="[notes]"></ng-content></span>
+
 <div class="doc-page container">
     <h1>{{ name }}</h1>
     <p>{{ description }}</p>
-    <sebng-tabs [list]="tabList" [(ngModel)]="section" (ngModelChange)="afterTabChange($event)"></sebng-tabs>
 
-    <app-playground *ngIf="section === 0">
-        <ng-content select="[example]"></ng-content>
-    </app-playground>
+    <sebng-tabs
+        [list]="contentNotes.innerText.length ? tabListWithNotes : tabList"
+        [(ngModel)]="section"
+        (ngModelChange)="afterTabChange($event)"
+    ></sebng-tabs>
 
-    <app-playground-controls *ngIf="section === 0">
-        <ng-content select="[controls]"></ng-content>
-    </app-playground-controls>
+    <app-doc-playground *ngIf="section === 0">
+        <ng-content select="[example]" example></ng-content>
+        <ng-content select="[code]" code></ng-content>
+        <ng-content select="[controls]" controls></ng-content>
+    </app-doc-playground>
 
     <app-doc-apis *ngIf="section === 1" [inputs]="inputs" [outputs]="outputs"></app-doc-apis>
+
+    <app-doc-notes *ngIf="contentNotes.innerText.length && section === 2">
+        <ng-content select="[notes]"></ng-content>
+    </app-doc-notes>
 </div>

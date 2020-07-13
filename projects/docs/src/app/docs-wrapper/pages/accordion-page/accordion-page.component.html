@@ -2,10 +2,17 @@
     <ng-container example>
         <sebng-accordion [list]="accordionList"></sebng-accordion>
     </ng-container>
+
+    <ng-container code>{{ code }}</ng-container>
+
     <ng-container controls>
         <select [(ngModel)]="iconPosition">
             <option value="left">Left</option>
             <option value="right">right</option>
         </select>
+    </ng-container>
+
+    <ng-container notes>
+        do this and that
     </ng-container>
 </app-doc-page>

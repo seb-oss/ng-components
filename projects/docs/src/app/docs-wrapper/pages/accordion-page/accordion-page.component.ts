@@ -34,6 +34,7 @@ export class AccordionPageComponent implements OnInit {
         },
     ];
     iconPosition: AccordionProps["iconPosition"] = "left";
+    code: string = '<sebng-accordion [list]="accordionList"></sebng-accordion>';
 
     constructor() {
         document.title = "Accordion - SEB Angular Components";

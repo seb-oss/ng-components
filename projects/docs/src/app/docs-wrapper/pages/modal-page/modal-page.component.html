@@ -1,0 +1,21 @@
+<app-doc-page [importString]="importString">
+    <ng-container example>
+        <button class="btn btn-primary" (click)="openModal()">Open Modal</button>
+        <sebng-modal>
+            <div class="custom-header" header>
+                Title
+            </div>
+
+            <div class="custom-body" body>
+                Body
+            </div>
+
+            <div class="custom-footer" footer>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeModal()">
+                    Close
+                </button>
+            </div>
+        </sebng-modal>
+    </ng-container>
+    <ng-container controls> </ng-container>
+</app-doc-page>

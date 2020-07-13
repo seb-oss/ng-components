@@ -4,7 +4,7 @@
     border-radius: 10px;
     display: grid;
     background-color: darken($gray-100, 2%);
-    overflow: hidden;
+    overflow: visible;
     grid-template-columns: 2fr 1fr;
     grid-template-areas:
         "nav apistitle"
@@ -19,6 +19,7 @@
     > .nav {
         padding: 0rem 0.5rem;
         background-color: $gray-300;
+        border-top-left-radius: 10px;
         .nav-link {
             padding: 0.5rem 0;
             margin: 0 1rem;
@@ -37,15 +38,18 @@
         background-color: $gray-300;
         grid-area: "apistitle";
         font-weight: 500;
+        border-top-right-radius: 10px;
     }
 
     > .example {
         padding: 1rem 1.5rem;
         grid-area: "example";
+        border-bottom-left-radius: 10px;
     }
 
     > .controls {
         padding: 1rem 1.5rem;
         grid-area: "controls";
+        border-top-right-radius: 10px;
     }
 }
