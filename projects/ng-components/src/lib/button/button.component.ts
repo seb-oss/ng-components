@@ -8,6 +8,7 @@ export type ButtonIconPosition = "right" | "left";
 export type ButtonTypes = "submit" | "button" | "reset";
 export type ButtonTags = "input" | "button" | "anchor";
 
+/** Buttons allow users to take action with a single tap. */
 @Component({
     selector: "sebng-button",
     styleUrls: ["./button.component.scss"],

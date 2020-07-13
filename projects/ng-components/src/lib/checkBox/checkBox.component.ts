@@ -9,6 +9,7 @@ export const CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR: Provider = {
     multi: true,
 };
 
+/** Checkboxes allow a user to toggle an option on or off, or make multiple choices in a set of available options. */
 @Component({
     selector: "sebng-checkbox",
     templateUrl: "./checkBox.component.html",

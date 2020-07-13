@@ -100,11 +100,6 @@
         "filePath": "pages/ProgressBarPage"
     },
     {
-        "name": "Carousel",
-        "path": "/docs/carousel",
-        "filePath": "pages/CarouselPage"
-    },
-    {
         "name": "Pagination/DotNav",
         "path": "/docs/pagination",
         "filePath": "pages/PaginationPage"
@@ -153,11 +148,6 @@
         "name": "Modal",
         "path": "/docs/modal",
         "filePath": "pages/ModalPage"
-    },
-    {
-        "name": "Charts",
-        "path": "/docs/chart",
-        "filePath": "pages/ChartPage"
     },
     {
         "name": "Image",
