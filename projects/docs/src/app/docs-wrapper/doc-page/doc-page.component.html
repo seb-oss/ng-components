@@ -5,6 +5,7 @@
     <p>{{ description }}</p>
 
     <sebng-tabs
+        className="doc-page-tabs"
         [list]="contentNotes.innerText.length ? tabListWithNotes : tabList"
         [(ngModel)]="section"
         (ngModelChange)="afterTabChange($event)"
