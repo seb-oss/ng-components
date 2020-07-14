@@ -17,9 +17,9 @@
     </div>
 
     <div class="code" *ngIf="activeTab === 1">
-        <code>
+        <app-code-snippet lang="html">
             <ng-content select="[code]"></ng-content>
-        </code>
+        </app-code-snippet>
     </div>
 
     <div class="controls">
