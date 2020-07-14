@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { RadioGroupItem } from "projects/ng-components/public-api";
+import { RadioGroupItem } from "@sebgroup/ng-components/radio-group";
 
 @Component({
     selector: "app-radiogroup-page",
