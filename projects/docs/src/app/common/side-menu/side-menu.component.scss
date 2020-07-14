@@ -1,4 +1,5 @@
 @import "~@sebgroup/bootstrap/scss/core";
+@import "../../../styles/mixins";
 
 $shadow: 0 3px 6px rgba(black, 0.16), 0 3px 6px rgba(black, 0.23);
 $shadow-light: 0 3px 6px rgba(black, 0.16);
@@ -31,6 +32,9 @@ aside.side-menu {
             > .sidemenu-content {
                 width: 0;
             }
+        }
+        @include IE_only {
+            width: 0;
         }
     }
     &.opened {
