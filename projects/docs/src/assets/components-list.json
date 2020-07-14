@@ -40,11 +40,6 @@
         "filePath": "pages/RadioGroupPage"
     },
     {
-        "name": "Radio Button",
-        "path": "/docs/radiobtn",
-        "filePath": "pages/RadioButtonPage"
-    },
-    {
         "name": "Rating",
         "path": "/docs/rating",
         "filePath": "pages/RatingPage"

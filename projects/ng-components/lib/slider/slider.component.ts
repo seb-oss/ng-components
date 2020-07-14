@@ -76,7 +76,9 @@ export class SliderComponent implements OnInit, OnChanges, AfterContentChecked, 
         normal: { width: "5px", offset: "24px" },
     };
 
-    constructor(private ref: ChangeDetectorRef) {}
+    constructor(private ref: ChangeDetectorRef) {
+        this.appearance = !!this.alternative ? "alternative" : "normal";
+    }
 
     get innerMin(): number {
         return this._min;
@@ -288,7 +290,6 @@ export class SliderComponent implements OnInit, OnChanges, AfterContentChecked, 
     ngOnInit() {
         this.size = 0;
         this.labelsPositions = [];
-        this.appearance = this.alternative ? "alternative" : "normal";
 
         this.setSliderRange();
         this.setStyleTracks();
