@@ -36,24 +36,24 @@
     > .apis-title {
         padding: 0.5rem 1.5rem;
         background-color: $gray-300;
-        grid-area: "apistitle";
+        grid-area: apistitle;
         font-weight: 500;
         border-top-right-radius: 10px;
     }
 
-    > .example,
-    > .code {
+    > .example {
         padding: 1rem 1.5rem;
-        grid-area: "example";
+        grid-area: example;
+    }
+
+    > .code {
+        grid-area: example;
         border-bottom-left-radius: 10px;
-        ::ng-deep code {
-            margin: 0;
-        }
     }
 
     > .controls {
         padding: 1rem 1.5rem;
-        grid-area: "controls";
+        grid-area: controls;
         border-top-right-radius: 10px;
     }
 }
