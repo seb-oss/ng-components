@@ -8,7 +8,7 @@ const CUSTOM_TEXTAREA_CONTROL_VALUE_ACCESSOR: Provider = {
 };
 
 @Component({
-    selector: "sebng-textArea",
+    selector: "sebng-textarea",
     templateUrl: "./textArea.component.html",
     styleUrls: ["./textArea.component.scss"],
     encapsulation: ViewEncapsulation.None,

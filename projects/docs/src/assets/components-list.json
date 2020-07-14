@@ -1,10 +1,5 @@
 [
     {
-        "name": "Textbox",
-        "path": "/docs/textbox",
-        "filePath": "pages/TextBoxPage"
-    },
-    {
         "name": "TextboxGroup",
         "path": "/docs/textboxgroup",
         "filePath": "pages/TextBoxGroupPage"
@@ -58,11 +53,6 @@
         "name": "Stepper",
         "path": "/docs/stepper",
         "filePath": "pages/StepperPage"
-    },
-    {
-        "name": "Timepicker",
-        "path": "/docs/timepicker",
-        "filePath": "pages/TimepickerPage"
     },
     {
         "name": "Button",

@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { TextAreaComponent } from "./textArea.component";
+import { TextAreaComponent } from "./textarea.component";
 import { FormsModule } from "@angular/forms";
 
 @NgModule({
@@ -8,4 +8,4 @@ import { FormsModule } from "@angular/forms";
     declarations: [TextAreaComponent],
     exports: [TextAreaComponent],
 })
-export class TextAreanModule {}
+export class TextAreaModule {}

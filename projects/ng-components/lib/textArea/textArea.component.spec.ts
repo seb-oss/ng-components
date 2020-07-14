@@ -1,13 +1,13 @@
 import { Component, DebugElement } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { TextAreaComponent } from "./textArea.component";
+import { TextAreaComponent } from "./textarea.component";
 import { CommonModule } from "@angular/common";
 
 @Component({
-    selector: "test-sebng-pagination",
+    selector: "test-sebng-textarea",
     template: `
-        <sebng-textArea
+        <sebng-textarea
             [className]="className"
             [cols]="cols"
             [disabled]="disabled"
@@ -27,7 +27,7 @@ import { CommonModule } from "@angular/common";
             (onKeyDown)="onKeyDown($event)"
             (onKeyPress)="onKeyPress($event)"
             (onKeyUp)="onKeyUp($event)"
-        ></sebng-textArea>
+        ></sebng-textarea>
     `,
 })
 class TextAreaTestComponent {

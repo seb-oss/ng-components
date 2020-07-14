@@ -20,7 +20,7 @@ export * from "./lib/slider";
 export * from "./lib/stepper";
 export * from "./lib/table";
 export * from "./lib/tabs";
-export * from "./lib/textArea";
+export * from "./lib/textarea";
 export * from "./lib/textLabel";
 export * from "./lib/textboxGroup";
 export * from "./lib/timeline";
