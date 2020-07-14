@@ -1,14 +1,30 @@
 <app-doc-page [importString]="importString">
     <ng-container example>
-        <sebng-video [src]="src" [sourceType]="sourceType" [width]="width" [height]="height"
-            [allowFullScreen]="allowFullScreen" [loop]="loop" [autoplay]="autoplay" [showControls]="showControls"
-            [showInfo]="showInfo">
+        <sebng-video
+            [src]="src"
+            [sourceType]="sourceType.value"
+            [width]="width"
+            [height]="height"
+            [allowFullScreen]="allowFullScreen"
+            [loop]="loop"
+            [autoplay]="autoplay"
+            [showControls]="showControls"
+            [showInfo]="showInfo"
+        >
         </sebng-video>
     </ng-container>
+    <ng-container code>{{ code }}</ng-container>
     <ng-container controls>
-        <!-- <select [(ngModel)]="iconPosition">
-            <option value="left">Left</option>
-            <option value="right">right</option>
-        </select> -->
+        <div class="row">
+            <sebng-dropdown className="col-12" label="sourceType" [list]="sourceTypeList" [(ngModel)]="sourceType"> </sebng-dropdown>
+            <sebng-textboxgroup className="col-12" label="src" [(ngModel)]="src"></sebng-textboxgroup>
+            <sebng-textboxgroup className="col-12" label="height" [(ngModel)]="height"></sebng-textboxgroup>
+            <sebng-textboxgroup className="col-12" label="width" [(ngModel)]="width"></sebng-textboxgroup>
+            <sebng-checkbox className="col-12" label="allowFullScreen" [(ngModel)]="allowFullScreen"></sebng-checkbox>
+            <sebng-checkbox className="col-12" label="loop" [(ngModel)]="loop"></sebng-checkbox>
+            <sebng-checkbox className="col-12" label="autoplay" [(ngModel)]="autoplay"></sebng-checkbox>
+            <sebng-checkbox className="col-12" label="showControls" [(ngModel)]="showControls"></sebng-checkbox>
+            <sebng-checkbox className="col-12" label="showInfo" [(ngModel)]="showInfo"></sebng-checkbox>
+        </div>
     </ng-container>
 </app-doc-page>
