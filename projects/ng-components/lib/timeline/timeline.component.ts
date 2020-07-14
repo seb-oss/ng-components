@@ -1,10 +1,12 @@
-import { Component, Input, OnInit, ViewEncapsulation, Output, EventEmitter } from "@angular/core";
+import { Component, Input, OnInit, ViewEncapsulation, Output, EventEmitter, HostBinding } from "@angular/core";
 
 export interface TimelineListItem {
     title: string;
     time: string;
     desc?: string;
 }
+
+export type TimelineDirection = "vertical" | "horizontal";
 
 @Component({
     selector: "sebng-timeline",
@@ -14,10 +16,12 @@ export interface TimelineListItem {
 })
 export class TimelineComponent implements OnInit {
     @Input() list: Array<TimelineListItem>;
-    @Input() direction?: string = "vertical";
+    @Input() direction?: TimelineDirection = "vertical";
     @Output() onClick? = new EventEmitter<number>();
 
     @Input() className?: string;
+
+    @HostBinding("style") styles: string = "width: 100%;";
 
     topList: Array<any> = [];
     bottomList: Array<any> = [];
