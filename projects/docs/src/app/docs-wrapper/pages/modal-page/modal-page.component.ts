@@ -83,18 +83,18 @@ export class ModalPageComponent {
     }
 
     modalTemplate: string = `<sebng-modal>
-    <div class="custom-header" header>
-        Header
-    </div>
+        <div class="custom-header" header>
+            Header
+        </div>
 
-    <div class="custom-body" body>
-        body
-    </div>
+        <div class="custom-body" body>
+            body
+        </div>
 
-    <div class="custom-footer" footer>
-        footer
-    </div>
-</sebng-modal>`;
+        <div class="custom-footer" footer>
+            footer
+        </div>
+    </sebng-modal>`;
 
     createViewChild: string = `@ViewChild(ModalComponent) modalChild: ModalComponent;`;
 

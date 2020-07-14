@@ -1,12 +1,15 @@
 <app-doc-page [importString]="importString">
     <ng-container example>
         <sebng-checkbox
-            label="Checkbox label"
+            [label]="customLabelCheckbox ? label : 'Checkbox label'"
             [description]="customDescriptionCheckbox ? description : showDescription && 'with optional description'"
             [(ngModel)]="model"
             [disabled]="disableCheckbox"
             [error]="customErrorCheckbox ? error : errorCheckbox && 'with error'"
         >
+            <ng-template #label>
+                <div class="custom-label">I am a custom label <a href="">read me please</a></div>
+            </ng-template>
             <ng-template #description>
                 <div class="custom-description">I am a custom description <a href="www.google.com" target="_blank">read me please</a></div>
             </ng-template>
@@ -18,11 +21,34 @@
     <ng-container code>{{ snippet }}</ng-container>
     <ng-container controls>
         <div class="row">
+            <sebng-checkbox class="col-12" label="custom label checkbox" [(ngModel)]="customLabelCheckbox"></sebng-checkbox>
             <sebng-checkbox class="col-12" label="show description" [(ngModel)]="showDescription"></sebng-checkbox>
             <sebng-checkbox class="col-12" label="custom description checkbox" [(ngModel)]="customDescriptionCheckbox"></sebng-checkbox>
             <sebng-checkbox class="col-12" label="disable checkbox" [(ngModel)]="disableCheckbox"></sebng-checkbox>
             <sebng-checkbox class="col-12" label="error checkbox" [(ngModel)]="errorCheckbox"></sebng-checkbox>
             <sebng-checkbox class="col-12" label="custom error checkbox" [(ngModel)]="customErrorCheckbox"></sebng-checkbox>
+        </div>
+    </ng-container>
+    <ng-container notes>
+        <div class="note-markdown">
+            <h2>Use Checkbox component</h2>
+            <p>
+                <code>sebng-checkbox</code> provides the same functionality as a native <code>input checkbox</code> enhanced with SEB Design
+                styling and animations.
+            </p>
+            <h3>Checkbox template</h3>
+            <p>
+                The checkbox component accepts string or custom <code>label, description or error</code>. In order to use a string property,
+                create the component this way
+            </p>
+            <pre><code [highlight]="simpleCheckboxHTML" [lineNumbers]="true"></code></pre>
+            <p>A custom template can be passed this way</p>
+            <pre><code [highlight]="templateCheckboxHTML" [lineNumbers]="true"></code></pre>
+            <p>Checkbox component support both template-driven and Reactive form</p>
+            <h4>Template-driven Form</h4>
+            <h5>1. create template</h5>
+            <sebng-checkbox label="label" [(ngModel)]="model"></sebng-checkbox>
+            <h4>Reactive Form</h4>
         </div>
     </ng-container>
 </app-doc-page>
