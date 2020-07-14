@@ -63,7 +63,7 @@
         "core-js": "^3.6.5",
         "file-loader": "^6.0.0",
         "lorem-ipsum": "^2.0.3",
-        "marked": "^1.1.0",
+        "marked": "^1.1.1",
         "prismjs": "^1.20.0",
         "rxjs": "^6.6.0",
         "tslib": "^1.13.0",
