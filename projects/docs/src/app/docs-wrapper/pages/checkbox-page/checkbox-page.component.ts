@@ -13,6 +13,8 @@ export class CheckboxPageComponent {
     customErrorCheckbox: boolean = false;
     customDescriptionCheckbox: boolean = false;
 
+    snippet: string = `<sebng-checkbox [(ngModel)]="value"></sebng-checkbox>`;
+
     constructor() {
         document.title = "Checkbox - SEB Angular Components";
     }

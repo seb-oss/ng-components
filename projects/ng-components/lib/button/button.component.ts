@@ -21,7 +21,7 @@ export class ButtonComponent implements OnInit {
     @Input() label?: string;
     @Input() className?: string;
     @Input() type?: ButtonTypes;
-    @Input() tag?: ButtonTags;
+    @Input() tag?: ButtonTags = "button";
     @Input() theme?: ButtonTheme;
     @Input() size?: ButtonSize;
     @Input() disabled?: boolean;

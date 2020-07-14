@@ -25,10 +25,7 @@ export class SideMenuComponent implements OnInit, OnDestroy {
      * This is used to determine the text that should be displayed to the user when hovering over the toggle button
      */
     platform: "mac" | "win" = navigator.platform.substr(0, 3).toLocaleLowerCase() as any;
-    /** The toggle title in Windows */
-    winToggleShortcutTitle: string = "Control + `";
-    /** The toggle title in Mac */
-    macToggleShortcutTitle: string = "Command + `";
+    modifier: string = this.platform === "win" ? "Control" : this.platform === "mac" ? "Command" : "";
 
     @ViewChild("listRef") listRef: ElementRef;
 

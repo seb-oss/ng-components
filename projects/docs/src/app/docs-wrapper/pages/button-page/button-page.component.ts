@@ -6,6 +6,7 @@ import { Component, OnInit } from "@angular/core";
 })
 export class ButtonPageComponent implements OnInit {
     importString: string = require("!raw-loader!@sebgroup/ng-components/button/button.component");
+    snippet: string = `<sebng-button>Button label</sebng-button>`;
 
     constructor() {
         document.title = "Button - SEB Angular Components";

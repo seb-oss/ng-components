@@ -8,6 +8,7 @@ import { Component, OnInit } from "@angular/core";
 export class BreadcrumbPageComponent implements OnInit {
     importString: string = require("!raw-loader!@sebgroup/ng-components/breadcrumb/breadcrumb.component");
     breadcrumbList: Array<string> = ["Home", "Articles", "ng-components", "about"];
+    snippet: string = `<sebng-breadcrumb [list]="breadcrumbList"></sebng-breadcrumb>`;
 
     constructor() {
         document.title = "Breadcrumb - SEB Angular Components";
