@@ -7,14 +7,14 @@ import { Component, ViewChild } from "@angular/core";
 
 @Component({
     selector: "test-seb-stepper",
-    template: `<seb-stepper
+    template: `<sebng-stepper
         [(ngModel)]="stepperValue"
         className="{{ className }}"
         [step]="step"
         [min]="min"
         [max]="max"
         id="{{ id }}"
-    ></seb-stepper>`,
+    ></sebng-stepper>`,
 })
 class CustomTestClass {
     @ViewChild(StepperComponent) stepperComponent: StepperComponent;

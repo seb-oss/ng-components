@@ -2,7 +2,7 @@ import { Component, Input, EventEmitter, Output, ViewEncapsulation } from "@angu
 import { TableHeaderListItem, TableRowClickedEvent, SortInfo } from "./table.models";
 
 @Component({
-    selector: "seb-table",
+    selector: "sebng-table",
     templateUrl: "./table.component.html",
     styleUrls: ["./table.component.scss"],
     encapsulation: ViewEncapsulation.None,

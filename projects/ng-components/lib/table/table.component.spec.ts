@@ -12,7 +12,7 @@ interface TestTableDataType {
 @Component({
     selector: "test-seb-table",
     template: `
-        <seb-table
+        <sebng-table
             [fixedHeight]="fixedHeight"
             [rows]="rows"
             [headerList]="headerList"
@@ -23,7 +23,7 @@ interface TestTableDataType {
             (sortClicked)="handleSortClicked($event)"
             (rowClicked)="handleSelectRow($event)"
             (selectAllClicked)="handleSelectAll()"
-        ></seb-table>
+        ></sebng-table>
     `,
 })
 class TableTestComponent {
