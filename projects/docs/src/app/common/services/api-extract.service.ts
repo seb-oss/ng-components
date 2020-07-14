@@ -50,7 +50,7 @@ export class APIExtractService {
      */
     static extractInputs(sourceCode: string): ParsedAPI {
         const regex: RegExp = XRegExp(
-            `(\\/\\*\\*(?<skip>[\\s\\S]* <!-- skip -->[\\s\\S])?(?<comment>(?:[\\sA-Za-z\\*\\\`\\.\\,\\(\\)\\/\\?\\=\\:\\[\\]\\&\\{\\}]*))\\*\\/)?(?:[\\r\\n\\t\\s]*)(?<decorator>\\@Input)\\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\\))(?:[\\W]+)(?<accessor>get|set|){1}(?:\\W)?(?<name>[^:?\\(]+)(?<optional>[?]?)+`,
+            `(\\/\\*\\*(?<skip>[\\s\\S]* <!-- skip -->[\\s\\S])?(?<comment>.*)\\*\\/)?(?:[\\r\\n\\t\\s]*)(?<decorator>\\@Input)\\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\\))(?:[\\W]+)(?<accessor>get|set|){1}(?:\\W)?(?<name>[^:?\\(]+)(?<optional>[?]?)+`,
             "g"
         );
         return this.formatSourceCode(sourceCode, regex);
@@ -62,7 +62,7 @@ export class APIExtractService {
      */
     static extractOutputs(sourceCode: string): ParsedAPI {
         const regex: RegExp = XRegExp(
-            `(?:\\/\\*\\*(?<skip>[\\s\\S]* <!-- skip -->[\\s\\S])?(?<comment>[\\s\\S][^@]+)\\*\\/[^@]+|)(?<decorator>\\@Output)\\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\\))(?:\\W)?(?<name>[^\\:?]+)+`,
+            `(?:\\/\\*\\*(?<skip>[\\s\\S]* <!-- skip -->[\\s\\S])?(?<comment>.*)\\*\\/[^@]+|)(?<decorator>\\@Output)\\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\\))(?:\\W)?(?<name>[^\\:?]+)+`,
             "g"
         );
         return this.formatSourceCode(sourceCode, regex);
@@ -74,7 +74,7 @@ export class APIExtractService {
      */
     static extractProperties(sourceCode: string): ParsedAPI {
         const regex: RegExp = XRegExp(
-            `(\\/\\*\\*(?<skip>[\\s\\S]* <!-- skip -->[\\s\\S])?(?<comment>(?:[\\sA-Za-z\\*\\\`\\.\\,\\(\\)\\/\\?\\=\\:\\[\\]\\&\\{\\}]*))\\*\\/)?(?:[\\r\\n\\t\\s]*)(?<decorator>\\@Input)\\(\\) (?<name>[\\w\\$]+)\\??\\:\\s(?<type>[^\\;\\=]*)(?:\\;\\s| \\=\\s)[\\'\\"]?(?<default>[\\w][^\\;\\/\\'\\"]*)?[\\'\\"]?`,
+            `(\\/\\*\\*(?<skip>[\\s\\S]<!-- skip -->[\\s\\S])?(?<comment>.*)\\*\\/)?(?:[\\r\\n\\t\\s]*)(?<decorator>\\@Input)\\(\\) (?<name>[\\w\\$]+)\\??\\:\\s(?<type>[^\\;\\=]*)(?:\\;\\s| \\=\\s)[\\'\\"]?(?<default>[\\w][^\\;\\/\\'\\"]*)?[\\'\\"]?`,
             "g"
         );
         return this.formatSourceCode(sourceCode, regex);
@@ -86,7 +86,7 @@ export class APIExtractService {
      */
     static extractMethods(sourceCode: string): ParsedAPI {
         const regex: RegExp = XRegExp(
-            `(?:\\/\\*\\*(?<skip>[\\s\\S]* <!-- skip -->[\\s\\S])?(?<comment>[\\s\\S][^\\/]*)\\*\\/[^\\w\\@]+|)(?!constructor|Input|Component)(?<private>(private )?)(?<name>[a-zA-Z^@]*)\\((?<parameters>[^\\)]*)\\)\\:?\\s?(?<returns>[\\w\\<\\>]*)`,
+            `(\\/\\*\\*(?<skip>[\\s\\S]<!-- skip -->[\\s\\S])?(?<comment>.*)?\\*\\/[^\\w\\@]+|)(?!constructor|Input|Component)(?<private>(private )?)(?<name>[a-zA-Z^@]*)\\((?<parameters>[^\\)]*)\\)\\:?\\s?(?<returns>[\\w\\<\\>]*)`,
             "g"
         );
         return this.formatSourceCode(sourceCode, regex);
@@ -98,7 +98,7 @@ export class APIExtractService {
      */
     static extractDescription(sourceCode: string): XRegExp.ExecArray {
         const regex: RegExp = XRegExp(
-            `(?:\\/\\*\\*(?<comment>[\\s\\S][^\\/]*)\\*\\/[^\\w\\@]+|)(?<decorator>(\\@Component|\\@Directive))`,
+            `(?:\\/\\*\\*(?<comment>.*)\\*\\/[^\\w\\@]+|)(?<decorator>(\\@Component|\\@Directive))`,
             "g"
         );
         return XRegExp.exec(sourceCode, regex);
@@ -144,7 +144,6 @@ export class APIExtractService {
                     property.name.substring(0, 2) !== "ng" &&
                     property.name.substring(0, 1) !== "_" &&
                     !!extractedMethods[property.name] &&
-                    !extractedMethods[property.name]?.comment?.indexOf("<!-- skip -->") &&
                     !extractedMethods[property.name]?.private?.length &&
                     !extractedMethods[property.name]?.skip?.length
             ) // remove private methods
