@@ -8,6 +8,7 @@ import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule } from "@angular/forms";
+import { TooltipModule } from "@sebgroup/ng-components/tooltip";
 
 const routes: Routes = [{ path: "", component: VideoPageComponent }];
 
@@ -22,6 +23,7 @@ const routes: Routes = [{ path: "", component: VideoPageComponent }];
         DropdownModule,
         TextboxGroupModule,
         CheckBoxModule,
+        TooltipModule,
     ],
     exports: [RouterModule, VideoModule],
 })

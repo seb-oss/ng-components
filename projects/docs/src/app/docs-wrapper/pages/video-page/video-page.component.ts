@@ -22,6 +22,7 @@ export class VideoPageComponent implements OnInit {
     showControls: boolean = true;
     showInfo: boolean = true;
     width: number = 535;
+    srcPlaceholder: string = `Try "https://player.vimeo.com/video/259422408" or "https://www.youtube.com/embed/f19fctL72CY"`;
 
     get src(): string {
         return this._src;

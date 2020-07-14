@@ -1,13 +1,37 @@
 <app-doc-page [importString]="importString">
     <ng-container example>
-        <sebng-tooltip [content]="content" [textReference]="textReference" [trigger]="trigger" [position]="position"
-            [theme]="theme" [className]="className">
-        </sebng-tooltip>
+        <div class="row">
+            <div class="col-12">
+                <sebng-tooltip
+                    [content]="content"
+                    [textReference]="textReference"
+                    [trigger]="trigger.value"
+                    [position]="position.value"
+                    [theme]="theme.value"
+                    [className]="className"
+                >
+                </sebng-tooltip>
+            </div>
+            <div class="col-12">
+                <sebng-tooltip
+                    [content]="content"
+                    [trigger]="trigger.value"
+                    [position]="position.value"
+                    [theme]="theme.value"
+                    [className]="className"
+                >
+                    Tooltip Reference in ng-content
+                </sebng-tooltip>
+            </div>
+        </div>
     </ng-container>
+    <ng-container code>{{ code }}</ng-container>
     <ng-container controls>
-        <!-- <select [(ngModel)]="iconPosition">
-            <option value="left">Left</option>
-            <option value="right">right</option>
-        </select> -->
+        <div class="col-12">
+            <sebng-textboxgroup className="col-12" label="textReference" [(ngModel)]="textReference"></sebng-textboxgroup>
+            <sebng-dropdown className="col-12" label="trigger" [list]="triggerList" [(ngModel)]="trigger"> </sebng-dropdown>
+            <sebng-dropdown className="col-12" label="position" [list]="positionList" [(ngModel)]="position"> </sebng-dropdown>
+            <sebng-dropdown className="col-12" label="theme" [list]="themeList" [(ngModel)]="theme"> </sebng-dropdown>
+        </div>
     </ng-container>
 </app-doc-page>

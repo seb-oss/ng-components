@@ -17,7 +17,8 @@
     <ng-container controls>
         <div class="row">
             <sebng-dropdown className="col-12" label="sourceType" [list]="sourceTypeList" [(ngModel)]="sourceType"> </sebng-dropdown>
-            <sebng-textboxgroup className="col-12" label="src" [(ngModel)]="src"></sebng-textboxgroup>
+            <sebng-textboxgroup className="col-10" label="src" [(ngModel)]="src"></sebng-textboxgroup>
+            <sebng-tooltip className="col-2" style="margin: auto;" [content]="srcPlaceholder" trigger="click"></sebng-tooltip>
             <sebng-textboxgroup className="col-12" label="height" [(ngModel)]="height"></sebng-textboxgroup>
             <sebng-textboxgroup className="col-12" label="width" [(ngModel)]="width"></sebng-textboxgroup>
             <sebng-checkbox className="col-12" label="allowFullScreen" [(ngModel)]="allowFullScreen"></sebng-checkbox>

@@ -31,8 +31,6 @@ export class TooltipComponent implements AfterViewInit {
     @Input() content: string | TemplateRef<any> = "";
     /** tooltip text reference with default SEB style */
     @Input() textReference: string = "";
-    /** tooltip reference which also can be passed with ngcontent */
-    @Input() tooltipReference: ElementRef<HTMLDivElement>;
     /** tooltip trigger method */
     @Input() trigger: TooltipTrigger = "hover";
     /** tooltip position */
@@ -48,7 +46,7 @@ export class TooltipComponent implements AfterViewInit {
     /** <!-- skip --> */
     hasContent: boolean = true;
     /** <!-- skip --> */
-    constructor(private cdr: ChangeDetectorRef) { }
+    constructor(private cdr: ChangeDetectorRef) {}
 
     ngAfterViewInit() {
         this.hasContent = this.contentref && this.contentref.nativeElement.childNodes.length > 0;
