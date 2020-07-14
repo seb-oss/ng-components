@@ -1,14 +1,14 @@
 import { Component } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { ProgressBarComponent, ProggressTheme, BarItem } from "./progressBar.component";
+import { ProgressBarComponent, ProggressTheme, BarItem } from "./progressbar.component";
 import { CommonModule } from "@angular/common";
-import { ProgressThemePipe } from "./progressTheme.pipe";
+import { ProgressThemePipe } from "./progress-theme.pipe";
 
 @Component({
-    selector: "test-sebng-progressBar",
+    selector: "test-sebng-progress-bar",
     template: `
-        <sebng-progressBar
+        <sebng-progress-bar
             [value]="value"
             [className]="className"
             [height]="height"
@@ -18,7 +18,7 @@ import { ProgressThemePipe } from "./progressTheme.pipe";
             [animated]="animated"
             [theme]="theme"
             [multiBars]="multiBars"
-        ></sebng-progressBar>
+        ></sebng-progress-bar>
     `,
 })
 class ProgressBarTestComponent {

@@ -1,2 +1,2 @@
-export * from "./progressBar.module";
-export * from "./progressBar.component";
+export * from "./progressbar.module";
+export * from "./progressbar.component";

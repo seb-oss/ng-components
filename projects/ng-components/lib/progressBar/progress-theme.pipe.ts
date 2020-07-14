@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { ProggressTheme } from "./progressBar.component";
+import { ProggressTheme } from "./progressbar.component";
 
 @Pipe({ name: "progressTheme" })
 export class ProgressThemePipe implements PipeTransform {

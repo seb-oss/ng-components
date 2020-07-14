@@ -1,4 +1,4 @@
-import { ViewEncapsulation, Component, Input } from "@angular/core";
+import { Component, Input, HostBinding } from "@angular/core";
 
 export type ProggressTheme = "success" | "warning" | "danger" | "info";
 export interface BarItem {
@@ -10,9 +10,8 @@ export interface BarItem {
 }
 
 @Component({
-    selector: "sebng-progressBar",
-    templateUrl: "./progressBar.component.html",
-    encapsulation: ViewEncapsulation.None,
+    selector: "sebng-progress-bar",
+    templateUrl: "./progressbar.component.html",
 })
 export class ProgressBarComponent {
     @Input() value?: number;
@@ -24,4 +23,5 @@ export class ProgressBarComponent {
     @Input() animated?: boolean;
     @Input() theme?: ProggressTheme;
     @Input() multiBars?: Array<BarItem>;
+    @HostBinding("style") styles: string = "width: 100%;";
 }

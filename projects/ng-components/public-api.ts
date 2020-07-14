@@ -13,7 +13,7 @@ export * from "./lib/loader";
 export * from "./lib/modal";
 export * from "./lib/notification";
 export * from "./lib/pagination";
-export * from "./lib/progressBar";
+export * from "./lib/progressbar";
 export * from "./lib/radio-group";
 export * from "./lib/rating";
 export * from "./lib/slider";
