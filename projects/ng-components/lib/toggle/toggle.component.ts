@@ -18,7 +18,7 @@ const CUSTOM_TEXTAREA_CONTROL_VALUE_ACCESSOR: Provider = {
     useExisting: forwardRef(() => ToggleComponent),
     multi: true,
 };
-
+/** A Slide toggle allows the user to change between two states */
 @Component({
     selector: "sebng-toggle",
     templateUrl: "./toggle.component.html",
@@ -27,12 +27,18 @@ const CUSTOM_TEXTAREA_CONTROL_VALUE_ACCESSOR: Provider = {
     providers: [CUSTOM_TEXTAREA_CONTROL_VALUE_ACCESSOR],
 })
 export class ToggleComponent implements ControlValueAccessor, OnInit, OnChanges {
+    /** Element class name */
     @Input() className?: string;
+    /** Element disabled state */
     @Input() disabled?: boolean;
+    /** Element ID */
     @Input() id?: string;
+    /** Element label */
     @Input() label?: string;
+    /** Element name */
     @Input() name?: string;
-    @Output() onChange = new EventEmitter<boolean>();
+    /** On change event which returns boolean */
+    @Output() onChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     public internalId: string;
 
