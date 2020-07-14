@@ -75,7 +75,7 @@ export class SideMenuComponent implements OnInit, OnDestroy {
     searchNavigations(e: KeyboardEvent): void {
         let highlightedItem: number;
         let children: HTMLCollectionOf<HTMLAnchorElement>;
-        switch (e.key.toLowerCase()) {
+        switch (e.key?.toLowerCase()) {
             case "escape":
                 if (this.search === "" && this.highlighted === -1) {
                     document.getElementById("searchTextBox").blur();
@@ -87,7 +87,6 @@ export class SideMenuComponent implements OnInit, OnDestroy {
             case "enter":
                 const currentElements: HTMLCollectionOf<HTMLAnchorElement> = this.listRef.nativeElement.children;
                 if (currentElements.length) {
-                    console.table({ highlighted: this.highlighted, search: this.search });
                     if (this.highlighted !== -1) {
                         currentElements.item(this.highlighted).click();
                         this.highlighted = -1;

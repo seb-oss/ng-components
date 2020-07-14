@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 
 @Component({
     selector: "app-doc-notes",
-    template: `<div class="card">Notes</div>`,
+    template: `<div class="card"><ng-content></ng-content></div>`,
     styles: [
         `
             .card {
