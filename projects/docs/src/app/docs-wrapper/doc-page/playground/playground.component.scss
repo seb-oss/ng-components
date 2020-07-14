@@ -2,10 +2,13 @@
 
 .playground.card {
     border-radius: 10px;
+    display: -ms-grid;
     display: grid;
     background-color: darken($gray-100, 2%);
     overflow: visible;
     grid-template-columns: 2fr 1fr;
+    -ms-grid-columns: 2fr 1fr;
+    -ms-grid-rows: auto 1fr;
     grid-template-areas:
         "nav apistitle"
         "example controls";
@@ -20,6 +23,9 @@
         padding: 0rem 0.5rem;
         background-color: $gray-300;
         border-top-left-radius: 10px;
+        grid-area: nav;
+        -ms-grid-column: 1;
+        -ms-grid-row: 1;
         .nav-link {
             padding: 0.5rem 0;
             margin: 0 1rem;
@@ -39,22 +45,30 @@
         grid-area: apistitle;
         font-weight: 500;
         border-top-right-radius: 10px;
+        -ms-grid-column: 2;
+        -ms-grid-row: 1;
     }
 
     > .example {
         padding: 1rem 1.5rem;
         grid-area: example;
+        -ms-grid-column: 1;
+        -ms-grid-row: 2;
     }
 
     > .code {
         grid-area: example;
         border-bottom-left-radius: 10px;
         overflow: hidden;
+        -ms-grid-column: 1;
+        -ms-grid-row: 2;
     }
 
     > .controls {
         padding: 1rem 1.5rem;
         grid-area: controls;
         border-top-right-radius: 10px;
+        -ms-grid-column: 2;
+        -ms-grid-row: 2;
     }
 }
