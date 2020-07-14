@@ -63,6 +63,7 @@ export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnCh
     @Output() onKeyUp = new EventEmitter<KeyboardEvent>();
     @Output() onLeftClick = new EventEmitter<MouseEvent>();
     @Output() onRightClick = new EventEmitter<MouseEvent>();
+    @Output() onSearch = new EventEmitter<KeyboardEvent>();
 
     private innerValue: Value;
 
@@ -135,6 +136,10 @@ export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnCh
 
     handleRightIconClick(e: MouseEvent): void {
         this.onRightClick?.emit(e);
+    }
+
+    handleSearch(e: KeyboardEvent): void {
+        this.onSearch?.emit(e);
     }
     // accessor props
     writeValue(val: Value): void {
