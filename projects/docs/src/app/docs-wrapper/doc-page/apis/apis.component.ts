@@ -17,7 +17,7 @@ import { Component, Input } from "@angular/core";
                     <tbody>
                         <tr *ngFor="let input of inputs">
                             <td>{{ input.name }}</td>
-                            <td>{{ input.type }}</td>
+                            <td class="text-primary">{{ input.type }}</td>
                             <td>{{ input.description }}</td>
                         </tr>
                     </tbody>

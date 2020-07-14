@@ -26,23 +26,16 @@
             </div>
         </sebng-modal>
     </ng-container>
+
+    <ng-container code>{{ code }}</ng-container>
+
     <ng-container controls>
         <div class="row">
             <div class="col-12">
-                size:
-                <select [(ngModel)]="size">
-                    <option value="">default</option>
-                    <option value="modal-lg">modal-lg</option>
-                    <option value="modal-sm">modal-sm</option>
-                </select>
+                <sebng-dropdown [list]="sizeList" label="Size:" [(ngModel)]="sizeItem"></sebng-dropdown>
             </div>
             <div class="col-12">
-                position:
-                <select [(ngModel)]="position">
-                    <option value="">default</option>
-                    <option value="right">right</option>
-                    <option value="left">left</option>
-                </select>
+                <sebng-dropdown [list]="positionList" label="Position:" [(ngModel)]="positionItem"></sebng-dropdown>
             </div>
             <div class="col-12">
                 <sebng-checkbox label="centered" [(ngModel)]="center"></sebng-checkbox>
@@ -56,6 +49,34 @@
             <div class="col-12">
                 <sebng-checkbox label="Enable escape key dismiss" [(ngModel)]="escapeDismiss"></sebng-checkbox>
             </div>
+        </div>
+    </ng-container>
+
+    <ng-container notes>
+        <div class="note-markdown">
+            <h2>Use Modal component</h2>
+            <h4>Modal Template</h4>
+            <p>this is how the modal template is created:</p>
+            <p>
+                The modal component accepts 3 selectors <span class="text-primary">header, body and footer</span> you can add inside each
+                selector any custom HTML Element.
+            </p>
+            <pre><code [highlight]="modalTemplate" [lineNumbers]="true"></code></pre>
+            <h4>Toggle Modal component</h4>
+            <p>The ModalComponent can be used to open modal dialogs with SEB Design styling and animations.</p>
+            <p>To be able to toggle component a modal reference should be created using <span class="text-primary">@ViewChild</span>.</p>
+            <pre><code [highlight]="createViewChild" [lineNumbers]="true"></code></pre>
+            <p>The modal is opened by calling the open method</p>
+            <pre><code [highlight]="openModalHTML" [lineNumbers]="true"></code></pre>
+
+            <p>The modal is closed by calling the close method</p>
+            <pre><code [highlight]="closeModalHTML"></code></pre>
+
+            <h2>Keyboard interaction</h2>
+            <p>
+                By default pressing the escape key will close the modal. While this behavior can be turned off via the
+                <span>escapeKeyDismiss</span> option.
+            </p>
         </div>
     </ng-container>
 </app-doc-page>

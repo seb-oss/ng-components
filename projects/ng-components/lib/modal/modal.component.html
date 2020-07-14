@@ -8,7 +8,7 @@
     [attr.aria-labelledby]="ariaLabel"
     [attr.aria-describedby]="ariaDescribedby"
     [ngClass]="modalPosition"
-    [@openClose]="{ value: toggleState, params: { time: animationDuration } }"
+    [@openClose]="{ value: toggleAnimationState, params: { time: animationDuration } }"
     (@openClose.done)="onAnimationDone($event)"
 >
     <div class="modal-dialog" [ngClass]="size" [class.modal-dialog-centered]="center" role="document">

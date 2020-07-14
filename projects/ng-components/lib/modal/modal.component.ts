@@ -16,11 +16,11 @@ import { fadeInAnimation } from "./animation";
 export class ModalComponent {
     /** Optional id for the modal. */
     @Input() id?: string;
-    /** Optional size of the modal window. */
+    /** Optional size of the modal window. Types: "modal-lg" | "modal-sm" */
     @Input() size?: ModalSizeType;
     /** Optional Input, toggles a vertically centered Modal. */
     @Input() center?: boolean;
-    /** Optional position, toggles the modal from the left or right */
+    /** Optional position, toggles the modal from the left or right. Types: "right" | "left" */
     @Input() position: ModalPositionType;
     /** Optional Input, toggles the modal in fullscreen */
     @Input() fullscreen?: boolean;
@@ -34,7 +34,7 @@ export class ModalComponent {
     @Input() ariaLabel?: string;
     /** Optional aria-describedby attribute value to set on the modal window. */
     @Input() ariaDescribedby?: string;
-    /** Optional Input, change the annimation duration */
+    /** Optional Input, change the annimation duration, accepts values in second and millisecond ex: "3s" or "3000" */
     @Input() animationDuration?: string = ".15s";
     @ViewChild("modalRef") modalRef: ElementRef;
     backDropRef: ComponentRef<SebModalBackdropComponent>;
@@ -80,7 +80,8 @@ export class ModalComponent {
         }
     }
 
-    get toggleState(): string {
+    /** toggles open and close state for the modal animation */
+    get toggleAnimationState(): string {
         return this.toggle ? "open" : "close";
     }
 
