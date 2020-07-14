@@ -1,11 +1,13 @@
 {
-  "name": "@sebgroup/ng-components",
-  "version": "0.0.0-semantically-released",
-  "peerDependencies": {
-    "@angular/common": "^10.0.2",
-    "@angular/core": "^10.0.2"
-  },
-  "dependencies": {
-    "tslib": "^2.0.0"
-  }
+    "name": "@sebgroup/ng-components",
+    "version": "0.0.0-semantically-released",
+    "peerDependencies": {
+        "@angular/common": "^10.0.2",
+        "@angular/core": "^10.0.2"
+    },
+    "dependencies": {
+        "tslib": "^2.0.0",
+        "@sebgroup/bootstrap": "^5.3.0",
+        "@sebgroup/frontend-tools": "^1.6.0"
+    }
 }
