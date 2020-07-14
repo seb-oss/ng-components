@@ -19,6 +19,6 @@
     <app-doc-apis *ngIf="section === 1" [inputs]="inputs" [outputs]="outputs"></app-doc-apis>
 
     <app-doc-notes *ngIf="contentNotes.innerText.length && section === 2">
-        {{ contentNotes.innerText }}
+        <div [innerHTML]="contentNotes.innerHTML"></div>
     </app-doc-notes>
 </div>
