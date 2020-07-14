@@ -30,6 +30,7 @@ export class SideMenuComponent implements OnInit, OnDestroy {
     @ViewChild("listRef") listRef: ElementRef;
 
     ngOnInit(): void {
+        console.log("here");
         document.addEventListener("keyup", this.documentKeyupListener);
     }
 

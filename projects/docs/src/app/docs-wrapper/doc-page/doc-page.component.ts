@@ -28,7 +28,6 @@ export class DocPageComponent implements OnInit, OnDestroy {
         if (this.importString) {
             try {
                 this.apiSub = this.apiService.initParse(this.importString).subscribe((data: Array<ApiSection>) => {
-                    console.log(data[0]);
                     if (data.length) {
                         this.name = data[0].name.replace("Component", "");
                         this.description = data[0].description;
