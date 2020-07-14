@@ -4,6 +4,8 @@
 $shadow: 0 3px 6px rgba(black, 0.16), 0 3px 6px rgba(black, 0.23);
 $shadow-light: 0 3px 6px rgba(black, 0.16);
 
+$base-transition-time: 200ms;
+
 aside.side-menu {
     position: relative;
     background-color: $gray-300;
@@ -19,9 +21,11 @@ aside.side-menu {
             padding: 1.25rem 0rem;
             overflow: hidden;
             opacity: 0;
+            transition: none;
         }
         > .toggle {
-            animation: close-side-menu 400ms forwards 400ms;
+            transform: translateX(60px);
+            opacity: 1;
         }
         &:not(.mobile) {
             > .sidemenu-content {
@@ -37,12 +41,35 @@ aside.side-menu {
             width: 0;
         }
     }
-    &.opened {
+    &.closing {
         > .sidemenu-content {
-            transition-delay: 200ms;
+            padding: 1.25rem 0rem;
+            overflow: hidden;
+            opacity: 0;
         }
         > .toggle {
-            animation: open-side-menu 400ms forwards;
+            animation: close-side-menu ($base-transition-time * 2) forwards ($base-transition-time * 2);
+        }
+        &:not(.mobile) {
+            > .sidemenu-content {
+                max-width: 0;
+            }
+        }
+        &.mobile {
+            > .sidemenu-content {
+                width: 0;
+            }
+        }
+        @include IE_only {
+            width: 0;
+        }
+    }
+    &.opening {
+        > .sidemenu-content {
+            transition-delay: $base-transition-time;
+        }
+        > .toggle {
+            animation: open-side-menu ($base-transition-time * 2) forwards;
         }
         &.mobile {
             > .sidemenu-content {
@@ -72,7 +99,7 @@ aside.side-menu {
         top: 18px;
         cursor: pointer;
         z-index: 20;
-        transition: transform 200ms linear 200ms;
+        transition: transform $base-transition-time linear $base-transition-time;
         width: 30px;
         height: 30px;
         text-align: center;
@@ -82,7 +109,7 @@ aside.side-menu {
             fill: $black;
             width: 24px;
             height: 14px;
-            transition: fill 100ms linear, transform 50ms linear;
+            transition: fill $base-transition-time/2 linear, transform $base-transition-time/4 linear;
         }
         &:hover {
             background-color: $gray-200;
@@ -104,7 +131,8 @@ aside.side-menu {
         -ms-transform: translate3d(0, 0, 0);
         transform: translate3d(0, 0, 0);
         padding: 1.25rem;
-        transition: max-width 400ms linear, width 400ms linear, padding 200ms linear, opacity 250ms linear;
+        transition: max-width ($base-transition-time * 2) linear, width ($base-transition-time * 2) linear,
+            padding $base-transition-time linear, opacity $base-transition-time * 1.25 linear;
         will-change: max-width, width;
         max-height: 100vh;
         overflow-y: auto;
@@ -126,7 +154,7 @@ aside.side-menu {
                 color: $black;
                 text-decoration: none;
                 border-right: 3px solid transparent;
-                transition: color 200ms linear;
+                transition: color $base-transition-time linear;
                 &:hover,
                 &:focus,
                 &.highlighted {
@@ -155,11 +183,11 @@ aside.side-menu {
                 &:before {
                     background-color: transparent;
                     opacity: 0.8;
-                    transition: background-color 200ms linear;
+                    transition: background-color $base-transition-time linear;
                 }
                 &:after {
                     border-right: 3px solid transparent;
-                    transition: border-color 200ms linear;
+                    transition: border-color $base-transition-time linear;
                 }
                 &.active {
                     color: $green;
@@ -193,7 +221,7 @@ aside.side-menu {
     > .input-group {
         .input-box-group-wrapper {
             direction: ltr;
-            transition: all 100ms linear;
+            transition: all $base-transition-time/2 linear;
             &:hover,
             &:focus-within {
                 box-shadow: $shadow-light;

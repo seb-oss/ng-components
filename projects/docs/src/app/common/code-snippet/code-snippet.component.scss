@@ -16,6 +16,10 @@
             margin-bottom: 2rem;
             box-shadow: 0 3px 6px rgba(black, 0.16), 0 3px 6px rgba(black, 0.23);
             border-radius: 15px;
+
+            & + div.snippet-icon {
+                border-top-right-radius: 15px;
+            }
         }
 
         &:hover {
@@ -32,7 +36,6 @@
         opacity: 0;
         transition: opacity 200ms, color 200ms;
         padding: 5px 10px;
-        border-top-right-radius: 15px;
 
         &:hover {
             opacity: 1;

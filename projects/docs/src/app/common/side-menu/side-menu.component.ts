@@ -26,11 +26,18 @@ export class SideMenuComponent implements OnInit, OnDestroy {
      */
     platform: "mac" | "win" = navigator.platform.substr(0, 3).toLocaleLowerCase() as any;
     modifier: string = this.platform === "win" ? "Control" : this.platform === "mac" ? "Command" : "";
+    prestine: boolean = true;
+    initialToggle: boolean;
+    isAnimating: boolean = false;
+
+    constructor() {
+        const value: string = localStorage.getItem(SIDE_MENU_STORAGE_KEY);
+        this.initialToggle = value === null ? true : JSON.parse(value);
+    }
 
     @ViewChild("listRef") listRef: ElementRef;
 
     ngOnInit(): void {
-        console.log("here");
         document.addEventListener("keyup", this.documentKeyupListener);
     }
 
@@ -55,6 +62,9 @@ export class SideMenuComponent implements OnInit, OnDestroy {
     }
 
     set toggle(value: boolean) {
+        if (this.prestine) {
+            this.prestine = false;
+        }
         localStorage.setItem(SIDE_MENU_STORAGE_KEY, String(value));
     }
 

@@ -1,5 +1,19 @@
-<aside class="side-menu" [class.opened]="toggle" [class.closed]="!toggle" [class.mobile]="isMobile">
-    <div class="toggle" (click)="this.toggle = !this.toggle">
+<aside
+    class="side-menu"
+    [class.opened]="(initialToggle && prestine) || (toggle && !isAnimating)"
+    [class.closed]="(!initialToggle && prestine) || (!toggle && !isAnimating)"
+    [ngClass]="{
+        openning: !prestine && toggle && isAnimating,
+        closing: !prestine && !toggle && isAnimating,
+        mobile: isMobile
+    }"
+>
+    <div
+        class="toggle"
+        (click)="this.toggle = !this.toggle; isAnimating = true"
+        (animationstart)="isAnimating = true"
+        (animationend)="isAnimating = false"
+    >
         <app-bars-icon [title]="modifier ? modifier + ' + `' : ''"></app-bars-icon>
     </div>
 
