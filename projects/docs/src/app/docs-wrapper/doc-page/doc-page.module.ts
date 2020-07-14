@@ -7,10 +7,11 @@ import { APIsComponent } from "./apis/apis.component";
 import { FormsModule } from "@angular/forms";
 import { PlaygroundComponent } from "./playground/playground.component";
 import { DocNotesComponent } from "./notes/notes.component";
+import { CodeSnippetModule } from "../../common/code-snippet/code-snippet.module";
 
 @NgModule({
     declarations: [DocPageComponent, PlaygroundComponent, APIsComponent, DocNotesComponent],
-    imports: [CommonModule, FormsModule, TabsModule],
+    imports: [CommonModule, FormsModule, TabsModule, CodeSnippetModule],
     exports: [DocPageComponent],
     providers: [APIExtractService],
 })

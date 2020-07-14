@@ -41,10 +41,14 @@
         border-top-right-radius: 10px;
     }
 
-    > .example {
+    > .example,
+    > .code {
         padding: 1rem 1.5rem;
         grid-area: "example";
         border-bottom-left-radius: 10px;
+        ::ng-deep code {
+            margin: 0;
+        }
     }
 
     > .controls {
