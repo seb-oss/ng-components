@@ -6,6 +6,7 @@ $transition-time: 200ms;
 .pagination-wrapper {
     > .custom-pagination {
         > .pagination {
+            margin: 0;
             > .page-item {
                 > .page-link {
                     position: relative;

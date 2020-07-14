@@ -32,9 +32,7 @@
         "no-var-requires": false,
         "object-literal-key-quotes": [true, "as-needed"],
         "quotemark": [true, "double"],
-        "semicolon": {
-            "options": ["always"]
-        },
+        "semicolon": [true, "always"],
         "space-before-function-paren": {
             "options": {
                 "anonymous": "never",

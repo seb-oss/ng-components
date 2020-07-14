@@ -1,15 +1,44 @@
 @import "~@sebgroup/bootstrap/scss/core";
 
-code.code-snippet {
-    display: block;
-    padding: 20px;
-    background-color: $gray-800;
-    color: $gray-200;
-    width: 100%;
+.code-snippet {
+    position: relative;
+    code {
+        display: block;
+        padding: 20px;
+        background-color: $gray-800;
+        color: $gray-200;
+        width: 100%;
 
-    &:not(.fill) {
-        margin-bottom: 2rem;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
-        border-radius: 15px;
+        &:not(.fill) {
+            margin-bottom: 2rem;
+            box-shadow: 0 3px 6px rgba(black, 0.16), 0 3px 6px rgba(black, 0.23);
+            border-radius: 15px;
+        }
+
+        &:hover {
+            & + div.copy-snippet {
+                opacity: 1;
+            }
+        }
+    }
+
+    div.copy-snippet {
+        position: absolute;
+        right: 0;
+        top: 0;
+        opacity: 0;
+        transition: opacity 200ms, color 200ms;
+        background-color: rgba(white, 0.4);
+        padding: 5px 10px;
+        cursor: pointer;
+
+        &:hover {
+            opacity: 1;
+            color: white;
+        }
+
+        svg {
+            margin-bottom: 2px;
+        }
     }
 }

@@ -10,19 +10,47 @@ const SIDE_MENU_STORAGE_KEY = "SIDEMENU";
     styleUrls: ["./side-menu.component.scss"],
 })
 export class SideMenuComponent implements OnInit, OnDestroy {
+    /** Making the config URLs (github, contributors, issues, etc) accessible in the template */
     urls: NavsURLs = urls;
-    // isMobile: boolean = useMediaQuery("(max-width: 420px)");
+    /** TODO: Add mobile detection */
     isMobile: boolean = false;
+    /** Search keyword(s) */
     search: string = "";
+    /** The highlighted item in the sidemenu. Items will be highlighted when navigating using arrow keys */
     highlighted: number = -1;
+    /** The list of components to be rendered in the sidemenu */
     components: Array<ComponentsListItem> = components.sort((a, b) => (a.name > b.name ? 1 : -1));
+    /**
+     * The operating system running the browser.
+     * This is used to determine the text that should be displayed to the user when hovering over the toggle button
+     */
+    platform: "mac" | "win" = navigator.platform.substr(0, 3).toLocaleLowerCase() as any;
+    /** The toggle title in Windows */
+    winToggleShortcutTitle: string = "Control + `";
+    /** The toggle title in Mac */
+    macToggleShortcutTitle: string = "Command + `";
 
     @ViewChild("listRef") listRef: ElementRef;
 
     ngOnInit(): void {
-        // console.log(this.toggle);
+        document.addEventListener("keyup", this.documentKeyupListener);
     }
 
+    /**
+     * A listener attached to the document to listen to shortcuts invocations
+     */
+    documentKeyupListener = (e: KeyboardEvent) => {
+        /** Toggles the side menu when `ctrl+\`` on Windows or `cmd+\`` on MacOS is invoked */
+        if ((e.ctrlKey || e.metaKey) && e.key === "`") {
+            this.toggle = !this.toggle;
+        }
+        /** Focuses on the search text box when `ctrl+shift+f` on Windows or `cmd+shift+f` on MacOS is invoked */
+        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === "f") {
+            document.getElementById("searchTextBox").focus();
+        }
+    };
+
+    /** The side menu toggle */
     get toggle(): boolean {
         const value: string = localStorage.getItem(SIDE_MENU_STORAGE_KEY);
         return value === null ? true : JSON.parse(value);
@@ -30,10 +58,6 @@ export class SideMenuComponent implements OnInit, OnDestroy {
 
     set toggle(value: boolean) {
         localStorage.setItem(SIDE_MENU_STORAGE_KEY, String(value));
-    }
-
-    onToggleClick(): void {
-        this.toggle = !this.toggle;
     }
 
     getChildIndex(children: HTMLCollectionOf<HTMLAnchorElement>, value: number): number {
@@ -53,8 +77,12 @@ export class SideMenuComponent implements OnInit, OnDestroy {
         let children: HTMLCollectionOf<HTMLAnchorElement>;
         switch (e.key.toLowerCase()) {
             case "escape":
-                this.highlighted = -1;
-                this.search = "";
+                if (this.search === "" && this.highlighted === -1) {
+                    document.getElementById("searchTextBox").blur();
+                } else {
+                    this.highlighted = -1;
+                    this.search = "";
+                }
                 break;
             case "enter":
                 const currentElements: HTMLCollectionOf<HTMLAnchorElement> = this.listRef.nativeElement.children;
@@ -100,5 +128,7 @@ export class SideMenuComponent implements OnInit, OnDestroy {
         }
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        document.removeEventListener("keyup", this.documentKeyupListener);
+    }
 }

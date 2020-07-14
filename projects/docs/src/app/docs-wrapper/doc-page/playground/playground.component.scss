@@ -49,6 +49,7 @@
     > .code {
         grid-area: example;
         border-bottom-left-radius: 10px;
+        overflow: hidden;
     }
 
     > .controls {
