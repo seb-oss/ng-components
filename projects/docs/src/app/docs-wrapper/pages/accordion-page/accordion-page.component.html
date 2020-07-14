@@ -1,18 +1,35 @@
 <app-doc-page [importString]="importString">
     <ng-container example>
-        <sebng-accordion [list]="accordionList"></sebng-accordion>
+        <sebng-accordion
+            [list]="accordionList"
+            [iconPosition]="iconPosition"
+            [alternative]="isAlt"
+            [activeIndex]="activeIndex"
+        ></sebng-accordion>
     </ng-container>
 
     <ng-container code>{{ code }}</ng-container>
 
-    <ng-container controls>
-        <select [(ngModel)]="iconPosition">
-            <option value="left">Left</option>
-            <option value="right">right</option>
-        </select>
-    </ng-container>
+    <div class="row" controls>
+        <label class="m-3"
+            >Icon position
+            <p><small>Show the icon on the left or right side</small></p>
+            <select class="custom-select" [(ngModel)]="iconPosition">
+                <option value="left">Left</option>
+                <option value="right">right</option>
+            </select>
+        </label>
+
+        <label class="col-12"
+            >Active index
+            <p><small>Dynamically set the index of the expanded list item</small></p>
+            <sebng-stepper [(ngModel)]="activeIndex" min="0" [max]="accordionList.length - 1"></sebng-stepper
+        ></label>
+
+        <sebng-checkbox class="col-12" [(ngModel)]="isAlt" label="Alternative" description="Show alternative look"></sebng-checkbox>
+    </div>
 
     <ng-container notes>
-        Do this and that
+        This version of the component does not support custom html for the content. It will be updated soon.
     </ng-container>
 </app-doc-page>

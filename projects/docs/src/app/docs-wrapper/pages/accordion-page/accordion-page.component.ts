@@ -7,6 +7,8 @@ import { AccrodionListItem, AccordionProps } from "@sebgroup/ng-components/accor
 })
 export class AccordionPageComponent implements OnInit {
     importString: string = require("!raw-loader!@sebgroup/ng-components/accordion/accordion.component");
+    isAlt: boolean = false;
+    activeIndex: number = 0;
     accordionList: Array<AccrodionListItem> = [
         {
             header: "Accordion List Item 1",
