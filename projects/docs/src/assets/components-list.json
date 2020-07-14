@@ -100,11 +100,6 @@
         "filePath": "pages/TimelinePage"
     },
     {
-        "name": "Step Tracker",
-        "path": "/docs/steptracker",
-        "filePath": "pages/StepTrackerPage"
-    },
-    {
         "name": "Breadcrumb",
         "path": "/docs/breadcrumb",
         "filePath": "pages/BreadcrumbPage"

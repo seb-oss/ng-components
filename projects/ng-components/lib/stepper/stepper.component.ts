@@ -8,7 +8,7 @@ const CUSTOM_STEPPER_CONTROL_VALUE_ACCESSOR: any = {
 };
 
 @Component({
-    selector: "seb-stepper",
+    selector: "sebng-stepper",
     templateUrl: "./stepper.component.html",
     styleUrls: ["./stepper.component.scss"],
     providers: [CUSTOM_STEPPER_CONTROL_VALUE_ACCESSOR],
