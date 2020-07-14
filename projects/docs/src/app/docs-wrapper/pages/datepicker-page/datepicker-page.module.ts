@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { DatePickerModule } from "@sebgroup/ng-components/date-picker";
+import { DatePickerModule } from "@sebgroup/ng-components/datePicker";
 import { DatepickerPageComponent } from "./datepicker-page.component";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
