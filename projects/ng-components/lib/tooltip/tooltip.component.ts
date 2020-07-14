@@ -13,9 +13,7 @@ import {
 import { trigger, transition, style, animate } from "@angular/animations";
 import { TooltipTheme, TooltipTrigger, TooltipPosition } from "./tooltip-content/tooltip-content.component";
 
-/**
- * A text label that acts as a helper to a specific item
- */
+/** A text label that acts as a helper to a specific item */
 @Component({
     selector: "sebng-tooltip",
     templateUrl: "./tooltip.component.html",
@@ -50,7 +48,7 @@ export class TooltipComponent implements AfterViewInit {
     /** <!-- skip --> */
     hasContent: boolean = true;
     /** <!-- skip --> */
-    constructor(private cdr: ChangeDetectorRef) {}
+    constructor(private cdr: ChangeDetectorRef) { }
 
     ngAfterViewInit() {
         this.hasContent = this.contentref && this.contentref.nativeElement.childNodes.length > 0;
