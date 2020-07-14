@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { ModalModule } from "@sebgroup/ng-components/modal";
+import { CheckBoxModule } from "@sebgroup/ng-components/checkBox";
 import { ModalPageComponent } from "./modal-page.component";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
@@ -10,7 +11,7 @@ const routes: Routes = [{ path: "", component: ModalPageComponent }];
 
 @NgModule({
     declarations: [ModalPageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, ModalModule],
+    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, ModalModule, CheckBoxModule],
     exports: [RouterModule, ModalModule],
 })
 export class ModalPageModule {}

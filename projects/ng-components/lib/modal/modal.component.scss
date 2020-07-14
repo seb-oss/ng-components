@@ -5,3 +5,33 @@
         display: none;
     }
 }
+.modal:not(.show).modal-aside {
+    &.modal-aside-right {
+        .modal-dialog {
+            animation: modal-slide-out-right 400ms forwards;
+        }
+    }
+    &.modal-aside-left {
+        .modal-dialog {
+            animation: modal-slide-out-left 400ms forwards;
+        }
+    }
+}
+
+@keyframes modal-slide-out-right {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(100%, 0, 0);
+    }
+}
+
+@keyframes modal-slide-out-left {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-100%, 0, 0);
+    }
+}

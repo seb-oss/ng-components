@@ -5,6 +5,7 @@ import { ModalSizeType, ModalPositionType } from "./modal.type";
 import { AnimationEvent } from "@angular/animations";
 import { fadeInAnimation } from "./animation";
 
+/**  */
 @Component({
     selector: "sebng-modal",
     styleUrls: ["./modal.component.scss"],
@@ -13,16 +14,27 @@ import { fadeInAnimation } from "./animation";
     animations: [fadeInAnimation],
 })
 export class ModalComponent {
+    /** Optional id for the modal. */
     @Input() id?: string;
+    /** Optional size of the modal window. */
     @Input() size?: ModalSizeType;
+    /** Optional Input, toggles a vertically centered Modal. */
     @Input() center?: boolean;
+    /** Optional position, toggles the modal from the left or right */
     @Input() position: ModalPositionType;
+    /** Optional Input, toggles the modal in fullscreen */
     @Input() fullscreen?: boolean;
+    /** Optional Input, if false it disables backdrop click dismiss */
     @Input() backdropDismiss?: boolean = true;
+    /** Optional Input, if false it disables escape key dismiss */
     @Input() escapeKeyDismiss?: boolean = true;
+    /** Optional custom class to append to the modal. */
     @Input() className?: string;
+    /** Optional aria-labelledby attribute value to set on the modal window. */
     @Input() ariaLabel?: string;
+    /** Optional aria-describedby attribute value to set on the modal window. */
     @Input() ariaDescribedby?: string;
+    /** Optional Input, change the annimation duration */
     @Input() animationDuration?: string = ".15s";
     @ViewChild("modalRef") modalRef: ElementRef;
     backDropRef: ComponentRef<SebModalBackdropComponent>;

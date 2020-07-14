@@ -2,14 +2,26 @@
     <ng-container example>
         <sebng-checkbox
             label="Checkbox label"
-            [description]="showDescription && 'with optional description'"
+            [description]="customDescriptionCheckbox ? description : showDescription && 'with optional description'"
             [(ngModel)]="model"
-        ></sebng-checkbox>
+            [disabled]="disableCheckbox"
+            [error]="customErrorCheckbox ? error : errorCheckbox && 'with error'"
+        >
+            <ng-template #description>
+                <div class="custom-description">I am a custom description <a href="www.google.com" target="_blank">read me please</a></div>
+            </ng-template>
+            <ng-template #error>
+                <div class="text-danger">Click on the <a href="www.google.com" target="_blank">error link</a></div>
+            </ng-template>
+        </sebng-checkbox>
     </ng-container>
     <ng-container controls>
-        <label>
-            Show description
-            <input type="checkbox" [(ngModel)]="showDescription" />
-        </label>
+        <div class="row">
+            <sebng-checkbox class="col-12" label="show description" [(ngModel)]="showDescription"></sebng-checkbox>
+            <sebng-checkbox class="col-12" label="custom description checkbox" [(ngModel)]="customDescriptionCheckbox"></sebng-checkbox>
+            <sebng-checkbox class="col-12" label="disable checkbox" [(ngModel)]="disableCheckbox"></sebng-checkbox>
+            <sebng-checkbox class="col-12" label="error checkbox" [(ngModel)]="errorCheckbox"></sebng-checkbox>
+            <sebng-checkbox class="col-12" label="custom error checkbox" [(ngModel)]="customErrorCheckbox"></sebng-checkbox>
+        </div>
     </ng-container>
 </app-doc-page>

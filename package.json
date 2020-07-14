@@ -82,7 +82,8 @@
         "raw-loader": "^4.0.1",
         "ts-node": "~8.3.0",
         "tslint": "~6.1.0",
-        "typescript": "~3.9.5"
+        "typescript": "~3.9.5",
+        "xregexp": "^4.3.0"
     },
     "config": {
         "commitizen": {

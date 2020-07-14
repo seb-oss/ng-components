@@ -19,7 +19,7 @@ interface ParsedAccessorDeclaration extends AccessorDeclaration {
 
 @Injectable()
 export class APIExtractService {
-    constructor() { }
+    constructor() {}
     $content: Observable<any>;
 
     /**
@@ -122,13 +122,13 @@ export class APIExtractService {
             .map((property: PropertyDeclaration) => {
                 return extractedProperties[property.name]
                     ? {
-                        ...property,
-                        default: extractedProperties[property.name].default,
-                        description: APIExtractService.parseComment(extractedProperties[property.name].comment?.trim()),
-                    }
+                          ...property,
+                          default: extractedProperties[property.name].default,
+                          description: APIExtractService.parseComment(extractedProperties[property.name].comment?.trim()),
+                      }
                     : {
-                        ...property,
-                    };
+                          ...property,
+                      };
             });
     }
 
@@ -174,10 +174,7 @@ export class APIExtractService {
      * @param type output type
      */
     static parseOutputType(type: string): APIInput {
-        const regex: RegExp = XRegExp(
-            `(EventEmitter<(?<type>[a-zA-Z]+)>)`,
-            "g"
-        );
+        const regex: RegExp = XRegExp(`(EventEmitter<(?<type>[a-zA-Z]+)>)`, "g");
         return XRegExp.exec(type, regex);
     }
 
