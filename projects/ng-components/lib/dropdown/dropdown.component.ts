@@ -29,20 +29,35 @@ const CUSTOM_DROPDOWN_CONTROL_VALUE_ACCESSOR: Provider = {
     providers: [CUSTOM_DROPDOWN_CONTROL_VALUE_ACCESSOR],
 })
 export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDestroy {
+    /** Element name */
     @Input() name: string;
+    /** List of dropdown items */
     @Input() list: Array<DropdownItem>;
+    /** Element ID */
     @Input() id?: string;
+    /** Element label */
     @Input() label?: string;
+    /** Error message of element */
     @Input() error?: string;
+    /** Element placeholder */
     @Input() placeHolder?: string;
+    /** Element class name */
     @Input() className?: string;
+    /** Property sets whether dropdown is disabled */
     @Input() disabled?: boolean = false;
+    /** Property sets whether native dropdown is rendered */
     @Input() native?: boolean = false;
+    /** Property sets whether user can select multiple items in the dropdown */
     @Input() multi?: boolean;
+    /** Property sets whether dropdown is clearable */
     @Input() clearable?: boolean = false;
+    /** Property sets whether dropdown is searchable */
     @Input() searchable?: boolean = false;
+    /** Search field placedholer */
     @Input() searchPlaceholder?: string = "";
+    /** On native change callback */
     @Input() nativeOnChange?: (event: DropdownItem | Array<DropdownItem> | UIEvent) => void;
+    /** Property sets whether dropdown is in ellipsis mode */
     @Input() ellipsisMode: boolean;
     // Placeholders for the callbacks which are later provided
     // by the Control Value Accessor

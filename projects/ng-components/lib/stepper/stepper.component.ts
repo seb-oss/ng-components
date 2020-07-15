@@ -7,6 +7,7 @@ const CUSTOM_STEPPER_CONTROL_VALUE_ACCESSOR: any = {
     multi: true,
 };
 
+/** A stepper makes it easier to input values that are in a narrow range */
 @Component({
     selector: "sebng-stepper",
     templateUrl: "./stepper.component.html",
@@ -15,11 +16,17 @@ const CUSTOM_STEPPER_CONTROL_VALUE_ACCESSOR: any = {
     encapsulation: ViewEncapsulation.None,
 })
 export class StepperComponent implements ControlValueAccessor {
+    /** Element class name */
     @Input() className?: string;
+    /** Element ID */
     @Input() id?: string;
+    /** Minimum value of the range */
     @Input() min?: number = 1;
+    /** Maximum value of the range */
     @Input() max?: number = 5;
+    /** Value that changes on every increment/decrement */
     @Input() step?: number = 1;
+    /** Property sets whether stepper is disabled */
     @Input() disabled?: boolean;
 
     private _invalid = false;

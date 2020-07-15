@@ -17,12 +17,19 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     encapsulation: ViewEncapsulation.None,
 })
 export class DatePickerComponent implements ControlValueAccessor {
+    /** Element placeholder */
     @Input() placeholder: string = "yyyy-mm-dd";
+    /** Element class name */
     @Input() className?: string;
+    /** Property sets whether a datepicker is a month picker  */
     @Input() monthPicker?: boolean = false;
+    /** Property sets whether SEB styled datepicker will be rendered despite the browser used */
     @Input() forceCustom?: boolean = false;
+    /** Property sets whether datepicker is disabled */
     @Input() disabled?: boolean = false;
+    /** Minimum range of date that can be selected */
     @Input() min?: Date;
+    /** Maximum range of date that can be selected */
     @Input() max?: Date;
 
     unitNames: { month: string; day: string; year: string } = {
@@ -32,6 +39,7 @@ export class DatePickerComponent implements ControlValueAccessor {
     };
 
     private _localeCode: string;
+    /** Locale of datepicker */
     @Input("localeCode")
     set localeCode(v: string) {
         this._localeCode = v;
@@ -62,16 +70,18 @@ export class DatePickerComponent implements ControlValueAccessor {
         });
         this._monthNames = monthNames;
     }
-    get localeCode() {
+    get localeCode(): string {
         return this._localeCode;
     }
 
     private _monthNames: string[];
+    /** <!-- skip --> */
     get monthNames(): string[] {
         return this._monthNames;
     }
 
     private _customPickerOrder: string[];
+    /** <!-- skip --> */
     get customPickerOrder(): string[] {
         return this._customPickerOrder;
     }
@@ -125,8 +135,9 @@ export class DatePickerComponent implements ControlValueAccessor {
             this.value = new Date("");
         }
     }
-
+    /** <!-- skip --> */
     private _customDay: number;
+    /** <!-- skip --> */
     get customDay(): number {
         if (this._customDay === undefined && !!this.inputRawValue) {
             const value: number = this.monthPicker ? 1 : Number(this.inputRawValue.substr(8, 2));
@@ -135,6 +146,7 @@ export class DatePickerComponent implements ControlValueAccessor {
         }
         return this._customDay;
     }
+    /** <!-- skip --> */
     set customDay(v: number) {
         if (!this.monthPicker) {
             this._customDay = v ? Number(v) : null;
@@ -151,6 +163,7 @@ export class DatePickerComponent implements ControlValueAccessor {
         }
         return this._customMonth;
     }
+    /** <!-- skip --> */
     set customMonth(v: number) {
         this._customMonth = v ? Number(v) : null;
         this.trySaveDate();
@@ -165,6 +178,7 @@ export class DatePickerComponent implements ControlValueAccessor {
         }
         return this._customYear;
     }
+    /** <!-- skip --> */
     set customYear(v: number) {
         this._customYear = v ? Number(v) : null;
         this.trySaveDate();
@@ -175,6 +189,7 @@ export class DatePickerComponent implements ControlValueAccessor {
     get value(): Date | null {
         return this._value;
     }
+    /** <!-- skip --> */
     set value(v: Date | null) {
         this.isDateInRange(
             v,

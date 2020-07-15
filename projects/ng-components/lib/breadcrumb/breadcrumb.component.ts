@@ -13,9 +13,13 @@ export interface ClickProps {
     encapsulation: ViewEncapsulation.None,
 })
 export class BreadcrumbComponent {
+    /** Element class name */
     @Input() className?: string;
+    /** Element ID */
     @Input() id?: string;
+    /** Breadcrumb list */
     @Input() list: Array<string>;
+    /** Onclick callback when breadcrumb item is clicked */
     @Output() onClick: EventEmitter<ClickProps> = new EventEmitter<ClickProps>();
 
     handleClick(index: number, e: MouseEvent): void {

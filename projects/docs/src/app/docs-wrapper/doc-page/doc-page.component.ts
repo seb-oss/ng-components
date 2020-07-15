@@ -31,7 +31,7 @@ export class DocPageComponent implements OnInit, OnDestroy {
                     if (data.length) {
                         this.name = data[0].name.replace("Component", "");
                         this.description = data[0].description;
-                        this.inputs = data[0].properties;
+                        this.inputs = [...data[0].properties, ...data[0].inputs];
                         this.outputs = data[0].outputs;
                     }
                 });

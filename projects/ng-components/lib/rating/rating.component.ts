@@ -8,6 +8,7 @@ export const CUSTOM_RATING_VALUE_ACCESSOR: any = {
     multi: true,
 };
 
+/** Rating is a component to indicate user interest in content */
 @Component({
     selector: "sebng-rating",
     templateUrl: "./rating.component.html",
@@ -16,19 +17,29 @@ export const CUSTOM_RATING_VALUE_ACCESSOR: any = {
     encapsulation: ViewEncapsulation.None,
 })
 export class RatingComponent implements ControlValueAccessor, OnInit {
+    /** Visual width of rating icon */
     @Input() iconWidth?: number = 25;
+    /** Visual height of rating icon */
     @Input() iconHeight?: number = 25;
+    /** Maximum value that can be given  */
     @Input() max?: number = 5;
+    /** Property sets whether rating is readonly */
     @Input() readOnly?: boolean = false;
+    /** List of tooltip corresponding to each icon */
     @Input() tooltipList?: Array<string>;
+    /** Element class name */
     @Input() className?: string;
+    /** Property sets whether rating's icon is hollow */
     @Input() useHollow?: boolean;
+    /** Property sets whether rating will show value */
     @Input() showValue?: boolean;
+    /** Property sets whether rating will show text value */
     @Input() showTextValue?: boolean;
 
     randomIds: Array<string> = [];
 
     /**
+     * Colors of icons
      * @member 0 Grey (unselected)
      * @member 1 Yellow (Selected)
      */
