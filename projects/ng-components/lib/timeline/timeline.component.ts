@@ -8,6 +8,7 @@ export interface TimelineListItem {
 
 export type TimelineDirection = "vertical" | "horizontal";
 
+/** Timeline is component to display of a list of events in chronological order */
 @Component({
     selector: "sebng-timeline",
     templateUrl: "./timeline.component.html",
@@ -15,11 +16,15 @@ export type TimelineDirection = "vertical" | "horizontal";
     encapsulation: ViewEncapsulation.None,
 })
 export class TimelineComponent implements OnInit {
+    /** List of events */
     @Input() list: Array<TimelineListItem>;
+    /** Direction of timeline */
     @Input() direction?: TimelineDirection = "vertical";
-    @Output() onClick? = new EventEmitter<number>();
-
+    /** Element class name */
     @Input() className?: string;
+
+    /** Callback when timeline event is clicked */
+    @Output() onClick?: EventEmitter<number> = new EventEmitter<number>();
 
     @HostBinding("style") styles: string = "width: 100%;";
 

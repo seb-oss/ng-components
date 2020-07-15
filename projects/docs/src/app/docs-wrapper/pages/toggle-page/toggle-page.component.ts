@@ -15,14 +15,14 @@ export class TogglePageComponent implements OnInit {
     isToggled: boolean = false;
     notificationMessage: string = "";
 
-    onCheckboxChange(): void {
-        this.isToggled = true;
-        this.notificationMessage = `Checkbox is set to ${this.checked}`;
-    }
-
     constructor() {
         document.title = "Toggle - SEB Angular Components";
     }
 
     ngOnInit(): void {}
+
+    onCheckboxChange(): void {
+        this.isToggled = true;
+        this.notificationMessage = `Checkbox is set to ${this.checked}`;
+    }
 }

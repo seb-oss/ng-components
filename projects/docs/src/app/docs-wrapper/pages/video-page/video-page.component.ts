@@ -35,6 +35,7 @@ export class VideoPageComponent implements OnInit {
         { value: "stream", label: "stream" },
     ];
     sourceType: VideoSourceType = this.sourceTypeList[0].value;
+
     constructor() {
         document.title = "Video - SEB Angular Components";
     }
