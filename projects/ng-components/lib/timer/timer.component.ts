@@ -2,20 +2,25 @@ import { Component, Input, ViewEncapsulation, Output, EventEmitter, ChangeDetect
 import { timer, Observable } from "rxjs";
 import { map, takeWhile, finalize } from "rxjs/operators";
 
+/** A timer is a component for measuring time intervals */
 @Component({
     selector: "sebng-timer",
     templateUrl: "./timer.component.html",
     encapsulation: ViewEncapsulation.None,
 })
 export class TimerComponent {
+    /** Element ID */
     @Input() id?: string;
+    /** Element class name */
     @Input() className?: string;
-    @Output() onTimerEnd = new EventEmitter<void>();
+    /** Callback when timer ends */
+    @Output() onTimerEnd: EventEmitter<void> = new EventEmitter<void>();
 
     public timer: Observable<string>;
 
     private _duration: number;
 
+    /** Timer's duration */
     @Input()
     get duration() {
         return this._duration;

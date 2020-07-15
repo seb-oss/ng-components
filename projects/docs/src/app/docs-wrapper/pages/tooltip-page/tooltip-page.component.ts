@@ -1,7 +1,5 @@
 import { Component, OnInit, TemplateRef, ElementRef } from "@angular/core";
 import { TooltipTrigger, TooltipPosition, TooltipTheme } from "@sebgroup/ng-components/tooltip";
-import { DropdownItem } from "@sebgroup/ng-components/dropdown";
-import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 
 @Component({
     selector: "app-tooltip-page",
