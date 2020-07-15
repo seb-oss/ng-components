@@ -39,7 +39,7 @@ import { Component, Input } from "@angular/core";
                     <tbody>
                         <tr *ngFor="let output of outputs">
                             <td>{{ output.name }}</td>
-                            <td>{{ output.type }}</td>
+                            <td class="text-primary">{{ output.type }}</td>
                             <td>{{ output.description }}</td>
                         </tr>
                     </tbody>

@@ -7,9 +7,33 @@ import { BehaviorSubject } from "rxjs";
     template: `
         <app-doc-page [importString]="importString">
             <ng-container example>
-                <sebng-table [rows]="rows$ | async" [headerList]="headerList$ | async"></sebng-table>
+                <sebng-table
+                    class="w-100"
+                    [rows]="rows$ | async"
+                    [headerList]="headerList$ | async"
+                    [selectable]="selectable"
+                    [fixedHeight]="hasFixedHeight ? height + 'px' : null"
+                ></sebng-table>
             </ng-container>
-            <ng-container controls> </ng-container>
+            <div class="row" controls>
+                <sebng-checkbox
+                    [(ngModel)]="selectable"
+                    label="Selectable"
+                    description="Enable selectable rows with checkboxes"
+                ></sebng-checkbox>
+
+                <sebng-checkbox
+                    [(ngModel)]="hasFixedHeight"
+                    label="Fixed Height"
+                    description="Preserve table height and scroll the content"
+                ></sebng-checkbox>
+
+                <label *ngIf="hasFixedHeight" class="p-3"
+                    >Table height
+                    <p><small>Set the height of the table (in px)</small></p>
+                    <sebng-stepper [(ngModel)]="height" [min]="20" [max]="200" [step]="5"></sebng-stepper>
+                </label>
+            </div>
             <ng-container code>{{ snippet }}</ng-container>
             <ng-container notes> // TODO: Add info about the table service </ng-container>
         </app-doc-page>
@@ -17,8 +41,20 @@ import { BehaviorSubject } from "rxjs";
     providers: [TableService],
 })
 export class TablePageComponent {
+    // controls
+    selectable: boolean = false;
+    hasFixedHeight: boolean = false;
+    height: number = 80;
+
     importString: string = require("!raw-loader!@sebgroup/ng-components/table/table.component");
-    snippet: string = `<sebng-table [rows]="rows$ | async" [headerList]="headerList$ | async"></sebng-table>`;
+    snippet: string = `
+    <sebng-table
+        [rows]="rows$ | async"
+        [headerList]="headerList$ | async"
+        [selectable]="selectable"
+        [fixedHeight]="hasFixedHeight ? height + 'px' : null"
+    ></sebng-table>
+    `;
     data: any[] = [
         { country: "Malaysia", currency: "RM" },
         { country: "Slovenia", currency: "EUR", language: "Slovenian" },
