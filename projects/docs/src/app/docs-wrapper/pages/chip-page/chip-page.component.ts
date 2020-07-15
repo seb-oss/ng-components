@@ -6,6 +6,7 @@ import { Component, OnInit } from "@angular/core";
 })
 export class ChipPageComponent implements OnInit {
     importString: string = require("!raw-loader!@sebgroup/ng-components/chip/chip.component");
+    snippet: string = `<sebng-chip>Chip label</sebng-chip>`;
 
     constructor() {
         document.title = "Chip - SEB Angular Components";
