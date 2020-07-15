@@ -11,7 +11,7 @@ import { Component, Input } from "@angular/core";
                         <tr>
                             <th>Inputs</th>
                             <th>Type</th>
-                            <th>Descrption</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,7 +33,7 @@ import { Component, Input } from "@angular/core";
                         <tr>
                             <th>Outputs</th>
                             <th>Params</th>
-                            <th>Descrption</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
