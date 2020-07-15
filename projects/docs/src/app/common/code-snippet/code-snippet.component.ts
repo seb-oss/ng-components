@@ -23,7 +23,7 @@ export class CodeSnippetComponent {
     @ViewChild("originalCodeHolder") codeHolder: ElementRef<HTMLSpanElement>;
 
     copied: boolean = false;
-    timer: { current: NodeJS.Timeout } = { current: null };
+    timer: { current: any } = { current: null };
 
     /** Copy the code snippet to the clipboard */
     copySnippet(): void {

@@ -1,9 +1,59 @@
 <app-doc-page [importString]="importString">
     <ng-container example>
-        <button class="btn btn-primary" (click)="toggle = !toggle">Toggle notification</button>
+        <button class="btn btn-primary" (click)="toggle = true">Toggle notification</button>
 
-        <sebng-notification [toggle]="toggle" title="Notification Title" [message]="'message'" [dismissable]="false"></sebng-notification>
+        <sebng-notification
+            [toggle]="toggle"
+            (dismiss)="this.toggle = false"
+            [title]="showTitle ? 'Notification title' : undefined"
+            [message]="'Notification message'"
+            [style]="style.value"
+            [theme]="theme.value"
+            [position]="style.value === 'bar' ? positionBar.value : position.value"
+            [dismissable]="dismissable"
+            [persist]="persist"
+            [actions]="showActions ? actions : undefined"
+        ></sebng-notification>
     </ng-container>
-    <ng-container controls> </ng-container>
+    <ng-container controls>
+        <div class="form-group">
+            <sebng-dropdown label="Style" [(ngModel)]="style" [list]="styleList"></sebng-dropdown>
+        </div>
+        <div class="form-group">
+            <sebng-dropdown label="Theme" [(ngModel)]="theme" [list]="themeList"></sebng-dropdown>
+        </div>
+        <div class="form-group">
+            <sebng-dropdown
+                *ngIf="style.value === 'slide-in'"
+                label="Position (slide-in style only)"
+                [(ngModel)]="position"
+                [list]="positionList"
+            ></sebng-dropdown>
+            <sebng-dropdown
+                *ngIf="style.value === 'bar'"
+                label="Position (bar style only)"
+                [(ngModel)]="positionBar"
+                [list]="positionBarList"
+            ></sebng-dropdown>
+        </div>
+        <div class="form-group">
+            <sebng-checkbox label="Show/hide title" [(ngModel)]="showTitle"></sebng-checkbox>
+            <sebng-checkbox
+                label="Dismissable"
+                description="Shows a close button for the user to dismiss it"
+                [(ngModel)]="dismissable"
+            ></sebng-checkbox>
+            <sebng-checkbox
+                label="Persist"
+                description="Persists the notification until its dismissed manually"
+                [(ngModel)]="persist"
+            ></sebng-checkbox>
+            <sebng-checkbox
+                label="Actions"
+                description="You can add up to 2 actions inside the notification"
+                [(ngModel)]="showActions"
+            ></sebng-checkbox>
+        </div>
+    </ng-container>
     <ng-container code>{{ snippet }}</ng-container>
 </app-doc-page>

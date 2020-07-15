@@ -16,7 +16,7 @@ export class ProgressbarPageComponent implements OnInit, OnDestroy {
     importString: string = require("!raw-loader!@sebgroup/ng-components/progressbar/progressbar.component");
     snippet: string = `<sebng-progress-bar [value]="progress"></sebng-progress-bar>`;
 
-    timerRef: NodeJS.Timeout;
+    timerRef: any;
     progress: number;
 
     constructor() {

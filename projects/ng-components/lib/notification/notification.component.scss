@@ -58,6 +58,7 @@ $wrapper-active-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 1px 2px 11px rgba(0, 0, 0, 0.5
         }
 
         .notification-title {
+            color: white;
             font-weight: 500;
             padding-right: 10px;
             user-select: none;
@@ -65,15 +66,58 @@ $wrapper-active-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 1px 2px 11px rgba(0, 0, 0, 0.5
         }
 
         .notification-message {
+            color: white;
             font-size: $small;
             padding-right: 18px;
             user-select: none;
+            margin: 0;
+        }
+
+        .actions-wrapper {
+            margin-top: 10px;
+
+            .action-wrapper {
+                text-align: center;
+
+                .notification-action {
+                    background-color: transparent;
+                    width: 100%;
+                    border: 1px solid $white;
+                    border-radius: 3px;
+                    will-change: background-color, color;
+                    transition: background-color 200ms, color 200ms;
+                    color: $white;
+
+                    &:hover {
+                        background-color: $white;
+                    }
+
+                    &:focus {
+                        box-shadow: none;
+                    }
+                }
+            }
+
+            &.partitioned {
+                .action-wrapper {
+                    display: inline-block;
+                    width: 50%;
+
+                    &:first-child {
+                        padding-right: 2px;
+                    }
+
+                    &:last-child {
+                        padding-left: 2px;
+                    }
+                }
+            }
         }
     }
 
     .dismiss-btn {
         position: absolute;
-        top: 12px;
+        top: 10px;
         right: 8px;
         cursor: pointer;
         will-change: top, right;
@@ -136,47 +180,6 @@ $wrapper-active-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 1px 2px 11px rgba(0, 0, 0, 0.5
                     }
                 }
             }
-
-            .actions-wrapper {
-                margin-top: 10px;
-
-                .action-wrapper {
-                    text-align: center;
-
-                    .notification-action {
-                        background-color: transparent;
-                        width: 100%;
-                        border: 1px solid $white;
-                        border-radius: 3px;
-                        will-change: background-color, color;
-                        transition: background-color 200ms, color 200ms;
-                        color: $white;
-
-                        &:hover {
-                            background-color: $white;
-                        }
-
-                        &:focus {
-                            box-shadow: none;
-                        }
-                    }
-                }
-
-                &.partitioned {
-                    .action-wrapper {
-                        display: inline-block;
-                        width: 50%;
-
-                        &:first-child {
-                            padding-right: 2px;
-                        }
-
-                        &:last-child {
-                            padding-left: 2px;
-                        }
-                    }
-                }
-            }
         }
     }
 
@@ -184,6 +187,23 @@ $wrapper-active-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 1px 2px 11px rgba(0, 0, 0, 0.5
         width: 100vw;
         left: 0;
         right: 0;
+
+        .content-wrapper {
+            display: flex;
+            align-items: center;
+
+            .notification-title {
+                margin-bottom: 0;
+            }
+
+            .actions-wrapper {
+                display: flex;
+                margin: 0;
+                > .action-wrapper:first-child:not(:last-child) {
+                    margin-right: 10px;
+                }
+            }
+        }
 
         &.top {
             top: 0;

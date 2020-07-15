@@ -1,4 +1,15 @@
-import { OnChanges, Component, ViewEncapsulation, Input, Output, EventEmitter, OnInit, SimpleChanges, OnDestroy } from "@angular/core";
+import {
+    OnChanges,
+    Component,
+    ViewEncapsulation,
+    Input,
+    Output,
+    EventEmitter,
+    OnInit,
+    SimpleChanges,
+    OnDestroy,
+    HostListener,
+} from "@angular/core";
 
 export type NotificationStyle = "slide-in" | "bar";
 export type NotificationPosition = "bottom-left" | "bottom-right" | "top-left" | "top-right" | "top" | "bottom";
@@ -20,11 +31,11 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
     /** Element class name */
     @Input() className?: string;
     /** Property sets whether the notification is dismissable */
-    @Input() dismissable?: boolean;
+    @Input() dismissable?: boolean = true;
     /** Interval for the notification to be dismissed */
     @Input() dismissTimeout?: number;
     /** Persist notification until dismissed (default: false) */
-    @Input() persist?: boolean;
+    @Input() persist?: boolean = false;
     /** Notification position, "bottom-left" | "bottom-right" | "top-left" | "top-right" | "top" | "bottom" */
     @Input() position?: NotificationPosition;
     /** Notification style, "slide-in" | "bar" */
@@ -40,15 +51,15 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
     /** Display action buttons - max: 2 actions */
     @Input() actions?: Array<NotificationAction>;
     /** Callback when notification is clicked */
-    @Output() onClick?: EventEmitter<MouseEvent> = new EventEmitter();
+    @Output() onClick?: (e?: MouseEvent) => void;
     /** Callback when notification is dismissed */
-    @Output() onDismiss?: EventEmitter<void> = new EventEmitter();
+    @Output() dismiss?: EventEmitter<void> = new EventEmitter();
 
     public notificationClassNames: string;
     public showNotificationBody: boolean = false;
     public showNotificationTitle: boolean = false;
-    private timerRef: number = null;
-    private defaultTimeout: number = 5000;
+    private timerRef: { current: any } = { current: null };
+    private defaultTimeout: any = 5000;
 
     // helper functions
 
@@ -70,9 +81,7 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
         this.showNotificationBody = styleClass === "style-slide-in" && this.actions && this.actions.length && this.actions.length < 3;
     }
 
-    /**
-     * Get the theme class based on the theme passed though the props
-     */
+    /** Get the theme class based on the theme passed though the props */
     private getThemeClass(): void {
         let themeClass: string = "theme-";
         if (
@@ -86,9 +95,7 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
         this.notificationClassNames += " " + themeClass;
     }
 
-    /**
-     * Get the position class based on the position and style passed through the props
-     */
+    /** Get the position class based on the position and style passed through the props */
     private getPositionClass(): void {
         let positionClass: string;
         const position: string = this.position;
@@ -124,22 +131,22 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
     /** Start the timer to dismiss the notification */
     private startTimer(): void {
         this.clearTimer();
-        this.timerRef = window.setTimeout(() => {
-            this.dismiss();
+        this.timerRef.current = setTimeout(() => {
+            this.dismissNotification();
         }, this.dismissTimeout || this.defaultTimeout);
     }
 
     /** Dismiss the notification */
-    public dismiss(): void {
+    public dismissNotification(): void {
         this.clearTimer();
-        this.onDismiss && this.onDismiss.emit();
+        this.dismiss.emit();
     }
 
     /** Clear the timer that dismisses the notification */
     private clearTimer(): void {
-        if (this.timerRef) {
-            clearTimeout(this.timerRef);
-            this.timerRef = null;
+        if (this.timerRef.current) {
+            clearTimeout(this.timerRef.current);
+            this.timerRef.current = null;
         }
     }
 
@@ -154,12 +161,14 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     // events
-
-    handleClick(e: MouseEvent) {
-        this.onClick.emit(e);
+    ngOnInit(): void {
+        this.setClassNames();
+        if (this.toggle && !this.persist) {
+            this.startTimer();
+        }
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.toggle) {
             if (this.toggle && !this.persist) {
                 this.startTimer();
@@ -173,12 +182,9 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
         if (changes.style || changes.position || changes.className || changes.actions || changes.theme) {
             this.setClassNames();
         }
-    }
 
-    ngOnInit() {
-        this.setClassNames();
-        if (this.toggle && !this.persist) {
-            this.startTimer();
+        if (changes.persist) {
+            this.clearTimer();
         }
     }
 
