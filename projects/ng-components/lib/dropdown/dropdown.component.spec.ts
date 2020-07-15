@@ -13,7 +13,7 @@ import { CommonModule } from "@angular/common";
             [list]="list"
             [label]="label"
             [error]="error"
-            [placeHolder]="placeHolder"
+            [placeholder]="placeholder"
             [className]="className"
             [disabled]="disabled"
             [native]="native"
@@ -30,7 +30,7 @@ class DropdownTestComponent {
     list: Array<DropdownItem>;
     label?: string;
     error?: string;
-    placeHolder?: string;
+    placeholder?: string;
     className?: string;
     disabled?: boolean = false;
     native?: boolean = false;
@@ -112,7 +112,7 @@ describe("DropdownComponent", () => {
     }));
 
     it("Should render placeholder when passed", async(() => {
-        component.placeHolder = "Some placeholder";
+        component.placeholder = "Some placeholder";
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css(".title"))).toBeDefined();
         /** Testing placeholder in native */
@@ -126,7 +126,7 @@ describe("DropdownComponent", () => {
     }));
 
     it('Should display label "Select ..." when no placeholder is defined and no item is selected', async(() => {
-        component.placeHolder = null;
+        component.placeholder = null;
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css(".title")).nativeElement.innerHTML.trim()).toEqual("Select ...");
     }));

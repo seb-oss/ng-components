@@ -3,14 +3,12 @@
         [type]="type"
         *ngSwitchCase="'input'"
         [ngClass]="theme | buttonClasses: size:block:className"
-        (click)="handleClick($event)"
         [disabled]="disabled"
         [attr.id]="id"
         [attr.name]="name"
         [value]="label"
         [attr.aria-disabled]="disabled"
-        [attr.aria-pressed]="active"
-        [class.active]="active"
+        [attr.title]="title"
     />
 
     <a
@@ -18,12 +16,10 @@
         role="button"
         *ngSwitchCase="'anchor'"
         [ngClass]="theme | buttonClasses: size:block:className"
-        (click)="handleClick($event)"
         [class.disabled]="disabled"
         [attr.id]="id"
         [attr.name]="name"
-        [attr.aria-pressed]="active"
-        [class.active]="active"
+        [attr.title]="title"
     >
         <ng-content></ng-content>
     </a>
@@ -33,13 +29,11 @@
         *ngSwitchDefault
         [ngClass]="theme | buttonClasses: size:block:className"
         data-toggle="button"
-        [attr.aria-pressed]="active"
-        (click)="handleClick($event)"
         [disabled]="disabled"
         [attr.aria-disabled]="disabled"
         [attr.id]="id"
         [attr.name]="name"
-        [class.active]="active"
+        [attr.title]="title"
     >
         <ng-content></ng-content>
     </button>

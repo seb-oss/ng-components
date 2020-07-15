@@ -70,6 +70,7 @@
         grid-area: controls;
         border-top-right-radius: 10px;
         align-items: flex-start;
+        flex-direction: column;
         -ms-grid-column: 2;
         -ms-grid-row: 2;
     }

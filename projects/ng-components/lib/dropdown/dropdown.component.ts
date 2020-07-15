@@ -11,6 +11,7 @@ import {
     NgZone,
     SimpleChanges,
     Provider,
+    HostBinding,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { fromEvent, Subscription } from "rxjs";
@@ -34,7 +35,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     @Input() id?: string;
     @Input() label?: string;
     @Input() error?: string;
-    @Input() placeHolder?: string;
+    @Input() placeholder?: string;
     @Input() className?: string;
     @Input() disabled?: boolean = false;
     @Input() native?: boolean = false;
@@ -44,6 +45,12 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     @Input() searchPlaceholder?: string = "";
     @Input() nativeOnChange?: (event: DropdownItem | Array<DropdownItem> | UIEvent) => void;
     @Input() ellipsisMode: boolean;
+    @Input() block?: boolean;
+
+    @HostBinding("style") get styles(): string {
+        return this.block ? "width: 100%;" : null;
+    }
+
     // Placeholders for the callbacks which are later provided
     // by the Control Value Accessor
     private onTouchedCallback: () => void;
@@ -448,7 +455,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
             return (this.selectedValue as DropdownItem).label;
         }
 
-        return this.placeHolder && this.placeHolder.length ? this.placeHolder : "Select ...";
+        return this.placeholder && this.placeholder.length ? this.placeholder : "Select ...";
     }
 
     handleItemOnMouseMove(event: MouseEvent, index: number): void {
@@ -478,11 +485,11 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     }
 }
 
-export interface DropdownItem {
+export interface DropdownItem<T = any> {
     /** The label or text to be displayed in the list */
     label: string;
     /** any value which should be tied to the item */
-    value: any;
+    value: T;
     /** The id or the unique key of the item */
     key: string;
 }

@@ -1,42 +1,44 @@
-import { Component, Input, ViewEncapsulation, EventEmitter, Output, OnInit } from "@angular/core";
+import { Component, Input, ViewEncapsulation, HostBinding } from "@angular/core";
 
 export type ButtonTheme = "primary" | "secondary" | "danger" | "outline-primary" | "outline-danger" | "dark" | "light" | "link";
-
 export type ButtonSize = "lg" | "md" | "sm";
 export type ButtonIconPosition = "right" | "left";
-
-export type ButtonTypes = "submit" | "button" | "reset";
-export type ButtonTags = "input" | "button" | "anchor";
+export type ButtonType = "submit" | "button" | "reset";
+export type ButtonTag = "input" | "button" | "anchor";
 
 /** Buttons allow users to take action with a single tap. */
 @Component({
     selector: "sebng-button",
-    styleUrls: ["./button.component.scss"],
     templateUrl: "./button.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent {
+    /** Element ID */
     @Input() id?: string;
+    /** Element name */
     @Input() name?: string;
+    /** Element label */
     @Input() label?: string;
+    /** Element class */
     @Input() className?: string;
-    @Input() type?: ButtonTypes;
-    @Input() tag?: ButtonTags = "button";
-    @Input() theme?: ButtonTheme;
-    @Input() size?: ButtonSize;
+    /** Button type can be either `button`, `submit` or `reset`. Default is `button` */
+    @Input() type?: ButtonType = "button";
+    /** Button tag can be either `button`, `input` or `anchor`. Default is `button` */
+    @Input() tag?: ButtonTag = "button";
+    /** Button theme follows bootstrap theme names. Default is `primary` */
+    @Input() theme?: ButtonTheme = "primary";
+    /** Button size can be either `sm`, `md` or `lg`. Default is `md` */
+    @Input() size?: ButtonSize = "md";
+    /** Element disabled state */
     @Input() disabled?: boolean;
-    @Input() active?: boolean;
+    /** Displays the button as a block spanning the full width of its parent */
     @Input() block?: boolean;
+    /** Element href value. Only works when tag is set tot `anchor` */
     @Input() href?: string;
+    /** Element title */
+    @Input() title?: string;
 
-    @Output() onClick: EventEmitter<Event> = new EventEmitter();
-
-    ngOnInit() {
-        this.type = this.type || "button";
-        this.theme = this.theme || "primary";
-    }
-
-    handleClick(e: Event): void {
-        this.onClick && this.onClick.emit(e);
+    @HostBinding("style") get styles(): string {
+        return this.block ? "width: 100%;" : null;
     }
 }

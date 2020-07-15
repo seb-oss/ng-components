@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { ButtonModule } from "./button.module";
-import { ButtonTheme, ButtonSize, ButtonTags, ButtonComponent } from "./button.component";
+import { ButtonTheme, ButtonSize, ButtonTag, ButtonComponent } from "./button.component";
 import { By } from "@angular/platform-browser";
 import { Component } from "@angular/core";
 import { ButtonClassesPipe } from "./button.pipes";
@@ -41,7 +41,7 @@ class ButtonTestComponent {
     name?: string;
     theme?: ButtonTheme;
     size: ButtonSize;
-    tag: ButtonTags;
+    tag: ButtonTag;
     block: boolean;
     disabled: boolean;
     label: string;
