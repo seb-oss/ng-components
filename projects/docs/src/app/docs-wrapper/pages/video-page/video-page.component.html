@@ -2,7 +2,7 @@
     <ng-container example>
         <sebng-video
             [src]="src"
-            [sourceType]="sourceType.value"
+            [sourceType]="sourceType"
             [width]="width"
             [height]="height"
             [allowFullScreen]="allowFullScreen"
@@ -14,18 +14,39 @@
         </sebng-video>
     </ng-container>
     <ng-container code>{{ code }}</ng-container>
-    <ng-container controls>
-        <div class="row">
-            <sebng-dropdown className="col-12" label="sourceType" [list]="sourceTypeList" [(ngModel)]="sourceType"> </sebng-dropdown>
-            <sebng-textboxgroup className="col-10" label="src" [(ngModel)]="src"></sebng-textboxgroup>
-            <sebng-tooltip className="col-2" style="margin: auto;" [content]="srcPlaceholder" trigger="click"></sebng-tooltip>
-            <sebng-textboxgroup className="col-12" label="height" [(ngModel)]="height"></sebng-textboxgroup>
-            <sebng-textboxgroup className="col-12" label="width" [(ngModel)]="width"></sebng-textboxgroup>
-            <sebng-checkbox className="col-12" label="allowFullScreen" [(ngModel)]="allowFullScreen"></sebng-checkbox>
-            <sebng-checkbox className="col-12" label="loop" [(ngModel)]="loop"></sebng-checkbox>
-            <sebng-checkbox className="col-12" label="autoplay" [(ngModel)]="autoplay"></sebng-checkbox>
-            <sebng-checkbox className="col-12" label="showControls" [(ngModel)]="showControls"></sebng-checkbox>
-            <sebng-checkbox className="col-12" label="showInfo" [(ngModel)]="showInfo"></sebng-checkbox>
-        </div>
-    </ng-container>
+    <div controls class="row">
+        <label class="m-3 col-12">
+            sourceType
+            <p><small>define the source type of the video</small></p>
+            <select class="custom-select" [(ngModel)]="sourceType">
+                <option *ngFor="let item of sourceTypeList" [value]="item.value">{{ item.label }}</option>
+            </select>
+        </label>
+        <label class="m-3 col-12">
+            src
+            <p>
+                <small>
+                    define the source of the video
+                </small>
+            </p>
+            <sebng-tooltip [content]="srcPlaceholder" trigger="focus">
+                <input class="form-control" [(ngModel)]="src" />
+            </sebng-tooltip>
+        </label>
+        <label class="m-3 col-12">
+            height
+            <p><small> set height of video</small></p>
+            <input class="form-control" [(ngModel)]="height" />
+        </label>
+        <label class="m-3 col-12">
+            width
+            <p><small> set width of video</small></p>
+            <input class="form-control" [(ngModel)]="width" />
+        </label>
+        <sebng-checkbox className="col-12" label="allowFullScreen" [(ngModel)]="allowFullScreen"></sebng-checkbox>
+        <sebng-checkbox className="col-12" label="loop" [(ngModel)]="loop"></sebng-checkbox>
+        <sebng-checkbox className="col-12" label="autoplay" [(ngModel)]="autoplay"></sebng-checkbox>
+        <sebng-checkbox className="col-12" label="showControls" [(ngModel)]="showControls"></sebng-checkbox>
+        <sebng-checkbox className="col-12" label="showInfo" [(ngModel)]="showInfo"></sebng-checkbox>
+    </div>
 </app-doc-page>

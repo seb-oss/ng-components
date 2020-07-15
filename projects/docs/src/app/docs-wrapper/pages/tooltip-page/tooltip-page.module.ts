@@ -12,7 +12,7 @@ const routes: Routes = [{ path: "", component: TooltipPageComponent }];
 
 @NgModule({
     declarations: [TooltipPageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, TooltipModule, DropdownModule, TextboxGroupModule],
+    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, TooltipModule],
     exports: [RouterModule, TooltipModule],
 })
 export class TooltipPageModule {}

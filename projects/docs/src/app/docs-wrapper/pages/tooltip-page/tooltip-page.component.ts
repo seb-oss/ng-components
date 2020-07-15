@@ -3,10 +3,6 @@ import { TooltipTrigger, TooltipPosition, TooltipTheme } from "@sebgroup/ng-comp
 import { DropdownItem } from "@sebgroup/ng-components/dropdown";
 import { THIS_EXPR } from "@angular/compiler/src/output/output_ast";
 
-interface GenericDropdownItem<T> extends DropdownItem {
-    value: T;
-}
-
 @Component({
     selector: "app-tooltip-page",
     templateUrl: "./tooltip-page.component.html",
@@ -19,40 +15,40 @@ export class TooltipPageComponent implements OnInit {
     textReference: string = "";
     className?: string = "";
 
-    positionList: Array<GenericDropdownItem<TooltipPosition>> = [
-        { value: "top", key: "top", label: "top" },
-        { value: "top-left", key: "top-left", label: "top-left" },
-        { value: "top-right", key: "top-right", label: "top-right" },
-        { value: "right", key: "right", label: "right" },
-        { value: "right-top", key: "right-top", label: "right-top" },
-        { value: "right-bottom", key: "right-bottom", label: "right-bottom" },
-        { value: "bottom", key: "bottom", label: "bottom" },
-        { value: "bottom-left", key: "bottom-left", label: "bottom-left" },
-        { value: "bottom-right", key: "bottom-right", label: "bottom-right" },
-        { value: "left", key: "left", label: "left" },
-        { value: "left-top", key: "left-top", label: "left-top" },
-        { value: "left-bottom", key: "left-bottom", label: "left-bottom" },
+    positionList: Array<DocDropdownItem<TooltipPosition>> = [
+        { value: "top", label: "top" },
+        { value: "top-left", label: "top-left" },
+        { value: "top-right", label: "top-right" },
+        { value: "right", label: "right" },
+        { value: "right-top", label: "right-top" },
+        { value: "right-bottom", label: "right-bottom" },
+        { value: "bottom", label: "bottom" },
+        { value: "bottom-left", label: "bottom-left" },
+        { value: "bottom-right", label: "bottom-right" },
+        { value: "left", label: "left" },
+        { value: "left-top", label: "left-top" },
+        { value: "left-bottom", label: "left-bottom" },
     ];
-    themeList: Array<GenericDropdownItem<TooltipTheme>> = [
-        { value: "default", key: "default", label: "default" },
-        { value: "primary", key: "primary", label: "primary" },
-        { value: "purple", key: "purple", label: "purple" },
-        { value: "warning", key: "warning", label: "warning" },
-        { value: "success", key: "success", label: "success" },
-        { value: "light", key: "light", label: "light" },
-        { value: "danger", key: "danger", label: "danger" },
+    themeList: Array<DocDropdownItem<TooltipTheme>> = [
+        { value: "default", label: "default" },
+        { value: "primary", label: "primary" },
+        { value: "purple", label: "purple" },
+        { value: "warning", label: "warning" },
+        { value: "success", label: "success" },
+        { value: "light", label: "light" },
+        { value: "danger", label: "danger" },
     ];
-    triggerList: Array<GenericDropdownItem<TooltipTrigger>> = [
-        { value: "hover", key: "hover", label: "hover" },
-        { value: "click", key: "click", label: "click" },
-        { value: "focus", key: "focus", label: "focus" },
+    triggerList: Array<DocDropdownItem<TooltipTrigger>> = [
+        { value: "hover", label: "hover" },
+        { value: "click", label: "click" },
+        { value: "focus", label: "focus" },
     ];
-    position: GenericDropdownItem<TooltipPosition> = this.positionList[0];
-    theme: GenericDropdownItem<TooltipTheme> = this.themeList[0];
-    trigger: GenericDropdownItem<TooltipTrigger> = this.triggerList[0];
+    position: TooltipPosition = this.positionList[0].value;
+    theme: TooltipTheme = this.themeList[0].value;
+    trigger: TooltipTrigger = this.triggerList[0].value;
 
     constructor() {
-        document.title = "Accordion - SEB Angular Components";
+        document.title = "Tooltip - SEB Angular Components";
     }
 
     ngOnInit(): void {}

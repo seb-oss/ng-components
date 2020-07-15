@@ -30,11 +30,11 @@ export class VideoPageComponent implements OnInit {
     set src(newSrc: string) {
         this._src = newSrc || this.defaultSrc;
     }
-    sourceTypeList: Array<DropdownItem> = [
-        { value: "local", label: "local", key: "local" },
-        { value: "stream", label: "stream", key: "stream" },
+    sourceTypeList: Array<DocDropdownItem<VideoSourceType>> = [
+        { value: "local", label: "local" },
+        { value: "stream", label: "stream" },
     ];
-    sourceType: DropdownItem = this.sourceTypeList[0];
+    sourceType: VideoSourceType = this.sourceTypeList[0].value;
     constructor() {
         document.title = "Video - SEB Angular Components";
     }

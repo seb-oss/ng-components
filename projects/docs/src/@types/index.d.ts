@@ -96,3 +96,8 @@ declare interface APIInput {
 declare interface ParsedAPI {
     [key: string]: APIInput;
 }
+
+declare interface DocDropdownItem<T = any> {
+    value: T;
+    label: string;
+}

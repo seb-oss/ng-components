@@ -5,33 +5,47 @@
                 <sebng-tooltip
                     [content]="content"
                     [textReference]="textReference"
-                    [trigger]="trigger.value"
-                    [position]="position.value"
-                    [theme]="theme.value"
+                    [trigger]="trigger"
+                    [position]="position"
+                    [theme]="theme"
                     [className]="className"
                 >
                 </sebng-tooltip>
             </div>
             <div class="col-12">
-                <sebng-tooltip
-                    [content]="content"
-                    [trigger]="trigger.value"
-                    [position]="position.value"
-                    [theme]="theme.value"
-                    [className]="className"
-                >
+                <sebng-tooltip [content]="content" [trigger]="trigger" [position]="position" [theme]="theme" [className]="className">
                     Tooltip Reference in ng-content
                 </sebng-tooltip>
             </div>
         </div>
     </ng-container>
     <ng-container code>{{ code }}</ng-container>
-    <ng-container controls>
-        <div class="col-12">
-            <sebng-textboxgroup className="col-12" label="textReference" [(ngModel)]="textReference"></sebng-textboxgroup>
-            <sebng-dropdown className="col-12" label="trigger" [list]="triggerList" [(ngModel)]="trigger"> </sebng-dropdown>
-            <sebng-dropdown className="col-12" label="position" [list]="positionList" [(ngModel)]="position"> </sebng-dropdown>
-            <sebng-dropdown className="col-12" label="theme" [list]="themeList" [(ngModel)]="theme"> </sebng-dropdown>
-        </div>
-    </ng-container>
+    <div class="row" controls>
+        <label class="m-3 col-12">
+            textReference
+            <p><small> set string as reference of tooltip</small></p>
+            <input class="form-control" [(ngModel)]="textReference" />
+        </label>
+        <label class="m-3 col-12">
+            trigger
+            <p><small>define trigger method of tooltip</small></p>
+            <select class="custom-select" [(ngModel)]="trigger">
+                <option *ngFor="let item of triggerList" [value]="item.value">{{ item.label }}</option>
+            </select>
+        </label>
+        <label class="m-3 col-12">
+            position
+            <p><small>define position of the tooltip</small></p>
+            <select class="custom-select" [(ngModel)]="position">
+                <option *ngFor="let item of positionList" [value]="item.value">{{ item.label }}</option>
+            </select>
+        </label>
+        <label class="m-3 col-12">
+            theme
+            <p><small>define theme of the tooltip</small></p>
+            <select class="custom-select" [(ngModel)]="theme">
+                <option *ngFor="let item of themeList" [value]="item.value">{{ item.label }}</option>
+            </select>
+        </label>
+    </div>
 </app-doc-page>
