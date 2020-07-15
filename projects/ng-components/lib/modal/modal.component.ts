@@ -5,7 +5,7 @@ import { ModalSizeType, ModalPositionType } from "./modal.type";
 import { AnimationEvent } from "@angular/animations";
 import { fadeInAnimation } from "./animation";
 
-/**  */
+/** The modal component provides a solid foundation for creating dialogs or slideout modals  */
 @Component({
     selector: "sebng-modal",
     styleUrls: ["./modal.component.scss"],

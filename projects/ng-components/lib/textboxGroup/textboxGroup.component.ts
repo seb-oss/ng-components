@@ -23,6 +23,7 @@ const CUSTOM_DROPDOWN_CONTROL_VALUE_ACCESSOR: Provider = {
 
 type Value = number | string;
 
+/** TextboxGroup is a component that allows user to add or edit text */
 @Component({
     selector: "sebng-textboxgroup",
     templateUrl: "./textboxGroup.component.html",
@@ -31,39 +32,71 @@ type Value = number | string;
     providers: [CUSTOM_DROPDOWN_CONTROL_VALUE_ACCESSOR],
 })
 export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnChanges {
+    /** Property sets to check if textbox is allowed to auto complete */
     @Input() autoComplete?: "on" | "off";
+    /** Element class name */
     @Input() className?: string;
+    /** Property sets whether textbox is disabled */
     @Input() disabled?: boolean;
+    /** Error message of textbox */
     @Input() error?: string;
+    /** Property sets whether textbox is focused */
     @Input() focus?: boolean;
+    /** Element ID */
     @Input() id?: string;
+    /** Element label */
     @Input() label?: string;
+    /** Element left icon */
     @Input() leftIcon?: string;
+    /** Element left text */
     @Input() leftText?: string;
+    /** Element left title */
     @Input() leftTitle?: string;
+    /** Maximum allowed length for input */
     @Input() maxLength?: number;
+    /** Minimum allowed length for input */
     @Input() minLength?: number;
+    /** Elemenet name */
     @Input() name: string;
+    /** Element pattern */
     @Input() pattern?: string;
+    /** Element placeholder */
     @Input() placeholder?: string;
+    /** Property sets whether textbox is readonly */
     @Input() readOnly?: boolean;
+    /** Property sets whether textbox is required */
     @Input() required?: boolean;
+    /** Element right icon */
     @Input() rightIcon?: string;
+    /** Element right text */
     @Input() rightText?: string;
+    /** Element right title */
     @Input() rightTitle?: string;
+    /** Input type */
     @Input() type?: string;
+    /** Property sets whether textbox is set to success theme */
     @Input() success?: boolean;
+    /** Property sets whether error message should be shown */
     @Input() showErrorMessage?: boolean;
 
-    @Output() onBlur = new EventEmitter<MouseEvent>();
-    @Output() onChange = new EventEmitter<Value>();
-    @Output() onFocus = new EventEmitter<MouseEvent>();
-    @Output() onKeyDown = new EventEmitter<KeyboardEvent>();
-    @Output() onKeyPress = new EventEmitter<KeyboardEvent>();
-    @Output() onKeyUp = new EventEmitter<KeyboardEvent>();
-    @Output() onLeftClick = new EventEmitter<MouseEvent>();
-    @Output() onRightClick = new EventEmitter<MouseEvent>();
-    @Output() onSearch = new EventEmitter<KeyboardEvent>();
+    /** Callback when textbox is defocused */
+    @Output() onBlur: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
+    /** Callback when textbox's value is changed  */
+    @Output() onChange: EventEmitter<Value> = new EventEmitter<Value>();
+    /** Callback when textbox is focused  */
+    @Output() onFocus: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
+    /** Callback when key is pressed */
+    @Output() onKeyDown: EventEmitter<KeyboardEvent> = new EventEmitter<KeyboardEvent>();
+    /** Callback when a key that produces a character value is pressed down */
+    @Output() onKeyPress: EventEmitter<KeyboardEvent> = new EventEmitter<KeyboardEvent>();
+    /** Callback when key is released */
+    @Output() onKeyUp: EventEmitter<KeyboardEvent> = new EventEmitter<KeyboardEvent>();
+    /** Callback when left icon/text button is clicked */
+    @Output() onLeftClick: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
+    /** Callback when right icon/text button is clicked */
+    @Output() onRightClick: EventEmitter<MouseEvent> = new EventEmitter<MouseEvent>();
+    /** Calback when a search is initiated using element of type="search" */
+    @Output() onSearch: EventEmitter<KeyboardEvent> = new EventEmitter<KeyboardEvent>();
 
     private innerValue: Value;
 

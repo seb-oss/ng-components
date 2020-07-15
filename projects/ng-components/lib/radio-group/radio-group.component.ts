@@ -8,7 +8,7 @@ export interface RadioGroupItem {
      * A Custom template as html string to be used instead of label and description.
      *
      * Example: "<b>Hello</b>"
-     * */
+     */
     customTemplate?: string;
     /** optional description to be displayed next to the label */
     description?: string;
@@ -36,6 +36,7 @@ const CUSTOM_RADIOGROUP_CONTROL_VALUE_ACCESSOR: Provider = {
     multi: true,
 };
 
+/** Use radio buttons when users must select one option in a list with exclusive options out of a set of two or more options. Radio buttons are common to use in forms, i.e when you apply for a loan and need to enter "Yes" or "No". */
 @Component({
     selector: "sebng-radio-group",
     templateUrl: "./radio-group.component.html",
@@ -44,6 +45,7 @@ const CUSTOM_RADIOGROUP_CONTROL_VALUE_ACCESSOR: Provider = {
 })
 export class RadioGroupComponent implements ControlValueAccessor, AfterViewChecked {
     // TODO: Add support for custom html as well as string labels?
+    /** List of radio group items */
     @Input("list")
     set list(value: RadioGroupItem[]) {
         this._list = value;
@@ -53,13 +55,17 @@ export class RadioGroupComponent implements ControlValueAccessor, AfterViewCheck
         return this._list;
     }
     private _list: RadioGroupItem[];
-
+    /** Element name */
     @Input() name?: string;
+    /** Element label */
     @Input() label?: string;
+    /** Element class name */
     @Input() className?: string;
-
+    /** Property sets whether radio group is disabled */
     @Input() disabled?: boolean = false;
+    /** Property sets whether radio group is condensed */
     @Input() condensed?: boolean = false;
+    /** Property sets whether radio group is inline */
     @Input() inline?: boolean = false;
 
     // Placeholders for the callbacks which are later provided
