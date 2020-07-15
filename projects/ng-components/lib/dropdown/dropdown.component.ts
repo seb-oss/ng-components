@@ -216,10 +216,8 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
         });
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.list && changes.list.previousValue !== changes.list.currentValue) {
-            this._generateHelperArrays();
-        }
+    ngOnChanges(): void {
+        this._generateHelperArrays();
     }
 
     ngOnDestroy(): void {

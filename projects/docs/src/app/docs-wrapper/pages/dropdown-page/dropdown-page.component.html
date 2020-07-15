@@ -1,7 +1,68 @@
 <app-doc-page [importString]="importString">
-    <ng-container example>
-        <sebng-dropdown [list]="list"></sebng-dropdown>
-    </ng-container>
-    <ng-container controls> </ng-container>
+    <div class="row w-100" example>
+        <sebng-dropdown
+            class="col-12 mb-2"
+            label="Single select"
+            [list]="list"
+            [multi]="false"
+            [native]="isNative"
+            [placeholder]="placeholder"
+            [ellipsisMode]="isEllipsisMode"
+            [disabled]="disabled"
+            [searchable]="searchable"
+            [clearable]="clearable"
+            [(ngModel)]="selectedValue"
+        ></sebng-dropdown>
+        <sebng-dropdown
+            class="col-12 mb-2"
+            label="Multi select"
+            [list]="list2"
+            [multi]="true"
+            [native]="isNative"
+            [placeholder]="placeholder"
+            [ellipsisMode]="isEllipsisMode"
+            [disabled]="disabled"
+            [searchable]="searchable"
+            [clearable]="clearable"
+            [(ngModel)]="selectedValue2"
+        ></sebng-dropdown>
+    </div>
+
+    <div controls>
+        <sebng-checkbox
+            [(ngModel)]="isNative"
+            label="Native select"
+            description="Switch to the native html select element"
+        ></sebng-checkbox>
+
+        <sebng-checkbox [(ngModel)]="disabled" label="Disabled"></sebng-checkbox>
+
+        <ng-container *ngIf="!isNative">
+            <sebng-checkbox
+                [(ngModel)]="isEllipsisMode"
+                label="Ellipsis mode"
+                description="Switch to ellipsis mode to use the dropdown as a menu item which indicates more actions."
+            ></sebng-checkbox>
+
+            <sebng-checkbox
+                [(ngModel)]="searchable"
+                label="Searchable"
+                description="Add a search bar to the dropdown menu."
+            ></sebng-checkbox>
+
+            <sebng-checkbox
+                *ngIf="!isEllipsisMode"
+                [(ngModel)]="clearable"
+                label="Clearable"
+                description="Add the option to clear the dropdown of any selection (only single select)."
+            ></sebng-checkbox>
+
+            <div>
+                <label>Placeholder:</label>
+                <p><small>Set a placeholder for when no item is selected (defaults to 'Select ...').</small></p>
+                <input class="form-control" type="text" [(ngModel)]="placeholder" />
+            </div>
+        </ng-container>
+    </div>
     <ng-container code>{{ snippet }}</ng-container>
 </app-doc-page>

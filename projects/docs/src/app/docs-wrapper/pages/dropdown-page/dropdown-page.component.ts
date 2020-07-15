@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { DropdownItem } from "@sebgroup/ng-components/dropdown";
+import { DropdownItem, DropdownModule } from "@sebgroup/ng-components/dropdown";
 
 @Component({
     selector: "app-dropdown-page",
@@ -14,6 +14,19 @@ export class DropdownPageComponent implements OnInit {
         { key: "3", label: "Item 3", value: "value-3" },
         { key: "4", label: "Item 4", value: "value-4" },
     ];
+    list2 = [...this.list];
+
+    selectedValue: DropdownModule = { ...this.list[2] };
+    selectedValue2: DropdownModule[] = [{ ...this.list[0] }, { ...this.list[3] }];
+
+    // controls
+    isNative: boolean = false;
+    isEllipsisMode: boolean = false;
+    disabled: boolean = false;
+    searchable: boolean = false;
+    clearable: boolean = false;
+    placeholder: string;
+
     constructor() {
         document.title = "Dropdown - SEB Angular Components";
     }

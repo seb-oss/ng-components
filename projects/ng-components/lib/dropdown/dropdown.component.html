@@ -12,9 +12,9 @@
         (change)="handleNativeOnChange($event)"
     >
         <option disabled hidden value="">{{ placeholder || "Select ..." }}</option>
-        <ng-container *ngFor="let item of list; index as i">
-            <option [value]="item.key">
-                {{ item.label }}
+        <ng-container *ngFor="let item of displayList; index as i">
+            <option *ngIf="i" [value]="item.optionItem.key" [selected]="item.selected">
+                {{ item.optionItem.label }}
             </option>
         </ng-container>
     </select>
