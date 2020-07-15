@@ -8,6 +8,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule } from "@angular/forms";
 import { HighlightModule, HIGHLIGHT_OPTIONS, HighlightOptions } from "ngx-highlightjs";
+import { CodeSnippetModule } from "../../../common/code-snippet/code-snippet.module";
 
 const routes: Routes = [{ path: "", component: ModalPageComponent }];
 
@@ -22,14 +23,15 @@ const routes: Routes = [{ path: "", component: ModalPageComponent }];
         CheckBoxModule,
         DropdownModule,
         HighlightModule,
+        CodeSnippetModule,
     ],
     exports: [RouterModule, ModalModule],
     providers: [
         {
             provide: HIGHLIGHT_OPTIONS,
-            useValue: <HighlightOptions>{
+            useValue: {
                 lineNumbers: true,
-            },
+            } as HighlightOptions,
         },
     ],
 })

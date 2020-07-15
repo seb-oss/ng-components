@@ -17,7 +17,9 @@ import { Component, Input } from "@angular/core";
                     <tbody>
                         <tr *ngFor="let input of inputs">
                             <td>{{ input.name }}</td>
-                            <td class="text-primary">{{ input.type }}</td>
+                            <td>
+                                <code>{{ input.type }}</code>
+                            </td>
                             <td>{{ input.description }}</td>
                         </tr>
                     </tbody>
@@ -39,7 +41,9 @@ import { Component, Input } from "@angular/core";
                     <tbody>
                         <tr *ngFor="let output of outputs">
                             <td>{{ output.name }}</td>
-                            <td>{{ output.type }}</td>
+                            <td>
+                                <code>{{ output.type }}</code>
+                            </td>
                             <td>{{ output.description }}</td>
                         </tr>
                     </tbody>
