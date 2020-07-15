@@ -1,12 +1,23 @@
 <app-doc-page [importString]="importString">
     <ng-container example>
-        <sebng-toggle>
-        </sebng-toggle>
+        <sebng-toggle [(ngModel)]="checked" (onChange)="onCheckboxChange()" [disabled]="disabled" [label]="label"> </sebng-toggle>
     </ng-container>
-    <ng-container controls>
-        <!-- <select [(ngModel)]="iconPosition">
-            <option value="left">Left</option>
-            <option value="right">right</option>
-        </select> -->
-    </ng-container>
+    <ng-container code>{{ code }}</ng-container>
+    <div class="row" controls>
+        <label class="m-3 col-12">
+            label
+            <p><small>set label of checkbox</small></p>
+            <input class="form-control" [(ngModel)]="label" />
+        </label>
+        <sebng-checkbox class="col-12" label="disabled" [(ngModel)]="disabled"></sebng-checkbox>
+        <sebng-notification
+            [toggle]="isToggled"
+            title="Checkbox changed"
+            [message]="notificationMessage"
+            [dismissable]="true"
+            [dismissTimeout]="2000"
+            (onDismiss)="isToggled = false"
+        >
+        </sebng-notification>
+    </div>
 </app-doc-page>

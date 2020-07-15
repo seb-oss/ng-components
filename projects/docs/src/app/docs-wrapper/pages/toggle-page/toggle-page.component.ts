@@ -7,17 +7,22 @@ import { TooltipTrigger, TooltipPosition, TooltipTheme } from "@sebgroup/ng-comp
 })
 export class TogglePageComponent implements OnInit {
     importString: string = require("!raw-loader!@sebgroup/ng-components/toggle/toggle.component");
+    code: string = `<sebng-toggle></sebng-toggle>`;
 
-    content: string | TemplateRef<any> = "This is a tooltip";
-    textReference: string = "";
-    trigger: TooltipTrigger = "hover";
-    position: TooltipPosition = "top";
-    theme: TooltipTheme = "default";
-    className?: string = "";
+    disabled: boolean = false;
+    checked: boolean = false;
+    label: string = "Checkbox";
+    isToggled: boolean = false;
+    notificationMessage: string = "";
 
-    constructor() {
-        document.title = "Accordion - SEB Angular Components";
+    onCheckboxChange(): void {
+        this.isToggled = true;
+        this.notificationMessage = `Checkbox is set to ${this.checked}`;
     }
 
-    ngOnInit(): void { }
+    constructor() {
+        document.title = "Toggle - SEB Angular Components";
+    }
+
+    ngOnInit(): void {}
 }
