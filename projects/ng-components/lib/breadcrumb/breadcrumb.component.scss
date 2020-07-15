@@ -9,7 +9,7 @@
                 color: $blue;
                 cursor: pointer;
 
-                > svg {
+                svg {
                     fill: $blue;
                     width: $font-size-base;
                     height: $font-size-base;
@@ -18,7 +18,7 @@
                 &:hover {
                     color: $blue-darker;
 
-                    > svg {
+                    svg {
                         fill: $blue-darker;
                     }
                 }

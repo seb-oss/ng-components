@@ -6,9 +6,7 @@ import { Component, Input, ViewEncapsulation, HostBinding, ElementRef, ViewChild
         <!-- This is where the original code snippet is kept for copying to clipboard -->
         <span class="d-none" #originalCodeHolder><ng-content></ng-content></span>
         <div class="code-snippet">
-            <pre>
-                <code [class.fill]="fillMode" [highlight]="originalCodeHolder.innerText" [lineNumbers]="true"></code>
-            </pre>
+            <pre><code [class.fill]="fillMode" [highlight]="originalCodeHolder.innerText" [lineNumbers]="true"></code></pre>
             <div title="Copy" *ngIf="!copied" class="snippet-icon copy" (click)="copySnippet()"><app-files-icon></app-files-icon></div>
             <div title="Copied!" *ngIf="copied" class="snippet-icon check"><app-check-icon></app-check-icon></div>
         </div>
