@@ -34,6 +34,7 @@ const CUSTOM_SLIDER_CONTROL_VALUE_ACCESSOR: Provider = {
     multi: true,
 };
 
+/** A slider to experiment and adjust values with. */
 @Component({
     selector: "sebng-slider",
     templateUrl: "./slider.component.html",
@@ -42,23 +43,39 @@ const CUSTOM_SLIDER_CONTROL_VALUE_ACCESSOR: Provider = {
     providers: [CUSTOM_SLIDER_CONTROL_VALUE_ACCESSOR],
 })
 export class SliderComponent implements OnInit, OnChanges, AfterContentChecked, ControlValueAccessor {
+    /** Use an alternative version of the slider */
     @Input() alternative?: boolean;
+    /** Always Show tooltip (default: false) */
     @Input() alwaysShowTooltip?: boolean;
+    /** Element class name */
     @Input() className?: string;
+    /** Property sets whether slider is disabled */
     @Input() disabled?: boolean;
+    /** Error message of slider */
     @Input() error?: string;
+    /** Element ID */
     @Input() id?: string;
+    /** Element label */
     @Input() label?: string;
+    /** Labels to be displayed below the slider */
     @Input() labels?: Array<RangeSliderLabel>;
+    /** Maximum value of the range */
     @Input() max?: number;
+    /** Minimum value of the range */
     @Input() min?: number;
+    /** Slider name */
     @Input() name: string;
+    /** Callback on slider value change */
     @Output() onChange: EventEmitter<number> = new EventEmitter<number>();
-
+    /** Show ticks with labels (default: false) */
     @Input() showTicks?: boolean;
+    /** Value changes on every increment/decrement */
     @Input() step?: number;
+    /** Slider theme based on SEB predefined colors. (default: 'primary') */
     @Input() theme?: SliderTheme;
+    /** Tooltip theme based on SEB predefined colors. (default: 'inverted') */
     @Input() tooltipTheme?: SliderTheme;
+    /** Custom tooltip value */
     @Input() tooltipValue?: string;
 
     private _min: number = 0;

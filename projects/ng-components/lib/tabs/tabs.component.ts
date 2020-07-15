@@ -6,6 +6,7 @@ export interface TabsListItem {
     disabled?: boolean;
 }
 
+/** Tabs organize and allow navigation between groups of content that are related and at the same level of hierarchy. */
 @Component({
     selector: "sebng-tabs",
     templateUrl: "./tabs.component.html",
@@ -25,9 +26,13 @@ export interface TabsListItem {
     ],
 })
 export class TabsComponent implements ControlValueAccessor {
+    /** Element ID */
     @Input() id?: string;
+    /** Element label */
     @Input() label?: string | TemplateRef<HTMLElement>;
+    /** Element class name */
     @Input() className?: string;
+    /** List of tab list item */
     @Input() list: Array<TabsListItem>;
 
     @ViewChildren("tabListRefs") tabListRefs: QueryList<ElementRef>;
@@ -50,6 +55,7 @@ export class TabsComponent implements ControlValueAccessor {
         return this._value;
     }
 
+    /** Active index */
     @Input("value") set value(v: number) {
         if (v !== this._value && !isNaN(v)) {
             this._value = v;

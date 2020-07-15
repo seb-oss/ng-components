@@ -8,22 +8,34 @@ import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter, ViewE
     encapsulation: ViewEncapsulation.None,
 })
 export class PaginationComponent implements OnChanges {
+    /** Total size of pagination */
     @Input() size: number;
-    @Output() change: EventEmitter<number> = new EventEmitter();
+    /** Selected index */
     @Input() value: number;
-
+    /** Element class name */
     @Input() className?: string;
+    /** First page text */
     @Input() firstText?: string;
+    /** Element ID */
     @Input() id?: string;
+    /** Last page text */
     @Input() lastText?: string;
+    /** Next page text */
     @Input() nextText?: string;
+    /** Offset per page */
     @Input() offset?: number;
+    /** The length of the pagination or number of pages */
     @Input() pagingLength?: number;
+    /** Previous page text */
     @Input() previousText?: string;
-
+    /** Use dot-navigation */
     @Input() useDotNav?: boolean;
+    /** Use first and last navigation buttons (default: false) */
     @Input() useFirstAndLast?: boolean;
+    /** Use text-base navigation buttons (default: false) */
     @Input() useTextNav?: boolean;
+    /** Callback on page change */
+    @Output() change: EventEmitter<number> = new EventEmitter();
 
     list: Array<number> = [];
     dotnavList: Array<number> = [];

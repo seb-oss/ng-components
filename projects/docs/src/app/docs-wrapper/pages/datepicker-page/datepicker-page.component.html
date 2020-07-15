@@ -1,7 +1,65 @@
 <app-doc-page [importString]="importString">
-    <ng-container example>
-        <sebng-date-picker [(ngModel)]="model"></sebng-date-picker>
-    </ng-container>
-    <ng-container controls> </ng-container>
+    <div class="row" example>
+        <div class="col-12">
+            <label>Normal</label>
+            <sebng-date-picker
+                className="mb-3"
+                [(ngModel)]="model"
+                [monthPicker]="monthPicker"
+                [forceCustom]="forceCustom"
+                [localeCode]="localeCode"
+            ></sebng-date-picker>
+        </div>
+
+        <hr />
+
+        <div class="col-12">
+            <label>Range</label>
+            <div class="row">
+                <div class="col-lg">
+                    <small>From:</small>
+                    <sebng-date-picker
+                        [(ngModel)]="rangeFrom"
+                        [localeCode]="localeCode"
+                        [monthPicker]="monthPicker"
+                        [forceCustom]="forceCustom"
+                        [max]="rangeTo"
+                    >
+                    </sebng-date-picker>
+                </div>
+
+                <div class="col-lg">
+                    <small>To:</small>
+                    <sebng-date-picker
+                        [(ngModel)]="rangeTo"
+                        [localeCode]="localeCode"
+                        [monthPicker]="monthPicker"
+                        [forceCustom]="forceCustom"
+                        [min]="rangeFrom"
+                    >
+                    </sebng-date-picker>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" controls>
+        <div class="custom-control custom-slide-toggle mb-2">
+            <input type="checkbox" class="custom-control-input" id="monthPicker" [(ngModel)]="monthPicker" />
+            <label class="custom-control-label" for="monthPicker">Switch to month picker only</label>
+        </div>
+
+        <div class="custom-control custom-slide-toggle mb-2">
+            <input type="checkbox" class="custom-control-input" id="forceCustom" [(ngModel)]="forceCustom" />
+            <label class="custom-control-label" for="forceCustom">Show fallback custom picker *</label>
+        </div>
+        <p><small>* This picker is the automatic fallback on browsers that don't support html5 datepicker</small></p>
+
+        <div>
+            <label>Locale code:</label>
+            <p><small>Set a locale for the custom picker (defaults to system locale).</small></p>
+            <input class="form-control" [style.width.rem]="10" type="test" [(ngModel)]="localeCode" placeholder="xx-XX" />
+        </div>
+    </div>
     <ng-container code>{{ snippet }}</ng-container>
 </app-doc-page>

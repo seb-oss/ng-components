@@ -22,7 +22,7 @@ export class TimerComponent {
 
     /** Timer's duration */
     @Input()
-    get duration() {
+    get duration(): number {
         return this._duration;
     }
 

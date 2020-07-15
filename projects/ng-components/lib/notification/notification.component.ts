@@ -17,21 +17,32 @@ export interface NotificationAction {
     encapsulation: ViewEncapsulation.None,
 })
 export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
+    /** Element class name */
     @Input() className?: string;
+    /** Property sets whether the notification is dismissable */
     @Input() dismissable?: boolean;
+    /** Interval for the notification to be dismissed */
     @Input() dismissTimeout?: number;
-    @Input() message?: string;
-    @Output() onClick?: EventEmitter<MouseEvent> = new EventEmitter();
-
-    @Output() onDismiss?: EventEmitter<void> = new EventEmitter();
-
+    /** Persist notification until dismissed (default: false) */
     @Input() persist?: boolean;
+    /** Notification position, "bottom-left" | "bottom-right" | "top-left" | "top-right" | "top" | "bottom" */
     @Input() position?: NotificationPosition;
+    /** Notification style, "slide-in" | "bar" */
     @Input() style?: NotificationStyle;
+    /** Notification theme, "purple" | "primary" | "danger" | "success" | "warning" | "inverted" */
     @Input() theme?: NotificationTheme;
+    /** Notification title */
     @Input() title?: string;
+    /** Notification content */
+    @Input() message?: string;
+    /** Property sets whether the notification is toggled */
     @Input() toggle: boolean;
+    /** Display action buttons - max: 2 actions */
     @Input() actions?: Array<NotificationAction>;
+    /** Callback when notification is clicked */
+    @Output() onClick?: EventEmitter<MouseEvent> = new EventEmitter();
+    /** Callback when notification is dismissed */
+    @Output() onDismiss?: EventEmitter<void> = new EventEmitter();
 
     public notificationClassNames: string;
     public showNotificationBody: boolean = false;
