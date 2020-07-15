@@ -41,14 +41,10 @@
                 The checkbox component accepts string or custom <code>label, description or error</code>. In order to use a string property,
                 create the component this way
             </p>
-            <pre><code [highlight]="simpleCheckboxHTML" [lineNumbers]="true"></code></pre>
+            <app-code-snippet>{{ simpleCheckboxHTML }}</app-code-snippet>
             <p>A custom template can be passed this way</p>
-            <pre><code [highlight]="templateCheckboxHTML" [lineNumbers]="true"></code></pre>
+            <app-code-snippet>{{ templateCheckboxHTML }}</app-code-snippet>
             <p>Checkbox component support both template-driven and Reactive form</p>
-            <h4>Template-driven Form</h4>
-            <h5>1. create template</h5>
-            <sebng-checkbox label="label" [(ngModel)]="model"></sebng-checkbox>
-            <h4>Reactive Form</h4>
         </div>
     </ng-container>
 </app-doc-page>

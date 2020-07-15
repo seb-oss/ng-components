@@ -26,7 +26,7 @@ export class ButtonPageComponent {
     block: boolean = false;
 
     importString: string = require("!raw-loader!@sebgroup/ng-components/button/button.component");
-    snippet: string = `<sebng-button>Button label</sebng-button>`;
+    snippet: string = `<sebng-button> Button label </sebng-button>`;
     theme: DropdownItem<ButtonTheme> = this.themeList[0];
     size: DropdownItem<ButtonSize> = this.sizeList[1];
 
