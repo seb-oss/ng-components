@@ -6,6 +6,7 @@ import { Component } from "@angular/core";
 })
 export class TextlabelPageComponent {
     importString: string = require("!raw-loader!@sebgroup/ng-components/textLabel/textLabel.component");
+    snippet: string = `<sebng-textlabel label="label" value="value"></sebng-textlabel>`;
     customLabelValue: boolean = false;
 
     constructor() {

@@ -6,6 +6,7 @@ import { Component, OnInit } from "@angular/core";
 })
 export class LoaderPageComponent implements OnInit {
     importString: string = require("!raw-loader!@sebgroup/ng-components/loader/loader.component");
+    snippet: string = `<sebng-loader></sebng-loader>`;
     toggle: boolean = true;
 
     constructor() {
