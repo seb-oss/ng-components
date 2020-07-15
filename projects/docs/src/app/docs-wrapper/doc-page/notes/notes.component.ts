@@ -9,6 +9,7 @@ import { Component } from "@angular/core";
                 padding: 1rem 2rem;
                 border-radius: 10px;
                 overflow: hidden;
+                margin-bottom: 1rem;
             }
         `,
     ],
