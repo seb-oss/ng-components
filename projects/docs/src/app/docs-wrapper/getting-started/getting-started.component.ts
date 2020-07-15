@@ -9,16 +9,16 @@ import { Component } from "@angular/core";
 
             <h2 class="pt-5 pb-3">Installation</h2>
             <p>First, install the npm package using the following:</p>
-            <app-code-snippet lang="bash">npm install @sebgroup/ng-components</app-code-snippet>
+            <app-code-snippet>npm install @sebgroup/ng-components</app-code-snippet>
 
             <p>
                 These components uses SEB Bootstrap for styling and relies on its styles, fonts, colors and variables. You will need to
                 install the SEB Bootstrap package as well to get it to work.
             </p>
-            <app-code-snippet lang="bash">npm install @sebgroup/bootstrap</app-code-snippet>
+            <app-code-snippet>npm install @sebgroup/bootstrap</app-code-snippet>
 
             <p>Then make sure you import SEB Bootstrap in your root styles files:</p>
-            <app-code-snippet lang="scss">@import "~@sebgroup/bootstrap/scss/bootstrap";</app-code-snippet>
+            <app-code-snippet>@import "~@sebgroup/bootstrap/scss/bootstrap";</app-code-snippet>
 
             <hr />
 

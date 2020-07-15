@@ -47,6 +47,7 @@ export class SideMenuComponent implements OnInit, OnDestroy {
     documentKeyupListener = (e: KeyboardEvent) => {
         /** Toggles the side menu when `ctrl+\`` on Windows or `cmd+\`` on MacOS is invoked */
         if ((e.ctrlKey || e.metaKey) && e.key === "`") {
+            this.isAnimating = true;
             this.toggle = !this.toggle;
         }
         /** Focuses on the search text box when `ctrl+shift+f` on Windows or `cmd+shift+f` on MacOS is invoked */

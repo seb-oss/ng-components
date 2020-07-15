@@ -96,7 +96,7 @@ aside.side-menu {
     > .toggle {
         position: absolute;
         right: 10px;
-        top: 18px;
+        top: 17px;
         cursor: pointer;
         z-index: 20;
         transition: transform $base-transition-time linear $base-transition-time;
@@ -146,7 +146,9 @@ aside.side-menu {
         }
         > nav.components-list {
             overflow: hidden;
-            padding-bottom: 1.5rem;
+            &:last-of-type {
+                padding-bottom: 1.5rem;
+            }
             > a.list-item {
                 padding: 6px 0;
                 font-weight: bold;
