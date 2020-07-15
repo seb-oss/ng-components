@@ -14,9 +14,7 @@ import { HighlightModule, HIGHLIGHT_OPTIONS, HighlightOptions } from "ngx-highli
         APIExtractService,
         {
             provide: HIGHLIGHT_OPTIONS,
-            useValue: <HighlightOptions>{
-                lineNumbers: true,
-            },
+            useValue: { lineNumbers: true } as HighlightOptions,
         },
     ],
 })

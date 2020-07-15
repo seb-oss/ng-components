@@ -50,7 +50,28 @@ export class ModalPageComponent {
             Close
         </button>
     </div>
+</sebng-modal>
+`;
+
+    modalTemplate: string = `<sebng-modal>
+    <div class="custom-header" header>
+        Header
+    </div>
+
+    <div class="custom-body" body>
+        body
+    </div>
+
+    <div class="custom-footer" footer>
+        footer
+    </div>
 </sebng-modal>`;
+
+    createViewChild: string = `@ViewChild(ModalComponent) modalChild: ModalComponent;`;
+
+    openModalHTML: string = `modalChild.open()`;
+
+    closeModalHTML: string = `modalChild.close()`;
 
     constructor() {
         document.title = "Modal - SEB Angular Components";
@@ -81,24 +102,4 @@ export class ModalPageComponent {
     closeModal(): void {
         this.modalChild.close();
     }
-
-    modalTemplate: string = `<sebng-modal>
-        <div class="custom-header" header>
-            Header
-        </div>
-
-        <div class="custom-body" body>
-            body
-        </div>
-
-        <div class="custom-footer" footer>
-            footer
-        </div>
-    </sebng-modal>`;
-
-    createViewChild: string = `@ViewChild(ModalComponent) modalChild: ModalComponent;`;
-
-    openModalHTML: string = `modalChild.open()`;
-
-    closeModalHTML: string = `modalChild.close()`;
 }

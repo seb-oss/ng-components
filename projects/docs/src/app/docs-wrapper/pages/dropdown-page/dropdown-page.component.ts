@@ -7,6 +7,7 @@ import { DropdownItem } from "@sebgroup/ng-components/dropdown";
 })
 export class DropdownPageComponent implements OnInit {
     importString: string = require("!raw-loader!@sebgroup/ng-components/dropdown/dropdown.component");
+    snippet: string = `<sebng-dropdown [list]="list"></sebng-dropdown>`;
     list: Array<DropdownItem> = [
         { key: "1", label: "Item 1", value: "value-1" },
         { key: "2", label: "Item 2", value: "value-2" },

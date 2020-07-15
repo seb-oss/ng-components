@@ -61,16 +61,19 @@
                 The modal component accepts 3 selectors <code>header, body and footer</code> you can add inside each selector any custom
                 HTML Element.
             </p>
-            <pre><code [highlight]="modalTemplate" [lineNumbers]="true"></code></pre>
+            <app-code-snippet>{{ modalTemplate }}</app-code-snippet>
+
             <h4>Toggle Modal component</h4>
+
             <p>The ModalComponent can be used to open modal dialogs with SEB Design styling and animations.</p>
             <p>To be able to toggle the component, a modal reference should be created using <code>@ViewChild</code>.</p>
-            <pre><code [highlight]="createViewChild" [lineNumbers]="true"></code></pre>
+            <app-code-snippet>{{ createViewChild }}</app-code-snippet>
+
             <p>The modal is opened by calling the open method</p>
-            <pre><code [highlight]="openModalHTML" [lineNumbers]="true"></code></pre>
+            <app-code-snippet>{{ openModalHTML }}</app-code-snippet>
 
             <p>The modal is closed by calling the close method</p>
-            <pre><code [highlight]="closeModalHTML"></code></pre>
+            <app-code-snippet>{{ closeModalHTML }}</app-code-snippet>
 
             <h2>Keyboard interaction</h2>
             <p>
