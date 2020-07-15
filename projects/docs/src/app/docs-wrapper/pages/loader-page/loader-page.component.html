@@ -1,7 +1,26 @@
 <app-doc-page [importString]="importString">
-    <ng-container example>
-        <sebng-loader></sebng-loader>
-    </ng-container>
-    <ng-container controls> </ng-container>
+    <div class="d-flex w-100 align-items-center justify-content-center" example>
+        <sebng-loader className="{{ 'text-' + color?.value }}" [size]="size.key" [type]="type.key"></sebng-loader>
+    </div>
+
+    <div class="row" controls>
+        <div class="col-12 mb-3">
+            <label>Size</label>
+            <sebng-dropdown name="size" [list]="sizeList" [(ngModel)]="size"> </sebng-dropdown>
+        </div>
+        <div class="col-12">
+            <label>Type</label>
+            <sebng-radio-group [inline]="true" [condensed]="true" name="type" [list]="typeList" [(ngModel)]="type"> </sebng-radio-group>
+        </div>
+        <div class="col-12">
+            <label>Color</label>
+            <sebng-dropdown [(ngModel)]="color" [list]="colorList" [multi]="false"></sebng-dropdown>
+
+            <p class="small">
+                Placing the loader inside another component will have it inherit the color of the font. Alternatively, you can color the
+                loader by passing Bootstrap text color classes
+            </p>
+        </div>
+    </div>
     <ng-container code>{{ snippet }}</ng-container>
 </app-doc-page>
