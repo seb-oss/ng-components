@@ -29,6 +29,7 @@ $duration-sq: 1.2s;
         justify-content: center;
         flex-direction: column;
         z-index: $zindex-tooltip + 10;
+        background-color: rgba(black, 0.4);
     }
     &.loader-cover {
         position: absolute;
