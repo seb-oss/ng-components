@@ -23,8 +23,8 @@ jobs:
     - name: installing dependencies
       run: npm ci
     
-    - name: running unit tests
-      run: npm test
+    # - name: running unit tests
+    #   run: npm test
 
     - name: building
       run: npm run build

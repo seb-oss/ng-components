@@ -105,7 +105,7 @@
                         "polyfills": "projects/docs/src/polyfills.ts",
                         "tsConfig": "projects/docs/tsconfig.app.json",
                         "aot": true,
-                        "assets": ["projects/docs/src/favicon.ico", "projects/docs/src/assets"],
+                        "assets": ["projects/docs/src/favicon.ico", "projects/docs/src/assets", "projects/docs/src/404.html"],
                         "styles": ["projects/docs/src/styles/mixins.scss", "projects/docs/src/styles/styles.scss"],
                         "scripts": []
                     },
@@ -127,14 +127,9 @@
                             "buildOptimizer": true,
                             "budgets": [
                                 {
-                                    "type": "initial",
-                                    "maximumWarning": "2mb",
-                                    "maximumError": "5mb"
-                                },
-                                {
-                                    "type": "anyComponentStyle",
-                                    "maximumWarning": "6kb",
-                                    "maximumError": "10kb"
+                                    "type": "all",
+                                    "maximumWarning": "8mb",
+                                    "maximumError": "15mb"
                                 }
                             ]
                         }
