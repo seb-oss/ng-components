@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import XRegExp from "xregexp";
 import { Observable, from, merge } from "rxjs";
 import { map, reduce } from "rxjs/operators";
 import { File as ParsedFile } from "typescript-parser-es5/resources/File";
@@ -34,8 +33,8 @@ export class APIExtractService {
      */
     static formatSourceCode(sourceCode: string, regex: RegExp, mapper: Array<RegexMapper>): any {
         let parsedObject: any = {};
-        (XRegExp.match(sourceCode, regex) as Array<any>).forEach(element => {
-            const parsedArray: XRegExp.ExecArray = XRegExp.exec(element, regex);
+        let parsedArray: Array<any> = [];
+        while ((parsedArray = regex.exec(sourceCode))) {
             const inputs: APIInput = {};
             Object.keys(parsedArray)
                 .filter((key: string) => {
@@ -48,7 +47,7 @@ export class APIExtractService {
             if (!!inputs.name) {
                 parsedObject = { ...parsedObject, [inputs.name]: inputs };
             }
-        });
+        }
         return parsedObject;
     }
 
@@ -57,7 +56,7 @@ export class APIExtractService {
      * @param sourceCode string of source code
      */
     static extractInputs(sourceCode: string): ParsedAPI {
-        const regex: RegExp = XRegExp(
+        const regex: RegExp = new RegExp(
             `(\\/\\*\\*([\\s\\S]<!-- skip -->[\\s\\S])?(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)?(?:[\\r\\n\\t\\s]*)(\\@Input)\\((?:'|"?)(.*?)(?:'|")?(?:\\))(?:[\\W]+)(get|set|){1}(?:\\W)?([^:?\\(]+)([?]?)+`,
             "g"
         );
@@ -78,7 +77,7 @@ export class APIExtractService {
      * @param sourceCode string of source code
      */
     static extractOutputs(sourceCode: string): ParsedAPI {
-        const regex: RegExp = XRegExp(
+        const regex: RegExp = new RegExp(
             `(?:(\\/\\*\\*([\\s\\S]<!-- skip -->[\\s\\S])?(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)[^@]+|)(\\@Output)\\((?:'|"?)(.*?)(?:'|")?(?:\\))(?:\\W)?([^\\:?]+)+`,
             "g"
         );
@@ -97,7 +96,7 @@ export class APIExtractService {
      * @param sourceCode string of source code
      */
     static extractProperties(sourceCode: string): ParsedAPI {
-        const regex: RegExp = XRegExp(
+        const regex: RegExp = new RegExp(
             `(\\/\\*\\*([\\s\\S]<!-- skip -->[\\s\\S])?(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)?(?:[\\r\\n\\t\\s]*)(\\@Input)\\(\\) ([\\w\\$]+)\\??\\:\\s([^\\;\\=]*)(?:\\;\\s| \\=\\s)[\\'\\"]?([\\w][^\\;\\/\\'\\"]*)?[\\'\\"]?`,
             "g"
         );
@@ -117,7 +116,7 @@ export class APIExtractService {
      * @param sourceCode string of source code
      */
     static extractMethods(sourceCode: string): ParsedAPI {
-        const regex: RegExp = XRegExp(
+        const regex: RegExp = new RegExp(
             `((\\/\\*\\*([\\s\\S]<!-- skip -->[\\s\\S])?(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)?[^\\w\\@]+|)(?!constructor|Input|Component)((private )?)([a-zA-Z^@]*)\\(([^\\)]*)\\)\\:?\\s?([\\w\\<\\>]*)`,
             "g"
         );
@@ -137,8 +136,11 @@ export class APIExtractService {
      * @param sourceCode string of source code
      */
     static extractDescription(sourceCode: string): APIInput {
-        const regex: RegExp = XRegExp(`((\\/\\*\\*(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)?[^\\w\\@]+|)((\\@Component|\\@Directive))`, "g");
-        const parsedArray: XRegExp.ExecArray = XRegExp.exec(sourceCode, regex);
+        const regex: RegExp = new RegExp(
+            `((\\/\\*\\*(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)?[^\\w\\@]+|)((\\@Component|\\@Directive))`,
+            "g"
+        );
+        const parsedArray: Array<any> = regex.exec(sourceCode);
         return { comment: parsedArray[1], decorator: parsedArray[6] };
     }
 
@@ -212,8 +214,9 @@ export class APIExtractService {
      * @param type output type
      */
     static parseOutputType(type: string): APIInput {
-        const regex: RegExp = XRegExp(`(EventEmitter<(?<type>[a-zA-Z]+)>)`, "g");
-        return XRegExp.exec(type, regex);
+        const regex: RegExp = new RegExp(`(EventEmitter<(?<type>[a-zA-Z]+)>)`, "g");
+        const parsedArray: Array<any> = regex.exec(type);
+        return { type: parsedArray[1] };
     }
 
     /**
@@ -235,7 +238,7 @@ export class APIExtractService {
      * @param source string of source code
      */
     parseSourceFile(source: string): Observable<Array<ApiSection>> {
-        const description: XRegExp.ExecArray = APIExtractService.extractDescription(source);
+        const description: APIInput = APIExtractService.extractDescription(source);
         const inputs: ParsedAPI = APIExtractService.extractInputs(source);
         const outputs: ParsedAPI = APIExtractService.extractOutputs(source);
         const properties: ParsedAPI = APIExtractService.extractProperties(source);
@@ -257,7 +260,7 @@ export class APIExtractService {
      */
     parse(
         file: ParsedFile,
-        description: XRegExp.ExecArray,
+        description: APIInput,
         inputs: ParsedAPI,
         outputs: ParsedAPI,
         properties: ParsedAPI,
