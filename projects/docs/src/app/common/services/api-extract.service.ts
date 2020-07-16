@@ -17,6 +17,11 @@ interface ParsedAccessorDeclaration extends AccessorDeclaration {
     isOptional?: boolean;
 }
 
+interface RegexMapper {
+    name: keyof APIInput;
+    index: string;
+}
+
 @Injectable()
 export class APIExtractService {
     constructor() {}
@@ -27,15 +32,18 @@ export class APIExtractService {
      * @param sourceCode string of source code
      * @param regex regular expression
      */
-    static formatSourceCode(sourceCode: string, regex: RegExp): any {
+    static formatSourceCode(sourceCode: string, regex: RegExp, mapper: Array<RegexMapper>): any {
         let parsedObject: any = {};
         (XRegExp.match(sourceCode, regex) as Array<any>).forEach(element => {
             const parsedArray: XRegExp.ExecArray = XRegExp.exec(element, regex);
             const inputs: APIInput = {};
             Object.keys(parsedArray)
-                .filter((key: string) => isNaN(parseInt(key, 10)))
+                .filter((key: string) => {
+                    return mapper.findIndex(({ index }: RegexMapper) => index === key) > -1;
+                })
                 .map((key: string) => {
-                    inputs[key] = parsedArray[key];
+                    const name: string = mapper.find(({ index }: RegexMapper) => index === key)?.name;
+                    inputs[name] = parsedArray[key];
                 });
             if (!!inputs.name) {
                 parsedObject = { ...parsedObject, [inputs.name]: inputs };
@@ -50,10 +58,19 @@ export class APIExtractService {
      */
     static extractInputs(sourceCode: string): ParsedAPI {
         const regex: RegExp = XRegExp(
-            `(?<comment>\\/\\*\\*(?<skip>[\\s\\S]<!-- skip -->[\\s\\S])?(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)?(?:[\\r\\n\\t\\s]*)(?<decorator>\\@Input)\\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\\))(?:[\\W]+)(?<accessor>get|set|){1}(?:\\W)?(?<name>[^:?\\(]+)(?<optional>[?]?)+`,
+            `(\\/\\*\\*([\\s\\S]<!-- skip -->[\\s\\S])?(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)?(?:[\\r\\n\\t\\s]*)(\\@Input)\\((?:'|"?)(.*?)(?:'|")?(?:\\))(?:[\\W]+)(get|set|){1}(?:\\W)?([^:?\\(]+)([?]?)+`,
             "g"
         );
-        return this.formatSourceCode(sourceCode, regex);
+        const mappers: Array<RegexMapper> = [
+            { name: "comment", index: "1" },
+            { name: "skip", index: "2" },
+            { name: "decorator", index: "6" },
+            { name: "alias", index: "7" },
+            { name: "accessor", index: "8" },
+            { name: "name", index: "9" },
+            { name: "optional", index: "10" },
+        ];
+        return this.formatSourceCode(sourceCode, regex, mappers);
     }
 
     /**
@@ -62,10 +79,17 @@ export class APIExtractService {
      */
     static extractOutputs(sourceCode: string): ParsedAPI {
         const regex: RegExp = XRegExp(
-            `(?:(?<comment>\\/\\*\\*(?<skip>[\\s\\S]<!-- skip -->[\\s\\S])?(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)[^@]+|)(?<decorator>\\@Output)\\((?:'|"?)(?<alias>.*?)(?:'|")?(?:\\))(?:\\W)?(?<name>[^\\:?]+)+`,
+            `(?:(\\/\\*\\*([\\s\\S]<!-- skip -->[\\s\\S])?(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)[^@]+|)(\\@Output)\\((?:'|"?)(.*?)(?:'|")?(?:\\))(?:\\W)?([^\\:?]+)+`,
             "g"
         );
-        return this.formatSourceCode(sourceCode, regex);
+        const mappers: Array<RegexMapper> = [
+            { name: "comment", index: "1" },
+            { name: "skip", index: "2" },
+            { name: "decorator", index: "6" },
+            { name: "alias", index: "7" },
+            { name: "name", index: "8" },
+        ];
+        return this.formatSourceCode(sourceCode, regex, mappers);
     }
 
     /**
@@ -74,10 +98,18 @@ export class APIExtractService {
      */
     static extractProperties(sourceCode: string): ParsedAPI {
         const regex: RegExp = XRegExp(
-            `(?<comment>\\/\\*\\*(?<skip>[\\s\\S]<!-- skip -->[\\s\\S])?(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)?(?:[\\r\\n\\t\\s]*)(?<decorator>\\@Input)\\(\\) (?<name>[\\w\\$]+)\\??\\:\\s(?<type>[^\\;\\=]*)(?:\\;\\s| \\=\\s)[\\'\\"]?(?<default>[\\w][^\\;\\/\\'\\"]*)?[\\'\\"]?`,
+            `(\\/\\*\\*([\\s\\S]<!-- skip -->[\\s\\S])?(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)?(?:[\\r\\n\\t\\s]*)(\\@Input)\\(\\) ([\\w\\$]+)\\??\\:\\s([^\\;\\=]*)(?:\\;\\s| \\=\\s)[\\'\\"]?([\\w][^\\;\\/\\'\\"]*)?[\\'\\"]?`,
             "g"
         );
-        return this.formatSourceCode(sourceCode, regex);
+        const mappers: Array<RegexMapper> = [
+            { name: "comment", index: "1" },
+            { name: "skip", index: "2" },
+            { name: "decorator", index: "6" },
+            { name: "name", index: "7" },
+            { name: "type", index: "8" },
+            { name: "default", index: "9" },
+        ];
+        return this.formatSourceCode(sourceCode, regex, mappers);
     }
 
     /**
@@ -86,22 +118,28 @@ export class APIExtractService {
      */
     static extractMethods(sourceCode: string): ParsedAPI {
         const regex: RegExp = XRegExp(
-            `((?<comment>\\/\\*\\*(?<skip>[\\s\\S]<!-- skip -->[\\s\\S])?(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)?[^\\w\\@]+|)(?!constructor|Input|Component)(?<private>(private )?)(?<name>[a-zA-Z^@]*)\\((?<parameters>[^\\)]*)\\)\\:?\\s?(?<returns>[\\w\\<\\>]*)`,
+            `((\\/\\*\\*([\\s\\S]<!-- skip -->[\\s\\S])?(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)?[^\\w\\@]+|)(?!constructor|Input|Component)((private )?)([a-zA-Z^@]*)\\(([^\\)]*)\\)\\:?\\s?([\\w\\<\\>]*)`,
             "g"
         );
-        return this.formatSourceCode(sourceCode, regex);
+        const mappers: Array<RegexMapper> = [
+            { name: "comment", index: "2" },
+            { name: "skip", index: "3" },
+            { name: "private", index: "8" },
+            { name: "name", index: "9" },
+            { name: "parameter", index: "10" },
+            { name: "return", index: "11" },
+        ];
+        return this.formatSourceCode(sourceCode, regex, mappers);
     }
 
     /**
      * extract component description from source code
      * @param sourceCode string of source code
      */
-    static extractDescription(sourceCode: string): XRegExp.ExecArray {
-        const regex: RegExp = XRegExp(
-            `((?<comment>\\/\\*\\*(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)?[^\\w\\@]+|)(?<decorator>(\\@Component|\\@Directive))`,
-            "g"
-        );
-        return XRegExp.exec(sourceCode, regex);
+    static extractDescription(sourceCode: string): APIInput {
+        const regex: RegExp = XRegExp(`((\\/\\*\\*(\\s*\\n)?([^\\*]|(\\*(?!\\/)))*\\*\\/)?[^\\w\\@]+|)((\\@Component|\\@Directive))`, "g");
+        const parsedArray: XRegExp.ExecArray = XRegExp.exec(sourceCode, regex);
+        return { comment: parsedArray[1], decorator: parsedArray[6] };
     }
 
     /**
@@ -235,9 +273,9 @@ export class APIExtractService {
                     inputs: this.parseInputs(declaration.accessors, inputs),
                     outputs: this.parseOutputs(declaration.properties, outputs),
                     properties: APIExtractService.parseProperties(declaration.properties, properties) as any,
-                    methods: APIExtractService.parseMethods(declaration.methods, methods) as any,
+                    // methods: APIExtractService.parseMethods(declaration.methods, methods) as any,
                 };
-                const isEmpty: boolean = !Object.entries(section)
+                const isEmpty: boolean = !this.getEntries(section)
                     .filter((key: [string, any]) => Array.isArray(key[1]))
                     .some((key: [string, any]) => key[1].length > 0);
                 return isEmpty ? [...previous] : [...previous, section];
@@ -251,7 +289,7 @@ export class APIExtractService {
      */
     parseInputs(accessors: Array<AccessorDeclaration>, inputs: ParsedAPI): Array<AccessorDeclaration> {
         return accessors
-            .filter((item: AccessorDeclaration) => !!inputs[item.name])
+            .filter((item: AccessorDeclaration) => !!inputs[item.name] && !inputs[item.name]?.skip?.length)
             .sort(APIExtractService.sortInputs)
             .reduce((previous: Array<ParsedAccessorDeclaration>, current: AccessorDeclaration) => {
                 const input: ParsedAccessorDeclaration = previous.find((i: ParsedAccessorDeclaration) => i.name === current.name);
@@ -289,5 +327,16 @@ export class APIExtractService {
                     description: outputs[property.name] && APIExtractService.parseComment(outputs[property.name].comment?.trim()),
                 };
             });
+    }
+
+    /** get object entries */
+    getEntries(obj: ApiSection): Array<any> {
+        const ownProps: Array<string> = Object.keys(obj);
+        let i: number = ownProps.length;
+        const resArray: Array<any> = new Array(i); // preallocate the Array
+        while (i--) {
+            resArray[i] = [ownProps[i], obj[ownProps[i]]];
+        }
+        return resArray;
     }
 }

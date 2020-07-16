@@ -82,15 +82,17 @@ declare interface APIOutputs {
 
 declare interface APIInput {
     comment?: string;
+    skip?: string;
     decorator?: string;
+    name?: string;
+    type?: string;
+    default?: string;
     alias?: string;
     accessor?: string;
-    name?: string;
     optional?: string;
-    default?: any;
-    type?: string;
     private?: string;
-    skip?: string;
+    parameter?: string;
+    return?: string;
 }
 
 declare interface ParsedAPI {
