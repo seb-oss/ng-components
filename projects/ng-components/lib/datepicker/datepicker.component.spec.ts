@@ -6,8 +6,8 @@ import { CommonModule } from "@angular/common";
 import { Component, ViewChild } from "@angular/core";
 
 @Component({
-    selector: "tac-datePicker",
-    template: ` <sebng-date-picker
+    selector: "tac-datepicker",
+    template: ` <sebng-datepicker
         [id]="id"
         [placeholder]="placeholder"
         [min]="startDate"
@@ -15,10 +15,10 @@ import { Component, ViewChild } from "@angular/core";
         [className]="className"
         [(ngModel)]="dateValue"
     >
-    </sebng-date-picker>`,
+    </sebng-datepicker>`,
 })
 class CustomTestClass {
-    @ViewChild(DatepickerComponent) datePickerComponent: DatepickerComponent;
+    @ViewChild(DatepickerComponent) datepickerComponent: DatepickerComponent;
     dateValue: Date;
     startDate: Date;
     endDate: Date;
@@ -69,26 +69,26 @@ describe("Component: DatepickerComponent", () => {
     it("should be able to write and update value using the writevalue method", async(() => {
         fixture.detectChanges();
 
-        expect(isNaN(component.datePickerComponent.value.getTime())).toBeTrue(); // Is invalid date
+        expect(isNaN(component.datepickerComponent.value.getTime())).toBeTrue(); // Is invalid date
 
         const expectedObj: Date = new Date();
-        component.datePickerComponent.writeValue(expectedObj);
+        component.datepickerComponent.writeValue(expectedObj);
 
         fixture.detectChanges();
 
-        expect(component.datePickerComponent.value.getTime()).toBe(expectedObj.getTime());
+        expect(component.datepickerComponent.value.getTime()).toBe(expectedObj.getTime());
     }));
 
     it("should call touch and change events when the value is set", fakeAsync(() => {
         fixture.detectChanges();
         const onChangeEvent = (change: any) => true;
-        const registerOnChangeMock = spyOn(component.datePickerComponent, "registerOnChange").and.callThrough();
-        const registerOnTouchedMock = spyOn(component.datePickerComponent, "registerOnTouched").and.callThrough();
-        const onMockWriteValue = spyOn(component.datePickerComponent, "writeValue").and.callThrough();
+        const registerOnChangeMock = spyOn(component.datepickerComponent, "registerOnChange").and.callThrough();
+        const registerOnTouchedMock = spyOn(component.datepickerComponent, "registerOnTouched").and.callThrough();
+        const onMockWriteValue = spyOn(component.datepickerComponent, "writeValue").and.callThrough();
 
-        component.datePickerComponent.registerOnChange(onChangeEvent);
+        component.datepickerComponent.registerOnChange(onChangeEvent);
 
-        component.datePickerComponent.registerOnTouched(onChangeEvent);
+        component.datepickerComponent.registerOnTouched(onChangeEvent);
 
         component.dateValue = new Date();
 
@@ -98,19 +98,19 @@ describe("Component: DatepickerComponent", () => {
             expect(registerOnChangeMock).toHaveBeenCalledTimes(1);
             expect(registerOnTouchedMock).toHaveBeenCalledTimes(1);
             expect(onMockWriteValue).toHaveBeenCalled();
-            expect(component.dateValue).toEqual(component.datePickerComponent.value);
+            expect(component.dateValue).toEqual(component.datepickerComponent.value);
         });
     }));
 
-    it("getter and setter values of datePicker should get be able to get and set value correctly", done => {
+    it("getter and setter values of datepicker should get be able to get and set value correctly", done => {
         fixture.detectChanges();
 
         let expectedValue: Date;
-        component.datePickerComponent.value = expectedValue = new Date();
+        component.datepickerComponent.value = expectedValue = new Date();
 
         // do not call detectChanges here again, doing so will refresh the component
 
-        expect(expectedValue).toEqual(component.datePickerComponent.value);
+        expect(expectedValue).toEqual(component.datepickerComponent.value);
         done();
     });
 });

@@ -1,8 +1,8 @@
-<ng-container *ngIf="monthPicker; else datePicker">
+<ng-container *ngIf="monthPicker; else datepicker">
     <ng-container *ngIf="!forceCustom && supportsInputOfType('month'); else dateFallback">
         <input
             type="month"
-            class="form-control seb-date-picker-native"
+            class="form-control seb-datepicker-native"
             [ngClass]="className"
             [class.is-invalid]="!isValidDate(value)"
             [attr.min]="getStringFromDate(min)"
@@ -13,11 +13,11 @@
     </ng-container>
 </ng-container>
 
-<ng-template #datePicker>
+<ng-template #datepicker>
     <ng-container *ngIf="!forceCustom && supportsInputOfType('date'); else dateFallback">
         <input
             type="date"
-            class="form-control seb-date-picker-native"
+            class="form-control seb-datepicker-native"
             [ngClass]="className"
             [class.is-invalid]="!isValidDate(value)"
             [attr.min]="getStringFromDate(min)"

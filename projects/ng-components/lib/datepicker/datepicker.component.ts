@@ -10,7 +10,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 
 /** Date pickers simplify the task of selecting a date in a visual representation of a calendar. */
 @Component({
-    selector: "sebng-date-picker",
+    selector: "sebng-datepicker",
     templateUrl: "./datepicker.component.html",
     styleUrls: ["./datepicker.component.scss"],
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
