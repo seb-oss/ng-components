@@ -53,19 +53,24 @@ export class DatePickerComponent implements ControlValueAccessor {
     @Input("localeCode")
     set localeCode(v: string) {
         this._localeCode = v;
-        const date: Date = new Date(2012, 0, 1);
+        const date: Date = new Date(2012, 0, 5);
         const locale = new Intl.DateTimeFormat(this.localeCode, { month: "long" });
         const rtf: any = this.getRelativeTimeFormat(this.localeCode);
-        const customPickerOrder: string[] = new Intl.DateTimeFormat(this.localeCode)
-            .formatToParts(new Date())
-            .map(e => e.type)
-            .filter(x => x !== "literal");
+        const localeDateString: string = new Intl.DateTimeFormat(this.localeCode)?.format(date);
+        const customPickerOrder: string[] = ["day", "month", "year"].sort((a, b) => {
+            const positions: { day: number; month: number; year: number } = {
+                day: localeDateString.search(/5/g) || 0,
+                month: localeDateString.search(/1/g) || 1,
+                year: localeDateString.search(/2012/g) || 2,
+            };
+            return positions[a] - positions[b];
+        });
 
-        customPickerOrder.map(unit => {
+        customPickerOrder?.map(unit => {
             this.unitNames[unit] =
                 rtf
-                    .formatToParts(1, unit)
-                    .filter(x => x.type === "literal")[1]
+                    ?.formatToParts(1, unit)
+                    ?.filter(x => x.type === "literal")[1]
                     ?.value?.trim() || unit;
         });
 
@@ -103,7 +108,7 @@ export class DatePickerComponent implements ControlValueAccessor {
     }
 
     getRelativeTimeFormat(code: string): any {
-        if ((Intl as any).RelativeTimeFormat) {
+        if ((Intl as any)["RelativeTimeFormat"]) {
             return new (Intl as any).RelativeTimeFormat(code);
         }
         return null;
