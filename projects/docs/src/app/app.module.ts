@@ -5,6 +5,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { LoaderModule } from "@sebgroup/ng-components/loader";
 
 const routes: Routes = [
     { path: "", loadChildren: () => import("./home/home.module").then(m => m.HomeModule) },
@@ -14,7 +15,7 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [CommonModule, BrowserModule, BrowserAnimationsModule, RouterModule.forRoot(routes), HomeModule],
+    imports: [CommonModule, BrowserModule, BrowserAnimationsModule, RouterModule.forRoot(routes), HomeModule, LoaderModule],
     exports: [RouterModule],
     bootstrap: [AppComponent],
 })
