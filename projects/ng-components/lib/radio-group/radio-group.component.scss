@@ -23,18 +23,18 @@ $radio-padding: 0.625rem;
                 top: 50%;
             }
             padding-right: 0.5rem;
-
-            > .custom-description {
-                color: $gray-600;
-            }
         }
+    }
 
-        &.disabled {
-            .custom-control-label {
-                > .custom-description {
-                    color: $gray-400;
-                }
-            }
+    .custom-control-description {
+        font-size: $font-size-sm;
+        margin: 0;
+        color: $gray-600;
+        line-height: $line-height-base;
+    }
+    &.disabled {
+        .custom-control-description {
+            color: $gray-400;
         }
     }
 }
