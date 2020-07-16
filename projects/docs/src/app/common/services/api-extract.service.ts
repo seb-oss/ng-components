@@ -267,7 +267,10 @@ export class APIExtractService {
         methods: ParsedAPI
     ): Array<ApiSection> {
         return file.declarations
-            .filter((declaration: Declaration) => declaration.constructor.name === "ClassDeclaration")
+            .filter((declaration: Declaration) => {
+                // only parse component or directive
+                return declaration.name.indexOf("Directive") > -1 || declaration.name.indexOf("Component") > -1;
+            })
             .reduce((previous: Array<ApiSection>, current: ClassDeclaration) => {
                 const declaration: ClassDeclaration = current;
                 const section: ApiSection = {
