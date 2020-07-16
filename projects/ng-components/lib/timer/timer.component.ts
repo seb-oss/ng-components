@@ -1,6 +1,4 @@
-import { Component, Input, ViewEncapsulation, Output, EventEmitter, ChangeDetectorRef } from "@angular/core";
-import { timer, Observable } from "rxjs";
-import { map, takeWhile, finalize } from "rxjs/operators";
+import { Component, Input, ViewEncapsulation, Output, EventEmitter, OnDestroy } from "@angular/core";
 
 /** A timer is a component for measuring time intervals */
 @Component({
@@ -8,51 +6,64 @@ import { map, takeWhile, finalize } from "rxjs/operators";
     templateUrl: "./timer.component.html",
     encapsulation: ViewEncapsulation.None,
 })
-export class TimerComponent {
+export class TimerComponent implements OnDestroy {
     /** Element ID */
     @Input() id?: string;
     /** Element class name */
     @Input() className?: string;
-    /** Callback when timer ends */
-    @Output() onTimerEnd: EventEmitter<void> = new EventEmitter<void>();
-
-    public timer: Observable<string>;
-
-    private _duration: number;
-
-    /** Timer's duration */
-    @Input()
-    get duration(): number {
+    /** Timer's duration in seconds */
+    @Input() get duration(): number {
         return this._duration;
     }
 
     set duration(value: number) {
-        this._duration = value;
+        this.clearTimer();
         if (value !== null && value !== undefined) {
-            this.setTimerValue();
+            this._duration = value;
+            this._countDown = value;
+            this.startTimer();
         }
     }
 
-    constructor(private changeRef: ChangeDetectorRef) {}
+    /** Callback when timer ends */
+    @Output() timerEnd: EventEmitter<void> = new EventEmitter<void>();
 
-    setTimerValue(): void {
-        this.timer = timer(0, 1000).pipe(
-            map(i => this.duration / 1000 - i),
-            takeWhile(i => i >= 0),
-            map((n: number) => {
-                const date: Date = new Date(n * 1000);
-                return (
-                    (date.getUTCHours() > 0 ? date.getUTCHours() + ":" : "") +
-                    (date.getUTCMinutes() < 10 ? "0" + date.getUTCMinutes() : date.getUTCMinutes()) +
-                    ":" +
-                    (date.getUTCSeconds() < 10 ? "0" + date.getUTCSeconds() : date.getUTCSeconds())
-                );
-            }),
-            finalize(() => this.onTimerEnd && this.onTimerEnd.emit())
-        );
+    public minutes: number = 0;
+    public seconds: number = 0;
+
+    private _timer: { current: any } = { current: null };
+    private _duration: number = 0;
+    private _countDown: number = 0;
+
+    /** Clears the timer */
+    private clearTimer(): void {
+        this._countDown = 0;
+        this._timer.current && clearInterval(this._timer.current);
     }
 
-    ngAfterContentChecked() {
-        this.changeRef.detectChanges();
+    /**
+     * Converts the numeric value into two digits string for display purposes
+     * @param {number} value The numberic value to be converted
+     * @returns The two digits string value
+     */
+    toDoubleDigits(value: number): string {
+        return value < 10 ? `0${value}` : String(value);
+    }
+
+    /** Kicks off the timer */
+    startTimer(): void {
+        this._timer.current = setInterval(() => {
+            if (this._countDown--) {
+                this.minutes = Math.floor(this._countDown / 60);
+                this.seconds = this._countDown < 60 ? this._countDown : this._countDown % 60;
+            } else {
+                this.clearTimer();
+                this.timerEnd.emit();
+            }
+        }, 1000);
+    }
+
+    ngOnDestroy(): void {
+        this.clearTimer();
     }
 }

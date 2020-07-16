@@ -1,0 +1,21 @@
+<app-doc-page [importString]="importString">
+    <ng-container example>
+        <sebng-timer [duration]="duration" (timerEnd)="isToggled = true"></sebng-timer>
+    </ng-container>
+    <div class="row" controls>
+        <label class="m-3 col-12">
+            duration
+            <p><small>set duration of timer</small></p>
+            <input class="form-control" [(ngModel)]="duration" />
+        </label>
+        <sebng-notification
+            [toggle]="isToggled"
+            title="Time is up"
+            message="Timer ended"
+            [dismissable]="true"
+            [dismissTimeout]="2000"
+            (dismiss)="isToggled = false"
+        ></sebng-notification>
+    </div>
+    <ng-container code>{{ snippet }}</ng-container>
+</app-doc-page>
