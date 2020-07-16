@@ -214,9 +214,9 @@ export class APIExtractService {
      * @param type output type
      */
     static parseOutputType(type: string): APIInput {
-        const regex: RegExp = new RegExp(`(EventEmitter<(?<type>[a-zA-Z]+)>)`, "g");
+        const regex: RegExp = new RegExp(`(EventEmitter<([a-zA-Z]+)>)`, "g");
         const parsedArray: Array<any> = regex.exec(type);
-        return { type: parsedArray[1] };
+        return { type: parsedArray[2] };
     }
 
     /**
