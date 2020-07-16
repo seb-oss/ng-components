@@ -24,8 +24,6 @@ export class SideMenuComponent implements OnInit, OnDestroy {
      * The operating system running the browser.
      * This is used to determine the text that should be displayed to the user when hovering over the toggle button
      */
-    platform: "mac" | "win" = navigator.platform.substr(0, 3).toLocaleLowerCase() as any;
-    modifier: string = this.platform === "win" ? "Control" : this.platform === "mac" ? "Command" : "";
     prestine: boolean = true;
     initialToggle: boolean;
     isAnimating: boolean = false;
@@ -45,13 +43,13 @@ export class SideMenuComponent implements OnInit, OnDestroy {
      * A listener attached to the document to listen to shortcuts invocations
      */
     documentKeyupListener = (e: KeyboardEvent) => {
-        /** Toggles the side menu when `ctrl+\`` on Windows or `cmd+\`` on MacOS is invoked */
-        if ((e.ctrlKey || e.metaKey) && e.key === "`") {
+        /** Toggles the side menu when `ctrl+\`` is invoked */
+        if (e.ctrlKey && e.key === "`") {
             this.isAnimating = true;
             this.toggle = !this.toggle;
         }
-        /** Focuses on the search text box when `ctrl+shift+f` on Windows or `cmd+shift+f` on MacOS is invoked */
-        if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === "f") {
+        /** Focuses on the search text box when `ctrl+shift+f` is invoked */
+        if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "f") {
             document.getElementById("searchTextBox").focus();
         }
     };

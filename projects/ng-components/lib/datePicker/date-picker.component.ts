@@ -39,6 +39,16 @@ export class DatePickerComponent implements ControlValueAccessor {
     };
 
     private _localeCode: string;
+
+    // Placeholders for the callbacks which are later provided
+    // by the Control Value Accessor
+    private onTouchedCallback: () => void;
+    private onChangeCallback: (_: any) => void;
+    private _customDay: number;
+    private _customMonth: number;
+    private _customYear: number;
+    private _value: Date = null;
+
     /** Locale of datepicker */
     @Input("localeCode")
     set localeCode(v: string) {
@@ -46,7 +56,6 @@ export class DatePickerComponent implements ControlValueAccessor {
         const date: Date = new Date(2012, 0, 1);
         const locale = new Intl.DateTimeFormat(this.localeCode, { month: "long" });
         const rtf: any = this.getRelativeTimeFormat(this.localeCode);
-        // console.log(locale.resolvedOptions());
         const customPickerOrder: string[] = new Intl.DateTimeFormat(this.localeCode)
             .formatToParts(new Date())
             .map(e => e.type)
@@ -61,12 +70,10 @@ export class DatePickerComponent implements ControlValueAccessor {
         });
 
         this._customPickerOrder = customPickerOrder;
-        // console.log(customPickerOrder);
         const monthNames: string[] = [this.unitNames.month];
         [...Array(12)].map((_, i) => {
             date.setMonth(i);
             monthNames.push(locale.format(date));
-            // console.log(locale.format(date));
         });
         this._monthNames = monthNames;
     }
@@ -91,21 +98,16 @@ export class DatePickerComponent implements ControlValueAccessor {
         this.localeCode = myLocale;
     }
 
-    getLocale() {
+    getLocale(): string {
         return navigator.languages && navigator.languages.length ? navigator.languages[0] : navigator.language;
     }
 
-    getRelativeTimeFormat(code: string) {
+    getRelativeTimeFormat(code: string): any {
         if ((Intl as any).RelativeTimeFormat) {
             return new (Intl as any).RelativeTimeFormat(code);
         }
         return null;
     }
-
-    // Placeholders for the callbacks which are later provided
-    // by the Control Value Accessor
-    private onTouchedCallback: () => void;
-    private onChangeCallback: (_: any) => void;
 
     get inputRawValue(): string {
         return this.getStringFromDate(this.value);
@@ -122,7 +124,7 @@ export class DatePickerComponent implements ControlValueAccessor {
         }
     }
 
-    trySaveDate() {
+    trySaveDate(): void {
         const day: number = this.monthPicker ? 1 : this.customDay;
         const month: number = this.customMonth;
         const year: number = this.customYear;
@@ -135,8 +137,6 @@ export class DatePickerComponent implements ControlValueAccessor {
             this.value = new Date("");
         }
     }
-    /** <!-- skip --> */
-    private _customDay: number;
     /** <!-- skip --> */
     get customDay(): number {
         if (this._customDay === undefined && !!this.inputRawValue) {
@@ -154,7 +154,6 @@ export class DatePickerComponent implements ControlValueAccessor {
         }
     }
 
-    private _customMonth: number;
     get customMonth(): number {
         if (this._customMonth === undefined && !!this.inputRawValue) {
             const value: number = Number(this.inputRawValue.substr(5, 2));
@@ -169,7 +168,6 @@ export class DatePickerComponent implements ControlValueAccessor {
         this.trySaveDate();
     }
 
-    private _customYear: number;
     get customYear(): number {
         if (this._customYear === undefined && !!this.inputRawValue) {
             const value: number = Number(this.inputRawValue.substr(0, 4));
@@ -184,7 +182,6 @@ export class DatePickerComponent implements ControlValueAccessor {
         this.trySaveDate();
     }
 
-    private _value: Date = null;
     // get and set accessor----------------------
     get value(): Date | null {
         return this._value;
@@ -204,7 +201,7 @@ export class DatePickerComponent implements ControlValueAccessor {
         this.onChangeCallback && this.onChangeCallback(this._value);
     }
 
-    isDateInRange(d: Date, success?: () => void, fail?: () => void) {
+    isDateInRange(d: Date, success?: () => void, fail?: () => void): void {
         if (!this.min && !this.max) {
             success && success();
         } else if (this.min && d >= this.min) {
@@ -225,7 +222,7 @@ export class DatePickerComponent implements ControlValueAccessor {
     }
 
     // From ControlValueAccessor interfaces--------------
-    writeValue(value: any) {
+    writeValue(value: any): void {
         this.value = value;
     }
     registerOnChange(fn: any): void {
@@ -236,7 +233,7 @@ export class DatePickerComponent implements ControlValueAccessor {
     }
 
     supportsInputOfType(type: "date" | "month"): boolean {
-        let input: HTMLInputElement = document.createElement("input");
+        const input: HTMLInputElement = document.createElement("input");
         input.setAttribute("type", type);
 
         const notADateValue: string = "not-a-date";
