@@ -1,15 +1,4 @@
-import {
-    Component,
-    ViewEncapsulation,
-    ElementRef,
-    Input,
-    TemplateRef,
-    ViewChild,
-    Output,
-    EventEmitter,
-    AfterViewInit,
-    ChangeDetectorRef,
-} from "@angular/core";
+import { Component, ViewEncapsulation, ElementRef, Input, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef } from "@angular/core";
 import { trigger, transition, style, animate } from "@angular/animations";
 import { TooltipTheme, TooltipTrigger, TooltipPosition } from "./tooltip-content/tooltip-content.component";
 
@@ -39,16 +28,15 @@ export class TooltipComponent implements AfterViewInit {
     @Input() theme: TooltipTheme = "default";
     /** CSS class */
     @Input() className?: string = "";
-    /** <!-- skip --> */
+
     @ViewChild("ngContent") contentref: ElementRef<HTMLDivElement>;
-    /** <!-- skip --> */
+
     stringContent: string = "";
-    /** <!-- skip --> */
     hasContent: boolean = true;
-    /** <!-- skip --> */
+
     constructor(private cdr: ChangeDetectorRef) {}
 
-    ngAfterViewInit() {
+    ngAfterViewInit(): void {
         this.hasContent = this.contentref && this.contentref.nativeElement.childNodes.length > 0;
         this.cdr.detectChanges();
     }

@@ -1,6 +1,6 @@
 <span class="d-none" #contentNotes><ng-content select="[notes]"></ng-content></span>
 
-<div class="doc-page container">
+<div class="doc-page container" [class.centered-example]="centered">
     <h1>{{ name }}</h1>
     <p>{{ description }}</p>
 

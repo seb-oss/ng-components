@@ -21,6 +21,7 @@ export class DocPageComponent implements OnInit, OnDestroy {
     tabListWithNotes: Array<TabsListItem> = [{ text: "Playground" }, { text: "APIs" }, { text: "Notes" }];
 
     @Input() importString: string;
+    @Input() centered?: boolean;
 
     constructor(private apiService: APIExtractService, private route: ActivatedRoute, private router: Router) {}
 

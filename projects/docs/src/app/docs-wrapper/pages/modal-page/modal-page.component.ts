@@ -5,7 +5,6 @@ import { DropdownItem } from "@sebgroup/ng-components/dropdown";
 @Component({
     selector: "app-modal-page",
     templateUrl: "./modal-page.component.html",
-    styleUrls: ["./modal-page.component.scss"],
 })
 export class ModalPageComponent {
     importString: string = require("!raw-loader!@sebgroup/ng-components/modal/modal.component");

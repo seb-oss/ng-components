@@ -11,7 +11,7 @@ const routes: Routes = [{ path: "", component: TimelinePageComponent }];
 
 @NgModule({
     declarations: [TimelinePageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, TimelineModule, NotificationModule],
+    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, TimelineModule],
     exports: [RouterModule, TimelineModule],
 })
 export class TimelinePageModule {}
