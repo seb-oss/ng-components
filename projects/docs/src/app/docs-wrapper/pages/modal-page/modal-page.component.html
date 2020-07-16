@@ -2,13 +2,16 @@
     <ng-container example>
         <button class="btn btn-primary" (click)="openModal()">Open Modal</button>
         <sebng-modal
+            [toggle]="toggle"
             [id]="'test'"
             [size]="size"
             [position]="position"
             [center]="center"
             [fullscreen]="fullscreen"
+            [backdropClassName]="backdropClassName"
             [backdropDismiss]="backdropDismiss"
             [escapeKeyDismiss]="escapeDismiss"
+            (onDismiss)="closeModal()"
         >
             <div class="custom-header" header>
                 Title
@@ -44,6 +47,13 @@
                 <sebng-checkbox label="fullscreen" [(ngModel)]="fullscreen"></sebng-checkbox>
             </div>
             <div class="col-12">
+                <sebng-checkbox
+                    label="Custom backdrop html class"
+                    [(ngModel)]="backdropClassNameModel"
+                    (onChange)="setBackdropClassName()"
+                ></sebng-checkbox>
+            </div>
+            <div class="col-12">
                 <sebng-checkbox label="Enable backdrop dismiss" [(ngModel)]="backdropDismiss"></sebng-checkbox>
             </div>
             <div class="col-12">
@@ -66,14 +76,11 @@
             <h4>Toggle Modal component</h4>
 
             <p>The ModalComponent can be used to open modal dialogs with SEB Design styling and animations.</p>
-            <p>To be able to toggle the component, a modal reference should be created using <code>@ViewChild</code>.</p>
-            <app-code-snippet>{{ createViewChild }}</app-code-snippet>
+            <p>To be able to toggle the component, set the input property toggle to true.</p>
+            <app-code-snippet>{{ openModalSnippet }}</app-code-snippet>
 
-            <p>The modal is opened by calling the open method</p>
-            <app-code-snippet>{{ openModalHTML }}</app-code-snippet>
-
-            <p>The modal is closed by calling the close method</p>
-            <app-code-snippet>{{ closeModalHTML }}</app-code-snippet>
+            <p>To be able the modal component, set the input property to false.</p>
+            <app-code-snippet>{{ closeModalSnippet }}</app-code-snippet>
 
             <h2>Keyboard interaction</h2>
             <p>
