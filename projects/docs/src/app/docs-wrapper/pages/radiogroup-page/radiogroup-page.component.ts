@@ -6,9 +6,21 @@ import { RadioGroupItem } from "@sebgroup/ng-components/radio-group";
     template: `
         <app-doc-page [importString]="importString">
             <ng-container example>
-                <sebng-radio-group [list]="list"></sebng-radio-group>
+                <sebng-radio-group [list]="list" [disabled]="disabled" [condensed]="condensed" [inline]="inline"></sebng-radio-group>
             </ng-container>
-            <ng-container controls> </ng-container>
+            <ng-container controls>
+                <sebng-checkbox label="Inline" description="Show radio buttons inlined." [(ngModel)]="inline"></sebng-checkbox>
+                <sebng-checkbox
+                    label="Condensed"
+                    description="Show radio buttons with less padding in between."
+                    [(ngModel)]="condensed"
+                ></sebng-checkbox>
+                <sebng-checkbox
+                    label="Disable All"
+                    description="Disable all elements in the group."
+                    [(ngModel)]="disabled"
+                ></sebng-checkbox>
+            </ng-container>
             <ng-container code>{{ snippet }}</ng-container>
         </app-doc-page>
     `,
@@ -17,9 +29,15 @@ export class RadioGroupPageComponent implements OnInit {
     importString: string = require("!raw-loader!@sebgroup/ng-components/radio-group/radio-group.component");
     snippet: string = `<sebng-radio-group [list]="list"></sebng-radio-group>`;
 
+    // control
+    disabled: boolean;
+    condensed: boolean;
+    inline: boolean;
     list: RadioGroupItem[] = [
-        { key: "One", value: "1", label: "One", description: "Description" },
-        { key: "Two", value: "2", label: "Two" },
+        { key: "1", value: "1", label: "First", description: "with description" },
+        { key: "2", value: "2", label: "Second" },
+        { key: "3", value: "3", label: "Third (disabled)", disabled: true },
+        { key: "4", value: "4", customTemplate: "<code>Fourth (using custom template)</code>" },
     ];
 
     constructor() {
