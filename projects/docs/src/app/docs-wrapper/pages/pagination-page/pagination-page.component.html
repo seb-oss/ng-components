@@ -1,13 +1,56 @@
 <app-doc-page [importString]="importString">
-    <ng-container example>
+    <div [style.overflow-x]="'auto'" example>
         <sebng-pagination
-            [value]="pagination"
-            (change)="pagination = $event"
-            [size]="60"
-            [offset]="6"
-            [pagingLength]="7"
+            [size]="size"
+            [value]="value"
+            [firstText]="firstText"
+            [lastText]="lastText"
+            [nextText]="nextText"
+            [offset]="offset"
+            [pagingLength]="pagingLength"
+            [previousText]="previousText"
+            [useDotNav]="useDotNav"
+            [useFirstAndLast]="useFirstAndLast"
+            [useTextNav]="useTextNav"
+            (change)="value = $event"
         ></sebng-pagination>
+    </div>
+    <ng-container controls>
+        <label>Value</label>
+        <small>The current selected page</small>
+        <sebng-stepper [(ngModel)]="value" [max]="size / offset + 1" [min]="1"></sebng-stepper>
+
+        <label>Size</label>
+        <small>The size of your data (length of the total number of items that are being paginated)</small>
+        <sebng-stepper [(ngModel)]="size" [max]="1000" [min]="1"></sebng-stepper>
+
+        <label>Offset</label>
+        <small>The max number of items to display on a page</small>
+        <sebng-stepper [(ngModel)]="offset" [max]="1000" [min]="1"></sebng-stepper>
+
+        <label>Paging length</label>
+        <small>The max number of pages visible</small>
+        <sebng-stepper [(ngModel)]="pagingLength" [max]="1000" [min]="1"></sebng-stepper>
+
+        <sebng-checkbox
+            label="Use dot navigation"
+            description="Use a dot style navigation (usually used with wizards and pages)"
+            [(ngModel)]="useDotNav"
+        ></sebng-checkbox>
+
+        <sebng-checkbox
+            *ngIf="!useDotNav"
+            label="Show first/last buttons"
+            description="Show the move to first and last buttons as arrow icons."
+            [(ngModel)]="useFirstAndLast"
+        ></sebng-checkbox>
+
+        <sebng-checkbox
+            *ngIf="!useDotNav"
+            label="Use text for navigation"
+            description="Display text instead of arrow icons for first, previous, next and last buttons."
+            [(ngModel)]="useTextNav"
+        ></sebng-checkbox>
     </ng-container>
-    <ng-container controls> </ng-container>
     <ng-container code>{{ snippet }}</ng-container>
 </app-doc-page>
