@@ -25,6 +25,8 @@
         "start": "ng serve docs",
         "commit": "git-cz",
         "build": "ng build ng-components --prod",
+        "build:docs": "ng build docs --prod --baseHref $npm_package_homepage",
+        "build:docs:win": "ng build docs --prod --baseHref %npm_package_homepage%",
         "test": "ng test ng-components",
         "sanitize": "package-lock-sanitizer && git add package-lock.json",
         "lint": "ng lint ng-components",
