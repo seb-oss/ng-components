@@ -1,1 +1,2 @@
-export { TextLabelModule } from "./textLabel.module";
+export * from "./textLabel.module";
+export * from "./textLabel.component";

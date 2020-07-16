@@ -2,7 +2,7 @@
 {
     "extends": "./tsconfig.lib.json",
     "angularCompilerOptions": {
-        "enableIvy": false,
+        "enableIvy": true,
         "outputPath": "dist/lib"
     }
 }
