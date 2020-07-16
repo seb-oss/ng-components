@@ -1,4 +1,4 @@
-import { DatePickerComponent } from "./date-picker.component";
+import { DatepickerComponent } from "./datepicker.component";
 import { TestBed, async, ComponentFixture, fakeAsync, tick } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
@@ -18,7 +18,7 @@ import { Component, ViewChild } from "@angular/core";
     </sebng-date-picker>`,
 })
 class CustomTestClass {
-    @ViewChild(DatePickerComponent) datePickerComponent: DatePickerComponent;
+    @ViewChild(DatepickerComponent) datePickerComponent: DatepickerComponent;
     dateValue: Date;
     startDate: Date;
     endDate: Date;
@@ -38,14 +38,14 @@ class CustomTestClass {
     }
 }
 
-describe("Component: DatePickerComponent", () => {
+describe("Component: DatepickerComponent", () => {
     let fixture: ComponentFixture<CustomTestClass>;
     let component: CustomTestClass;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [FormsModule, CommonModule],
-            declarations: [DatePickerComponent, CustomTestClass],
+            declarations: [DatepickerComponent, CustomTestClass],
             providers: [],
         })
             .compileComponents()

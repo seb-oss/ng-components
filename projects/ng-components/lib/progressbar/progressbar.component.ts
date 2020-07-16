@@ -14,7 +14,7 @@ export interface BarItem {
     selector: "sebng-progress-bar",
     templateUrl: "./progressbar.component.html",
 })
-export class ProgressBarComponent {
+export class ProgressbarComponent {
     /** Value of progress bar */
     @Input() value?: number;
     /* Visual height of progress bar */

@@ -3,7 +3,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 
 const CUSTOM_TEXTAREA_CONTROL_VALUE_ACCESSOR: Provider = {
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => TextAreaComponent),
+    useExisting: forwardRef(() => TextareaComponent),
     multi: true,
 };
 
@@ -15,7 +15,7 @@ const CUSTOM_TEXTAREA_CONTROL_VALUE_ACCESSOR: Provider = {
     encapsulation: ViewEncapsulation.None,
     providers: [CUSTOM_TEXTAREA_CONTROL_VALUE_ACCESSOR],
 })
-export class TextAreaComponent implements ControlValueAccessor {
+export class TextareaComponent implements ControlValueAccessor {
     /** Element class name */
     @Input() className?: string;
     /** The visible width of the textarea. It must be a positive integer. */

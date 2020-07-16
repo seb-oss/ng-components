@@ -7,7 +7,7 @@ export * from "./lib/breadcrumb";
 export * from "./lib/button";
 export * from "./lib/checkBox";
 export * from "./lib/chip";
-export * from "./lib/datePicker";
+export * from "./lib/datepicker";
 export * from "./lib/dropdown";
 export * from "./lib/loader";
 export * from "./lib/modal";

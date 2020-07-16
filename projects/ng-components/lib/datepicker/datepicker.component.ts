@@ -4,19 +4,19 @@ import { padNumber } from "./formatters";
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => DatePickerComponent),
+    useExisting: forwardRef(() => DatepickerComponent),
     multi: true,
 };
 
 /** Date pickers simplify the task of selecting a date in a visual representation of a calendar. */
 @Component({
     selector: "sebng-date-picker",
-    templateUrl: "./date-picker.component.html",
-    styleUrls: ["./date-picker.component.scss"],
+    templateUrl: "./datepicker.component.html",
+    styleUrls: ["./datepicker.component.scss"],
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR],
     encapsulation: ViewEncapsulation.None,
 })
-export class DatePickerComponent implements ControlValueAccessor {
+export class DatepickerComponent implements ControlValueAccessor {
     /** Element placeholder */
     @Input() placeholder: string = "yyyy-mm-dd";
     /** Element class name */
