@@ -11,9 +11,6 @@ import { Component, OnInit } from "@angular/core";
             </div>
             <div controls>
                 <button [disabled]="array.length === maxItems" class="btn btn-primary" (click)="add()">Add chip</button>
-                <p>
-                    <small>( max {{ maxItems }} items)</small>
-                </p>
             </div>
             <ng-container code>{{ snippet }}</ng-container>
         </app-doc-page>
