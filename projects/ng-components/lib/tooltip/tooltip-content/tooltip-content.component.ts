@@ -1,15 +1,4 @@
-import {
-    Component,
-    OnInit,
-    ViewEncapsulation,
-    ElementRef,
-    Input,
-    TemplateRef,
-    ViewChild,
-    HostListener,
-    Output,
-    EventEmitter,
-} from "@angular/core";
+import { Component, ViewEncapsulation, ElementRef, Input, TemplateRef, ViewChild, Output, EventEmitter } from "@angular/core";
 import { trigger, transition, style, animate } from "@angular/animations";
 
 export type TooltipTrigger = "hover" | "click" | "focus";
@@ -56,14 +45,13 @@ export class TooltipContentComponent {
         return this._content;
     }
 
-    @Input("content")
-    set content(value: string | TemplateRef<any>) {
+    @Input("content") set content(value: string | TemplateRef<any>) {
         this._content = value;
         this.isTemplateRef = value instanceof TemplateRef;
     }
 
     /** on tooltip blur */
-    onBlur(event: FocusEvent) {
+    onBlur(event: FocusEvent): void {
         if (!this.tooltipReference.nativeElement.contains(event.relatedTarget as any)) {
             this.defocus.emit();
         }

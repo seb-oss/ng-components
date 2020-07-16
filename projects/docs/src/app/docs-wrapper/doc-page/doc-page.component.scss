@@ -4,4 +4,10 @@
     ::ng-deep .nav-tabs.doc-page-tabs {
         margin-bottom: 2rem;
     }
+
+    &.centered-example {
+        ::ng-deep .example {
+            justify-content: center;
+        }
+    }
 }

@@ -1,0 +1,15 @@
+<app-doc-page [importString]="importString">
+    <ng-container example>
+        <sebng-timeline [list]="list" [direction]="direction" (onClick)="onClick($event)"></sebng-timeline>
+    </ng-container>
+    <div class="row" controls>
+        <label class="m-3 col-12">
+            direction
+            <p><small>define direction of timeline</small></p>
+            <select class="custom-select" [(ngModel)]="direction">
+                <option *ngFor="let item of directionList" [value]="item.value">{{ item.label }}</option>
+            </select>
+        </label>
+    </div>
+    <ng-container code>{{ snippet }}</ng-container>
+</app-doc-page>

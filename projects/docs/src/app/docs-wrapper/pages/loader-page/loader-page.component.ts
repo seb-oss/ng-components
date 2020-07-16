@@ -1,19 +1,14 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { LoaderSize, LoaderType } from "@sebgroup/ng-components/loader";
+import { DropdownItem } from "@sebgroup/ng-components/dropdown";
 
 type Color = "primary" | "secondary" | "warning" | "danger" | "success" | "white" | "info" | "light" | "dark" | "body" | "muted";
-
-interface Item<T> {
-    label: string;
-    value: T;
-    key: T;
-}
 
 @Component({
     selector: "app-loader-page",
     templateUrl: "./loader-page.component.html",
 })
-export class LoaderPageComponent implements OnInit {
+export class LoaderPageComponent {
     importString: string = require("!raw-loader!@sebgroup/ng-components/loader/loader.component");
     snippet: string = `<sebng-loader></sebng-loader>`;
     toggle: boolean = true;
@@ -22,30 +17,28 @@ export class LoaderPageComponent implements OnInit {
         document.title = "Loader - SEB Angular Components";
     }
 
-    ngOnInit(): void {}
-
     classNames: string;
     lightColors: Array<Color> = ["white", "secondary", "light"];
 
-    size: Item<LoaderSize> = { value: "md", key: "md", label: "Medium (md)" };
-    type: Item<LoaderType> = { value: "spinner", key: "spinner", label: "Spinner" };
-    color: Item<Color>;
-    showText: Array<Item<boolean>> = [];
-    showTextList: Array<Item<boolean>> = [{ value: false, key: false, label: "show text" }];
+    size: DropdownItem<LoaderSize> = { value: "md", key: "md", label: "Medium (md)" };
+    type: DropdownItem<LoaderType> = { value: "spinner", key: "spinner", label: "Spinner" };
+    color: DropdownItem<Color>;
+    showText: Array<DropdownItem<boolean>> = [];
+    showTextList: Array<DropdownItem<boolean>> = [{ value: false, key: false, label: "show text" }];
 
-    sizeList: Array<Item<LoaderSize>> = [
+    sizeList: Array<DropdownItem<LoaderSize>> = [
         { value: "xs", key: "xs", label: "Extra small (xs)" },
         { value: "sm", key: "sm", label: "Small (sm)" },
         { value: "md", key: "md", label: "Medium (md)" },
         { value: "lg", key: "lg", label: "Large (lg)" },
     ];
 
-    typeList: Array<Item<LoaderType>> = [
+    typeList: Array<DropdownItem<LoaderType>> = [
         { value: "spinner", key: "spinner", label: "Spinner" },
         { value: "square", key: "square", label: "Square" },
     ];
 
-    colorList: Array<Item<Color>> = [
+    colorList: Array<DropdownItem<Color>> = [
         { value: undefined, key: undefined, label: "none" },
         { value: "primary", key: "primary", label: "text-primary" },
         { value: "secondary", key: "secondary", label: "text-secondary" },

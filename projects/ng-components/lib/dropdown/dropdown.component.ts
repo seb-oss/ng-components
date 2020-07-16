@@ -504,7 +504,7 @@ export interface DropdownItem<T = any> {
     /** any value which should be tied to the item */
     value: T;
     /** The id or the unique key of the item */
-    key: string;
+    key: T;
 }
 
 interface UniqueItem {

@@ -1,7 +1,7 @@
-<app-doc-page [importString]="importString">
-    <div class="d-flex w-100 align-items-center justify-content-center" example>
+<app-doc-page [importString]="importString" [centered]="true">
+    <ng-container example>
         <sebng-loader className="{{ 'text-' + color?.value }}" [size]="size.key" [type]="type.key"></sebng-loader>
-    </div>
+    </ng-container>
 
     <div class="row" controls>
         <div class="col-12 mb-3">

@@ -1,15 +1,4 @@
-import {
-    ComponentRef,
-    Directive,
-    ElementRef,
-    HostListener,
-    Input,
-    OnInit,
-    TemplateRef,
-    HostBinding,
-    OnChanges,
-    OnDestroy,
-} from "@angular/core";
+import { ComponentRef, Directive, ElementRef, HostListener, Input, OnInit, TemplateRef, HostBinding, OnDestroy } from "@angular/core";
 import {
     Overlay,
     OverlayPositionBuilder,
@@ -22,7 +11,7 @@ import {
 import { ComponentPortal } from "@angular/cdk/portal";
 
 import { TooltipContentComponent, TooltipTrigger, TooltipPosition, TooltipTheme } from "./tooltip-content/tooltip-content.component";
-import { Observable, Subscription } from "rxjs";
+import { Subscription } from "rxjs";
 import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChanged";
 import { isEqual } from "lodash";
 
@@ -34,25 +23,15 @@ type Placement = {
  */
 @Directive({ selector: "[sebng-tooltip]" })
 export class TooltipDirective implements OnInit, OnDestroy {
-    /**
-     * content of tooltip
-     */
+    /** content of tooltip */
     @Input("sebng-tooltip") content: string | TemplateRef<any> = "";
-    /**
-     * tooltip trigger method
-     */
+    /** tooltip trigger method */
     @Input() trigger: TooltipTrigger = "hover";
-    /**
-     * tooltip position
-     */
+    /** tooltip position */
     @Input() position: TooltipPosition = "top";
-    /**
-     * tooltip theme
-     */
+    /** tooltip theme */
     @Input() theme: TooltipTheme = "default";
-    /**
-     * CSS class
-     */
+    /** CSS class */
     @Input() className?: string = "";
 
     @HostBinding("attr.tabindex") tabindex = -1;
@@ -90,50 +69,38 @@ export class TooltipDirective implements OnInit, OnDestroy {
         }
     }
 
-    @HostListener("mouseenter")
-    /** <!-- skip --> */
-    showHover() {
+    @HostListener("mouseenter") showHover(): void {
         this.trigger === "hover" && this.showTooltip();
     }
 
-    @HostListener("mouseout", ["$event"])
-    /** <!-- skip --> */
-    hideHover(event: MouseEvent) {
+    @HostListener("mouseout", ["$event"]) hideHover(event: MouseEvent): void {
         if (this.elementRef.nativeElement.contains(event.relatedTarget)) {
             return;
         }
         this.trigger === "hover" && this.overlayRef.detach();
     }
 
-    @HostListener("click")
-    /** <!-- skip --> */
-    showClick() {
+    @HostListener("click") showClick(): void {
         this.trigger === "click" && this.showTooltip();
     }
 
-    @HostListener("focus")
-    /** <!-- skip --> */
-    showFocus() {
+    @HostListener("focus") showFocus(): void {
         this.trigger === "focus" && this.showTooltip();
     }
 
     @HostListener("focusin", ["$event"])
     /** <!-- skip --> */
-    showFocusWithin(event: FocusEvent) {
+    showFocusWithin(event: FocusEvent): void {
         if (this.elementRef.nativeElement.contains(event.target)) {
             this.trigger === "focus" && this.showTooltip();
         }
     }
 
-    @HostListener("focusout", ["$event.relatedTarget"])
-    /** <!-- skip --> */
-    hideFocusOut(relatedTarget: HTMLDivElement) {
+    @HostListener("focusout", ["$event.relatedTarget"]) hideFocusOut(relatedTarget: HTMLDivElement): void {
         this.hideTooltip(relatedTarget);
     }
 
-    @HostListener("blur", ["$event.relatedTarget"])
-    /** <!-- skip --> */
-    hideClick(relatedTarget: HTMLDivElement) {
+    @HostListener("blur", ["$event.relatedTarget"]) hideClick(relatedTarget: HTMLDivElement): void {
         this.hideTooltip(relatedTarget);
     }
 
@@ -235,8 +202,11 @@ export class TooltipDirective implements OnInit, OnDestroy {
         }
     }
 
-    /** <!-- skip --> show tooltip */
-    showTooltip() {
+    /**
+     * <!-- skip -->
+     * Show tooltip
+     */
+    showTooltip(): void {
         if (!this.overlayRef.hasAttached()) {
             this.tooltipRef = this.overlayRef.attach(new ComponentPortal(TooltipContentComponent));
         }
@@ -256,7 +226,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
      * hide tooltip
      * @param relatedTarget target related
      */
-    hideTooltip(relatedTarget: HTMLDivElement) {
+    hideTooltip(relatedTarget: HTMLDivElement): void {
         if (!relatedTarget || !this.tooltipRef.instance.tooltip.nativeElement.contains(relatedTarget)) {
             (this.trigger === "click" || this.trigger === "focus") && this.overlayRef.detach();
         }
