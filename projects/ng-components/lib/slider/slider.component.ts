@@ -11,6 +11,7 @@ import {
     Provider,
     ChangeDetectorRef,
     AfterContentChecked,
+    HostBinding,
 } from "@angular/core";
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 
@@ -77,6 +78,8 @@ export class SliderComponent implements OnInit, OnChanges, AfterContentChecked, 
     @Input() tooltipTheme?: SliderTheme;
     /** Custom tooltip value */
     @Input() tooltipValue?: string;
+
+    @HostBinding("style") styles = "width: 100%;";
 
     private _min: number = 0;
     private _max: number = 0;
