@@ -36,10 +36,6 @@ export class DynamicFormComponent {
      */
     shouldRenderControl(key: string, formItem: DynamicFormItem, index?: number): boolean {
         // console.log("should render key: ", key, " item: ", formItem, index ? ` index: ${index}` : "");
-        if (formItem.controlType === DynamicFormType.Hidden) {
-            // Marked as hidden, don't render
-            return false;
-        }
         if (formItem.rulerKey) {
             // It has a ruler key, trying to find the ruler and it's value
             let ruler: ExtendedFormControl;
@@ -89,6 +85,8 @@ export class DynamicFormComponent {
                 !Array.isArray(rulerValue) &&
                 rulerValue.value === (condition as DynamicFormOption).value
             ) {
+                return this.shouldRenderControl(key, ruler.formItem, index);
+            } else if (rulerValue && typeof rulerValue === "boolean" && rulerValue === condition) {
                 return this.shouldRenderControl(key, ruler.formItem, index);
             }
             return false;

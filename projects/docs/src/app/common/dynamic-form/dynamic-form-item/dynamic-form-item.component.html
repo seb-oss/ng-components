@@ -1,5 +1,5 @@
 <ng-container [ngSwitch]="control.formItem.controlType">
-    <label *ngIf="control.formItem.label"
+    <label *ngIf="control.formItem.label && control.formItem.controlType !== 'Checkbox'"
         ><b>{{ control.formItem.label }}</b></label
     >
 
@@ -60,8 +60,17 @@
         ></sebng-textarea>
     </ng-container>
 
+    <ng-container *ngSwitchCase="controlType.Number?.toString()">
+        <sebng-stepper [id]="makeId()" [min]="control.formItem.min" [max]="control.formItem.max" [formControl]="control"></sebng-stepper>
+    </ng-container>
+
     <ng-container *ngSwitchCase="controlType.Checkbox.toString()">
-        <sebng-checkbox [formControl]="control" [id]="makeId()" [label]="control.formItem.title"></sebng-checkbox>
+        <sebng-checkbox
+            [formControl]="control"
+            [id]="makeId()"
+            [label]="control.formItem.label"
+            [description]="control.formItem.description"
+        ></sebng-checkbox>
     </ng-container>
 
     <ng-container *ngSwitchCase="controlType.Dropdown.toString()">
@@ -76,13 +85,13 @@
     </ng-container>
 
     <ng-container *ngSwitchCase="controlType.Datepicker.toString()">
-        <sebng-date-picker
+        <sebng-datepicker
             [formControl]="control"
             [id]="makeId()"
             [min]="control.formItem.min"
             [max]="control.formItem.max"
             [placeholder]="control.formItem.placeholder || 'yyyy-mm-dd'"
-        ></sebng-date-picker>
+        ></sebng-datepicker>
     </ng-container>
 
     <ng-container *ngSwitchCase="controlType.Radio.toString()">

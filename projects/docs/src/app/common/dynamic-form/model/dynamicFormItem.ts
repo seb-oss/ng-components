@@ -6,6 +6,7 @@ export interface DynamicFormItem {
     key?: string | null;
     value?: any;
     label?: string | null;
+    description?: string | null;
     className?: string | null;
     required?: boolean;
     multi?: boolean;

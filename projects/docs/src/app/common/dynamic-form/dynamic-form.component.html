@@ -1,14 +1,10 @@
 <form *ngIf="extendedFormGroup" #ngForm="ngForm" [formGroup]="extendedFormGroup">
-    <div class="form-group" *ngFor="let section of extendedFormGroup.controls | keyvalue: orderForm">
+    <div *ngFor="let section of extendedFormGroup.controls | keyvalue: orderForm">
         <h3 *ngIf="section.value.sectionItem.title">{{ section.value.sectionItem.title }}</h3>
 
         <div [class]="section.value.sectionItem.className" *ngIf="!section.value.sectionItem.multi; else multi">
             <ng-container *ngFor="let control of section.value.controls | keyvalue: orderForm">
-                <div
-                    class="form-group"
-                    [class]="control.value.formItem.className"
-                    *ngIf="shouldRenderControl(section.key, control.value.formItem)"
-                >
+                <div [class]="control.value.formItem.className" *ngIf="shouldRenderControl(section.key, control.value.formItem)">
                     <app-dynamic-form-item
                         [control]="control.value"
                         [submitted]="ngForm.submitted"
@@ -69,7 +65,5 @@
                 + Add new {{ section.value.sectionItem.title }}
             </button>
         </ng-template>
-
-        <hr />
     </div>
 </form>

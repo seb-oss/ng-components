@@ -8,11 +8,12 @@ import { FormsModule } from "@angular/forms";
 import { PlaygroundComponent } from "./playground/playground.component";
 import { DocNotesComponent } from "./notes/notes.component";
 import { CodeSnippetModule } from "../../common/code-snippet/code-snippet.module";
+import { DynamicFormModule } from "../../common/dynamic-form/dynamic-form.module";
 
 @NgModule({
     declarations: [DocPageComponent, PlaygroundComponent, APIsComponent, DocNotesComponent],
-    imports: [CommonModule, FormsModule, TabsModule, CodeSnippetModule],
-    exports: [DocPageComponent],
+    imports: [CommonModule, FormsModule, TabsModule, CodeSnippetModule, DynamicFormModule],
+    exports: [DocPageComponent, DynamicFormModule],
     providers: [APIExtractService],
 })
 export class DocPageModule {}

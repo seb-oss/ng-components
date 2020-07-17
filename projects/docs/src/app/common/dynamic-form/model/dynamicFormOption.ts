@@ -1,7 +1,7 @@
 import { AttributeTypeMap } from "./models";
 
-export interface DynamicFormOption {
-    value?: object | null;
+export interface DynamicFormOption<T = any> {
+    value?: T;
     label?: string | null;
     key?: string | null;
     disabled?: boolean | null;
