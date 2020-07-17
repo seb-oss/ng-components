@@ -7,15 +7,17 @@
         "declaration": true,
         "inlineSources": true,
         "types": [],
+        "importHelpers": true,
         "lib": ["dom", "es2018"]
     },
     "angularCompilerOptions": {
-        "enableResourceInlining": true,
         "annotateForClosureCompiler": true,
-        "skipTemplateCodegen": false,
+        "skipTemplateCodegen": true,
         "strictMetadataEmit": true,
         "fullTemplateTypeCheck": true,
-        "strictInjectionParameters": true
+        "strictInjectionParameters": true,
+        "enableResourceInlining": true,
+        "enableIvy": false
     },
     "exclude": ["test.ts", "**/*.spec.ts"]
 }
