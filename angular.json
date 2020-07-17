@@ -105,7 +105,7 @@
                         "polyfills": "projects/docs/src/polyfills.ts",
                         "tsConfig": "projects/docs/tsconfig.app.json",
                         "aot": true,
-                        "assets": ["projects/docs/src/favicon.ico", "projects/docs/src/assets", "projects/docs/src/404.html"],
+                        "assets": ["projects/docs/src/favicon.ico", "projects/docs/src/assets"],
                         "styles": ["projects/docs/src/styles/mixins.scss", "projects/docs/src/styles/styles.scss"],
                         "scripts": []
                     },

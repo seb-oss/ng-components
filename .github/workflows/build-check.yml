@@ -18,10 +18,13 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: installing dependencies
-        run: npm install
+        run: npm ci
 
       # - name: running unit tests
       #   run: npm test
 
-      - name: building
+      - name: building lib
         run: npm run build
+
+      - name: building docs
+        run: npm run build:docs
