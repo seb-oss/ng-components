@@ -57,7 +57,7 @@ This project uses `prettier` for a more consistent (less annoying) coding.
 To use a component, you need to import the `Module` in whichever Module you want to use it. For performance/stability benefits we are not combining all the components into single Index, rather they are chunk into their own sub packages, therefore to use a component, you need to import the `Component` sub-module from the `lib` folder, in whichever Class you want to use it. Here is a sample of how to import the `Chip` component in a page which you can then access by its selector.
 
 ```javascript
-import { ChipModule } from "@sebgroup/ng-components/lib/Chip";
+import { ChipModule } from "@sebgroup/ng-components";
 
 @NgModule({
       imports: [ChipModule]
