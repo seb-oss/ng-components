@@ -9,6 +9,7 @@
     "dependencies": {
         "tslib": "^2.0.0",
         "@sebgroup/bootstrap": "^5.3.0",
-        "@sebgroup/frontend-tools": "^1.6.0"
+        "@sebgroup/frontend-tools": "^1.6.0",
+        "@angular/cdk": "^10.0.2"
     }
 }
