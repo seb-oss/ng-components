@@ -214,9 +214,9 @@ export class APIExtractService {
      * @param type output type
      */
     static parseOutputType(type: string): APIInput {
-        const regex: RegExp = new RegExp(`(EventEmitter<(?<type>[a-zA-Z]+)>)`, "g");
+        const regex: RegExp = new RegExp(`(EventEmitter<([a-zA-Z]+)>)`, "g");
         const parsedArray: Array<any> = regex.exec(type);
-        return { type: parsedArray[1] };
+        return { type: parsedArray[2] };
     }
 
     /**
@@ -267,7 +267,10 @@ export class APIExtractService {
         methods: ParsedAPI
     ): Array<ApiSection> {
         return file.declarations
-            .filter((declaration: Declaration) => declaration.constructor.name === "ClassDeclaration")
+            .filter((declaration: Declaration) => {
+                // only parse component or directive
+                return declaration.name.indexOf("Directive") > -1 || declaration.name.indexOf("Component") > -1;
+            })
             .reduce((previous: Array<ApiSection>, current: ClassDeclaration) => {
                 const declaration: ClassDeclaration = current;
                 const section: ApiSection = {
