@@ -6,13 +6,13 @@ import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule } from "@angular/forms";
 import { StepperModule } from "@sebgroup/ng-components/stepper";
-import { CheckBoxModule } from "@sebgroup/ng-components/checkBox";
+import { CheckboxModule } from "@sebgroup/ng-components/checkbox";
 
 const routes: Routes = [{ path: "", component: PaginationPageComponent }];
 
 @NgModule({
     declarations: [PaginationPageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, PaginationModule, StepperModule, CheckBoxModule],
+    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, PaginationModule, StepperModule, CheckboxModule],
     exports: [RouterModule, PaginationModule],
 })
 export class PaginationPageModule {}

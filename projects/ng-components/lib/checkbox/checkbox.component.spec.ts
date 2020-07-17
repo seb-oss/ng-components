@@ -1,4 +1,4 @@
-import { CheckBoxComponent, CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR } from "./checkBox.component";
+import { CheckboxComponent, CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR } from "./checkbox.component";
 import { TestBed, async, ComponentFixture } from "@angular/core/testing";
 import { DebugElement, Component, ViewChild, TemplateRef } from "@angular/core";
 import { By } from "@angular/platform-browser";
@@ -26,7 +26,7 @@ class CheckboxTestComponent {
     selectedValue: boolean;
     disabled: boolean = false;
     id: string;
-    @ViewChild(CheckBoxComponent) checkBoxComponent: CheckBoxComponent;
+    @ViewChild(CheckboxComponent) checkboxComponent: CheckboxComponent;
 
     onChange(): void {}
 }
@@ -38,7 +38,7 @@ describe("Component: CheckBoxComponent", () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [FormsModule, CommonModule],
-            declarations: [CheckBoxComponent, CheckboxTestComponent],
+            declarations: [CheckboxComponent, CheckboxTestComponent],
             providers: [CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR],
         })
             .compileComponents()
@@ -105,7 +105,7 @@ describe("Component: CheckBoxComponent", () => {
     });
 
     it("should call writeValue when ngmodel changes", async () => {
-        const ngModelChange = spyOn(component.checkBoxComponent, "writeValue");
+        const ngModelChange = spyOn(component.checkboxComponent, "writeValue");
         component.selectedValue = true;
         fixture.detectChanges();
         await fixture.whenStable().then(() => expect(ngModelChange).toHaveBeenCalled());

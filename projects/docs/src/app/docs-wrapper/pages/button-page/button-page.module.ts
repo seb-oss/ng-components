@@ -6,13 +6,13 @@ import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule } from "@angular/forms";
 import { DropdownModule } from "@sebgroup/ng-components/dropdown";
-import { CheckBoxModule } from "@sebgroup/ng-components/checkBox";
+import { CheckboxModule } from "@sebgroup/ng-components/checkbox";
 
 const routes: Routes = [{ path: "", component: ButtonPageComponent }];
 
 @NgModule({
     declarations: [ButtonPageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, ButtonModule, DropdownModule, CheckBoxModule],
+    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, ButtonModule, DropdownModule, CheckboxModule],
     exports: [RouterModule, ButtonModule],
 })
 export class ButtonPageModule {}
