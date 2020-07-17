@@ -50,7 +50,7 @@
         "@sebgroup/frontend-tools": "^1.6.0",
         "bootstrap-icons": "^1.0.0-alpha5",
         "highlight.js": "^9.18.1",
-        "highlightjs-line-numbers.js": "^2.7.0",
+        "highlightjs-line-numbers.js": "^2.8.0",
         "ngx-highlightjs": "^4.0.2",
         "rxjs": "~6.5.5",
         "tslib": "^2.0.0",
