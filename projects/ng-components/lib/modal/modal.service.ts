@@ -14,9 +14,12 @@ export class ModalService {
      * @param component component of type any that will be appended
      * @returns reference of the toggled component, this is important in case you want to removed the component that was appended
      */
-    appendComponentToBody(component: any): ComponentRef<any> {
+    appendComponentToBody(component: any, className?: string): ComponentRef<any> {
         //create a component reference
         const componentRef: ComponentRef<any> = this.componentFactoryResolver.resolveComponentFactory(component).create(this.injector);
+
+        //Add custom className to component instance
+        componentRef.instance.customClass = className;
 
         // attach component to the appRef.
         this.applicationRef.attachView(componentRef.hostView);
@@ -48,7 +51,7 @@ export class ModalService {
      * @param ref reference to the component
      */
     open(ref: ElementRef): void {
-        ref.nativeElement.classList.add("show");
+        ref?.nativeElement?.classList.add("show");
     }
 
     /**
@@ -56,6 +59,6 @@ export class ModalService {
      * @param ref reference to the component
      */
     close(ref: ElementRef): void {
-        ref.nativeElement.classList.remove("show");
+        ref?.nativeElement?.classList.remove("show");
     }
 }
