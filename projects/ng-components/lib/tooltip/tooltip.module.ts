@@ -9,5 +9,6 @@ import { TooltipContentComponent } from "./tooltip-content/tooltip-content.compo
     imports: [CommonModule, OverlayModule],
     declarations: [TooltipComponent, TooltipContentComponent, TooltipDirective],
     exports: [TooltipComponent, TooltipDirective],
+    entryComponents: [TooltipContentComponent],
 })
 export class TooltipModule {}
