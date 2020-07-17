@@ -1,13 +1,14 @@
-# SEB React Components
+# SEB Angular Components
 
 ![Deployment](https://github.com/sebgroup/ng-components/workflows/Deployment/badge.svg)
+![npm](https://img.shields.io/npm/v/@sebgroup/ng-components?color=brightgreen)
 ![Github Pages](https://github.com/sebgroup/ng-components/workflows/Github%20Pages/badge.svg)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 [![Coverage Status](https://coveralls.io/repos/github/sebgroup/ng-components/badge.svg?branch=master)](https://coveralls.io/github/sebgroup/ng-components?branch=master)
 [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=sebgroup/ng-components)](https://dependabot.com)
 
-This is a set of react components some of which are based on SEB's bootstrap. The plan for this project is to increase and improve components for future usage.
+This is a set of angular components some of which are based on SEB's bootstrap. The plan for this project is to increase and improve components for future usage.
 
 -   The package name: `@sebgroup/ng-components`
 -   The package documentation: [Documentation](https://sebgroup.github.io/ng-components)
