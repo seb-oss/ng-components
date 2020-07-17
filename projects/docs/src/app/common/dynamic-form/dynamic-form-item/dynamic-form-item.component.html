@@ -1,7 +1,5 @@
 <ng-container [ngSwitch]="control.formItem.controlType">
-    <label *ngIf="control.formItem.label && control.formItem.controlType !== 'Checkbox'"
-        ><b>{{ control.formItem.label }}</b></label
-    >
+    <label *ngIf="control.formItem.label && control.formItem.controlType !== 'Checkbox'">{{ control.formItem.label }}</label>
 
     <ng-container *ngSwitchCase="controlType.Text.toString()">
         <sebng-textboxgroup
