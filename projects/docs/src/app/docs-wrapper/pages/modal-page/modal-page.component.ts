@@ -1,5 +1,4 @@
-import { Component, ViewChild } from "@angular/core";
-import { ModalComponent } from "@sebgroup/ng-components/modal";
+import { Component } from "@angular/core";
 import { DropdownItem } from "@sebgroup/ng-components/dropdown";
 
 @Component({
@@ -8,12 +7,14 @@ import { DropdownItem } from "@sebgroup/ng-components/dropdown";
 })
 export class ModalPageComponent {
     importString: string = require("!raw-loader!@sebgroup/ng-components/modal/modal.component");
-    @ViewChild(ModalComponent) modalChild: ModalComponent;
 
     center: boolean;
     fullscreen: boolean;
+    backdropClassNameModel: boolean = false;
     backdropDismiss: boolean = true;
+    backdropClassName: string;
     escapeDismiss: boolean = true;
+    toggle: boolean = false;
 
     sizeItem: DropdownItem = { key: "", value: "", label: "default" };
     sizeList: Array<DropdownItem> = [
@@ -28,13 +29,8 @@ export class ModalPageComponent {
         { key: "left", value: "left", label: "left" },
     ];
     code: string = `<sebng-modal
-    [id]="'test'"
-    [size]="size"
-    [position]="position"
-    [center]="center"
-    [fullscreen]="fullscreen"
-    [backdropDismiss]="backdropDismiss"
-    [escapeKeyDismiss]="escapeDismiss">
+    [toggle]="toggle"
+    (dismiss)="closeModal()>
 
     <div class="custom-header" header>
         Title
@@ -49,8 +45,7 @@ export class ModalPageComponent {
             Close
         </button>
     </div>
-</sebng-modal>
-`;
+</sebng-modal>`;
 
     modalTemplate: string = `<sebng-modal>
     <div class="custom-header" header>
@@ -66,9 +61,9 @@ export class ModalPageComponent {
     </div>
 </sebng-modal>`;
 
-    createViewChild: string = `@ViewChild(ModalComponent) modalChild: ModalComponent;`;
+    openModalSnippet: string = `toggle = true;`;
 
-    openModalHTML: string = `modalChild.open()`;
+    closeModalSnippet: string = `toggle = false;`;
 
     closeModalHTML: string = `modalChild.close()`;
 
@@ -88,17 +83,21 @@ export class ModalPageComponent {
         return this.positionItem.value;
     }
 
+    setBackdropClassName(): void {
+        this.backdropClassName = this.backdropClassNameModel ? "bg-primary" : "";
+    }
+
     /**
      * open Modal
      */
     openModal(): void {
-        this.modalChild.open();
+        this.toggle = true;
     }
 
     /**
      * close modal
      */
     closeModal(): void {
-        this.modalChild.close();
+        this.toggle = false;
     }
 }

@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnDestroy, NgModule } from "@angular/core";
+import { Component, HostBinding, OnDestroy, NgModule, Input } from "@angular/core";
 import { trigger, style, transition, animate } from "@angular/animations";
 
 @Component({
@@ -13,8 +13,11 @@ import { trigger, style, transition, animate } from "@angular/animations";
     ],
 })
 export class SebModalBackdropComponent implements OnDestroy {
+    @Input() customClass?: string;
     fadeState: boolean = true;
-
+    @HostBinding("class") get className(): string {
+        return this.customClass;
+    }
     @HostBinding("@openCloseBackdrop") get fade(): string {
         return this.fadeState ? "open" : "close";
     }

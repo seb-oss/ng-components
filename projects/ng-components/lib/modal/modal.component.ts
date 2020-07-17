@@ -1,4 +1,16 @@
-import { Component, Input, ViewEncapsulation, ComponentRef, HostListener, ElementRef, ViewChild, NgZone } from "@angular/core";
+import {
+    Component,
+    Input,
+    ViewEncapsulation,
+    ComponentRef,
+    HostListener,
+    ElementRef,
+    ViewChild,
+    NgZone,
+    Output,
+    EventEmitter,
+    AfterViewInit,
+} from "@angular/core";
 import { SebModalBackdropComponent } from "./modal.backdrop";
 import { ModalService } from "./modal.service";
 import { ModalSizeType, ModalPositionType } from "./modal.type";
@@ -13,7 +25,17 @@ import { fadeInAnimation } from "./animation";
     encapsulation: ViewEncapsulation.None,
     animations: [fadeInAnimation],
 })
-export class ModalComponent {
+export class ModalComponent implements AfterViewInit {
+    /** toggle to show or hide the modal */
+    @Input()
+    set toggle(param: boolean) {
+        param ? this.modalRef && this.open() : this.close();
+        this._toggle = param;
+    }
+
+    get toggle(): boolean {
+        return this._toggle;
+    }
     /** Optional id for the modal. */
     @Input() id?: string;
     /** Optional size of the modal window. Types: "modal-lg" | "modal-sm" */
@@ -24,23 +46,34 @@ export class ModalComponent {
     @Input() position: ModalPositionType;
     /** Optional Input, toggles the modal in fullscreen */
     @Input() fullscreen?: boolean;
+    /** Optional Input, html class for the modal backdrop */
+    @Input() backdropClassName?: string;
     /** Optional Input, if false it disables backdrop click dismiss */
     @Input() backdropDismiss?: boolean = true;
     /** Optional Input, if false it disables escape key dismiss */
     @Input() escapeKeyDismiss?: boolean = true;
     /** Optional custom class to append to the modal. */
     @Input() className?: string;
-    /** Optional aria-labelledby attribute value to set on the modal window. */
+    /** Optional aria-label attribute value to set on the modal window. */
     @Input() ariaLabel?: string;
+    /** Optional aria-labelledby attribute value to set on the modal window. */
+    @Input() ariaLabelledby?: string;
     /** Optional aria-describedby attribute value to set on the modal window. */
     @Input() ariaDescribedby?: string;
     /** Optional Input, change the annimation duration, accepts values in second and millisecond ex: "3s" or "3000" */
     @Input() animationDuration?: string = ".15s";
+    /** Dismiss modal method Output, use this to set the toggle property to false */
+    @Output() dismiss: EventEmitter<void> = new EventEmitter();
     @ViewChild("modalRef") modalRef: ElementRef;
     backDropRef: ComponentRef<SebModalBackdropComponent>;
-    toggle: boolean; // toggle is required to enable the open or close animation
+    _toggle: boolean = false; // toggle is required to enable the open or close animation
 
     constructor(private modalService: ModalService, private _ngZone: NgZone) {}
+
+    // Required in case the parent wants to toggle the modal component before the modal view init
+    ngAfterViewInit(): void {
+        this.toggle && this.open();
+    }
 
     /**
      * construct the class names that needs to be appended to the modal depending on the inputs requested
@@ -82,25 +115,26 @@ export class ModalComponent {
 
     /** toggles open and close state for the modal animation */
     get toggleAnimationState(): string {
-        return this.toggle ? "open" : "close";
+        return this._toggle ? "open" : "close";
     }
 
     /**
      * append backrop to the body, open the modal and trigger the animation
      */
     open(): void {
-        this.backDropRef = this.modalService.appendComponentToBody(SebModalBackdropComponent);
+        this.backDropRef = this.modalService.appendComponentToBody(SebModalBackdropComponent, this.backdropClassName);
         this.modalService.open(this.modalRef);
-        this.toggle = true;
     }
 
     /**
      * close the modal, trigger the anumation and remove the backdrop from the body using its reference
      */
     close(): void {
-        this.modalService.close(this.modalRef);
-        this.toggle = false;
-        this.modalService.removeComponentFromBody(this.backDropRef);
+        if (this.modalRef) {
+            this.toggle && this.dismiss && this.dismiss.emit();
+            this.modalService.close(this.modalRef);
+            this.modalService.removeComponentFromBody(this.backDropRef);
+        }
     }
 
     /**
