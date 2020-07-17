@@ -36,13 +36,13 @@
                     "builder": "@angular-devkit/build-ng-packagr:build",
                     "options": {
                         "tsConfig": "projects/ng-components/tsconfig.lib.json",
-                        "project": "projects/ng-components/ng-package.json",
-                        "aot": true
+                        "project": "projects/ng-components/ng-package.json"
                     },
                     "configurations": {
                         "production": {
                             "tsConfig": "projects/ng-components/tsconfig.lib.prod.json"
-                        }
+                        },
+                        "aot": true
                     }
                 },
                 "test": {
