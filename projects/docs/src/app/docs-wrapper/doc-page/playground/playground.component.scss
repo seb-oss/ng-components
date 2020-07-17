@@ -1,12 +1,14 @@
 @import "~@sebgroup/bootstrap/scss/core";
+@import "../../../../styles/variables";
 
 .playground.card {
-    border-radius: 10px;
+    border-radius: $border-radius;
     display: -ms-grid;
     display: grid;
     margin-bottom: 1rem;
     background-color: darken($gray-100, 2%);
     overflow: visible;
+    box-shadow: $shadow;
     grid-template-columns: 2fr 1fr;
     -ms-grid-columns: 2fr 1fr;
     -ms-grid-rows: auto 1fr;
@@ -21,16 +23,17 @@
     }
 
     > .nav {
-        padding: 0rem 0.5rem;
+        padding: 0rem 0.8rem;
         background-color: $gray-300;
-        border-top-left-radius: 10px;
+        border-top-left-radius: $border-radius;
         grid-area: nav;
         -ms-grid-column: 1;
         -ms-grid-row: 1;
         .nav-link {
-            padding: 0.5rem 0;
+            padding: 1.2rem 0;
             margin: 0 1rem;
-            border-bottom: 3px solid transparent;
+            border-bottom: 4px solid transparent;
+            font-size: $h4-font-size;
             &.active {
                 border-bottom-color: $green-dark;
             }
@@ -45,7 +48,8 @@
         background-color: $gray-300;
         grid-area: apistitle;
         font-weight: 500;
-        border-top-right-radius: 10px;
+        border-top-right-radius: $border-radius;
+        border-left: 2px solid $gray-400;
         -ms-grid-column: 2;
         -ms-grid-row: 1;
     }
@@ -59,7 +63,7 @@
 
     > .code {
         grid-area: example;
-        border-bottom-left-radius: 10px;
+        border-bottom-left-radius: $border-radius;
         overflow: hidden;
         -ms-grid-column: 1;
         -ms-grid-row: 2;
@@ -68,7 +72,8 @@
     > .controls {
         padding: 1rem 1.5rem;
         grid-area: controls;
-        border-top-right-radius: 10px;
+        border-top-right-radius: $border-radius;
+        border-left: 2px solid $gray-400;
         align-items: flex-start;
         flex-direction: column;
         -ms-grid-column: 2;

@@ -106,7 +106,11 @@
                         "tsConfig": "projects/docs/tsconfig.app.json",
                         "aot": true,
                         "assets": ["projects/docs/src/favicon.ico", "projects/docs/src/assets", "projects/docs/src/404.html"],
-                        "styles": ["projects/docs/src/styles/mixins.scss", "projects/docs/src/styles/styles.scss"],
+                        "styles": [
+                            "projects/docs/src/styles/mixins.scss",
+                            "projects/docs/src/styles/styles.scss",
+                            "projects/docs/src/styles/variables/scss"
+                        ],
                         "scripts": []
                     },
                     "configurations": {
