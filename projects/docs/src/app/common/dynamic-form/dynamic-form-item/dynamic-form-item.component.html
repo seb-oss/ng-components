@@ -1,0 +1,91 @@
+<ng-container [ngSwitch]="control.formItem.controlType">
+    <label *ngIf="control.formItem.label"
+        ><b>{{ control.formItem.label }}</b></label
+    >
+
+    <ng-container *ngSwitchCase="controlType.Text.toString()">
+        <sebng-textboxgroup
+            *ngIf="!control.formItem.multi; else multi"
+            [id]="makeId()"
+            [maxLength]="control.formItem.max"
+            [name]="makeId()"
+            [placeholder]="control.formItem.placeholder"
+            [formControl]="control"
+        >
+        </sebng-textboxgroup>
+
+        <ng-template #multi>
+            <div *ngFor="let arrayControl of getFormArrayControls(control); let i = index">
+                <div class="input-group mb-3">
+                    <input
+                        type="text"
+                        class="form-control"
+                        [id]="makeId(null, i)"
+                        [formControl]="arrayControl"
+                        [placeholder]="control.formItem.placeholder ? control.formItem.placeholder : ''"
+                        [minlength]="control.formItem.min"
+                        [maxlength]="control.formItem.max"
+                    />
+                    <div *ngIf="getFormArrayControls(control).length > 1" class="input-group-append">
+                        <button
+                            [id]="makeId('multitextbox-remove', i)"
+                            class="btn btn-outline-danger"
+                            type="button"
+                            (click)="itemRemovedClicked.emit({ id: control.formItem.key, index: i })"
+                        >
+                            –
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <button
+                [id]="makeId('multitextbox-add')"
+                class="btn btn-outline-primary"
+                type="button"
+                (click)="itemAddedClicked.emit(control.formItem.key)"
+            >
+                +
+            </button>
+        </ng-template>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="controlType.TextArea.toString()">
+        <sebng-textarea
+            class="form-control"
+            [id]="makeId()"
+            [placeholder]="control.formItem.placeholder"
+            [minlength]="control.formItem.min"
+            [maxlength]="control.formItem.max"
+            [formControl]="control"
+        ></sebng-textarea>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="controlType.Checkbox.toString()">
+        <sebng-checkbox [formControl]="control" [id]="makeId()" [label]="control.formItem.title"></sebng-checkbox>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="controlType.Dropdown.toString()">
+        <sebng-dropdown
+            [formControl]="control"
+            [id]="makeId()"
+            [searchable]="true"
+            [multi]="control.formItem.multi"
+            [placeholder]="control.formItem.placeholder"
+            [list]="control.formItem.options"
+        ></sebng-dropdown>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="controlType.Datepicker.toString()">
+        <sebng-date-picker
+            [formControl]="control"
+            [id]="makeId()"
+            [min]="control.formItem.min"
+            [max]="control.formItem.max"
+            [placeholder]="control.formItem.placeholder || 'yyyy-mm-dd'"
+        ></sebng-date-picker>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="controlType.Radio.toString()">
+        <sebng-radio-group [formControl]="control" [id]="makeId()" [list]="control.formItem.options"></sebng-radio-group>
+    </ng-container>
+</ng-container>

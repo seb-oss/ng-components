@@ -5,6 +5,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { FooterModule } from "../common/footer/footer.module";
 import components from "../../assets/components-list.json";
+import { DynamicFormModule } from "../common/dynamic-form/dynamic-form.module";
 
 function getComponentPageRoutes(): Routes {
     return components.map(({ path, name, filePath }) => {
@@ -32,7 +33,7 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [DocsWrapperComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FooterModule, SideMenuModule],
+    imports: [CommonModule, RouterModule.forChild(routes), FooterModule, SideMenuModule, DynamicFormModule],
     exports: [RouterModule, FooterModule, SideMenuModule],
 })
 export class DocsWrapperModule {}

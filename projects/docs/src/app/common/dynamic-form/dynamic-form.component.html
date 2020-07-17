@@ -1,0 +1,75 @@
+<form *ngIf="extendedFormGroup" #ngForm="ngForm" [formGroup]="extendedFormGroup">
+    <div class="form-group" *ngFor="let section of extendedFormGroup.controls | keyvalue: orderForm">
+        <h3 *ngIf="section.value.sectionItem.title">{{ section.value.sectionItem.title }}</h3>
+
+        <div [class]="section.value.sectionItem.className" *ngIf="!section.value.sectionItem.multi; else multi">
+            <ng-container *ngFor="let control of section.value.controls | keyvalue: orderForm">
+                <div
+                    class="form-group"
+                    [class]="control.value.formItem.className"
+                    *ngIf="shouldRenderControl(section.key, control.value.formItem)"
+                >
+                    <app-dynamic-form-item
+                        [control]="control.value"
+                        [submitted]="ngForm.submitted"
+                        [sectionId]="section.value.sectionItem.key"
+                        (itemAddedClicked)="addNewItemToFormArrayWithId(section.key, $event)"
+                        (itemRemovedClicked)="removeItemAtIndexFromFormArrayWithId(section.key, $event)"
+                    ></app-dynamic-form-item>
+                    <span *ngIf="getValidationErrorFor(section.value.sectionItem.key, control.value.formItem)" class="alert alert-danger">{{
+                        getValidationErrorFor(section.value.sectionItem.key, control.value.formItem)
+                    }}</span>
+                </div>
+            </ng-container>
+        </div>
+
+        <ng-template #multi>
+            <div
+                [class]="section.value.sectionItem.className"
+                *ngFor="let arrayControl of getFormArrayControls(section.value); let i = index"
+            >
+                <ng-container *ngFor="let control of arrayControl.controls | keyvalue: orderForm">
+                    <div
+                        class="form-group"
+                        [class]="control.value.formItem.className"
+                        *ngIf="shouldRenderControl(section.value.sectionItem.key, control.value.formItem, i)"
+                    >
+                        <app-dynamic-form-item
+                            [control]="control.value"
+                            [sectionId]="section.value.sectionItem.key + control.key + i"
+                            [submitted]="ngForm.submitted"
+                            (itemAddedClicked)="addNewItemToFormArrayWithId(section.key, $event, i)"
+                            (itemRemovedClicked)="removeItemAtIndexFromFormArrayWithId(section.key, $event, i)"
+                        ></app-dynamic-form-item>
+                        <span
+                            *ngIf="getValidationErrorFor(section.value.sectionItem.key, control.value.formItem, i)"
+                            class="alert alert-danger"
+                            >{{ getValidationErrorFor(section.value.sectionItem.key, control.value.formItem, i) }}</span
+                        >
+                    </div>
+                </ng-container>
+
+                <button
+                    *ngIf="getFormArrayControls(section.value).length > 1"
+                    [id]="section.value.sectionItem.key + i + '-remove'"
+                    class="btn btn-sm btn-outline-danger border-transparent mb-3"
+                    type="button"
+                    (click)="removeItemAtIndexFromFormArrayWithId(section.key, null, i)"
+                >
+                    - Remove {{ section.value.sectionItem.title }}
+                </button>
+            </div>
+
+            <button
+                [id]="section.value.sectionItem.key + '-add'"
+                class="btn btn-sm btn-secondary mb-3"
+                type="button"
+                (click)="addNewItemToFormArrayWithId(section.value.sectionItem.key)"
+            >
+                + Add new {{ section.value.sectionItem.title }}
+            </button>
+        </ng-template>
+
+        <hr />
+    </div>
+</form>
