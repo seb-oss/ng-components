@@ -2,13 +2,13 @@
     <div class="row" example>
         <div class="col-12">
             <label>Normal</label>
-            <sebng-date-picker
+            <sebng-datepicker
                 className="mb-3"
                 [(ngModel)]="model"
                 [monthPicker]="monthPicker"
                 [forceCustom]="forceCustom"
                 [localeCode]="localeCode"
-            ></sebng-date-picker>
+            ></sebng-datepicker>
         </div>
 
         <hr />
@@ -18,26 +18,26 @@
             <div class="row">
                 <div class="col-lg">
                     <small>From:</small>
-                    <sebng-date-picker
+                    <sebng-datepicker
                         [(ngModel)]="rangeFrom"
                         [localeCode]="localeCode"
                         [monthPicker]="monthPicker"
                         [forceCustom]="forceCustom"
                         [max]="rangeTo"
                     >
-                    </sebng-date-picker>
+                    </sebng-datepicker>
                 </div>
 
                 <div class="col-lg">
                     <small>To:</small>
-                    <sebng-date-picker
+                    <sebng-datepicker
                         [(ngModel)]="rangeTo"
                         [localeCode]="localeCode"
                         [monthPicker]="monthPicker"
                         [forceCustom]="forceCustom"
                         [min]="rangeFrom"
                     >
-                    </sebng-date-picker>
+                    </sebng-datepicker>
                 </div>
             </div>
         </div>

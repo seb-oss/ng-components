@@ -7,7 +7,7 @@
     {
         "name": "Textarea",
         "path": "/docs/textarea",
-        "filePath": "pages/TextAreaPage"
+        "filePath": "pages/TextareaPage"
     },
     {
         "name": "Textlabel",
@@ -77,7 +77,7 @@
     {
         "name": "Progress Bar",
         "path": "/docs/progressbar",
-        "filePath": "pages/ProgressBarPage"
+        "filePath": "pages/ProgressbarPage"
     },
     {
         "name": "Pagination",

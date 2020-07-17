@@ -135,8 +135,7 @@ aside.side-menu {
             padding $base-transition-time linear, opacity $base-transition-time * 1.25 linear;
         will-change: max-width, width;
         max-height: 100vh;
-        overflow-y: auto;
-        overflow-y: overlay;
+        overflow-y: scroll;
         direction: rtl;
         > img {
             display: block;

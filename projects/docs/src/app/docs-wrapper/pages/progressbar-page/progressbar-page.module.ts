@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { ProgressBarModule } from "@sebgroup/ng-components/progressbar";
+import { ProgressbarModule } from "@sebgroup/ng-components/progressbar";
 import { ProgressbarPageComponent } from "./progressbar-page.component";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
@@ -19,12 +19,12 @@ const routes: Routes = [{ path: "", component: ProgressbarPageComponent }];
         RouterModule.forChild(routes),
         FormsModule,
         DocPageModule,
-        ProgressBarModule,
+        ProgressbarModule,
         StepperModule,
         CheckBoxModule,
         DropdownModule,
         SliderModule,
     ],
-    exports: [RouterModule, ProgressBarModule],
+    exports: [RouterModule, ProgressbarModule],
 })
-export class ProgressBarPageModule {}
+export class ProgressbarPageModule {}

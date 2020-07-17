@@ -1,6 +1,7 @@
 {
     "name": "@sebgroup/ng-components",
     "version": "0.0.0-semantically-released",
+    "homepage": "https://sebgroup.github.io/ng-components/",
     "peerDependencies": {
         "@angular/common": "^10.0.2",
         "@angular/core": "^10.0.2"
