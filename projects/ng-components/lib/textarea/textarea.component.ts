@@ -10,8 +10,8 @@ const CUSTOM_TEXTAREA_CONTROL_VALUE_ACCESSOR: Provider = {
 /** Textarea is a component that allows user to add or edit text in multiline */
 @Component({
     selector: "sebng-textarea",
-    templateUrl: "./textArea.component.html",
-    styleUrls: ["./textArea.component.scss"],
+    templateUrl: "./textarea.component.html",
+    styleUrls: ["./textarea.component.scss"],
     encapsulation: ViewEncapsulation.None,
     providers: [CUSTOM_TEXTAREA_CONTROL_VALUE_ACCESSOR],
 })
