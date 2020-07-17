@@ -30,7 +30,7 @@ export class ModalPageComponent {
     ];
     code: string = `<sebng-modal
     [toggle]="toggle"
-    (onDismiss)="closeModal()>
+    (dismiss)="closeModal()>
 
     <div class="custom-header" header>
         Title

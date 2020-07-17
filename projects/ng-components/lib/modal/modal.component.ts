@@ -63,7 +63,7 @@ export class ModalComponent implements AfterViewInit {
     /** Optional Input, change the annimation duration, accepts values in second and millisecond ex: "3s" or "3000" */
     @Input() animationDuration?: string = ".15s";
     /** Dismiss modal method Output, use this to set the toggle property to false */
-    @Output() onDismiss: EventEmitter<void> = new EventEmitter<void>();
+    @Output() dismiss: EventEmitter<void> = new EventEmitter();
     @ViewChild("modalRef") modalRef: ElementRef;
     backDropRef: ComponentRef<SebModalBackdropComponent>;
     _toggle: boolean = false; // toggle is required to enable the open or close animation
@@ -131,7 +131,7 @@ export class ModalComponent implements AfterViewInit {
      */
     close(): void {
         if (this.modalRef) {
-            this.toggle && this.onDismiss && this.onDismiss.emit();
+            this.toggle && this.dismiss && this.dismiss.emit();
             this.modalService.close(this.modalRef);
             this.modalService.removeComponentFromBody(this.backDropRef);
         }
