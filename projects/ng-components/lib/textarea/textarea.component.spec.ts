@@ -1,7 +1,7 @@
 import { Component, DebugElement } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { TextAreaComponent } from "./textarea.component";
+import { TextareaComponent } from "./textarea.component";
 import { CommonModule } from "@angular/common";
 
 @Component({
@@ -30,7 +30,7 @@ import { CommonModule } from "@angular/common";
         ></sebng-textarea>
     `,
 })
-class TextAreaTestComponent {
+class TextareaTestComponent {
     className?: string;
     cols?: number;
     disabled?: boolean;
@@ -54,19 +54,19 @@ class TextAreaTestComponent {
     onKeyUp() {}
 }
 
-describe("TextAreaComponent", () => {
-    let component: TextAreaTestComponent;
-    let fixture: ComponentFixture<TextAreaTestComponent>;
+describe("TextareaComponent", () => {
+    let component: TextareaTestComponent;
+    let fixture: ComponentFixture<TextareaTestComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [CommonModule],
-            declarations: [TextAreaTestComponent, TextAreaComponent],
+            declarations: [TextareaTestComponent, TextareaComponent],
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TextAreaTestComponent);
+        fixture = TestBed.createComponent(TextareaTestComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
     });

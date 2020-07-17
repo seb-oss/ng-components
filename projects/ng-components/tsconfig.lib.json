@@ -12,7 +12,7 @@
     "angularCompilerOptions": {
         "skipTemplateCodegen": true,
         "strictMetadataEmit": true,
-        "enableResourceInlining": true
+        "enableResourceInlining": false
     },
     "exclude": ["test.ts", "**/*.spec.ts"]
 }

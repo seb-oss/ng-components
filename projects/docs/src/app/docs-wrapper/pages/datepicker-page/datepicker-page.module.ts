@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { DatePickerModule } from "@sebgroup/ng-components/datePicker";
+import { DatepickerModule } from "@sebgroup/ng-components/datepicker";
 import { DatepickerPageComponent } from "./datepicker-page.component";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
@@ -11,7 +11,7 @@ const routes: Routes = [{ path: "", component: DatepickerPageComponent }];
 
 @NgModule({
     declarations: [DatepickerPageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, DatePickerModule, CheckBoxModule],
-    exports: [RouterModule, DatePickerModule],
+    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, DatepickerModule, CheckBoxModule],
+    exports: [RouterModule, DatepickerModule],
 })
 export class DatepickerPageModule {}

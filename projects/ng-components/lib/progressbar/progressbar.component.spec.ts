@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { ProgressBarComponent, ProggressTheme, BarItem } from "./progressbar.component";
+import { ProgressbarComponent, ProggressTheme, BarItem } from "./progressbar.component";
 import { CommonModule } from "@angular/common";
 import { ProgressThemePipe } from "./progress-theme.pipe";
 
@@ -21,7 +21,7 @@ import { ProgressThemePipe } from "./progress-theme.pipe";
         ></sebng-progress-bar>
     `,
 })
-class ProgressBarTestComponent {
+class ProgressbarTestComponent {
     value: number;
     height?: number;
     className?: string;
@@ -33,19 +33,19 @@ class ProgressBarTestComponent {
     multiBars?: Array<BarItem>;
 }
 
-describe("ProgressBarComponent", () => {
-    let component: ProgressBarTestComponent;
-    let fixture: ComponentFixture<ProgressBarTestComponent>;
+describe("ProgressbarComponent", () => {
+    let component: ProgressbarTestComponent;
+    let fixture: ComponentFixture<ProgressbarTestComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [CommonModule],
-            declarations: [ProgressBarComponent, ProgressBarTestComponent, ProgressThemePipe],
+            declarations: [ProgressbarComponent, ProgressbarTestComponent, ProgressThemePipe],
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ProgressBarTestComponent);
+        fixture = TestBed.createComponent(ProgressbarTestComponent);
         component = fixture.componentInstance;
         component.value = 40;
         fixture.detectChanges();
