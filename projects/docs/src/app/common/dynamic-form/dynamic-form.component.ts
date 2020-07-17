@@ -1,7 +1,7 @@
 import { Component, Input } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { KeyValue } from "@angular/common";
-import { DynamicFormItem, DynamicFormType, DynamicFormOption } from "./model/models";
+import { DynamicFormItem, DynamicFormOption } from "./model/models";
 import { ExtendedFormGroup, ExtendedFormGroupControls } from "./model/custom-classes/extended-form-group";
 import { ExtendedFormControl } from "./model/custom-classes/extended-form-control";
 import { ExtendedFormArray } from "./model/custom-classes/extended-form-array";
@@ -20,6 +20,13 @@ interface DynamicFormValidationError {
     selector: "app-dynamic-form",
     templateUrl: "./dynamic-form.component.html",
     providers: [FormService],
+    styles: [
+        `
+            ::ng-deep .dynamic-form-section-item {
+                margin-bottom: 1.5rem;
+            }
+        `,
+    ],
 })
 export class DynamicFormComponent {
     @Input() extendedFormGroup: ExtendedFormGroup;
@@ -52,7 +59,7 @@ export class DynamicFormComponent {
                 ruler = this.extendedFormGroup.get(key).get(formItem.rulerKey) as ExtendedFormControl;
             }
             const rulerValue: any = ruler.value;
-            const { condition } = formItem;
+            const { condition }: DynamicFormItem = formItem;
             if (rulerValue === undefined || condition === undefined) {
                 console.warn("Something went wrong in shouldRenderControl: Ruler value or condition could not be found.");
                 return false;
@@ -101,7 +108,7 @@ export class DynamicFormComponent {
      * @param id the id of the form item which should be duplicated
      * @param sectionIndex if the formgroup is an array this is the index of the formgroup item
      */
-    addNewItemToFormArrayWithId(key: string, id?: string, sectionIndex?: number) {
+    addNewItemToFormArrayWithId(key: string, id?: string, sectionIndex?: number): void {
         if (id) {
             // There is an id which means we want to duplicate a form item within a section
             if (sectionIndex > -1) {
@@ -130,7 +137,7 @@ export class DynamicFormComponent {
      * @param info the id of the form item which should be removed and the index of where to remove it
      * @param sectionIndex if the formgroup is an array this is the index of the formgroup item
      */
-    removeItemAtIndexFromFormArrayWithId(key: string, info?: { id: string; index: number }, sectionIndex?: number) {
+    removeItemAtIndexFromFormArrayWithId(key: string, info?: { id: string; index: number }, sectionIndex?: number): void {
         if (info && info.id) {
             // There is info which means we want to remove a form item within a section
             if (sectionIndex > -1) {

@@ -1,5 +1,5 @@
 <form *ngIf="extendedFormGroup" #ngForm="ngForm" [formGroup]="extendedFormGroup">
-    <div *ngFor="let section of extendedFormGroup.controls | keyvalue: orderForm">
+    <div class="dynamic-form-section-item" *ngFor="let section of extendedFormGroup.controls | keyvalue: orderForm">
         <h3 *ngIf="section.value.sectionItem.title">{{ section.value.sectionItem.title }}</h3>
 
         <div [class]="section.value.sectionItem.className" *ngIf="!section.value.sectionItem.multi; else multi">
@@ -21,6 +21,7 @@
 
         <ng-template #multi>
             <div
+                class="dynamic-form-section-item"
                 [class]="section.value.sectionItem.className"
                 *ngFor="let arrayControl of getFormArrayControls(section.value); let i = index"
             >
@@ -48,7 +49,7 @@
                 <button
                     *ngIf="getFormArrayControls(section.value).length > 1"
                     [id]="section.value.sectionItem.key + i + '-remove'"
-                    class="btn btn-sm btn-outline-danger border-transparent mb-3"
+                    class="btn btn-sm btn-outline-danger"
                     type="button"
                     (click)="removeItemAtIndexFromFormArrayWithId(section.key, null, i)"
                 >
@@ -58,7 +59,7 @@
 
             <button
                 [id]="section.value.sectionItem.key + '-add'"
-                class="btn btn-sm btn-secondary mb-3"
+                class="btn btn-sm btn-secondary"
                 type="button"
                 (click)="addNewItemToFormArrayWithId(section.value.sectionItem.key)"
             >

@@ -6,6 +6,13 @@ import { DynamicFormType } from "../model/dynamicFormType";
 @Component({
     selector: "app-dynamic-form-item",
     templateUrl: "./dynamic-form-item.component.html",
+    styles: [
+        `
+            ::ng-deep .dynamic-form-item {
+                margin-bottom: 1.5rem;
+            }
+        `,
+    ],
 })
 export class DynamicFormItemComponent {
     @Input() control: ExtendedFormControl | ExtendedFormArray;
@@ -24,7 +31,7 @@ export class DynamicFormItemComponent {
         }
     }
 
-    makeId(info: string, index?: number) {
+    makeId(info: string, index?: number): string {
         return `${this.sectionId}-${this.control.formItem.key}-${this.control.formItem.controlType}${
             info ? `-${info}` : "" + index ? `-${index}` : ""
         }`;

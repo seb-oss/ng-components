@@ -5,6 +5,7 @@ import { ExtendedFormGroup, ExtendedFormGroupControls, ExtendedFormGroupControl 
 import { ExtendedFormControl } from "./model/custom-classes/extended-form-control";
 import { ExtendedFormArray } from "./model/custom-classes/extended-form-array";
 import { ExtendedFormGroupArray } from "./model/custom-classes/extended-form-group-array";
+import { KeyValue } from "@angular/common";
 
 @Injectable()
 export class FormService {
@@ -30,7 +31,7 @@ export class FormService {
 
     dynamicFormItemsToControls(items: Array<DynamicFormItem>): ExtendedFormGroupControls {
         const controls: ExtendedFormGroupControls = {};
-        const orderedItems = items.sort((a: DynamicFormItem, b: DynamicFormItem) => a.order - b.order);
+        const orderedItems: Array<DynamicFormItem> = items.sort((a: DynamicFormItem, b: DynamicFormItem) => a.order - b.order);
 
         orderedItems.forEach((item: DynamicFormItem) => {
             if (item.controlType === DynamicFormType.Text && item.multi) {
@@ -51,7 +52,7 @@ export class FormService {
     }
 
     formToDynamicFormResponseItems(
-        data: Array<{ [k: string]: { [k: string]: any } }> | { [k: string]: { [k: string]: any } },
+        data: KeyValue<string, any> | Array<KeyValue<string, any>>,
         formGroup: ExtendedFormGroup
     ): Array<DynamicFormResponseItem> {
         const dynamicFormSubmitValues: Array<DynamicFormResponseItem> = [];
