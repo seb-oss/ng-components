@@ -40,8 +40,7 @@
                     },
                     "configurations": {
                         "production": {
-                            "tsConfig": "projects/ng-components/tsconfig.lib.prod.json",
-                            "aot": true
+                            "tsConfig": "projects/ng-components/tsconfig.lib.prod.json"
                         }
                     }
                 },
