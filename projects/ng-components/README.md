@@ -11,6 +11,7 @@
 This is a set of angular components some of which are based on SEB's bootstrap. The plan for this project is to increase and improve components for future usage.
 
 -   The package name: `@sebgroup/ng-components`
+-   [Get started](https://sebgroup.github.io/ng-components/docs/getting-started)
 -   The package documentation: [Documentation](https://sebgroup.github.io/ng-components)
 -   The package sourcecode: [Github Source Code](https://github.com/sebgroup/ng-components)
 -   NPM package: [@sebgroup/ng-components](https://www.npmjs.com/package/@sebgroup/ng-components)
