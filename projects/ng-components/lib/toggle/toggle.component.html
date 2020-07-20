@@ -2,7 +2,7 @@
     <div class="custom-control custom-slide-toggle">
         <input
             class="custom-control-input"
-            [attr.id]="internalId"
+            [attr.id]="id"
             [attr.name]="name"
             type="checkbox"
             [(ngModel)]="value"
@@ -11,7 +11,7 @@
             tabIndex="0"
             role="switch"
         />
-        <label class="custom-control-label" [attr.htmlFor]="internalId">
+        <label class="custom-control-label" [attr.for]="id">
             {{ label }}
         </label>
     </div>

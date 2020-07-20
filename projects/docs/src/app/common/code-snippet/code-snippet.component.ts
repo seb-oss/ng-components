@@ -6,7 +6,9 @@ import { Component, Input, ViewEncapsulation, HostBinding, ElementRef, ViewChild
         <!-- This is where the original code snippet is kept for copying to clipboard -->
         <span class="d-none" #originalCodeHolder><ng-content></ng-content></span>
         <div class="code-snippet">
-            <pre [class.fill]="fillMode"><code [highlight]="originalCodeHolder.innerText" [lineNumbers]="true"></code></pre>
+            <pre
+                [class.fill]="fillMode"
+            ><code [highlight]="originalCodeHolder.innerText" [lineNumbers]="true" [languages]="languages"></code></pre>
             <div title="Copy" *ngIf="!copied" class="snippet-icon copy" (click)="copySnippet()"><app-files-icon></app-files-icon></div>
             <div title="Copied!" *ngIf="copied" class="snippet-icon check"><app-check-icon></app-check-icon></div>
         </div>
@@ -17,6 +19,7 @@ import { Component, Input, ViewEncapsulation, HostBinding, ElementRef, ViewChild
 export class CodeSnippetComponent {
     /** Fill mode allows the code snippet to span across the width and height of its container */
     @Input() fillMode?: boolean = false;
+    @Input() languages?: HighlightLanguages;
     /** Appending this class name that forces the Angular custom HTML tag to span the whole width of the container */
     @HostBinding("style") styles = "width: 100%; height: 100%;";
     /** This is kept so that copying the code will copy the original code snippet, not the processed with syntax highlighting */

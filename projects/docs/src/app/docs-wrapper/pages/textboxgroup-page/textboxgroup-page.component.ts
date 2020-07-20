@@ -13,7 +13,7 @@ import { Component, OnInit } from "@angular/core";
     `,
 })
 export class TextboxgroupPageComponent implements OnInit {
-    importString: string = require("!raw-loader!@sebgroup/ng-components/textboxgroup/textboxgroup.component");
+    importString: string = require("!raw-loader!@sebgroup/ng-components/textboxGroup/textboxGroup.component");
     snippet: string = `<sebng-textboxgroup></sebng-textboxgroup>`;
 
     constructor() {

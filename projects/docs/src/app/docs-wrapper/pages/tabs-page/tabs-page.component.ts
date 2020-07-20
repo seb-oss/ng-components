@@ -24,8 +24,7 @@ import { TabsListItem } from "@sebgroup/ng-components/tabs";
 })
 export class TabsPageComponent {
     importString: string = require("!raw-loader!@sebgroup/ng-components/tabs/tabs.component");
-    snippet: string = `
-<sebng-tabs
+    snippet: string = `<sebng-tabs
     [(ngModel)]="value"
     [list]="[
         { text: "First", disabled: false },
@@ -36,8 +35,7 @@ export class TabsPageComponent {
 ></sebng-tabs>
 <div *ngFor="let item of list; index as i">
     <div class="bg-light p-3" [style.height.px]="100" *ngIf="value === i">{{ item.text }} page</div>
-</div>
-    `;
+</div>`;
     list: Array<TabsListItem> = [
         { text: "First", disabled: false },
         { text: "Second", disabled: false },

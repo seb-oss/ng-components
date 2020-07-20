@@ -5,19 +5,19 @@ import { NgClass } from "@angular/common";
 
 export const CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR: Provider = {
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => CheckBoxComponent),
+    useExisting: forwardRef(() => CheckboxComponent),
     multi: true,
 };
 
 /** Checkboxes allow a user to toggle an option on or off, or make multiple choices in a set of available options. */
 @Component({
     selector: "sebng-checkbox",
-    templateUrl: "./checkBox.component.html",
-    styleUrls: ["./checkBox.component.scss"],
+    templateUrl: "./checkbox.component.html",
+    styleUrls: ["./checkbox.component.scss"],
     providers: [CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR],
     encapsulation: ViewEncapsulation.None,
 })
-export class CheckBoxComponent implements ControlValueAccessor {
+export class CheckboxComponent implements ControlValueAccessor {
     /** Checkbox required label, supported types: `string`, `TemplateRef<HTMLElement>` */
     @Input() label: string | TemplateRef<HTMLElement>;
     /** Checbox optional id, supported type: `string`, default random string value will be set if not provided */

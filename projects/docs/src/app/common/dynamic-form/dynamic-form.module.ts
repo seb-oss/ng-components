@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DynamicFormComponent } from "./dynamic-form.component";
 import { DynamicFormItemComponent } from "./dynamic-form-item/dynamic-form-item.component";
 
-import { CheckBoxModule } from "@sebgroup/ng-components/checkBox";
+import { CheckboxModule } from "@sebgroup/ng-components/checkbox";
 import { RadioGroupModule } from "@sebgroup/ng-components/radio-group";
 import { TextboxGroupModule } from "@sebgroup/ng-components/textboxGroup";
 import { DatepickerModule } from "@sebgroup/ng-components/datepicker";
@@ -21,7 +21,7 @@ import { StepperModule } from "@sebgroup/ng-components/stepper";
         FormsModule,
         ReactiveFormsModule,
         DropdownModule,
-        CheckBoxModule,
+        CheckboxModule,
         RadioGroupModule,
         TextboxGroupModule,
         TextareaModule,
@@ -34,7 +34,7 @@ import { StepperModule } from "@sebgroup/ng-components/stepper";
         DynamicFormItemComponent,
         // MODULES
         DropdownModule,
-        CheckBoxModule,
+        CheckboxModule,
         RadioGroupModule,
         TextboxGroupModule,
         TextareaModule,

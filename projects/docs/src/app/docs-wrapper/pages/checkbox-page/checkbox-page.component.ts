@@ -5,7 +5,7 @@ import { Component } from "@angular/core";
     templateUrl: "./checkbox-page.component.html",
 })
 export class CheckboxPageComponent {
-    importString: string = require("!raw-loader!@sebgroup/ng-components/checkBox/checkbox.component");
+    importString: string = require("!raw-loader!@sebgroup/ng-components/checkbox/checkbox.component");
     model: boolean;
     showDescription: boolean;
     disableCheckbox: boolean = false;
