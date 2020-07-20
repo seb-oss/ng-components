@@ -6,7 +6,7 @@ import { Component } from "@angular/core";
         <div class="docs-wrapper">
             <app-side-menu></app-side-menu>
             <div class="content-wrapper">
-                <router-outlet [ngStyle]="{ display: 'none' }"></router-outlet>
+                <router-outlet></router-outlet>
                 <app-footer></app-footer>
             </div>
         </div>
