@@ -3,7 +3,7 @@ import { DynamicFormOption } from "./dynamicFormOption";
 import { AttributeTypeMap } from "./models";
 
 export interface DynamicFormItem {
-    key?: string | null;
+    key: string | null;
     value?: any;
     label?: string | null;
     description?: string | null;
@@ -17,7 +17,7 @@ export interface DynamicFormItem {
     options?: Array<DynamicFormOption> | null;
     rulerKey?: string | null;
     condition?: any;
-    controlType?: DynamicFormType;
+    controlType: DynamicFormType;
 }
 
 export const attributeTypeMapDynamicFormItem: AttributeTypeMap[] = [
