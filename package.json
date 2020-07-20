@@ -125,5 +125,9 @@
         "fs": false,
         "path": false,
         "os": false
-    }
+    },
+    "browserslist": [
+        "defaults",
+        "IE 11"
+    ]
 }

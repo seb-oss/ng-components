@@ -19,6 +19,7 @@ declare interface ComponentsListItem {
     name: string;
     path: string;
     filePath: string;
+    module: string;
 }
 
 declare interface NPMPackage {

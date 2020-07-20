@@ -47,7 +47,7 @@ export class RatingComponent implements ControlValueAccessor, OnInit {
 
     // Placeholders for the callbacks which are later provided
     // by the Control Value Accessor
-    private innerValue: any = "";
+    private _value: any = "";
 
     activeList: Array<string> = [];
     initialized: boolean = false;
@@ -209,20 +209,21 @@ export class RatingComponent implements ControlValueAccessor, OnInit {
     onChangeCallback: (_: any) => void = () => {};
 
     // get and set accessor----------------------
+    @Input()
     get value(): any {
-        return this.innerValue;
+        return this._value;
     }
     set value(v: any) {
-        if (v !== this.innerValue) {
-            this.innerValue = v;
+        if (v !== this._value) {
+            this._value = v;
             this.onChangeCallback(v);
         }
     }
 
     // From ControlValueAccessor interfaces--------------
     writeValue(value: any): void {
-        if (value !== this.innerValue) {
-            this.innerValue = value;
+        if (value !== this._value) {
+            this._value = value;
             this.setRateValue();
         }
     }

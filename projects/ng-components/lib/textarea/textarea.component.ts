@@ -56,47 +56,48 @@ export class TextareaComponent implements ControlValueAccessor {
     /** Callback when key is released */
     @Output() onKeyUp: EventEmitter<KeyboardEvent> = new EventEmitter<KeyboardEvent>();
 
-    private innerValue: string;
+    private _value: string;
 
     private onTouchedCallback: () => void;
     private onChangeCallback: (_: any) => void;
 
+    @Input()
     get value(): string {
-        return this.innerValue;
+        return this._value;
     }
 
     set value(v: string) {
-        if (v !== this.innerValue) {
-            this.innerValue = v;
+        if (v !== this._value) {
+            this._value = v;
             this.onChangeCallback && this.onChangeCallback(v);
             this.onChange && this.onChange.emit(v);
         }
     }
 
     // event
-    handleBlur(e: MouseEvent) {
+    handleBlur(e: MouseEvent): void {
         this.onBlur?.emit(e);
     }
 
-    handleKeyUp(e: KeyboardEvent) {
+    handleKeyUp(e: KeyboardEvent): void {
         this.onKeyUp?.emit(e);
     }
 
-    handleKeyDown(e: KeyboardEvent) {
+    handleKeyDown(e: KeyboardEvent): void {
         this.onKeyDown?.emit(e);
     }
 
-    handleFocus(e: MouseEvent) {
+    handleFocus(e: MouseEvent): void {
         this.onFocus?.emit(e);
     }
 
-    handleKeyPress(e: KeyboardEvent) {
+    handleKeyPress(e: KeyboardEvent): void {
         this.onKeyPress?.emit(e);
     }
 
     // accessor props
-    writeValue(val: string) {
-        this.innerValue = val;
+    writeValue(val: string): void {
+        this._value = val;
     }
 
     registerOnChange(fn: () => void): void {

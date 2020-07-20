@@ -51,18 +51,7 @@ import { Component, Input } from "@angular/core";
             </div>
         </ng-container>
     `,
-    styles: [
-        `
-            .card {
-                border-radius: 10px;
-                overflow: hidden;
-                margin-bottom: 1rem;
-            }
-            .card table {
-                margin: 0;
-            }
-        `,
-    ],
+    styleUrls: ["./apis.component.scss"],
 })
 export class APIsComponent {
     @Input() inputs: Array<APIInputs>;

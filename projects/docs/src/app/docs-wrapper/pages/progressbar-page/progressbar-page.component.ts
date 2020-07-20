@@ -1,11 +1,11 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { ProggressTheme, BarItem, DropdownItem } from "projects/ng-components/public-api";
 
 @Component({
     selector: "app-progressbar-page",
     templateUrl: "./progressbar-page.component.html",
 })
-export class ProgressbarPageComponent implements OnInit, OnDestroy {
+export class ProgressbarPageComponent implements OnDestroy {
     importString: string = require("!raw-loader!@sebgroup/ng-components/progressbar/progressbar.component");
     snippet: string = `<sebng-progress-bar [value]="progress"></sebng-progress-bar>`;
 
@@ -36,11 +36,7 @@ export class ProgressbarPageComponent implements OnInit, OnDestroy {
         document.title = "Progressbar - SEB Angular Components";
     }
 
-    ngOnInit(): void {
-        // this.simulateProgress();
-    }
-
-    ngOnDestroy() {
+    ngOnDestroy(): void {
         this.timerRef && clearInterval(this.timerRef);
     }
 

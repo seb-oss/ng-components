@@ -1,5 +1,4 @@
 import { trigger, animate, transition, style, state } from "@angular/animations";
-import { keyframes } from "@angular/animations";
 
 export const fadeInAnimation = trigger("openClose", [
     state(
@@ -14,5 +13,5 @@ export const fadeInAnimation = trigger("openClose", [
             display: "none",
         })
     ),
-    transition("open <=> close", [animate("{{ time }}")]),
+    transition("close => open", [style({ display: "block" }), animate("{{ time }}")]),
 ]);

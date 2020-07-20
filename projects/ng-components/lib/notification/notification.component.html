@@ -1,5 +1,5 @@
 <div class="{{ notificationClassNames }}">
-    <div class="content-wrapper" [class.clickable]="!!onClick" (click)="onClick($event)">
+    <div class="content-wrapper" [class.clickable]="!!notificationClick.observers.length" (click)="notificationClick.emit($event)">
         <h5 class="notification-title" *ngIf="title">{{ title }}</h5>
         <p class="notification-message" *ngIf="message">{{ message }}</p>
         <ng-content></ng-content>
