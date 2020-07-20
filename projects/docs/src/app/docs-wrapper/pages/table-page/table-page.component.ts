@@ -35,7 +35,10 @@ import { BehaviorSubject } from "rxjs";
                 </label>
             </div>
             <ng-container code>{{ snippet }}</ng-container>
-            <ng-container notes> // TODO: Add info about the table service </ng-container>
+            <!--
+                // TODO: Add info about the table service
+                <ng-container notes></ng-container>
+            -->
         </app-doc-page>
     `,
     providers: [TableService],
@@ -47,14 +50,12 @@ export class TablePageComponent {
     height: number = 80;
 
     importString: string = require("!raw-loader!@sebgroup/ng-components/table/table.component");
-    snippet: string = `
-    <sebng-table
-        [rows]="rows$ | async"
-        [headerList]="headerList$ | async"
-        [selectable]="selectable"
-        [fixedHeight]="hasFixedHeight ? height + 'px' : null"
-    ></sebng-table>
-    `;
+    snippet: string = `<sebng-table
+    [rows]="rows$ | async"
+    [headerList]="headerList$ | async"
+    [selectable]="selectable"
+    [fixedHeight]="hasFixedHeight ? height + 'px' : null"
+></sebng-table>`;
     data: any[] = [
         { country: "Malaysia", currency: "RM" },
         { country: "Slovenia", currency: "EUR", language: "Slovenian" },

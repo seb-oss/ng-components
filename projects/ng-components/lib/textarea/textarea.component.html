@@ -1,6 +1,6 @@
 <div class="form-group text-area" [ngClass]="className">
     <div class="input-field" [class.has-error]="error">
-        <label class="custom-label" [attr.htmlFor]="id" *ngIf="label">
+        <label class="custom-label" [attr.for]="id" *ngIf="label">
             {{ label }}
         </label>
         <textarea
