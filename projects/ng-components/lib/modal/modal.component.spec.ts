@@ -5,9 +5,18 @@ import { Component, ViewChild, DebugElement } from "@angular/core";
 import { ModalSizeType, ModalPositionType } from "./modal.type";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { By } from "@angular/platform-browser";
+import { SebModalBackdropComponent } from "./modal.backdrop";
 
 @Component({
-    template: `<sebng-modal [size]="'modal-lg'" [id]="id" [center]="center" [position]="position" [fullscreen]="fullscreen">
+    template: `<sebng-modal
+        [toggle]="toggle"
+        [size]="'modal-lg'"
+        [id]="id"
+        [center]="center"
+        [position]="position"
+        [fullscreen]="fullscreen"
+        [backdropClassName]="backdropClassName"
+    >
         <div class="custom-body" body>
             Body
         </div>
@@ -20,19 +29,21 @@ import { By } from "@angular/platform-browser";
     </sebng-modal>`,
 })
 class TestComponent {
+    toggle?: boolean;
     id?: string;
     size?: ModalSizeType;
     center?: boolean;
     position?: ModalPositionType;
     fullscreen?: boolean;
+    backdropClassName?: string;
     @ViewChild(ModalComponent) modalChild: ModalComponent;
 
     closeModal(): void {
-        this.modalChild.close();
+        this.toggle = false;
     }
 
     openModal(): void {
-        this.modalChild.open();
+        this.toggle = true;
     }
 }
 
@@ -100,34 +111,41 @@ describe("Component: ModalComponent", () => {
         expect(debugEl.querySelector(".modal-fullscreen")).toBeTruthy();
     });
 
-    it("should open the modal when openModal function is called and backdrop is appended to the body", () => {
-        const modalSpy: jasmine.Spy = spyOn(component.modalChild, "open").and.callThrough();
+    it("should open custom backdrop className", async () => {
+        component.backdropClassName = "custom-class";
+        fixture.detectChanges();
         const modalServiceSpy: jasmine.Spy = spyOn(modalService, "appendComponentToBody").and.callThrough();
         fixture.componentInstance.openModal();
         fixture.detectChanges();
-        expect(modalSpy).toHaveBeenCalled();
-        expect(modalServiceSpy).toHaveBeenCalled();
-        fixture.whenRenderingDone().then(() => {
-            fixture.detectChanges();
-            expect(document.querySelector(".modal-backdrop")).toBeTruthy();
-        });
+        expect(modalServiceSpy).toHaveBeenCalledWith(SebModalBackdropComponent, "custom-class");
     });
 
-    it("should close the modal when closeModal function is called", () => {
-        spyOn(component.modalChild, "close");
+    it("should open the modal when openModal function is called and backdrop is appended to the body", async () => {
+        const modalServiceSpy: jasmine.Spy = spyOn(modalService, "appendComponentToBody").and.callThrough();
+        fixture.componentInstance.openModal();
+        fixture.detectChanges();
+        expect(document.querySelector(".modal-backdrop")).toBeTruthy();
+        expect(modalServiceSpy).toHaveBeenCalled();
+    });
+
+    it("should close the modal when closeModal function is called", async () => {
+        const modalServiceSpy: jasmine.Spy = spyOn(modalService, "removeComponentFromBody").and.callThrough();
+        fixture.componentInstance.openModal();
+        fixture.detectChanges();
         fixture.componentInstance.closeModal();
         fixture.detectChanges();
-        expect(component.modalChild.close).toHaveBeenCalled();
+        expect(modalServiceSpy).toHaveBeenCalled();
         const debugEl: HTMLElement = fixture.debugElement.nativeElement;
         const cssStyle: CSSStyleDeclaration = getComputedStyle(debugEl.querySelector(".modal"));
         expect(cssStyle.display).toEqual("none");
     });
 
-    it("should close the modal when backdrop is clicked", async(() => {
+    it("should close the modal when backdrop is clicked", async () => {
         fixture.componentInstance.openModal();
+        fixture.detectChanges();
         spyOn(component.modalChild, "onBackdropClick");
         const modal: DebugElement = fixture.debugElement.query(By.css(".modal"));
         modal.nativeElement.click();
         expect(component.modalChild.onBackdropClick).toHaveBeenCalled();
-    }));
+    });
 });

@@ -4,5 +4,5 @@
     "lib": {
         "entryFile": "public-api.ts"
     },
-    "whitelistedNonPeerDependencies": ["@sebgroup/bootstrap", "@sebgroup/frontend-tools"]
+    "whitelistedNonPeerDependencies": ["@sebgroup/bootstrap", "@sebgroup/frontend-tools", "@angular/cdk"]
 }
