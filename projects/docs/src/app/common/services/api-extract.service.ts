@@ -206,7 +206,7 @@ export class APIExtractService {
      * @param comment string of comment
      */
     static parseComment(comment: string): string {
-        return comment ? comment.replace(/\*\/+|\/\*+|\*\s+|[\t\r\n]/g, "") : "n/a";
+        return this.formatComment(comment ? comment.replace(/\*\/+|\/\*+|\*\s+|[\t\r\n]/g, "") : "n/a");
     }
 
     /**
@@ -227,6 +227,18 @@ export class APIExtractService {
     static sortInputs(a: AccessorDeclaration, b: AccessorDeclaration): number {
         const isSet: boolean = a.constructor.name === "SetterDeclaration";
         return isSet ? -1 : 0;
+    }
+
+    /** format comment with backticks */
+    static formatComment(comment: string): string {
+        const regexPattern: string = "\\`(.*?)\\`";
+        const rawCodeReg: RegExp = new RegExp(regexPattern, "g");
+        let newComment: string = comment;
+        while (newComment.match(rawCodeReg)) {
+            const arr: RegExpExecArray = rawCodeReg.exec(newComment);
+            newComment = newComment.replace(new RegExp(regexPattern), `<code>${arr[1]}</code>`);
+        }
+        return newComment.trim();
     }
 
     initParse(sourceFileUrl: any): Observable<Array<ApiSection>> {
@@ -300,7 +312,7 @@ export class APIExtractService {
             .reduce((previous: Array<ParsedAccessorDeclaration>, current: AccessorDeclaration) => {
                 const input: ParsedAccessorDeclaration = previous.find((i: ParsedAccessorDeclaration) => i.name === current.name);
                 if (!!input && !inputs[input.name]?.skip?.length) {
-                    input.type = current.type;
+                    input.type = current.type || input.type; // to fix getter setter issue in firefox
                     return [...previous];
                 }
                 return [
