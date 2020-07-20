@@ -47,14 +47,12 @@ export class TablePageComponent {
     height: number = 80;
 
     importString: string = require("!raw-loader!@sebgroup/ng-components/table/table.component");
-    snippet: string = `
-    <sebng-table
-        [rows]="rows$ | async"
-        [headerList]="headerList$ | async"
-        [selectable]="selectable"
-        [fixedHeight]="hasFixedHeight ? height + 'px' : null"
-    ></sebng-table>
-    `;
+    snippet: string = `<sebng-table
+    [rows]="rows$ | async"
+    [headerList]="headerList$ | async"
+    [selectable]="selectable"
+    [fixedHeight]="hasFixedHeight ? height + 'px' : null"
+></sebng-table>`;
     data: any[] = [
         { country: "Malaysia", currency: "RM" },
         { country: "Slovenia", currency: "EUR", language: "Slovenian" },

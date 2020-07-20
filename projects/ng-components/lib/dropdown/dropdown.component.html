@@ -122,7 +122,7 @@
                                     [name]="item.id"
                                     [defaultChecked]="item.selected"
                                 />
-                                <label *ngIf="item.optionItem.label" tabIndex="-1" class="custom-control-label" [htmlFor]="item.id">{{
+                                <label *ngIf="item.optionItem.label" tabIndex="-1" class="custom-control-label" [attr.for]="item.id">{{
                                     item.optionItem.label
                                 }}</label>
                             </div>

@@ -1,15 +1,4 @@
-import {
-    Component,
-    Input,
-    Output,
-    EventEmitter,
-    ViewEncapsulation,
-    forwardRef,
-    Provider,
-    OnInit,
-    OnChanges,
-    SimpleChanges,
-} from "@angular/core";
+import { Component, Input, Output, EventEmitter, ViewEncapsulation, forwardRef, Provider } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { randomId } from "@sebgroup/frontend-tools/dist/randomId";
 
@@ -26,41 +15,27 @@ const CUSTOM_TEXTAREA_CONTROL_VALUE_ACCESSOR: Provider = {
     encapsulation: ViewEncapsulation.None,
     providers: [CUSTOM_TEXTAREA_CONTROL_VALUE_ACCESSOR],
 })
-export class ToggleComponent implements ControlValueAccessor, OnInit, OnChanges {
+export class ToggleComponent implements ControlValueAccessor {
     /** Element class name */
     @Input() className?: string;
     /** Element disabled state */
     @Input() disabled?: boolean;
     /** Element ID */
-    @Input() id?: string;
+    @Input()
+    get id(): string {
+        return this._id;
+    }
+
+    set id(v: string) {
+        console.log(v);
+        this._id = v || randomId("toggle-");
+    }
     /** Element label */
     @Input() label?: string;
     /** Element name */
     @Input() name?: string;
-    /** On change event which returns boolean */
-    @Output() onChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    public internalId: string;
-
-    setInternalId() {
-        this.internalId = this.id ? this.id : randomId("toggle-");
-    }
-
-    ngOnInit() {
-        this.setInternalId();
-    }
-
-    ngOnChanges(changes: SimpleChanges) {
-        if (changes.id) {
-            this.setInternalId();
-        }
-    }
-
-    private _value: boolean;
-
-    private onTouchedCallback: () => void;
-    private onChangeCallback: (_: any) => void;
-
+    /** Element value. Use ngModel for two-way data binding */
     @Input()
     get value(): boolean {
         return this._value;
@@ -70,12 +45,20 @@ export class ToggleComponent implements ControlValueAccessor, OnInit, OnChanges 
         if (v !== this._value) {
             this._value = v;
             this.onChangeCallback && this.onChangeCallback(v);
-            this.onChange && this.onChange.emit(v);
+            this.valueChange && this.valueChange.emit(v);
         }
     }
+    /** On change event which returns boolean */
+    @Output() valueChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    private _value: boolean;
+    private _id: string = randomId("toggle-");
+
+    private onTouchedCallback: () => void;
+    private onChangeCallback: (_: any) => void;
 
     // accessor props
-    writeValue(val: boolean) {
+    writeValue(val: boolean): void {
         this._value = val;
     }
 

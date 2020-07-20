@@ -18,9 +18,7 @@ import { ExtendedFormGroup } from "../../../common/dynamic-form/model/custom-cla
             <ng-container controls>
                 <app-dynamic-form [extendedFormGroup]="extendedFormGroup"></app-dynamic-form>
             </ng-container>
-            <ng-container code>{{
-                snippet(extendedFormGroup.value.numbers.step, extendedFormGroup.value.numbers.min, extendedFormGroup.value.numbers.max)
-            }}</ng-container>
+            <ng-container code>{{ snippet }}</ng-container>
         </app-doc-page>
     `,
     providers: [FormService],
@@ -32,16 +30,15 @@ export class StepperPageComponent {
     // controls
     value: number = 50;
 
-    snippet = (step: number, min: number, max: number): string => {
-        return `
-<sebng-stepper
+    get snippet(): string {
+        const { step, min, max } = this.extendedFormGroup.value.numbers;
+        return `<sebng-stepper
     [step]="${step}"
     [min]="${min}"
     [max]="${max}"
     [(ngModel)]="value"
-></sebng-stepper>
-        `;
-    };
+></sebng-stepper>`;
+    }
 
     constructor(private formService: FormService) {
         document.title = "Stepper - SEB Angular Components";

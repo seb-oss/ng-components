@@ -9,9 +9,12 @@ export class TimerPageComponent {
     snippet: string = `<sebng-timer duration="90000"></sebng-timer>`;
 
     duration: number = 90;
-    isToggled: boolean = false;
 
     constructor() {
         document.title = "Timer - SEB Angular Components";
+    }
+
+    notify(): void {
+        alert("Timer is finished");
     }
 }
