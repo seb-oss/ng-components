@@ -11,6 +11,5 @@ const routes: Routes = [{ path: "", component: SliderPageComponent }];
 @NgModule({
     declarations: [SliderPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, SliderModule, ReactiveFormsModule],
-    exports: [RouterModule, SliderModule],
 })
 export class SliderPageModule {}

@@ -2,157 +2,157 @@
     {
         "name": "Textbox Group",
         "path": "/docs/textboxgroup",
-        "filePath": "./docs-wrapper/pages/textboxgroup-page/textboxgroup-page.module",
+        "filePath": "./pages/textboxgroup-page/textboxgroup-page.module",
         "module": "TextboxGroupPageModule"
     },
     {
         "name": "Textarea",
         "path": "/docs/textarea",
-        "filePath": "./docs-wrapper/pages/textarea-page/textarea-page.module",
+        "filePath": "./pages/textarea-page/textarea-page.module",
         "module": "TextareaPageModule"
     },
     {
         "name": "Text label",
         "path": "/docs/textlabel",
-        "filePath": "./docs-wrapper/pages/textlabel-page/textlabel-page.module",
+        "filePath": "./pages/textlabel-page/textlabel-page.module",
         "module": "TextlabelPageModule"
     },
     {
         "name": "Checkbox",
         "path": "/docs/checkbox",
-        "filePath": "./docs-wrapper/pages/checkbox-page/checkbox-page.module",
+        "filePath": "./pages/checkbox-page/checkbox-page.module",
         "module": "CheckboxPageModule"
     },
     {
         "name": "Dropdown",
         "path": "/docs/dropdown",
-        "filePath": "./docs-wrapper/pages/dropdown-page/dropdown-page.module",
+        "filePath": "./pages/dropdown-page/dropdown-page.module",
         "module": "DropdownPageModule"
     },
     {
         "name": "Datepicker",
         "path": "/docs/datepicker",
-        "filePath": "./docs-wrapper/pages/datepicker-page/datepicker-page.module",
+        "filePath": "./pages/datepicker-page/datepicker-page.module",
         "module": "DatepickerPageModule"
     },
     {
         "name": "Radio Group",
         "path": "/docs/radiogroup",
-        "filePath": "./docs-wrapper/pages/radiogroup-page/radiogroup-page.module",
+        "filePath": "./pages/radiogroup-page/radiogroup-page.module",
         "module": "RadioGroupPageModule"
     },
     {
         "name": "Rating",
         "path": "/docs/rating",
-        "filePath": "./docs-wrapper/pages/rating-page/rating-page.module",
+        "filePath": "./pages/rating-page/rating-page.module",
         "module": "RatingPageModule"
     },
     {
         "name": "Toggle",
         "path": "/docs/toggle",
-        "filePath": "./docs-wrapper/pages/toggle-page/toggle-page.module",
+        "filePath": "./pages/toggle-page/toggle-page.module",
         "module": "TogglePageModule"
     },
     {
         "name": "Slider",
         "path": "/docs/slider",
-        "filePath": "./docs-wrapper/pages/slider-page/slider-page.module",
+        "filePath": "./pages/slider-page/slider-page.module",
         "module": "SliderPageModule"
     },
     {
         "name": "Stepper",
         "path": "/docs/stepper",
-        "filePath": "./docs-wrapper/pages/stepper-page/stepper-page.module",
+        "filePath": "./pages/stepper-page/stepper-page.module",
         "module": "StepperPageModule"
     },
     {
         "name": "Button",
         "path": "/docs/button",
-        "filePath": "./docs-wrapper/pages/button-page/button-page.module",
+        "filePath": "./pages/button-page/button-page.module",
         "module": "ButtonPageModule"
     },
     {
         "name": "Chip",
         "path": "/docs/chip",
-        "filePath": "./docs-wrapper/pages/chip-page/chip-page.module",
+        "filePath": "./pages/chip-page/chip-page.module",
         "module": "ChipPageModule"
     },
     {
         "name": "Tooltip",
         "path": "/docs/tooltip",
-        "filePath": "./docs-wrapper/pages/tooltip-page/tooltip-page.module",
+        "filePath": "./pages/tooltip-page/tooltip-page.module",
         "module": "TooltipPageModule"
     },
     {
         "name": "Loader",
         "path": "/docs/loader",
-        "filePath": "./docs-wrapper/pages/loader-page/loader-page.module",
+        "filePath": "./pages/loader-page/loader-page.module",
         "module": "LoaderPageModule"
     },
     {
         "name": "Progress Bar",
         "path": "/docs/progressbar",
-        "filePath": "./docs-wrapper/pages/progressbar-page/progressbar-page.module",
+        "filePath": "./pages/progressbar-page/progressbar-page.module",
         "module": "ProgressbarPageModule"
     },
     {
         "name": "Pagination",
         "path": "/docs/pagination",
-        "filePath": "./docs-wrapper/pages/pagination-page/pagination-page.module",
+        "filePath": "./pages/pagination-page/pagination-page.module",
         "module": "PaginationPageModule"
     },
     {
         "name": "Timeline",
         "path": "/docs/timeline",
-        "filePath": "./docs-wrapper/pages/timeline-page/timeline-page.module",
+        "filePath": "./pages/timeline-page/timeline-page.module",
         "module": "TimelinePageModule"
     },
     {
         "name": "Breadcrumb",
         "path": "/docs/breadcrumb",
-        "filePath": "./docs-wrapper/pages/breadcrumb-page/breadcrumb-page.module",
+        "filePath": "./pages/breadcrumb-page/breadcrumb-page.module",
         "module": "BreadcrumbPageModule"
     },
     {
         "name": "Accordion",
         "path": "/docs/accordion",
-        "filePath": "./docs-wrapper/pages/accordion-page/accordion-page.module",
+        "filePath": "./pages/accordion-page/accordion-page.module",
         "module": "AccordionPageModule"
     },
     {
         "name": "Tabs",
         "path": "/docs/tabs",
-        "filePath": "./docs-wrapper/pages/tabs-page/tabs-page.module",
+        "filePath": "./pages/tabs-page/tabs-page.module",
         "module": "TabsPageModule"
     },
     {
         "name": "Notification",
         "path": "/docs/notification",
-        "filePath": "./docs-wrapper/pages/notification-page/notification-page.module",
+        "filePath": "./pages/notification-page/notification-page.module",
         "module": "NotificationPageModule"
     },
     {
         "name": "Table",
         "path": "/docs/table",
-        "filePath": "./docs-wrapper/pages/table-page/table-page.module",
+        "filePath": "./pages/table-page/table-page.module",
         "module": "TablePageModule"
     },
     {
         "name": "Modal",
         "path": "/docs/modal",
-        "filePath": "./docs-wrapper/pages/modal-page/modal-page.module",
+        "filePath": "./pages/modal-page/modal-page.module",
         "module": "ModalPageModule"
     },
     {
         "name": "Video",
         "path": "/docs/video",
-        "filePath": "./docs-wrapper/pages/video-page/video-page.module",
+        "filePath": "./pages/video-page/video-page.module",
         "module": "VideoPageModule"
     },
     {
         "name": "Timer",
         "path": "/docs/timer",
-        "filePath": "./docs-wrapper/pages/timer-page/timer-page.module",
+        "filePath": "./pages/timer-page/timer-page.module",
         "module": "TimerPageModule"
     }
 ]

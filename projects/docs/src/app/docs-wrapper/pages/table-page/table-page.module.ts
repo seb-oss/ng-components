@@ -13,6 +13,5 @@ const routes: Routes = [{ path: "", component: TablePageComponent }];
 @NgModule({
     declarations: [TablePageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, TableModule, CheckboxModule, StepperModule],
-    exports: [RouterModule, TableModule],
 })
 export class TablePageModule {}

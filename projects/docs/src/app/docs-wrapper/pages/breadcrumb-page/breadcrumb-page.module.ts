@@ -11,6 +11,5 @@ const routes: Routes = [{ path: "", component: BreadcrumbPageComponent }];
 @NgModule({
     declarations: [BreadcrumbPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, BreadcrumModule],
-    exports: [RouterModule, BreadcrumModule],
 })
 export class BreadcrumbPageModule {}

@@ -11,6 +11,5 @@ const routes: Routes = [{ path: "", component: TextboxgroupPageComponent }];
 @NgModule({
     declarations: [TextboxgroupPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, TextboxGroupModule],
-    exports: [RouterModule, TextboxGroupModule],
 })
 export class TextboxGroupPageModule {}

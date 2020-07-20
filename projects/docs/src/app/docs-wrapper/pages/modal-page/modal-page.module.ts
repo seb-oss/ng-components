@@ -25,7 +25,6 @@ const routes: Routes = [{ path: "", component: ModalPageComponent }];
         HighlightModule,
         CodeSnippetModule,
     ],
-    exports: [RouterModule, ModalModule],
     providers: [
         {
             provide: HIGHLIGHT_OPTIONS,
