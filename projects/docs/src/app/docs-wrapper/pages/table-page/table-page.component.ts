@@ -35,7 +35,10 @@ import { BehaviorSubject } from "rxjs";
                 </label>
             </div>
             <ng-container code>{{ snippet }}</ng-container>
-            <ng-container notes> // TODO: Add info about the table service </ng-container>
+            <!--
+                // TODO: Add info about the table service
+                <ng-container notes></ng-container>
+            -->
         </app-doc-page>
     `,
     providers: [TableService],
