@@ -1,8 +1,6 @@
 @import "~@sebgroup/bootstrap/scss/core";
-@import "../../../styles/mixins";
-@import "../../../styles/variables";
-
-$shadow-light: 0 3px 6px rgba(black, 0.16);
+@import "mixins";
+@import "variables";
 
 $base-transition-time: 200ms;
 
@@ -12,7 +10,7 @@ aside.side-menu {
     grid-area: aside;
     grid-column: 1;
     -ms-grid-column: 1;
-    box-shadow: $shadow;
+    box-shadow: inset $shadow;
     white-space: nowrap;
     width: auto;
     height: 100vh;

@@ -7,15 +7,13 @@ import { FooterModule } from "../common/footer/footer.module";
 import components from "../../assets/components-list.json";
 
 function getComponentPageRoutes(): Routes {
-    return components.map(({ path, name, filePath }) => {
-        const componentNameLowercase: string = path.replace("/docs/", "");
+    return components.map(({ path, filePath, module }: ComponentsListItem) => {
+        const component: string = path.replace("/docs/", "");
         return {
-            path: componentNameLowercase,
+            path: component,
             component: DocsWrapperComponent,
-            loadChildren: () =>
-                import(`./pages/${componentNameLowercase}-page/${componentNameLowercase}-page.module`).then(
-                    m => m && m[`${name.replace(" ", "")}PageModule`]
-                ),
+            // This is the only way to trigger Angular to pre-process the file path import(`${filePath})
+            loadChildren: () => import(`${filePath}`).then(m => m[module]),
         };
     });
 }

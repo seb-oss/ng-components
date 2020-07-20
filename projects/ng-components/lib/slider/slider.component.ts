@@ -91,6 +91,11 @@ export class SliderComponent implements OnInit, OnChanges, AfterContentChecked, 
 
     public thumbPosition: number = 0;
 
+    private _value: number;
+
+    private onTouchedCallback: () => void;
+    private onChangeCallback: (_: any) => void;
+
     private appearanceSizesMap: AppearanceStyleMap = {
         alternative: { width: "27px", offset: "56px" },
         normal: { width: "5px", offset: "24px" },
@@ -166,7 +171,7 @@ export class SliderComponent implements OnInit, OnChanges, AfterContentChecked, 
         this.size = this.getSize(minValue, maxValue);
     }
 
-    setLabelsPositions() {
+    setLabelsPositions(): void {
         if (this.labels && this.labels.length) {
             const positions: Array<string> = [];
             this.labels.map((label: RangeSliderLabel) => {
@@ -176,7 +181,7 @@ export class SliderComponent implements OnInit, OnChanges, AfterContentChecked, 
         }
     }
 
-    setStyleTracks() {
+    setStyleTracks(): void {
         this.thumbPosition = this.getPercentage();
         this.activeTrackStyles = this.getActiveTrackStyles();
     }
@@ -215,7 +220,7 @@ export class SliderComponent implements OnInit, OnChanges, AfterContentChecked, 
      * Calculates the styles needed for the active track
      * @returns {CSSStyleDeclaration} The active track styles object
      */
-    getActiveTrackStyles() {
+    getActiveTrackStyles(): CSSStyleDeclaration {
         const calculatedThumbPosition: number = this.getPercentage();
         let zeroPosition: number;
         const { width, offset }: AppearanceStyleMap[keyof AppearanceStyleMap] = this.appearanceSizesMap[this.appearance];
@@ -270,19 +275,14 @@ export class SliderComponent implements OnInit, OnChanges, AfterContentChecked, 
         return this.size / this.step <= maxNumberOfStepsToAllowTransition;
     }
 
-    // controlAccessor
-    private innerValue: number;
-
-    private onTouchedCallback: () => void;
-    private onChangeCallback: (_: any) => void;
-
+    @Input()
     get value(): number {
-        return this.innerValue;
+        return this._value;
     }
 
     set value(v: number) {
-        if (v !== this.innerValue) {
-            this.innerValue = v;
+        if (v !== this._value) {
+            this._value = v;
             this.onChangeCallback && this.onChangeCallback(v);
             this.onChange && this.onChange.emit(v);
             this.thumbPosition = this.getPercentage();
@@ -291,9 +291,9 @@ export class SliderComponent implements OnInit, OnChanges, AfterContentChecked, 
     }
 
     // accessor props
-    writeValue(val: number) {
-        if (val !== this.innerValue) {
-            this.innerValue = val;
+    writeValue(val: number): void {
+        if (val !== this._value) {
+            this._value = val;
             this.thumbPosition = this.getPercentage();
             this.activeTrackStyles = this.getActiveTrackStyles();
         }
@@ -307,7 +307,7 @@ export class SliderComponent implements OnInit, OnChanges, AfterContentChecked, 
         this.onTouchedCallback = fn;
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.size = 0;
         this.labelsPositions = [];
 
@@ -316,11 +316,11 @@ export class SliderComponent implements OnInit, OnChanges, AfterContentChecked, 
         this.setLabelsPositions();
     }
 
-    ngAfterContentChecked() {
+    ngAfterContentChecked(): void {
         this.ref.detectChanges();
     }
 
-    ngOnChanges(changes: SimpleChanges) {
+    ngOnChanges(changes: SimpleChanges): void {
         if (changes.max || changes.min) {
             this.setSliderRange();
             this.thumbPosition = this.getPercentage();

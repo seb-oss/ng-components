@@ -1,3 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@sebgroup/bootstrap/scss/bootstrap";
 @import "~highlight.js/styles/atom-one-dark-reasonable.css";
+
+/** This fix is for IE, since it doesn't treat display flex as a block element */
+.row {
+    width: 100%;
+}

@@ -188,6 +188,7 @@ export class DatepickerComponent implements ControlValueAccessor {
     }
 
     // get and set accessor----------------------
+    @Input()
     get value(): Date | null {
         return this._value;
     }

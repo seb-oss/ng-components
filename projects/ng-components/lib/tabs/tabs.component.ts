@@ -51,12 +51,13 @@ export class TabsComponent implements ControlValueAccessor {
     }
 
     // Whatever name for this (myValue) you choose here, use it in the .html file.
+    @Input()
     get value(): number {
         return this._value;
     }
 
     /** Active index */
-    @Input("value") set value(v: number) {
+    set value(v: number) {
         if (v !== this._value && !isNaN(v)) {
             this._value = v;
             this.onChange(v);

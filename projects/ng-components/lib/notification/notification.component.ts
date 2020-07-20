@@ -51,7 +51,7 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
     /** Display action buttons - max: 2 actions */
     @Input() actions?: Array<NotificationAction>;
     /** Callback when notification is clicked */
-    @Output() onClick?: (e?: MouseEvent) => void;
+    @Output() notificationClick?: EventEmitter<MouseEvent> = new EventEmitter();
     /** Callback when notification is dismissed */
     @Output() dismiss?: EventEmitter<void> = new EventEmitter();
 

@@ -5,7 +5,7 @@ import { Component, OnInit } from "@angular/core";
     template: `
         <app-doc-page [importString]="importString">
             <ng-container example>
-                <sebng-textarea></sebng-textarea>
+                <sebng-textarea [(ngModel)]="value"></sebng-textarea>
             </ng-container>
             <ng-container controls> </ng-container>
             <ng-container code>{{ snippet }}</ng-container>
@@ -15,6 +15,7 @@ import { Component, OnInit } from "@angular/core";
 export class TextareaPageComponent implements OnInit {
     importString: string = require("!raw-loader!@sebgroup/ng-components/textarea/textarea.component");
     snippet: string = `<sebng-textarea></sebng-textarea>`;
+    value: string = "";
 
     constructor() {
         document.title = "Textarea - SEB Angular Components";
