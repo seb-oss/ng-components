@@ -98,7 +98,7 @@ export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnCh
     /** Calback when a search is initiated using element of type="search" */
     @Output() onSearch: EventEmitter<KeyboardEvent> = new EventEmitter<KeyboardEvent>();
 
-    private innerValue: Value;
+    private _value: Value;
 
     private onTouchedCallback: () => void;
     private onChangeCallback: (_: any) => void;
@@ -130,13 +130,14 @@ export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnCh
         }
     }
 
+    @Input()
     get value(): Value {
-        return this.innerValue;
+        return this._value;
     }
 
     set value(v: Value) {
-        if (v !== this.innerValue) {
-            this.innerValue = v;
+        if (v !== this._value) {
+            this._value = v;
             this.onChangeCallback && this.onChangeCallback(v);
             this.onChange && this.onChange.emit(v);
         }
@@ -176,8 +177,8 @@ export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnCh
     }
     // accessor props
     writeValue(val: Value): void {
-        if (val !== this.innerValue) {
-            this.innerValue = val;
+        if (val !== this._value) {
+            this._value = val;
         }
     }
 

@@ -61,6 +61,7 @@ export class ToggleComponent implements ControlValueAccessor, OnInit, OnChanges 
     private onTouchedCallback: () => void;
     private onChangeCallback: (_: any) => void;
 
+    @Input()
     get value(): boolean {
         return this._value;
     }

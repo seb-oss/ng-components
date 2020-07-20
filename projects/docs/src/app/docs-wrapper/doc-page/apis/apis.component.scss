@@ -1,0 +1,11 @@
+@import "variables";
+
+.card {
+    border-radius: $border-radius;
+    overflow: hidden;
+    margin-bottom: 1rem;
+
+    table {
+        margin: 0;
+    }
+}

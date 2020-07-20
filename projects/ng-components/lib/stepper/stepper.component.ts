@@ -37,7 +37,7 @@ export class StepperComponent implements ControlValueAccessor {
 
     // Placeholders for the callbacks which are later provided
     // by the Control Value Accessor
-    private innerValue: number = 0;
+    private _value: number = 0;
 
     private onTouchedCallback: () => void;
     private onChangeCallback: (_: number) => void;
@@ -55,17 +55,18 @@ export class StepperComponent implements ControlValueAccessor {
     }
 
     // get and set accessor----------------------
+    @Input()
     get value(): number {
-        return this.innerValue;
+        return this._value;
     }
     set value(v: number) {
         this._invalid = false;
         if (v >= this.min && v <= this.max) {
-            this.innerValue = Number(v);
+            this._value = Number(v);
         } else {
             this._invalid = true;
         }
-        this.onChangeCallback && this.onChangeCallback(this.innerValue);
+        this.onChangeCallback && this.onChangeCallback(this._value);
         this.onTouchedCallback && this.onTouchedCallback();
     }
 

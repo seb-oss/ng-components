@@ -35,20 +35,21 @@ export class CheckboxComponent implements ControlValueAccessor {
     /** Checkbox optional onChange event emitter */
     @Output() onChange?: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    private innerValue: boolean = false;
+    private _value: boolean = false;
 
     // Placeholders for the callbacks which are later provided
     // by the Control Value Accessor
     private onTouchedCallback: () => void;
     private onChangeCallback: (_: any) => void;
 
+    @Input()
     get value(): boolean {
-        return this.innerValue;
+        return this._value;
     }
 
     set value(v: boolean) {
-        if (v !== this.innerValue) {
-            this.innerValue = v;
+        if (v !== this._value) {
+            this._value = v;
             this.onChangeCallback && this.onChangeCallback(v);
             this.onTouchedCallback && this.onTouchedCallback();
             this.onChange && this.onChange.emit(v);
@@ -57,8 +58,8 @@ export class CheckboxComponent implements ControlValueAccessor {
 
     // From ControlValueAccessor interface
     writeValue(value: boolean): void {
-        if (value !== this.innerValue) {
-            this.innerValue = value;
+        if (value !== this._value) {
+            this._value = value;
         }
     }
 
