@@ -13,6 +13,5 @@ const routes: Routes = [{ path: "", component: RatingPageComponent }];
 @NgModule({
     declarations: [RatingPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, RatingModule, StepperModule, CheckboxModule],
-    exports: [RouterModule, RatingModule],
 })
 export class RatingPageModule {}

@@ -12,6 +12,5 @@ const routes: Routes = [{ path: "", component: DatepickerPageComponent }];
 @NgModule({
     declarations: [DatepickerPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, DatepickerModule, CheckboxModule],
-    exports: [RouterModule, DatepickerModule],
 })
 export class DatepickerPageModule {}

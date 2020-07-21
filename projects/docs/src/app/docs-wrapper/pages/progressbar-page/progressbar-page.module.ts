@@ -25,6 +25,5 @@ const routes: Routes = [{ path: "", component: ProgressbarPageComponent }];
         DropdownModule,
         SliderModule,
     ],
-    exports: [RouterModule, ProgressbarModule],
 })
 export class ProgressbarPageModule {}

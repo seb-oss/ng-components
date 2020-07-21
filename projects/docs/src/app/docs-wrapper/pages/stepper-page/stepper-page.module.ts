@@ -12,6 +12,5 @@ const routes: Routes = [{ path: "", component: StepperPageComponent }];
 @NgModule({
     declarations: [StepperPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, StepperModule, DynamicFormModule],
-    exports: [RouterModule, StepperModule, DynamicFormModule],
 })
 export class StepperPageModule {}

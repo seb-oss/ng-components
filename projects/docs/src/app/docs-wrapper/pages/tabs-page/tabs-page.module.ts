@@ -11,6 +11,5 @@ const routes: Routes = [{ path: "", component: TabsPageComponent }];
 @NgModule({
     declarations: [TabsPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, TabsModule],
-    exports: [RouterModule, TabsModule],
 })
 export class TabsPageModule {}

@@ -13,6 +13,5 @@ const routes: Routes = [{ path: "", component: NotificationPageComponent }];
 @NgModule({
     declarations: [NotificationPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, NotificationModule, DropdownModule, CheckboxModule],
-    exports: [RouterModule, NotificationModule],
 })
 export class NotificationPageModule {}

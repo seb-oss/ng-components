@@ -11,6 +11,5 @@ const routes: Routes = [{ path: "", component: ChipPageComponent }];
 @NgModule({
     declarations: [ChipPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, ChipModule],
-    exports: [RouterModule, ChipModule],
 })
 export class ChipPageModule {}
