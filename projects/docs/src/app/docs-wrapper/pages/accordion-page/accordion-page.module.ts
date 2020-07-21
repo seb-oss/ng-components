@@ -13,6 +13,5 @@ const routes: Routes = [{ path: "", component: AccordionPageComponent }];
 @NgModule({
     declarations: [AccordionPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, AccordionModule, CheckboxModule, StepperModule],
-    exports: [RouterModule, AccordionModule],
 })
 export class AccordionPageModule {}

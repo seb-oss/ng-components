@@ -12,6 +12,5 @@ const routes: Routes = [{ path: "", component: RadioGroupPageComponent }];
 @NgModule({
     declarations: [RadioGroupPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, RadioGroupModule, CheckboxModule],
-    exports: [RouterModule, RadioGroupModule],
 })
 export class RadioGroupPageModule {}

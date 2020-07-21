@@ -1,36 +1,15 @@
 import { NgModule } from "@angular/core";
 import { DocsWrapperComponent } from "./docs-wrapper.component";
-import { SideMenuModule } from "../common/side-menu/side-menu.module";
-import { Routes, RouterModule } from "@angular/router";
+import { RouterModule } from "@angular/router";
+import { DOCS_ROUTES } from "./docs-wrapper.routes";
 import { CommonModule } from "@angular/common";
 import { FooterModule } from "../common/footer/footer.module";
-import components from "../../assets/components-list.json";
-
-function getComponentPageRoutes(): Routes {
-    return components.map(({ path, filePath, module }: ComponentsListItem) => {
-        const component: string = path.replace("/docs/", "");
-        return {
-            path: component,
-            component: DocsWrapperComponent,
-            // This is the only way to trigger Angular to pre-process the file path import(`${filePath})
-            loadChildren: () => import(`${filePath}`).then(m => m[module]),
-        };
-    });
-}
-
-const routes: Routes = [
-    { path: "", redirectTo: "getting-started", pathMatch: "full" },
-    {
-        path: "getting-started",
-        component: DocsWrapperComponent,
-        loadChildren: () => import("./getting-started/getting-started.module").then(m => m.GettingStartedModule),
-    },
-    ...getComponentPageRoutes(),
-];
+import { SideMenuModule } from "../common/side-menu/side-menu.module";
+import { LoaderModule } from "@sebgroup/ng-components/loader";
 
 @NgModule({
     declarations: [DocsWrapperComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FooterModule, SideMenuModule],
-    exports: [RouterModule, FooterModule, SideMenuModule],
+    imports: [CommonModule, RouterModule.forChild(DOCS_ROUTES), FooterModule, SideMenuModule, LoaderModule],
+    exports: [LoaderModule],
 })
 export class DocsWrapperModule {}

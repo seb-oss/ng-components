@@ -12,6 +12,5 @@ const routes: Routes = [{ path: "", component: DropdownPageComponent }];
 @NgModule({
     declarations: [DropdownPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, DropdownModule, CheckboxModule],
-    exports: [RouterModule, DropdownModule],
 })
 export class DropdownPageModule {}
