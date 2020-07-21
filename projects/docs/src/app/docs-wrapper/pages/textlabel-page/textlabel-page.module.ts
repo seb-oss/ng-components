@@ -12,6 +12,5 @@ const routes: Routes = [{ path: "", component: TextlabelPageComponent }];
 @NgModule({
     declarations: [TextlabelPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, TextLabelModule, CheckboxModule],
-    exports: [RouterModule, TextLabelModule],
 })
 export class TextlabelPageModule {}

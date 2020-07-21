@@ -11,6 +11,5 @@ const routes: Routes = [{ path: "", component: TimerPageComponent }];
 @NgModule({
     declarations: [TimerPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, TimerModule],
-    exports: [RouterModule, TimerModule],
 })
 export class TimerPageModule {}

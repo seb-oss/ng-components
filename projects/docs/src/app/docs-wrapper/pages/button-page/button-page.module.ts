@@ -13,6 +13,5 @@ const routes: Routes = [{ path: "", component: ButtonPageComponent }];
 @NgModule({
     declarations: [ButtonPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, ButtonModule, DropdownModule, CheckboxModule],
-    exports: [RouterModule, ButtonModule],
 })
 export class ButtonPageModule {}

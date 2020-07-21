@@ -13,6 +13,5 @@ const routes: Routes = [{ path: "", component: VideoPageComponent }];
 @NgModule({
     declarations: [VideoPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, VideoModule, CheckboxModule, TooltipModule],
-    exports: [RouterModule, VideoModule],
 })
 export class VideoPageModule {}

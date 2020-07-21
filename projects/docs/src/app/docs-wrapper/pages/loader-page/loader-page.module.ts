@@ -23,6 +23,5 @@ const routes: Routes = [{ path: "", component: LoaderPageComponent }];
         DropdownModule,
         RadioGroupModule,
     ],
-    exports: [RouterModule, LoaderModule],
 })
 export class LoaderPageModule {}

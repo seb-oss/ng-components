@@ -11,6 +11,5 @@ const routes: Routes = [{ path: "", component: TextareaPageComponent }];
 @NgModule({
     declarations: [TextareaPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, TextareaModule],
-    exports: [RouterModule, TextareaModule],
 })
 export class TextareaPageModule {}

@@ -13,6 +13,5 @@ const routes: Routes = [{ path: "", component: PaginationPageComponent }];
 @NgModule({
     declarations: [PaginationPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, PaginationModule, StepperModule, CheckboxModule],
-    exports: [RouterModule, PaginationModule],
 })
 export class PaginationPageModule {}
