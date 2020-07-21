@@ -14,10 +14,18 @@ import { ExtendedFormGroup } from "../../../common/dynamic-form/model/custom-cla
                     [required]="extendedFormGroup.value.toggles.required"
                     [minLength]="extendedFormGroup.value.numbers.min"
                     [maxLength]="extendedFormGroup.value.numbers.max"
-                    [leftIcon]="extendedFormGroup.value.radios.left?.key === 'icon' ? extendedFormGroup.value.radios.left?.value : null"
-                    [leftText]="extendedFormGroup.value.radios.left?.key === 'text' ? extendedFormGroup.value.radios.left?.value : null"
-                    [rightIcon]="extendedFormGroup.value.radios.right?.key === 'icon' ? extendedFormGroup.value.radios.right?.value : null"
-                    [rightText]="extendedFormGroup.value.radios.right?.key === 'text' ? extendedFormGroup.value.radios.right?.value : null"
+                    [leftIcon]="
+                        extendedFormGroup.value.radios.left?.key === 'left-icon' ? extendedFormGroup.value.radios.left?.value : null
+                    "
+                    [leftText]="
+                        extendedFormGroup.value.radios.left?.key === 'left-text' ? extendedFormGroup.value.radios.left?.value : null
+                    "
+                    [rightIcon]="
+                        extendedFormGroup.value.radios.right?.key === 'right-icon' ? extendedFormGroup.value.radios.right?.value : null
+                    "
+                    [rightText]="
+                        extendedFormGroup.value.radios.right?.key === 'right-text' ? extendedFormGroup.value.radios.right?.value : null
+                    "
                     [(ngModel)]="value"
                 ></sebng-textboxgroup>
             </ng-container>
@@ -59,9 +67,9 @@ export class TextboxgroupPageComponent implements OnInit {
                         description: "The element to be displayed on the left.",
                         controlType: "Radio",
                         options: [
-                            { key: "none", label: "None", value: null },
-                            { key: "icon", label: "Icon", value: this.icon },
-                            { key: "text", label: "Text", value: "kr" },
+                            { key: "left-none", label: "None", value: null },
+                            { key: "left-icon", label: "Icon", value: this.icon },
+                            { key: "left-text", label: "Text", value: "kr" },
                         ],
                     },
                     {
@@ -70,9 +78,9 @@ export class TextboxgroupPageComponent implements OnInit {
                         description: "The element to be displayed on the right.",
                         controlType: "Radio",
                         options: [
-                            { key: "none", label: "None", value: null },
-                            { key: "icon", label: "Icon", value: this.icon },
-                            { key: "text", label: "Text", value: "$" },
+                            { key: "right-none", label: "None", value: null },
+                            { key: "right-icon", label: "Icon", value: this.icon },
+                            { key: "right-text", label: "Text", value: "$" },
                         ],
                     },
                 ],
