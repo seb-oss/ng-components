@@ -13,6 +13,5 @@ const routes: Routes = [{ path: "", component: CheckboxPageComponent }];
 @NgModule({
     declarations: [CheckboxPageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, CheckboxModule, HighlightModule, CodeSnippetModule],
-    exports: [RouterModule, CheckboxModule],
 })
 export class CheckboxPageModule {}

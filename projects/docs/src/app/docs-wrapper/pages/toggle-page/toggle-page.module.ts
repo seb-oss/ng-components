@@ -12,6 +12,5 @@ const routes: Routes = [{ path: "", component: TogglePageComponent }];
 @NgModule({
     declarations: [TogglePageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, ToggleModule, CheckboxModule],
-    exports: [RouterModule, ToggleModule],
 })
 export class TogglePageModule {}

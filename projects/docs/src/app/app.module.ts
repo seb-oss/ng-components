@@ -1,11 +1,10 @@
 import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
-import { HomeModule } from "./home/home.module";
-import { Routes, RouterModule } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { LoaderModule } from "@sebgroup/ng-components/loader";
+import { DocsWrapperModule } from "./docs-wrapper/docs-wrapper.module";
 
 const routes: Routes = [
     { path: "", loadChildren: () => import("./home/home.module").then(m => m.HomeModule) },
@@ -15,8 +14,7 @@ const routes: Routes = [
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [CommonModule, BrowserModule, BrowserAnimationsModule, RouterModule.forRoot(routes), HomeModule, LoaderModule],
-    exports: [RouterModule],
+    imports: [CommonModule, BrowserModule, BrowserAnimationsModule, RouterModule.forRoot(routes), DocsWrapperModule],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
