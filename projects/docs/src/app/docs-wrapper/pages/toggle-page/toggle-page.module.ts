@@ -5,14 +5,12 @@ import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule } from "@angular/forms";
-import { NotificationModule } from "@sebgroup/ng-components/notification";
-import { CheckBoxModule } from "@sebgroup/ng-components/checkBox";
+import { CheckboxModule } from "@sebgroup/ng-components/checkbox";
 
 const routes: Routes = [{ path: "", component: TogglePageComponent }];
 
 @NgModule({
     declarations: [TogglePageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, ToggleModule, NotificationModule, CheckBoxModule],
-    exports: [RouterModule, ToggleModule],
+    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, ToggleModule, CheckboxModule],
 })
 export class TogglePageModule {}

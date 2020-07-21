@@ -1,4 +1,4 @@
-name: Build
+name: Build Check
 
 on:
   pull_request
@@ -6,17 +6,25 @@ on:
 jobs:
   build_check:
     runs-on: [ubuntu-latest]
+    strategy:
+      matrix:
+        node: ['14', '13', '12']
     steps:
       - uses: actions/checkout@v2
 
       - name: Setup node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2.1.0
+        with:
+          node-version: ${{ matrix.node }}
 
       - name: installing dependencies
-        run: npm install
+        run: npm ci
 
       # - name: running unit tests
       #   run: npm test
 
-      - name: building
+      - name: building lib
         run: npm run build
+
+      - name: building docs
+        run: npm run build:docs

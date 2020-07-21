@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { ModalModule } from "@sebgroup/ng-components/modal";
-import { CheckBoxModule } from "@sebgroup/ng-components/checkBox";
+import { CheckboxModule } from "@sebgroup/ng-components/checkbox";
 import { DropdownModule } from "@sebgroup/ng-components/dropdown";
 import { ModalPageComponent } from "./modal-page.component";
 import { CommonModule } from "@angular/common";
@@ -20,12 +20,11 @@ const routes: Routes = [{ path: "", component: ModalPageComponent }];
         FormsModule,
         DocPageModule,
         ModalModule,
-        CheckBoxModule,
+        CheckboxModule,
         DropdownModule,
         HighlightModule,
         CodeSnippetModule,
     ],
-    exports: [RouterModule, ModalModule],
     providers: [
         {
             provide: HIGHLIGHT_OPTIONS,

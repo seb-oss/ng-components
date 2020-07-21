@@ -9,6 +9,7 @@
         > .custom-control-input {
             width: 2.5rem;
             z-index: 1;
+            cursor: pointer;
 
             &:disabled:not(:checked) {
                 & + label.custom-control-label {
@@ -37,6 +38,7 @@
             &:before,
             &:after {
                 top: 2px;
+                box-shadow: none;
             }
 
             &:after {

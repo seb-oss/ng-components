@@ -1,21 +1,21 @@
 <div class="form-group text-area" [ngClass]="className">
     <div class="input-field" [class.has-error]="error">
-        <label class="custom-label" [attr.htmlFor]="id" *ngIf="label">
+        <label class="custom-label" [attr.for]="id" *ngIf="label">
             {{ label }}
         </label>
         <textarea
-            [attr.name]="name"
             class="form-control"
             [class.resizable]="resizable || resizable === undefined"
+            [attr.name]="name"
             [attr.id]="id"
             [attr.placeholder]="placeholder"
             [attr.maxLength]="max"
             [attr.autoFocus]="focus"
             [attr.readOnly]="readonly"
             [attr.disabled]="disabled"
-            [cols]="cols"
+            [attr.rows]="rows"
+            [attr.cols]="cols"
             [(ngModel)]="value"
-            [rows]="rows"
             (keydown)="handleKeyDown($event)"
             (keyup)="handleKeyUp($event)"
             (keypress)="handleKeyPress($event)"

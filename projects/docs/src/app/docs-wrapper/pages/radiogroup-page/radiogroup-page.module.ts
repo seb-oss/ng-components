@@ -5,13 +5,12 @@ import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule } from "@angular/forms";
-import { CheckBoxModule } from "@sebgroup/ng-components/checkBox";
+import { CheckboxModule } from "@sebgroup/ng-components/checkbox";
 
 const routes: Routes = [{ path: "", component: RadioGroupPageComponent }];
 
 @NgModule({
     declarations: [RadioGroupPageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, RadioGroupModule, CheckBoxModule],
-    exports: [RouterModule, RadioGroupModule],
+    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, RadioGroupModule, CheckboxModule],
 })
 export class RadioGroupPageModule {}

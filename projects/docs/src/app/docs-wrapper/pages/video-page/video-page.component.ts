@@ -10,7 +10,12 @@ export class VideoPageComponent implements OnInit {
     private defaultSrc: string = require("file-loader!../../../../assets/videos/sample.mp4").default;
     private _src: string = this.defaultSrc;
     importString: string = require("!raw-loader!@sebgroup/ng-components/video/video.component");
-    code: string = `<sebng-video [src]="src" [sourceType]="sourceType" [width]="width" [height]="height"></sebng-video>`;
+    code: string = `<sebng-video
+    [src]="src"
+    [sourceType]="sourceType"
+    [width]="width"
+    [height]="height"
+></sebng-video>`;
 
     allowFullScreen: boolean = true;
     autoplay: boolean = true;

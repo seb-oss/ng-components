@@ -5,13 +5,12 @@ import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule } from "@angular/forms";
-import { CheckBoxModule } from "@sebgroup/ng-components/checkBox";
+import { CheckboxModule } from "@sebgroup/ng-components/checkbox";
 
 const routes: Routes = [{ path: "", component: TextlabelPageComponent }];
 
 @NgModule({
     declarations: [TextlabelPageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, TextLabelModule, CheckBoxModule],
-    exports: [RouterModule, TextLabelModule],
+    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, TextLabelModule, CheckboxModule],
 })
 export class TextlabelPageModule {}

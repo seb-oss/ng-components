@@ -1,28 +1,21 @@
-import { Component, OnInit, TemplateRef, ElementRef } from "@angular/core";
-import { TooltipTrigger, TooltipPosition, TooltipTheme } from "@sebgroup/ng-components/tooltip";
+import { Component } from "@angular/core";
 
 @Component({
     selector: "app-toggle-page",
     templateUrl: "./toggle-page.component.html",
 })
-export class TogglePageComponent implements OnInit {
+export class TogglePageComponent {
     importString: string = require("!raw-loader!@sebgroup/ng-components/toggle/toggle.component");
-    code: string = `<sebng-toggle></sebng-toggle>`;
+    code: string = `<sebng-toggle [(ngModel)]="value"></sebng-toggle>`;
 
     disabled: boolean = false;
     checked: boolean = false;
-    label: string = "Checkbox";
-    isToggled: boolean = false;
+    label: string = "Lorem ipsum";
+    toggle: boolean = false;
     notificationMessage: string = "";
+    notificationToggle: boolean = false;
 
     constructor() {
         document.title = "Toggle - SEB Angular Components";
-    }
-
-    ngOnInit(): void {}
-
-    onCheckboxChange(): void {
-        this.isToggled = true;
-        this.notificationMessage = `Checkbox is set to ${this.checked}`;
     }
 }

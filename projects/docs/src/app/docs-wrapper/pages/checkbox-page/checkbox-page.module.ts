@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { CheckBoxModule } from "@sebgroup/ng-components/checkBox";
+import { CheckboxModule } from "@sebgroup/ng-components/checkbox";
 import { CheckboxPageComponent } from "./checkbox-page.component";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
@@ -12,7 +12,6 @@ const routes: Routes = [{ path: "", component: CheckboxPageComponent }];
 
 @NgModule({
     declarations: [CheckboxPageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, CheckBoxModule, HighlightModule, CodeSnippetModule],
-    exports: [RouterModule, CheckBoxModule],
+    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, CheckboxModule, HighlightModule, CodeSnippetModule],
 })
 export class CheckboxPageModule {}

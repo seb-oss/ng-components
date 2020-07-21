@@ -5,7 +5,7 @@ import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule } from "@angular/forms";
-import { CheckBoxModule } from "@sebgroup/ng-components/checkBox";
+import { CheckboxModule } from "@sebgroup/ng-components/checkbox";
 import { DropdownModule } from "@sebgroup/ng-components/dropdown";
 import { RadioGroupModule } from "projects/ng-components/public-api";
 
@@ -19,10 +19,9 @@ const routes: Routes = [{ path: "", component: LoaderPageComponent }];
         FormsModule,
         DocPageModule,
         LoaderModule,
-        CheckBoxModule,
+        CheckboxModule,
         DropdownModule,
         RadioGroupModule,
     ],
-    exports: [RouterModule, LoaderModule],
 })
 export class LoaderPageModule {}

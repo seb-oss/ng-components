@@ -6,13 +6,12 @@ import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule } from "@angular/forms";
 import { DropdownModule } from "@sebgroup/ng-components/dropdown";
-import { CheckBoxModule } from "@sebgroup/ng-components/checkBox";
+import { CheckboxModule } from "@sebgroup/ng-components/checkbox";
 
 const routes: Routes = [{ path: "", component: NotificationPageComponent }];
 
 @NgModule({
     declarations: [NotificationPageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, NotificationModule, DropdownModule, CheckBoxModule],
-    exports: [RouterModule, NotificationModule],
+    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, NotificationModule, DropdownModule, CheckboxModule],
 })
 export class NotificationPageModule {}

@@ -4,13 +4,12 @@ import { SliderPageComponent } from "./slider-page.component";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 const routes: Routes = [{ path: "", component: SliderPageComponent }];
 
 @NgModule({
     declarations: [SliderPageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, SliderModule],
-    exports: [RouterModule, SliderModule],
+    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, SliderModule, ReactiveFormsModule],
 })
 export class SliderPageModule {}

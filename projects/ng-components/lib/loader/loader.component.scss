@@ -8,7 +8,13 @@
     }
 }
 
-$offset: 200;
+@mixin IE-only {
+    @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+        @content;
+    }
+}
+
+$offset: 200px;
 $duration: 1.5s;
 $duration-sq: 1.2s;
 
@@ -65,6 +71,9 @@ $duration-sq: 1.2s;
                 animation: dash-grow $duration ease-in-out infinite forwards;
                 stroke-width: 6;
                 stroke-linecap: round;
+                @include IE-only {
+                    stroke-dashoffset: 50px;
+                }
             }
         }
     }

@@ -1,5 +1,5 @@
 <div class="form-group input-box-group" [ngClass]="className">
-    <label class="custom-label" [htmlFor]="internalId" *ngIf="label">
+    <label class="custom-label" [attr.for]="internalId" *ngIf="label">
         {{ label }}
     </label>
     <div class="input-group" [ngClass]="{ success: success, 'has-error': error, disabled: disabled }">

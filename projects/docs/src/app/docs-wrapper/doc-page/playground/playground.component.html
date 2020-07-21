@@ -6,8 +6,9 @@
             [class.active]="activeTab === i"
             [attr.data-value]="i"
             (click)="switchTab($event)"
-            >{{ item }}</a
         >
+            {{ item }}
+        </a>
     </nav>
 
     <h4 class="apis-title">Try it out</h4>
@@ -17,7 +18,7 @@
     </div>
 
     <div class="code" *ngIf="activeTab === 1">
-        <app-code-snippet [fillMode]="true">
+        <app-code-snippet [fillMode]="true" [languages]="['html.handlebars']">
             <ng-content select="[code]"></ng-content>
         </app-code-snippet>
     </div>
