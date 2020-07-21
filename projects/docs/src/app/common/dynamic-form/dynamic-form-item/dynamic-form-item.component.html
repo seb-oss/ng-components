@@ -104,6 +104,8 @@
     <ng-container *ngSwitchCase="controlType.Radio.toString()">
         <sebng-radio-group
             className="dynamic-form-item"
+            [condensed]="true"
+            [inline]="true"
             [formControl]="control"
             [id]="makeId()"
             [list]="control.formItem.options"
