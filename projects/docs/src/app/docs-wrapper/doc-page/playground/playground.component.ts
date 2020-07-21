@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 
 @Component({
     selector: "app-doc-playground",
@@ -8,6 +8,8 @@ import { Component } from "@angular/core";
 export class PlaygroundComponent {
     navs: string[] = ["Component", "Code"];
     activeTab: number = 0;
+
+    @Input() class?: string;
 
     switchTab(e: MouseEvent): void {
         e.preventDefault();

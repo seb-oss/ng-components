@@ -154,5 +154,11 @@
         "path": "/docs/timer",
         "filePath": "./pages/timer-page/timer-page.module",
         "module": "TimerPageModule"
+    },
+    {
+        "name": "Collapse",
+        "path": "/docs/collapse",
+        "filePath": "./pages/collapse-page/collapse-page.module",
+        "module": "CollapsePageModule"
     }
 ]
