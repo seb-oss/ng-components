@@ -8,6 +8,8 @@ import { ExtendedFormGroup } from "../../../common/dynamic-form/model/custom-cla
         <app-doc-page [importString]="importString" [centered]="true">
             <ng-container example>
                 <sebng-textarea
+                    [id]="'textare-example'"
+                    [label]="extendedFormGroup.value.text.label"
                     [placeholder]="extendedFormGroup.value.text.placeholder"
                     [resizable]="extendedFormGroup.value.toggles.resizable"
                     [disabled]="extendedFormGroup.value.toggles.disabled"
@@ -38,7 +40,10 @@ export class TextareaPageComponent implements OnInit {
         this.extendedFormGroup = this.formService.dynamicFormSectionsToFormGroup([
             {
                 key: "text",
-                items: [{ key: "placeholder", label: "Placeholder", controlType: "Text" }],
+                items: [
+                    { key: "placeholder", label: "Placeholder", controlType: "Text" },
+                    { key: "label", label: "Label", controlType: "Text", value: "Element label" },
+                ],
             },
             {
                 key: "numbers",
