@@ -8,6 +8,8 @@ import { ExtendedFormGroup } from "../../../common/dynamic-form/model/custom-cla
         <app-doc-page [importString]="importString" [centered]="true">
             <ng-container example>
                 <sebng-textboxgroup
+                    [id]="'textboxgroup-example'"
+                    [label]="extendedFormGroup.value.text.label"
                     [placeholder]="extendedFormGroup.value.text.placeholder"
                     [disabled]="extendedFormGroup.value.toggles.disabled"
                     [readonly]="extendedFormGroup.value.toggles.readonly"
@@ -56,7 +58,10 @@ export class TextboxgroupPageComponent implements OnInit {
         this.extendedFormGroup = this.formService.dynamicFormSectionsToFormGroup([
             {
                 key: "text",
-                items: [{ key: "placeholder", label: "Placeholder", controlType: "Text" }],
+                items: [
+                    { key: "placeholder", label: "Placeholder", controlType: "Text" },
+                    { key: "label", label: "Label", controlType: "Text", value: "Element label" },
+                ],
             },
             {
                 key: "radios",
