@@ -33,7 +33,7 @@ type Value = number | string;
 })
 export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnChanges {
     /** Property sets to check if textbox is allowed to auto complete */
-    @Input() autoComplete?: "on" | "off";
+    @Input() autocomplete?: string;
     /** Element class name */
     @Input() className?: string;
     /** Property sets whether textbox is disabled */
@@ -63,7 +63,7 @@ export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnCh
     /** Element placeholder */
     @Input() placeholder?: string;
     /** Property sets whether textbox is readonly */
-    @Input() readOnly?: boolean;
+    @Input() readonly?: boolean;
     /** Property sets whether textbox is required */
     @Input() required?: boolean;
     /** Element right icon */

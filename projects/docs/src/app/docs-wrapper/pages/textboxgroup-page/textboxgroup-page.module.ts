@@ -4,7 +4,7 @@ import { TextboxgroupPageComponent } from "./textboxgroup-page.component";
 import { CommonModule } from "@angular/common";
 import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 const routes: Routes = [{ path: "", component: TextboxgroupPageComponent }];
 
