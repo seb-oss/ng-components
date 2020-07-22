@@ -8,6 +8,7 @@ import { Component, Input, ViewChild, ElementRef, EventEmitter, Output, OnChange
             #collapseRef
             [ngStyle]="{ display: this.display, height: this.height, opacity: this.opacity }"
             (transitionend)="transitionEnd.emit()"
+            [attr.id]="id"
             [ngClass]="class"
             class="custom-collapse"
         >
@@ -28,6 +29,8 @@ export class CollapseComponent implements OnChanges {
     @Input() toggle?: boolean = true;
     /** Element class */
     @Input() class?: string;
+    /** Element id */
+    @Input() id?: string;
     /** This method will be triggered after the transition has ended */
     @Output() transitionEnd: EventEmitter<void> = new EventEmitter();
 
