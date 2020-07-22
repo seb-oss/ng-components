@@ -42,7 +42,7 @@ export class CollapseComponent implements OnChanges {
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes.toggle) {
-            this.toggle ? this.uncollapse() : this.collapse();
+            this.toggle ? this.expand() : this.collapse();
         }
     }
 
@@ -57,8 +57,8 @@ export class CollapseComponent implements OnChanges {
         }, 10);
     }
 
-    /** Uncollapse the content */
-    uncollapse(): void {
+    /** Expand the content */
+    expand(): void {
         /** Cannot transition when display is set to `none`, we need to change it to `block` */
         this.display = "block";
         /** This async delay is needed for the height change to take effect */
@@ -69,11 +69,10 @@ export class CollapseComponent implements OnChanges {
     }
 
     /**
-     * An event handler triggered after collapse/uncollapse transition ends
+     * An event handler triggered after collapse/expand transition ends
      * @param e The transition event
      */
     afterTransition(e: TransitionEvent): void {
-        console.table({ height: this.height, toggle: this.toggle, display: this.display });
         if (e.propertyName === "height") {
             if (this.toggle) {
                 this.height = "auto";
