@@ -11,6 +11,10 @@ import { DynamicFormType } from "../model/dynamicFormType";
             ::ng-deep .dynamic-form-item {
                 margin-bottom: 1.5rem;
             }
+
+            ::ng-deep .dynamic-form-item-description {
+                margin-bottom: 0.5rem;
+            }
         `,
     ],
 })
