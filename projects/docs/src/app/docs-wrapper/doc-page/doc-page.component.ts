@@ -22,6 +22,7 @@ export class DocPageComponent implements OnInit, OnDestroy {
 
     @Input() importString: string;
     @Input() centered?: boolean;
+    @Input() class?: string;
 
     constructor(private apiService: APIExtractService, private route: ActivatedRoute, private router: Router) {}
 
