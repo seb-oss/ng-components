@@ -24,6 +24,7 @@ export const attributeTypeMapDynamicFormItem: AttributeTypeMap[] = [
     { name: "key", type: "string" },
     { name: "value", type: "object" },
     { name: "label", type: "string" },
+    { name: "description", type: "string" },
     { name: "className", type: "string" },
     { name: "required", type: "boolean" },
     { name: "multi", type: "boolean" },
