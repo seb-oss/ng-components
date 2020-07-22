@@ -7,7 +7,7 @@ import { Component, Input, ViewChild, ElementRef, EventEmitter, Output, OnChange
         <div
             #collapseRef
             [ngStyle]="{ display: this.display, height: this.height, opacity: this.opacity }"
-            (transitionend)="transitionEnd.emit()"
+            (transitionend)="afterTransition($event)"
             [attr.id]="id"
             [ngClass]="class"
             class="custom-collapse"
@@ -73,16 +73,12 @@ export class CollapseComponent implements OnChanges {
      * @param e The transition event
      */
     afterTransition(e: TransitionEvent): void {
+        console.table({ height: this.height, toggle: this.toggle, display: this.display });
         if (e.propertyName === "height") {
-            switch (true) {
-                /** After expand, the height is set to auto to enable responsiveness */
-                case this.toggle && this.height && this.height !== "auto":
-                    this.height = "auto";
-                    break;
-                /** After collapse, the display is set to none to disable tab navigation inside the hidden collapse */
-                case !this.height && !this.toggle:
-                    this.display = "none";
-                    break;
+            if (this.toggle) {
+                this.height = "auto";
+            } else {
+                this.display = "none";
             }
         }
         this.transitionEnd.emit();

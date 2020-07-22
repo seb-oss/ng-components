@@ -3,8 +3,8 @@ import { Component } from "@angular/core";
 @Component({
     selector: "app-collapse-page",
     template: `
-        <app-doc-page [class]="'align-example-normal'" [importString]="importString">
-            <div class="align-items-normal" example>
+        <app-doc-page class="align-example-normal" [importString]="importString">
+            <div example>
                 <sebng-collapse [toggle]="toggle">
                     <p class="border border-danger p-3">
                         Provident consequatur omnis vitae aut saepe. Quis autem aliquam tenetur. Officiis quia est dolorem quaerat sed rerum
