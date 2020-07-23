@@ -91,7 +91,7 @@
         "karma-coverage-istanbul-reporter": "~3.0.2",
         "karma-jasmine": "~3.3.0",
         "karma-jasmine-html-reporter": "^1.5.0",
-        "ng-packagr": "^10.0.2",
+        "ng-packagr": "^10.0.3",
         "package-lock-sanitizer": "^1.0.1",
         "prettier": "^2.0.5",
         "pretty-quick": "^2.0.1",
