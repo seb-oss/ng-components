@@ -1,5 +1,8 @@
 <ng-container [ngSwitch]="control.formItem.controlType">
     <label *ngIf="control.formItem.label && control.formItem.controlType !== 'Checkbox'">{{ control.formItem.label }}</label>
+    <p class="dynamic-form-item-description" *ngIf="control.formItem.description && control.formItem.controlType !== 'Checkbox'">
+        <small>{{ control.formItem.description }}</small>
+    </p>
 
     <ng-container *ngSwitchCase="controlType.Text.toString()">
         <sebng-textboxgroup
@@ -104,6 +107,8 @@
     <ng-container *ngSwitchCase="controlType.Radio.toString()">
         <sebng-radio-group
             className="dynamic-form-item"
+            [condensed]="true"
+            [inline]="true"
             [formControl]="control"
             [id]="makeId()"
             [list]="control.formItem.options"

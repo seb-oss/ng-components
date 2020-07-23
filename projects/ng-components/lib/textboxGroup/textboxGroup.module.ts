@@ -2,10 +2,10 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { TextboxGroupComponent } from "./textboxGroup.component";
-import { SafeHtmlPipe } from "./textboxGroup.pipe";
+import { TextboxGroupSafeHtmlPipe } from "./textboxGroup.pipe";
 @NgModule({
     imports: [CommonModule, FormsModule],
-    declarations: [TextboxGroupComponent, SafeHtmlPipe],
+    declarations: [TextboxGroupComponent, TextboxGroupSafeHtmlPipe],
     exports: [TextboxGroupComponent],
 })
 export class TextboxGroupModule {}
