@@ -11,6 +11,13 @@ main {
             > h1 {
                 color: white;
                 font-weight: bold;
+                line-height: 1.2;
+                @include media-breakpoint-up(md) {
+                    font-size: 3.5rem;
+                }
+                @include media-breakpoint-down(md) {
+                    font-size: 2.5rem;
+                }
             }
         }
     }
@@ -38,12 +45,50 @@ main {
         > .container {
             padding-top: 3rem;
             padding-bottom: 3rem;
+            > h2 {
+                text-align: center;
+            }
+        }
+    }
+
+    #call-to-action {
+        background-color: $green;
+        > .container {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            text-align: center;
+            > h4 {
+                color: white;
+                display: inline-block;
+            }
+            > a {
+                margin-left: 1rem;
+                @media only screen and (max-width: 526px) {
+                    margin-top: 1rem;
+                }
+            }
         }
     }
 
     #contributors {
-        img.avatar {
-            border-radius: 50%;
+        > .container {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            > h2 {
+                text-align: center;
+                margin-bottom: 2rem;
+            }
+            img.avatar {
+                border-radius: 50%;
+            }
+            > div {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                > div {
+                    margin: 0.5rem;
+                }
+            }
         }
     }
 }
