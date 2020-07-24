@@ -29,7 +29,7 @@ This version of components has been developed with:
 You should be able to install the NPM package.
 
 ```bash
-npm install @sebgroup/ng-components --save
+npm install @sebgroup/ng-components@beta --save
 ```
 
 This project is based on SEB Bootstrap which includes `fonts`, `colors` and `variables`, to make sure everything works fine, please install these dependencies on your project:
@@ -58,7 +58,7 @@ This project uses `prettier` for a more consistent (less annoying) coding.
 To use a component, you need to import the `Module` in whichever Module you want to use it. For performance/stability benefits we are not combining all the components into single Index, rather they are chunk into their own sub packages, therefore to use a component, you need to import the `Component` sub-module from the `lib` folder, in whichever Class you want to use it. Here is a sample of how to import the `Chip` component in a page which you can then access by its selector.
 
 ```javascript
-import { ChipModule } from "@sebgroup/ng-components";
+import { ChipModule } from "@sebgroup/ng-components/lib/chip";
 
 @NgModule({
       imports: [ChipModule]
