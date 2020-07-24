@@ -1,4 +1,5 @@
-import { Routes } from "@angular/router";
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
 import { DocsWrapperComponent } from "./docs-wrapper.component";
 import components from "../../assets/components-list.json";
 
@@ -13,9 +14,9 @@ function getComponentPageRoutes(): Routes {
     });
 }
 
-export const DOCS_ROUTES: Routes = [
+const routes: Routes = [
     {
-        path: "docs",
+        path: "",
         component: DocsWrapperComponent,
         children: [
             { path: "", redirectTo: "getting-started", pathMatch: "full" },
@@ -27,3 +28,9 @@ export const DOCS_ROUTES: Routes = [
         ],
     },
 ];
+
+@NgModule({
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule],
+})
+export class DocsWrapperRoutingModule {}
