@@ -7,7 +7,7 @@ import { Component } from "@angular/core";
             <h1 class="pt-5 pb-3">Getting started</h1>
             <h4 class="font-weight-normal">How to get started using SEB Angular components</h4>
 
-            <div body class="alert alert-warning rounded mt-3 py-3 text-center" role="alert">
+            <div body class="alert alert-warning rounded mt-3 py-3" role="alert">
                 <strong>&#9888; The library is still in beta stage so expect things to change (please provide feedback if you can)</strong>
             </div>
 
