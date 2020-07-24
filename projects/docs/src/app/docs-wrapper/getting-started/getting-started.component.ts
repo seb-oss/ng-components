@@ -7,9 +7,13 @@ import { Component } from "@angular/core";
             <h1 class="pt-5 pb-3">Getting started</h1>
             <h4 class="font-weight-normal">How to get started using SEB Angular components</h4>
 
-            <h2 class="pt-5 pb-3">Installation</h2>
+            <div body class="alert alert-warning rounded mt-3 py-3 text-center" role="alert">
+                <strong>&#9888; The library is still in beta stage so expect things to change (please provide feedback if you can)</strong>
+            </div>
+
+            <h2 class="pt-3 pb-3">Installation</h2>
             <p>First, install the npm package using the following:</p>
-            <app-code-snippet [languages]="['properties']">npm install @sebgroup/ng-components --save</app-code-snippet>
+            <app-code-snippet [languages]="['properties']">npm install @sebgroup/ng-components@beta --save</app-code-snippet>
 
             <p>
                 These components uses SEB Bootstrap for styling and relies on its styles, fonts, colors and variables. You will need to
