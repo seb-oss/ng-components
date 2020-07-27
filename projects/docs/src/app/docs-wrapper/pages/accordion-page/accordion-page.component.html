@@ -11,7 +11,7 @@
     <ng-container code>{{ code }}</ng-container>
 
     <div class="row" controls>
-        <label class="m-3"
+        <label
             >Icon position
             <p><small>Show the icon on the left or right side</small></p>
             <select class="custom-select" [(ngModel)]="iconPosition">
@@ -20,13 +20,13 @@
             </select>
         </label>
 
-        <label class="col-12"
+        <label
             >Active index
             <p><small>Dynamically set the index of the expanded list item</small></p>
             <sebng-stepper [(ngModel)]="activeIndex" min="0" [max]="accordionList.length - 1"></sebng-stepper
         ></label>
 
-        <sebng-checkbox class="col-12" [(ngModel)]="isAlt" label="Alternative" description="Show alternative look"></sebng-checkbox>
+        <sebng-checkbox [(ngModel)]="isAlt" label="Alternative" description="Show alternative look"></sebng-checkbox>
     </div>
 
     <ng-container notes>
