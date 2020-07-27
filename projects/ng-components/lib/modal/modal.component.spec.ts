@@ -12,6 +12,7 @@ import { SebModalBackdropComponent } from "./modal.backdrop";
         [toggle]="toggle"
         [size]="'modal-lg'"
         [id]="id"
+        [className]="className"
         [center]="center"
         [position]="position"
         [fullscreen]="fullscreen"
@@ -31,6 +32,7 @@ import { SebModalBackdropComponent } from "./modal.backdrop";
 class TestComponent {
     toggle?: boolean;
     id?: string;
+    className?: string;
     size?: ModalSizeType;
     center?: boolean;
     position?: ModalPositionType;
@@ -64,6 +66,7 @@ describe("Component: ModalComponent", () => {
                 component = fixture.componentInstance;
                 modalService = TestBed.get(ModalService);
                 component.id = "test-id";
+                component.className = "test-class";
                 fixture.detectChanges();
             });
     }));
@@ -75,6 +78,11 @@ describe("Component: ModalComponent", () => {
     it("should have an id", () => {
         const debugEl: HTMLElement = fixture.debugElement.nativeElement;
         expect(debugEl.querySelector("#test-id")).toBeTruthy();
+    });
+
+    it("should have a custom class", () => {
+        const debugEl: HTMLElement = fixture.debugElement.nativeElement;
+        expect(debugEl.querySelector(".test-class")).toBeTruthy();
     });
 
     it("should be large", () => {

@@ -2,7 +2,7 @@ import { Component, DebugElement } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { BreadcrumbComponent } from "./breadcrumb.component";
-import { SafeHtmlPipe } from "./breadcrumb.pipe";
+import { BreadcrumbSafeHtmlPipe } from "./breadcrumb.pipe";
 import { CommonModule } from "@angular/common";
 
 @Component({
@@ -33,7 +33,7 @@ describe("BreadcrumbComponent", () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [CommonModule],
-            declarations: [SafeHtmlPipe, BreadcrumbComponent, BreadcrumbTestComponent],
+            declarations: [BreadcrumbSafeHtmlPipe, BreadcrumbComponent, BreadcrumbTestComponent],
         }).compileComponents();
     }));
 
