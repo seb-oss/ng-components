@@ -1,5 +1,21 @@
-<nav class="navbar navbar-dark">
-    <a class="navbar-brand" href="/">SEB Angular Components</a>
+<nav class="navbar navbar-dark navbar-expand-md">
+    <div class="navbar-brand">SEB Angular Components</div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="this.toggle = !this.toggle">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-content">
+        <div class="navbar-collapse">
+            <sebng-collapse *ngIf="isMobile" [toggle]="toggle">
+                <ng-container *ngTemplateOutlet="navs"></ng-container>
+            </sebng-collapse>
+            <ng-container *ngIf="!isMobile">
+                <ng-container *ngTemplateOutlet="navs"></ng-container>
+            </ng-container>
+        </div>
+    </div>
+</nav>
+
+<ng-template #navs>
     <ul class="nav nav-dark">
         <li class="nav-item">
             <a class="nav-link" [routerLink]="['/docs']">Docs</a>
@@ -23,4 +39,4 @@
             </a>
         </li>
     </ul>
-</nav>
+</ng-template>

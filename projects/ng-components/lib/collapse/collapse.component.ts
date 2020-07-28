@@ -49,7 +49,7 @@ export class CollapseComponent implements OnChanges {
     /** Collapse the content */
     collapse(): void {
         /** Since height `auto` will not transition, we need to change it to pixels */
-        this.height = this.collapseRef.nativeElement.scrollHeight + "px";
+        this.height = this.collapseRef?.nativeElement.scrollHeight + "px" || "0px";
         /** This async delay is needed for the height change to take effect */
         setTimeout(() => {
             this.height = 0 + "px";
@@ -63,7 +63,7 @@ export class CollapseComponent implements OnChanges {
         this.display = "block";
         /** This async delay is needed for the height change to take effect */
         setTimeout(() => {
-            this.height = this.collapseRef.nativeElement.scrollHeight + "px";
+            this.height = this.collapseRef?.nativeElement.scrollHeight + "px" || "0px";
             this.opacity = "1";
         }, 10);
     }

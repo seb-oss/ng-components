@@ -4,7 +4,7 @@ import { Component } from "@angular/core";
     selector: "app-not-found",
     template: `
         <div class="notfound container text-center">
-            <img width="80%" src="assets/404.svg" alt="Page not found" />
+            <img width="80%" src="assets/images/404.svg" alt="Page not found" />
             <h1 class="display-4">Page not found</h1>
             <a class="btn btn-primary" [routerLink]="['/']">Return Home</a>
         </div>
