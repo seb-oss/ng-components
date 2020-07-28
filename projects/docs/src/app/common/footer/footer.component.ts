@@ -5,12 +5,12 @@ import { Component } from "@angular/core";
     template: `
         <footer class="container">
             <nav class="navbar">
-                <span class="navbar-brand">Developed with ❤️ by </span>
-                <span class="navbar-text">
-                    <a href="https://www.npmjs.com/package/@sebgroup/ng-components" target="_blank" title="View in npm">
-                        <img src="https://img.shields.io/npm/v/@sebgroup/ng-components?color=brightgreen" alt="npm version" />
+                <div class="navbar-brand">Developed with ❤️ by <a href="https://seb.se" target="_blank"></a></div>
+                <div class="navbar-text">
+                    <a href="https://www.npmjs.com/package/@sebgroup/ng-components/v/beta" target="_blank" title="View in npm">
+                        <img src="https://img.shields.io/npm/v/@sebgroup/ng-components/beta" alt="npm version" />
                     </a>
-                </span>
+                </div>
             </nav>
         </footer>
     `,

@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from "@angular/core";
-import { urls } from "../../../configs";
-import components from "../../../assets/components-list.json";
+import { Subscription } from "rxjs";
+import { urls } from "@configs";
+import components from "@assets/components-list.json";
+import { BreakpointService } from "@services/breakpoint.service";
 
 const SIDE_MENU_STORAGE_KEY = "SIDEMENU";
 
@@ -28,7 +30,9 @@ export class SideMenuComponent implements OnInit, OnDestroy {
     initialToggle: boolean;
     isAnimating: boolean = false;
 
-    constructor() {
+    private _breakpointSub: Subscription;
+
+    constructor(private breakpoint: BreakpointService) {
         const value: string = localStorage.getItem(SIDE_MENU_STORAGE_KEY);
         this.initialToggle = value === null ? true : JSON.parse(value);
     }
@@ -37,12 +41,35 @@ export class SideMenuComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         document.addEventListener("keyup", this.documentKeyupListener);
+
+        this._breakpointSub = this.breakpoint.size$.subscribe({
+            next: (size: QuerySize) => {
+                if (size === "sm" || size === "xs") {
+                    // Only change the value if it's `false`, otherwise, no need to trigger re-render
+                    if (!this.isMobile) {
+                        this.isMobile = true;
+                        if (this.toggle) {
+                            this.toggle = false;
+                        }
+                    }
+                } else {
+                    // Only change the value if it's `true`, otherwise, no need to trigger re-render
+                    if (this.isMobile) {
+                        this.isMobile = false;
+                        if (!this.toggle) {
+                            this.toggle = true;
+                        }
+                    }
+                }
+            },
+        });
     }
 
     /**
      * A listener attached to the document to listen to shortcuts invocations
+     * @param {KeyboardEvent} e Keyboard event
      */
-    documentKeyupListener = (e: KeyboardEvent) => {
+    documentKeyupListener = (e: KeyboardEvent): void => {
         /** Toggles the side menu when `ctrl+\`` is invoked */
         if (e.ctrlKey && e.key === "`") {
             this.isAnimating = true;
@@ -136,5 +163,6 @@ export class SideMenuComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         document.removeEventListener("keyup", this.documentKeyupListener);
+        this._breakpointSub && this._breakpointSub.unsubscribe();
     }
 }
