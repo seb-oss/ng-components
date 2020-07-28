@@ -70,7 +70,7 @@
     }
 
     > .controls {
-        padding: 1rem 1.5rem;
+        padding: 1rem;
         grid-area: controls;
         border-top-right-radius: $border-radius;
         border-left: 2px solid $gray-400;
@@ -78,5 +78,23 @@
         flex-direction: column;
         -ms-grid-column: 2;
         -ms-grid-row: 2;
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    .playground.card {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "nav"
+            "example"
+            "controls";
+        > .apis-title {
+            display: none;
+        }
+        > .controls {
+            border-left: none;
+            border-top: 2px solid $gray-400;
+            border-top-right-radius: 0;
+        }
     }
 }
