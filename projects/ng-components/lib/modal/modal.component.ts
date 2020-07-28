@@ -16,6 +16,7 @@ import { ModalService } from "./modal.service";
 import { ModalSizeType, ModalPositionType } from "./modal.type";
 import { AnimationEvent } from "@angular/animations";
 import { fadeInAnimation } from "./animation";
+import { NgClass } from "@angular/common";
 
 /** The modal component provides a solid foundation for creating dialogs or slideout modals  */
 @Component({

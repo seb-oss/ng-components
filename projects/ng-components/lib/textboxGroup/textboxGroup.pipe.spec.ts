@@ -1,4 +1,4 @@
-import { SafeHtmlPipe } from "./textboxGroup.pipe";
+import { TextboxGroupSafeHtmlPipe } from "./textboxGroup.pipe";
 import { DomSanitizer, BrowserModule, SafeHtml } from "@angular/platform-browser";
 import { TestBed, inject, async } from "@angular/core/testing";
 
@@ -21,7 +21,7 @@ describe("SafeHtmlPipe", () => {
     });
 
     it("convert string to html", inject([DomSanitizer], (domSanitizer: DomSanitizer) => {
-        const pipe = new SafeHtmlPipe(domSanitizer);
+        const pipe = new TextboxGroupSafeHtmlPipe(domSanitizer);
 
         const returnValMock = spyOn(pipe, "transform").and.returnValue(htmlStr);
         pipe.transform(htmlStr);
