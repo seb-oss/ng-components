@@ -2,14 +2,12 @@ import { NgModule } from "@angular/core";
 import { TimerModule } from "@sebgroup/ng-components/timer";
 import { TimerPageComponent } from "./timer-page.component";
 import { CommonModule } from "@angular/common";
-import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule } from "@angular/forms";
-
-const routes: Routes = [{ path: "", component: TimerPageComponent }];
+import { TimerPageRoutingModule } from "./timer-page-routing.module";
 
 @NgModule({
     declarations: [TimerPageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, TimerModule],
+    imports: [CommonModule, TimerPageRoutingModule, FormsModule, DocPageModule, TimerModule],
 })
 export class TimerPageModule {}

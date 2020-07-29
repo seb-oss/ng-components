@@ -1,16 +1,13 @@
 import { NgModule } from "@angular/core";
 import { TimelineModule } from "@sebgroup/ng-components/timeline";
-import { NotificationModule } from "@sebgroup/ng-components/notification";
 import { TimelinePageComponent } from "./timeline-page.component";
 import { CommonModule } from "@angular/common";
-import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule } from "@angular/forms";
-
-const routes: Routes = [{ path: "", component: TimelinePageComponent }];
+import { TimelinePageRoutingModule } from "./timeline-page-routing.module";
 
 @NgModule({
     declarations: [TimelinePageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, TimelineModule],
+    imports: [CommonModule, TimelinePageRoutingModule, FormsModule, DocPageModule, TimelineModule],
 })
 export class TimelinePageModule {}

@@ -4,19 +4,17 @@ import { CheckboxModule } from "@sebgroup/ng-components/checkbox";
 import { DropdownModule } from "@sebgroup/ng-components/dropdown";
 import { ModalPageComponent } from "./modal-page.component";
 import { CommonModule } from "@angular/common";
-import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule } from "@angular/forms";
 import { HighlightModule, HIGHLIGHT_OPTIONS, HighlightOptions } from "ngx-highlightjs";
 import { CodeSnippetModule } from "../../../common/code-snippet/code-snippet.module";
-
-const routes: Routes = [{ path: "", component: ModalPageComponent }];
+import { ModalPageRoutingModule } from "./modal-page-routing.module";
 
 @NgModule({
     declarations: [ModalPageComponent],
     imports: [
         CommonModule,
-        RouterModule.forChild(routes),
+        ModalPageRoutingModule,
         FormsModule,
         DocPageModule,
         ModalModule,
