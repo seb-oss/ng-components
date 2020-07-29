@@ -6,7 +6,8 @@
         "paths": {
             "@pkg": ["package.json"],
             "@configs": ["projects/docs/src/configs.ts"],
-            "@common/*": ["projects/docs/src/common/*"],
+            "@common/*": ["projects/docs/src/app/common/*"],
+            "@services/*": ["projects/docs/src/app/services/*"],
             "@pages/*": ["projects/docs/src/pages/*"],
             "@styles/*": ["projects/docs/src/styles/*"],
             "@assets/*": ["projects/docs/src/assets/*"],

@@ -58,6 +58,7 @@
                 [routerLink]="comp.path"
                 routerLinkActive="active"
                 [attr.data-value]="i"
+                (click)="isMobile && (toggle = false)"
             >
                 {{ comp.name }}
             </a>

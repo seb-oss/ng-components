@@ -104,3 +104,5 @@ declare interface DocDropdownItem<T = any> {
     value: T;
     label: string;
 }
+
+declare type QuerySize = "xl" | "lg" | "md" | "sm" | "xs" | "never";

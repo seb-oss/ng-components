@@ -5,4 +5,5 @@
 /** This fix is for IE, since it doesn't treat display flex as a block element */
 .row {
     width: 100%;
+    margin: 0;
 }
