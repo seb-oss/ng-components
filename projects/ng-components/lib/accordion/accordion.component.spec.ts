@@ -2,7 +2,7 @@ import { Component, DebugElement } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { AccordionComponent, AccordionIconRotation, AccrodionListItem } from "./accordion.component";
-import { SafeHtmlPipe } from "./accordion.pipe";
+import { AccordionSafeHtmlPipe } from "./accordion.pipe";
 import { DynamicStylePipe } from "./accordion-style.pipe";
 import { CommonModule } from "@angular/common";
 
@@ -53,7 +53,7 @@ describe("AccordionComponent", () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [CommonModule],
-            declarations: [AccordionComponent, AccordionTestComponent, SafeHtmlPipe, DynamicStylePipe],
+            declarations: [AccordionComponent, AccordionTestComponent, AccordionSafeHtmlPipe, DynamicStylePipe],
         }).compileComponents();
     }));
 

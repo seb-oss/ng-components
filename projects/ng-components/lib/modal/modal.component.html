@@ -8,6 +8,7 @@
     [attr.aria-label]="ariaLabel"
     [attr.aria-labelledby]="ariaLabelledby"
     [attr.aria-describedby]="ariaDescribedby"
+    [attr.class]="className"
     [ngClass]="modalPosition"
     [@openClose]="{ value: toggleAnimationState, params: { time: animationDuration } }"
     (@openClose.done)="onAnimationDone($event)"
