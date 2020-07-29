@@ -1,34 +1,17 @@
 import { Component } from "@angular/core";
-import { DropdownItem } from "@sebgroup/ng-components/dropdown";
+import { ModalSize, ModalPosition } from "@sebgroup/ng-components/modal";
+import { FormService } from "@common/dynamic-form/form.service";
+import { ExtendedFormGroup } from "@common/dynamic-form/model/custom-classes/extended-form-group";
+import { DynamicFormOption } from "@common/dynamic-form/model/models";
 
 @Component({
     selector: "app-modal-page",
     templateUrl: "./modal-page.component.html",
+    providers: [FormService],
 })
 export class ModalPageComponent {
     importString: string = require("!raw-loader!@sebgroup/ng-components/modal/modal.component");
-
-    center: boolean;
-    fullscreen: boolean;
-    backdropClassNameModel: boolean = false;
-    backdropDismiss: boolean = true;
-    backdropClassName: string;
-    escapeDismiss: boolean = true;
-    toggle: boolean = false;
-
-    sizeItem: DropdownItem = { key: "", value: "", label: "default" };
-    sizeList: Array<DropdownItem> = [
-        this.sizeItem,
-        { key: "modal-lg", value: "modal-lg", label: "modal-lg" },
-        { key: "modal-sm", value: "modal-sm", label: "modal-sm" },
-    ];
-    positionItem: DropdownItem = { key: "", value: "", label: "default" };
-    positionList: Array<DropdownItem> = [
-        this.positionItem,
-        { key: "right", value: "right", label: "right" },
-        { key: "left", value: "left", label: "left" },
-    ];
-    code: string = `<sebng-modal
+    snippet: string = `<sebng-modal
     [toggle]="toggle"
     (dismiss)="closeModal()>
 
@@ -60,44 +43,83 @@ export class ModalPageComponent {
         footer
     </div>
 </sebng-modal>`;
+    extendedFormGroup: ExtendedFormGroup;
 
-    openModalSnippet: string = `toggle = true;`;
+    toggle: boolean = false;
 
-    closeModalSnippet: string = `toggle = false;`;
+    sizeList: DynamicFormOption<ModalSize>[] = [
+        { key: "", value: null, label: "default" },
+        { key: "lg", value: "lg", label: "lg" },
+        { key: "sm", value: "sm", label: "sm" },
+    ];
+    positionList: DynamicFormOption<ModalPosition>[] = [
+        { key: "", value: null, label: "default" },
+        { key: "right", value: "right", label: "right" },
+        { key: "left", value: "left", label: "left" },
+    ];
 
-    closeModalHTML: string = `modalChild.close()`;
-
-    constructor() {
+    constructor(private formService: FormService) {
         document.title = "Modal - SEB Angular Components";
+
+        this.extendedFormGroup = this.formService.dynamicFormSectionsToFormGroup([
+            {
+                key: "controls",
+                items: [
+                    {
+                        key: "size",
+                        controlType: "Dropdown",
+                        label: "Size:",
+                        value: this.sizeList[0],
+                        options: this.sizeList,
+                    },
+                    {
+                        key: "position",
+                        controlType: "Dropdown",
+                        label: "Position:",
+                        value: this.positionList[0],
+                        options: this.positionList,
+                    },
+                    {
+                        key: "centered",
+                        controlType: "Checkbox",
+                        label: "Centered",
+                        description: "Positions the modal in the middle of the page. Only works with default position.",
+                        value: false,
+                    },
+                    {
+                        key: "fullscreen",
+                        controlType: "Checkbox",
+                        label: "Fullscreen",
+                        value: false,
+                    },
+                    {
+                        key: "disableBackdropDismiss",
+                        controlType: "Checkbox",
+                        label: "Disable backdrop dismiss",
+                        value: false,
+                    },
+                    {
+                        key: "escapeToDismiss",
+                        controlType: "Checkbox",
+                        label: "Escape to dismiss",
+                        value: false,
+                    },
+                    {
+                        key: "disableCloseButton",
+                        controlType: "Checkbox",
+                        label: "Disable close button",
+                        value: false,
+                    },
+                ],
+            },
+        ]);
     }
 
-    get hasImage(): boolean {
-        return this.position && this.sizeItem.value === "modal-lg";
-    }
+    /** Only renders the image when the size is `lg` and the position is aside */
+    get shouldRenderImage(): boolean {
+        const position: ModalPosition = this.extendedFormGroup.value.controls.position.value;
+        const size: ModalSize = this.extendedFormGroup.value.controls.size.value;
 
-    get size(): string {
-        return this.sizeItem.value;
-    }
-
-    get position(): string {
-        return this.positionItem.value;
-    }
-
-    setBackdropClassName(): void {
-        this.backdropClassName = this.backdropClassNameModel ? "bg-primary" : "";
-    }
-
-    /**
-     * open Modal
-     */
-    openModal(): void {
-        this.toggle = true;
-    }
-
-    /**
-     * close modal
-     */
-    closeModal(): void {
-        this.toggle = false;
+        return size === "lg" && ["right", "left"].some(p => p === position);
     }
 }

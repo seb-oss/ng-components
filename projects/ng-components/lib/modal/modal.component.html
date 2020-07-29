@@ -1,5 +1,6 @@
 <div
     [ngClass]="modalClassName"
+    class="ac modal"
     role="dialog"
     tabIndex="-1"
     aria-modal="true"
@@ -19,7 +20,7 @@
                     class="close"
                     data-dismiss="modal"
                     aria-label="Close"
-                    (click)="dismiss.emit()"
+                    (click)="dismiss.emit($event)"
                 >
                     <span aria-hidden="true">&times;</span>
                 </button>

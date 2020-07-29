@@ -1,159 +1,119 @@
 import { ModalComponent } from "./modal.component";
-import { ModalService } from "./modal.service";
-import { TestBed, async, ComponentFixture } from "@angular/core/testing";
-import { Component, ViewChild, DebugElement } from "@angular/core";
-import { ModalSizeType, ModalPositionType } from "./modal.type";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { By } from "@angular/platform-browser";
-import { SebModalBackdropComponent } from "./modal.backdrop";
-
-@Component({
-    template: `<sebng-modal
-        [toggle]="toggle"
-        [size]="'modal-lg'"
-        [id]="id"
-        [className]="className"
-        [center]="center"
-        [position]="position"
-        [fullscreen]="fullscreen"
-        [backdropClassName]="backdropClassName"
-    >
-        <div class="custom-body" body>
-            Body
-        </div>
-
-        <div class="custom-footer" footer>
-            <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeModal()">
-                Close
-            </button>
-        </div>
-    </sebng-modal>`,
-})
-class TestComponent {
-    toggle?: boolean;
-    id?: string;
-    className?: string;
-    size?: ModalSizeType;
-    center?: boolean;
-    position?: ModalPositionType;
-    fullscreen?: boolean;
-    backdropClassName?: string;
-    @ViewChild(ModalComponent) modalChild: ModalComponent;
-
-    closeModal(): void {
-        this.toggle = false;
-    }
-
-    openModal(): void {
-        this.toggle = true;
-    }
-}
+import { TestBed, async, ComponentFixture, fakeAsync, tick } from "@angular/core/testing";
+import { Subscription } from "rxjs";
 
 describe("Component: ModalComponent", () => {
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
-    let modalService: ModalService;
+    let component: ModalComponent;
+    let fixture: ComponentFixture<ModalComponent>;
+    let modalElement: HTMLDivElement;
 
     beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [BrowserAnimationsModule],
-            declarations: [TestComponent, ModalComponent],
-            providers: [ModalService],
-        })
-            .compileComponents()
-            .then(() => {
-                fixture = TestBed.createComponent(TestComponent);
-                component = fixture.componentInstance;
-                modalService = TestBed.get(ModalService);
-                component.id = "test-id";
-                component.className = "test-class";
-                fixture.detectChanges();
-            });
+        TestBed.configureTestingModule({ declarations: [ModalComponent] }).compileComponents();
     }));
 
-    it("should create", () => {
-        expect(component).toBeTruthy();
-    });
-
-    it("should have an id", () => {
-        const debugEl: HTMLElement = fixture.debugElement.nativeElement;
-        expect(debugEl.querySelector("#test-id")).toBeTruthy();
-    });
-
-    it("should have a custom class", () => {
-        const debugEl: HTMLElement = fixture.debugElement.nativeElement;
-        expect(debugEl.querySelector(".test-class")).toBeTruthy();
-    });
-
-    it("should be large", () => {
-        const debugEl: HTMLElement = fixture.debugElement.nativeElement;
-        component.size = "modal-lg";
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ModalComponent);
+        component = fixture.componentInstance;
         fixture.detectChanges();
-        expect(debugEl.querySelector(".modal-lg")).toBeTruthy();
+        modalElement = fixture.debugElement.nativeElement.firstElementChild;
     });
 
-    it("should be centered", () => {
-        component.center = true;
-        fixture.detectChanges();
-        const debugEl: HTMLElement = fixture.debugElement.nativeElement;
-        expect(debugEl.querySelector(".modal-dialog-centered")).toBeTruthy();
+    it("Should render correctly", () => {
+        const dialogElement: HTMLDivElement = modalElement.firstElementChild as any;
+
+        expect(modalElement).not.toBeNull();
+        expect(dialogElement).not.toBeNull();
+
+        expect(modalElement.classList.contains("ac")).toBeTrue();
+        expect(modalElement.classList.contains("modal")).toBeTrue();
+        expect(modalElement.getAttribute("role")).toEqual("dialog");
+        expect(modalElement.getAttribute("aria-modal")).toEqual("true");
+
+        expect(dialogElement.classList.contains("modal-dialog")).toBeTrue();
+        expect(dialogElement.getAttribute("role")).toEqual("document");
+
+        expect(dialogElement.firstElementChild).not.toBeNull();
+        expect(dialogElement.firstElementChild.classList.contains("modal-content")).toBeTrue();
     });
 
-    it("footer should not be displayed if no select is passed", () => {
-        const debugEl: HTMLElement = fixture.debugElement.nativeElement;
-        const cssStyle: CSSStyleDeclaration = getComputedStyle(debugEl.querySelector(".modal-header"));
-        expect(cssStyle.display).toEqual("none");
+    it("Should pass optional parameters correctly", () => {
+        const id: string = "myID";
+        const className: string = "myClassName";
+        const ariaLabel: string = "myAriaLabel";
+        const ariaLabelledby: string = "myAriaLabelledby";
+        const ariaDescribedby: string = "myAriaDescribedby";
+
+        component.id = id;
+        component.className = className;
+        component.ariaLabel = ariaLabel;
+        component.ariaLabelledby = ariaLabelledby;
+        component.ariaDescribedby = ariaDescribedby;
+
+        fixture.detectChanges();
+
+        expect(modalElement.id).toEqual(id);
+        expect(modalElement.classList.contains(className)).toBeTrue();
+        expect(modalElement.getAttribute("aria-label")).toEqual(ariaLabel);
+        expect(modalElement.getAttribute("aria-labelledby")).toEqual(ariaLabelledby);
+        expect(modalElement.getAttribute("aria-describedby")).toEqual(ariaDescribedby);
     });
 
-    it("should render according to the position", () => {
-        component.position = "left";
+    it("Should emit dismiss when close button or backdrop is clicked", () => {
+        const onDismiss: jasmine.Spy = jasmine.createSpy();
+
+        const sub: Subscription = component.dismiss.subscribe(onDismiss);
+
+        // Backdrop click
+        modalElement.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        // Close button click
+        modalElement.querySelector(".close").dispatchEvent(new MouseEvent("click", { bubbles: true }));
+
+        expect(onDismiss).toHaveBeenCalledTimes(2);
+
+        component.toggle = true;
         fixture.detectChanges();
-        const debugEl: HTMLElement = fixture.debugElement.nativeElement;
-        expect(debugEl.querySelector(".modal-aside-left")).toBeTruthy();
+
+        window.dispatchEvent(new KeyboardEvent("keyup", { key: "Escape", bubbles: true }));
+
+        expect(onDismiss).toHaveBeenCalledTimes(3);
+
+        component.disableBackdropDismiss = true;
+        component.escapeToDismiss = false;
+        fixture.detectChanges();
+
+        // Should not emit since the backdrop dismiss is disabled
+        modalElement.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+        window.dispatchEvent(new KeyboardEvent("keyup", { key: "Escape", bubbles: true }));
+
+        expect(onDismiss).toHaveBeenCalledTimes(3);
+        sub.unsubscribe();
     });
 
-    it("should open in fullscreen", () => {
-        component.fullscreen = true;
-        fixture.detectChanges();
-        const debugEl: HTMLElement = fixture.debugElement.nativeElement;
-        expect(debugEl.querySelector(".modal-fullscreen")).toBeTruthy();
-    });
+    it("Should handle window keyup event correctly as the toggle changes", () => {
+        const addListenerSpy: jasmine.Spy = spyOn(window, "addEventListener");
+        const removeListenerSpy: jasmine.Spy = spyOn(window, "removeEventListener");
 
-    it("should open custom backdrop className", async () => {
-        component.backdropClassName = "custom-class";
+        // If the modal is hidden, no listener is added
+        component.toggle = false;
+        component.escapeToDismiss = false;
         fixture.detectChanges();
-        const modalServiceSpy: jasmine.Spy = spyOn(modalService, "appendComponentToBody").and.callThrough();
-        fixture.componentInstance.openModal();
-        fixture.detectChanges();
-        expect(modalServiceSpy).toHaveBeenCalledWith(SebModalBackdropComponent, "custom-class");
-    });
 
-    it("should open the modal when openModal function is called and backdrop is appended to the body", async () => {
-        const modalServiceSpy: jasmine.Spy = spyOn(modalService, "appendComponentToBody").and.callThrough();
-        fixture.componentInstance.openModal();
-        fixture.detectChanges();
-        expect(document.querySelector(".modal-backdrop")).toBeTruthy();
-        expect(modalServiceSpy).toHaveBeenCalled();
-    });
+        expect(addListenerSpy).not.toHaveBeenCalled();
+        expect(removeListenerSpy).not.toHaveBeenCalled();
 
-    it("should close the modal when closeModal function is called", async () => {
-        const modalServiceSpy: jasmine.Spy = spyOn(modalService, "removeComponentFromBody").and.callThrough();
-        fixture.componentInstance.openModal();
+        // It should not add a listener when escapeToDismiss is disabled
+        component.toggle = true;
+        component.escapeToDismiss = false;
         fixture.detectChanges();
-        fixture.componentInstance.closeModal();
-        fixture.detectChanges();
-        expect(modalServiceSpy).toHaveBeenCalled();
-        const debugEl: HTMLElement = fixture.debugElement.nativeElement;
-        const cssStyle: CSSStyleDeclaration = getComputedStyle(debugEl.querySelector(".modal"));
-        expect(cssStyle.display).toEqual("none");
-    });
 
-    it("should close the modal when backdrop is clicked", async () => {
-        fixture.componentInstance.openModal();
+        expect(addListenerSpy).not.toHaveBeenCalled();
+
+        // It should try to remove the listner when the modal is hidden
+        component.toggle = false;
+        component.escapeToDismiss = true;
         fixture.detectChanges();
-        spyOn(component.modalChild, "onBackdropClick");
-        const modal: DebugElement = fixture.debugElement.query(By.css(".modal"));
-        modal.nativeElement.click();
-        expect(component.modalChild.onBackdropClick).toHaveBeenCalled();
+
+        // expect(removeListenerSpy).toHaveBeenCalled();
+        // console.log("TEST");
     });
 });

@@ -36,7 +36,7 @@
         "postbuild:docs": "npm run copy404",
         "postbuild:docs:win": "npm run copy404",
         "copy404": "cp dist/docs/index.html dist/docs/404.html",
-        "test": "ng test ng-components --watch=false --browsers=ChromeHeadless",
+        "test": "ng test ng-components",
         "sanitize": "package-lock-sanitizer && git add package-lock.json",
         "lint": "ng lint ng-components",
         "e2e": "ng e2e ng-components",

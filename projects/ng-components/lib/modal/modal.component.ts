@@ -1,7 +1,7 @@
-import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, Input, Output, EventEmitter, OnDestroy } from "@angular/core";
 
-export type ModalPositionProp = "left" | "right" | null;
-export type ModalSizeProp = "lg" | "sm" | null;
+export type ModalPosition = "left" | "right" | null;
+export type ModalSize = "lg" | "sm" | null;
 
 type NgClassType = { [klass: string]: any };
 
@@ -11,19 +11,49 @@ type NgClassType = { [klass: string]: any };
     styleUrls: ["./modal.component.scss"],
     templateUrl: "./modal.component.html",
 })
-export class ModalComponent implements OnChanges {
+export class ModalComponent implements OnDestroy {
+    /**
+     * Keeps track of whether the toggle prop is pristine or not.
+     * It's only used to not render `hide` class when the component just rendered.
+     */
+    private pristine: boolean = true;
+    private _toggle: boolean = false;
+
     /** Centers the modal in the middle of the screen */
     @Input() centered?: boolean;
     /** Modal size follows bootstrap sizes: `lg` and `sm` */
-    @Input() size?: ModalSizeProp;
+    @Input() size?: ModalSize;
     /** Modal position. Available positions: `left`, `right` */
-    @Input() position?: ModalPositionProp;
+    @Input() position?: ModalPosition;
     /** Modal toggle */
-    @Input() toggle: boolean;
+    @Input() get toggle(): boolean {
+        return this._toggle;
+    }
+    set toggle(val: boolean) {
+        if (this._toggle !== val) {
+            this._toggle = val;
+
+            if (this._toggle && this.escapeToDismiss) {
+                window.addEventListener("keyup", this.escapeKeyListener);
+            }
+
+            // Unsubscribe as soon as the the modal is dismissed
+            if (!this._toggle && this.escapeToDismiss) {
+                window.removeEventListener("keyup", this.escapeKeyListener);
+            }
+
+            // This only runs once when the toggle value is changed
+            if (this.pristine) {
+                this.pristine = false;
+            }
+        }
+    }
     /** Disables the ability to dismiss the modal when the backdrop is clicked */
     @Input() disableBackdropDismiss?: boolean;
     /** Disables the close button at the top right corner of the modal */
     @Input() disableCloseButton?: boolean;
+    /** Fires a dismiss output when the escape key is registered. Default is true */
+    @Input() escapeToDismiss?: boolean = true;
     /** Expands the modal to cover the whole screen */
     @Input() fullscreen?: boolean;
     /** Element class */
@@ -38,14 +68,12 @@ export class ModalComponent implements OnChanges {
     @Input() ariaDescribedby?: string;
 
     /** Event triggered when the modal is dismissed. Can be triggered with close button or backdrop click */
-    @Output() dismiss: EventEmitter<void> = new EventEmitter();
-
-    private prestine: { current: boolean } = { current: true };
+    @Output() dismiss: EventEmitter<MouseEvent> = new EventEmitter();
 
     get modalClassName(): NgClassType {
         return {
             show: this.toggle,
-            hide: !this.toggle && !this.prestine.current,
+            hide: !this.toggle && !this.pristine,
             "modal-centered": this.centered,
             "modal-fullscreen": this.fullscreen,
             [`modal-aside modal-aside-${this.position}`]: !!this.position,
@@ -66,13 +94,17 @@ export class ModalComponent implements OnChanges {
     backdropClick(e: MouseEvent): void {
         e.stopPropagation();
         if (!this.disableBackdropDismiss) {
-            this.dismiss.emit();
+            this.dismiss.emit(e);
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.toggle) {
-            this.prestine.current = false;
+    escapeKeyListener = (e: KeyboardEvent): void => {
+        if (e.key.toLowerCase() === "escape" && this.escapeToDismiss) {
+            this.dismiss.emit();
         }
+    };
+
+    ngOnDestroy(): void {
+        window.removeEventListener("keyup", this.escapeKeyListener);
     }
 }
