@@ -21,8 +21,9 @@ $duration-sq: 1.2s;
 .ac.loader {
     color: $green;
     &:not(.loader-cover):not(.loader-fullscreen) {
-        display: inline-flex;
-        vertical-align: middle;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     &.loader-cover,
     &.loader-fullscreen {
