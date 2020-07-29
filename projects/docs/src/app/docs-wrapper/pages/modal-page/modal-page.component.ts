@@ -16,18 +16,10 @@ export class ModalPageComponent {
     escapeDismiss: boolean = true;
     toggle: boolean = false;
 
-    sizeItem: DropdownItem = { key: "", value: "", label: "default" };
-    sizeList: Array<DropdownItem> = [
-        this.sizeItem,
-        { key: "modal-lg", value: "modal-lg", label: "modal-lg" },
-        { key: "modal-sm", value: "modal-sm", label: "modal-sm" },
-    ];
-    positionItem: DropdownItem = { key: "", value: "", label: "default" };
-    positionList: Array<DropdownItem> = [
-        this.positionItem,
-        { key: "right", value: "right", label: "right" },
-        { key: "left", value: "left", label: "left" },
-    ];
+    sizeItem: DropdownItem = { value: "", label: "default" };
+    sizeList: Array<DropdownItem> = [this.sizeItem, { value: "modal-lg", label: "modal-lg" }, { value: "modal-sm", label: "modal-sm" }];
+    positionItem: DropdownItem = { value: "", label: "default" };
+    positionList: Array<DropdownItem> = [this.positionItem, { value: "right", label: "right" }, { value: "left", label: "left" }];
     code: string = `<sebng-modal
     [toggle]="toggle"
     (dismiss)="closeModal()>

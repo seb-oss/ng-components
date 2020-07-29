@@ -42,7 +42,6 @@ export class DynamicFormComponent {
      * @param index if the formgroup is an array this is the index of the formgroup item
      */
     shouldRenderControl(key: string, formItem: DynamicFormItem, index?: number): boolean {
-        // console.log("should render key: ", key, " item: ", formItem, index ? ` index: ${index}` : "");
         if (formItem.rulerKey) {
             // It has a ruler key, trying to find the ruler and it's value
             let ruler: ExtendedFormControl;
@@ -71,16 +70,12 @@ export class DynamicFormComponent {
                     if (conditionItem) {
                         if (typeof rulerValue === "object" && Array.isArray(rulerValue)) {
                             for (const rulerValueItem of rulerValue as Array<any>) {
-                                if (
-                                    rulerValueItem &&
-                                    rulerValueItem.value === conditionItem.value &&
-                                    rulerValueItem.key === conditionItem.key
-                                ) {
+                                if (rulerValueItem && rulerValueItem.value === conditionItem.value) {
                                     return this.shouldRenderControl(key, ruler.formItem, index);
                                 }
                             }
                         } else if (typeof rulerValue === "object" && !Array.isArray(rulerValue)) {
-                            if (rulerValue && rulerValue.value === conditionItem.value && rulerValue.key === conditionItem.key) {
+                            if (rulerValue && rulerValue.value === conditionItem.value) {
                                 return this.shouldRenderControl(key, ruler.formItem, index);
                             }
                         }

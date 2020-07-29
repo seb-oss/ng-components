@@ -19,10 +19,10 @@ export class ProgressbarPageComponent implements OnDestroy {
     animated: boolean;
     showMultiBars: boolean;
     themeList: DropdownItem<ProggressTheme>[] = [
-        { value: "success", label: "Success", key: "success" },
-        { value: "danger", label: "Danger", key: "danger" },
-        { value: "info", label: "Info", key: "info" },
-        { value: "warning", label: "Warning", key: "warning" },
+        { value: "success", label: "Success" },
+        { value: "danger", label: "Danger" },
+        { value: "info", label: "Info" },
+        { value: "warning", label: "Warning" },
     ];
     themeItem: DropdownItem<ProggressTheme> = this.themeList[0];
     multiBars: Array<BarItem> = [

@@ -32,8 +32,8 @@ class RadioGroupTestComponent {
 
     constructor() {
         this.list = [
-            { label: "Nigeria", value: "NG", key: "1" },
-            { label: "Malaysia", value: "MY", key: "2" },
+            { label: "Nigeria", value: "NG" },
+            { label: "Malaysia", value: "MY" },
         ];
     }
 }

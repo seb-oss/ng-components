@@ -13,7 +13,12 @@
     >
         <option disabled hidden value="">{{ placeholder || "Select ..." }}</option>
         <ng-container *ngFor="let item of displayList; index as i">
-            <option *ngIf="i" [value]="item.optionItem.key" [selected]="item.selected">
+            <option
+                *ngIf="!multi || (multi && i !== 0)"
+                [value]="item.optionItem.value"
+                [selected]="item.selected"
+                [disabled]="item.optionItem.disabled"
+            >
                 {{ item.optionItem.label }}
             </option>
         </ng-container>
@@ -35,7 +40,7 @@
             [class.open]="open"
             [ngClass]="{ 'more mx-right': ellipsisMode }"
             (keydown)="handleKeyDownToggle($event)"
-            (click)="handleClickToggle($event)"
+            (click)="handleClickToggle()"
             [attr.aria-label]="'Dropdown toggle: ' + getTitleLabel()"
             [attr.aria-haspopup]="true"
             [attr.aria-expanded]="open"
@@ -59,11 +64,7 @@
                 </div>
 
                 <div class="right-items">
-                    <div
-                        *ngIf="(clearable || multi) && selectedList.length > 0"
-                        class="dropdown-icon-holder"
-                        (click)="handleClickClear($event)"
-                    >
+                    <div *ngIf="clearable && selectedList.length > 0" class="dropdown-icon-holder" (click)="handleClickClear($event)">
                         <svg class="dropdown-times-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
                             <path
                                 d="M217.5 256l137.2-137.2c4.7-4.7 4.7-12.3 0-17l-8.5-8.5c-4.7-4.7-12.3-4.7-17 0L192 230.5 54.8 93.4c-4.7-4.7-12.3-4.7-17 0l-8.5 8.5c-4.7 4.7-4.7 12.3 0 17L166.5 256 29.4 393.2c-4.7 4.7-4.7 12.3 0 17l8.5 8.5c4.7 4.7 12.3 4.7 17 0L192 281.5l137.2 137.2c4.7 4.7 12.3 4.7 17 0l8.5-8.5c4.7-4.7 4.7-12.3 0-17L217.5 256z"
@@ -109,11 +110,13 @@
                         #listRefs
                         class="{{ item.className }}"
                         [class.highlighted]="currentFocused === i"
-                        (mousemove)="handleItemOnMouseMove($event, i)"
+                        [class.disabled]="item.optionItem.disabled"
+                        [disabled]="item.optionItem.disabled"
+                        (mousemove)="handleItemOnMouseMove(i)"
                         (click)="handleItemOnClick($event, i, item)"
                     >
                         <ng-container *ngIf="multi; else notMulti">
-                            <div tabIndex="-1" class="custom-control">
+                            <div tabIndex="-1" [class.disabled]="item.optionItem.disabled" class="custom-control">
                                 <input
                                     tabIndex="-1"
                                     type="checkbox"
@@ -121,6 +124,7 @@
                                     [id]="item.id"
                                     [name]="item.id"
                                     [defaultChecked]="item.selected"
+                                    [disabled]="item.optionItem.disabled"
                                 />
                                 <label *ngIf="item.optionItem.label" tabIndex="-1" class="custom-control-label" [attr.for]="item.id">{{
                                     item.optionItem.label

@@ -252,6 +252,31 @@ $white: white;
                     }
                 }
             }
+
+            &.disabled:disabled {
+                > label {
+                    color: $gray-500;
+                }
+
+                .custom-control {
+                    .custom-control-label,
+                    .custom-control-input {
+                        &::before {
+                            color: $gray-500;
+                            border-color: $gray-500;
+                        }
+                    }
+                }
+            }
+
+            &.disabled:disabled.selected > .custom-control {
+                .custom-control-label,
+                .custom-control-input {
+                    &::before {
+                        background-color: $gray-500;
+                    }
+                }
+            }
         }
     }
 
