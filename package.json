@@ -41,10 +41,11 @@
         "format:all": "prettier --write \"**/*.{ts,html,json,scss,md}\"",
         "semantic-release": "semantic-release",
         "build:scully": "npm run scully -- --project=docs --scanRoutes",
-        "scully": "scully --projectName=docs",
+        "postbuild:scully": "prettier --write \"projects/docs/src/assets/**/*.json\"",
+        "scully": "scully --projectName=ng-docs",
         "postscully": "npm run copy404",
-        "copy404": "cp dist/static/404/index.html dist/static/404.html",
-        "scully:serve": "scully serve --projectName=docs"
+        "copy404": "cp dist/docs/404/index.html dist/docs/404.html",
+        "scully:serve": "scully serve --projectName=ng-docs"
     },
     "dependencies": {
         "@angular/animations": "~10.0.2",
