@@ -44,8 +44,7 @@
         "postbuild:scully": "prettier --write \"projects/docs/src/assets/**/*.json\"",
         "scully": "scully --projectName=ng-docs",
         "postscully": "npm run copy404",
-        "copy404": "cp dist/docs/404/index.html dist/docs/404.html",
-        "scully:serve": "scully serve --projectName=ng-docs"
+        "copy404": "cp dist/docs/404/index.html dist/docs/404.html"
     },
     "dependencies": {
         "@angular/animations": "~10.0.2",
