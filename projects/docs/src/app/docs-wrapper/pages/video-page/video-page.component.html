@@ -15,14 +15,14 @@
     </ng-container>
     <ng-container code>{{ code }}</ng-container>
     <div controls class="row">
-        <label class="m-3 col-12">
+        <label class="w-100">
             sourceType
             <p><small>define the source type of the video</small></p>
             <select class="custom-select" [(ngModel)]="sourceType">
                 <option *ngFor="let item of sourceTypeList" [value]="item.value">{{ item.label }}</option>
             </select>
         </label>
-        <label class="m-3 col-12">
+        <label class="w-100">
             src
             <p>
                 <small>
@@ -33,12 +33,12 @@
                 <input class="form-control" [(ngModel)]="src" />
             </sebng-tooltip>
         </label>
-        <label class="m-3 col-12">
+        <label class="w-100">
             height
             <p><small> set height of video</small></p>
             <input class="form-control" [(ngModel)]="height" />
         </label>
-        <label class="m-3 col-12">
+        <label class="w-100">
             width
             <p><small> set width of video</small></p>
             <input class="form-control" [(ngModel)]="width" />

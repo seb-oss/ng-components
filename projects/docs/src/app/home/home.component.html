@@ -2,7 +2,7 @@
 <main>
     <section id="getting-started" class="jumbotron">
         <div class="container">
-            <h1 class="display-4">Angular components</h1>
+            <h1>Angular components</h1>
             <p class="lead">A set of Angular components based on SEB design library guidelines</p>
             <a class="btn btn-light" href="/docs" [routerLink]="['/docs']" role="button">Get started</a>
         </div>
@@ -10,7 +10,7 @@
 
     <section id="features">
         <div class="container">
-            <h2>Why use your components?</h2>
+            <h2>Why use our components?</h2>
             <div class="row">
                 <div class="col-md-4 col-12">
                     <app-design-team-illustration height="220px" class="my-5"></app-design-team-illustration>
@@ -42,7 +42,7 @@
 
     <section id="technical-stack">
         <div class="container">
-            <h2 class="text-center">Technical stack</h2>
+            <h2>Technical stack</h2>
             <app-tech-stack></app-tech-stack>
         </div>
     </section>
@@ -54,19 +54,25 @@
         </div>
     </section> -->
 
-    <section class="bg-success">
-        <div class="container py-5 text-center">
-            <h4 class="text-light d-inline">Get started with SEB Angular Components</h4>
-            <a [routerLink]="['/docs']" class="btn btn-light ml-3">Get started</a>
+    <section id="call-to-action">
+        <div class="container">
+            <h4>Get started with SEB Angular Components</h4>
+            <a [routerLink]="['/docs']" class="btn btn-light">Get started</a>
         </div>
     </section>
 
     <section id="contributors">
-        <div class="container py-5">
-            <div class="row">
-                <div class="col" *ngFor="let person of contributors">
+        <div class="container">
+            <h2>Contributors</h2>
+            <div>
+                <div *ngFor="let person of contributors">
                     <a [href]="person.html_url" target="_blank">
                         <img class="avatar" width="50px" [src]="person.avatar_url" [alt]="person.login" [title]="person.login" />
+                    </a>
+                </div>
+                <div>
+                    <a [href]="designer.html_url" target="_blank">
+                        <img class="avatar" width="50px" [src]="designer.avatar_url" [alt]="designer.login" [title]="designer.login" />
                     </a>
                 </div>
             </div>

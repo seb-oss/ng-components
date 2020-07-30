@@ -1,65 +1,41 @@
-<app-doc-page [importString]="importString" [centered]="true">
+<app-doc-page [importString]="importString" [centered]="true" [showNotes]="true">
     <ng-container example>
-        <button class="btn btn-primary" (click)="openModal()">Open Modal</button>
+        <button class="btn btn-primary" (click)="this.toggle = true">Open Modal</button>
         <sebng-modal
             [toggle]="toggle"
             [id]="'test'"
-            [size]="size"
-            [position]="position"
-            [center]="center"
-            [fullscreen]="fullscreen"
-            [backdropClassName]="backdropClassName"
-            [backdropDismiss]="backdropDismiss"
-            [escapeKeyDismiss]="escapeDismiss"
-            (dismiss)="closeModal()"
+            [size]="extendedFormGroup.value.controls.size.value"
+            [position]="extendedFormGroup.value.controls.position.value"
+            [centered]="extendedFormGroup.value.controls.centered"
+            [fullscreen]="extendedFormGroup.value.controls.fullscreen"
+            [escapeToDismiss]="extendedFormGroup.value.controls.escapeToDismiss"
+            [backdropDismiss]="extendedFormGroup.value.controls.backdropDismiss"
+            [closeButton]="extendedFormGroup.value.controls.closeButton"
+            (dismiss)="this.toggle = false"
         >
-            <div class="custom-header" header>
-                Title
-            </div>
+            <div class="custom-header" header>Title</div>
 
             <div class="custom-body" body>
-                <img *ngIf="hasImage; else simpleBody" src="https://via.placeholder.com/500" />
-                <ng-template #simpleBody>Body</ng-template>
+                <img *ngIf="shouldRenderImage" src="https://via.placeholder.com/500" loading="lazy" />
+                <p *ngIf="!shouldRenderImage">
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis vero perferendis deleniti dolores? Ratione
+                    asperiores excepturi nulla explicabo sed itaque, aspernatur velit. Vitae possimus autem doloribus. Ipsam laudantium
+                    praesentium iusto!
+                </p>
             </div>
 
             <div class="custom-footer" footer>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeModal()">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="this.toggle = false">
                     Close
                 </button>
             </div>
         </sebng-modal>
     </ng-container>
 
-    <ng-container code>{{ code }}</ng-container>
+    <ng-container code>{{ snippet }}</ng-container>
 
     <ng-container controls>
-        <div class="row">
-            <div class="col-12">
-                <sebng-dropdown [list]="sizeList" label="Size:" [(ngModel)]="sizeItem"></sebng-dropdown>
-            </div>
-            <div class="col-12">
-                <sebng-dropdown [list]="positionList" label="Position:" [(ngModel)]="positionItem"></sebng-dropdown>
-            </div>
-            <div class="col-12">
-                <sebng-checkbox label="centered" [(ngModel)]="center"></sebng-checkbox>
-            </div>
-            <div class="col-12">
-                <sebng-checkbox label="fullscreen" [(ngModel)]="fullscreen"></sebng-checkbox>
-            </div>
-            <div class="col-12">
-                <sebng-checkbox
-                    label="Custom backdrop html class"
-                    [(ngModel)]="backdropClassNameModel"
-                    (onChange)="setBackdropClassName()"
-                ></sebng-checkbox>
-            </div>
-            <div class="col-12">
-                <sebng-checkbox label="Enable backdrop dismiss" [(ngModel)]="backdropDismiss"></sebng-checkbox>
-            </div>
-            <div class="col-12">
-                <sebng-checkbox label="Enable escape key dismiss" [(ngModel)]="escapeDismiss"></sebng-checkbox>
-            </div>
-        </div>
+        <app-dynamic-form [extendedFormGroup]="extendedFormGroup"></app-dynamic-form>
     </ng-container>
 
     <ng-container notes>
@@ -73,19 +49,10 @@
             </p>
             <app-code-snippet [languages]="['html.handlebars']">{{ modalTemplate }}</app-code-snippet>
 
-            <h4>Toggle Modal component</h4>
-
-            <p>The ModalComponent can be used to open modal dialogs with SEB Design styling and animations.</p>
-            <p>To be able to toggle the component, set the input property toggle to true.</p>
-            <app-code-snippet>{{ openModalSnippet }}</app-code-snippet>
-
-            <p>To be able the modal component, set the input property to false.</p>
-            <app-code-snippet>{{ closeModalSnippet }}</app-code-snippet>
-
             <h2>Keyboard interaction</h2>
             <p>
-                By default pressing the escape key will close the modal. While this behavior can be turned off via the
-                <code>escapeKeyDismiss</code> option.
+                By default pressing the escape key will close the modal. This behavior can be turned off when setting the
+                <code>escapeToDismiss</code> prop to <code>false</code>.
             </p>
         </div>
     </ng-container>

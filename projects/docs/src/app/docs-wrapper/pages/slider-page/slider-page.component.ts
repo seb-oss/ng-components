@@ -47,12 +47,12 @@ export class SliderPageComponent {
     snippet: string = `<sebng-slider></sebng-slider>`;
     extendedFormGroup: ExtendedFormGroup;
     themeOptions: DynamicFormOption<SliderTheme>[] = [
-        { key: "primary", value: "primary", label: "Primary" },
-        { key: "inverted", value: "inverted", label: "Inverted" },
-        { key: "success", value: "success", label: "Success" },
-        { key: "danger", value: "danger", label: "Danger" },
-        { key: "warning", value: "warning", label: "Warning" },
-        { key: "purple", value: "purple", label: "Purple" },
+        { value: "primary", label: "Primary" },
+        { value: "inverted", label: "Inverted" },
+        { value: "success", label: "Success" },
+        { value: "danger", label: "Danger" },
+        { value: "warning", label: "Warning" },
+        { value: "purple", label: "Purple" },
     ];
 
     // controls

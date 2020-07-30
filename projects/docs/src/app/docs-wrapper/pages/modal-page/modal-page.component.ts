@@ -1,103 +1,115 @@
 import { Component } from "@angular/core";
-import { DropdownItem } from "@sebgroup/ng-components/dropdown";
+import { ModalSize, ModalPosition } from "@sebgroup/ng-components/modal";
+import { FormService } from "@common/dynamic-form/form.service";
+import { ExtendedFormGroup } from "@common/dynamic-form/model/custom-classes/extended-form-group";
+import { DynamicFormOption } from "@common/dynamic-form/model/models";
 
 @Component({
     selector: "app-modal-page",
     templateUrl: "./modal-page.component.html",
+    providers: [FormService],
 })
 export class ModalPageComponent {
     importString: string = require("!raw-loader!@sebgroup/ng-components/modal/modal.component");
+    snippet: string = `<sebng-modal [toggle]="toggle" (dismiss)="toggle = false">
+    <div header>Title</div>
 
-    center: boolean;
-    fullscreen: boolean;
-    backdropClassNameModel: boolean = false;
-    backdropDismiss: boolean = true;
-    backdropClassName: string;
-    escapeDismiss: boolean = true;
-    toggle: boolean = false;
-
-    sizeItem: DropdownItem = { key: "", value: "", label: "default" };
-    sizeList: Array<DropdownItem> = [
-        this.sizeItem,
-        { key: "modal-lg", value: "modal-lg", label: "modal-lg" },
-        { key: "modal-sm", value: "modal-sm", label: "modal-sm" },
-    ];
-    positionItem: DropdownItem = { key: "", value: "", label: "default" };
-    positionList: Array<DropdownItem> = [
-        this.positionItem,
-        { key: "right", value: "right", label: "right" },
-        { key: "left", value: "left", label: "left" },
-    ];
-    code: string = `<sebng-modal
-    [toggle]="toggle"
-    (dismiss)="closeModal()>
-
-    <div class="custom-header" header>
-        Title
+    <div body>
+        <ng-template *ngTemplateOutlet="simpleBody"></ng-template>
     </div>
 
-    <div class="custom-body" body>
-        <ng-template #simpleBody>Body</ng-template>
-    </div>
-
-    <div class="custom-footer" footer>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeModal()">
+    <div footer>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="toggle = false">
             Close
         </button>
     </div>
 </sebng-modal>`;
 
     modalTemplate: string = `<sebng-modal>
-    <div class="custom-header" header>
-        Header
-    </div>
-
-    <div class="custom-body" body>
-        body
-    </div>
-
-    <div class="custom-footer" footer>
-        footer
-    </div>
+    <div header>Header</div>
+    <div body>body</div>
+    <div footer>footer</div>
 </sebng-modal>`;
+    extendedFormGroup: ExtendedFormGroup;
 
-    openModalSnippet: string = `toggle = true;`;
+    toggle: boolean = false;
 
-    closeModalSnippet: string = `toggle = false;`;
+    sizeList: DynamicFormOption<ModalSize>[] = [
+        { value: null, label: "default" },
+        { value: "lg", label: "lg" },
+        { value: "sm", label: "sm" },
+    ];
+    positionList: DynamicFormOption<ModalPosition>[] = [
+        { value: null, label: "default" },
+        { value: "right", label: "right" },
+        { value: "left", label: "left" },
+    ];
 
-    closeModalHTML: string = `modalChild.close()`;
-
-    constructor() {
+    constructor(private formService: FormService) {
         document.title = "Modal - SEB Angular Components";
+
+        this.extendedFormGroup = this.formService.dynamicFormSectionsToFormGroup([
+            {
+                key: "controls",
+                items: [
+                    {
+                        key: "size",
+                        controlType: "Dropdown",
+                        label: "Size:",
+                        value: this.sizeList[0],
+                        options: this.sizeList,
+                    },
+                    {
+                        key: "position",
+                        controlType: "Dropdown",
+                        label: "Position:",
+                        value: this.positionList[0],
+                        options: this.positionList,
+                    },
+                    {
+                        key: "centered",
+                        controlType: "Checkbox",
+                        label: "Centered",
+                        description: "Positions the modal in the middle of the page. Only works with default position.",
+                        value: false,
+                    },
+                    {
+                        key: "fullscreen",
+                        controlType: "Checkbox",
+                        label: "Fullscreen",
+                        value: false,
+                    },
+                    {
+                        key: "backdropDismiss",
+                        controlType: "Checkbox",
+                        label: "Backdrop dismiss",
+                        description: "Enables dismissing the modal when the backdrop is clicked",
+                        value: true,
+                    },
+                    {
+                        key: "escapeToDismiss",
+                        controlType: "Checkbox",
+                        label: "Escape to dismiss",
+                        description: `Dismisses the modal when the "Escape" key is pressed`,
+                        value: true,
+                    },
+                    {
+                        key: "closeButton",
+                        controlType: "Checkbox",
+                        label: "Close button",
+                        description: "Shows a close button at the top right corner to be used to dismiss the modal",
+                        value: true,
+                    },
+                ],
+            },
+        ]);
     }
 
-    get hasImage(): boolean {
-        return this.position && this.sizeItem.value === "modal-lg";
-    }
+    /** Only renders the image when the size is `lg` and the position is aside */
+    get shouldRenderImage(): boolean {
+        const position: ModalPosition = this.extendedFormGroup.value.controls.position.value;
+        const size: ModalSize = this.extendedFormGroup.value.controls.size.value;
 
-    get size(): string {
-        return this.sizeItem.value;
-    }
-
-    get position(): string {
-        return this.positionItem.value;
-    }
-
-    setBackdropClassName(): void {
-        this.backdropClassName = this.backdropClassNameModel ? "bg-primary" : "";
-    }
-
-    /**
-     * open Modal
-     */
-    openModal(): void {
-        this.toggle = true;
-    }
-
-    /**
-     * close modal
-     */
-    closeModal(): void {
-        this.toggle = false;
+        return size === "lg" && ["right", "left"].some(p => p === position);
     }
 }

@@ -9,7 +9,6 @@ import {
     QueryList,
     OnDestroy,
     NgZone,
-    SimpleChanges,
     Provider,
     HostBinding,
 } from "@angular/core";
@@ -229,19 +228,19 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
         this.uniqueList =
             this.list &&
             this.list
-                .filter((e: DropdownItem) => e && e.hasOwnProperty("key") && e.hasOwnProperty("value") && e.hasOwnProperty("label"))
+                .filter((e: DropdownItem) => e && e.hasOwnProperty("value") && e.hasOwnProperty("label"))
                 .map((e: DropdownItem, i: number) => {
-                    const id = `${e.key}-${i}`;
-                    let selected = false;
+                    const id: string = `${e.value}-${i}`;
+                    let selected: boolean = false;
 
                     if (!this.multi) {
-                        if ((this.selectedValue as DropdownItem) && e.key === (this.selectedValue as DropdownItem).key) {
+                        if ((this.selectedValue as DropdownItem) && e.value === (this.selectedValue as DropdownItem).value) {
                             selected = true;
                         }
                     } else {
                         if (
                             (this.selectedValue as Array<DropdownItem>) &&
-                            (this.selectedValue as Array<DropdownItem>).find((el: DropdownItem) => el.key === e.key)
+                            (this.selectedValue as Array<DropdownItem>).find((el: DropdownItem) => el.value === e.value)
                         ) {
                             selected = true;
                         }
@@ -262,19 +261,22 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
                     (e: UniqueItem) =>
                         e &&
                         e.optionItem &&
-                        e.optionItem.label &&
+                        e.optionItem?.label &&
+                        e.optionItem?.label?.length &&
                         e.optionItem.label.toString().toLowerCase().indexOf(this.searchText.toLowerCase()) !== -1
                 );
 
         this.selectedList = this.uniqueList && this.uniqueList.filter((e: UniqueItem) => e.selected).map((e: UniqueItem) => e.optionItem);
-        this.allSelected = this.selectedList && this.uniqueList ? this.selectedList.length === this.uniqueList.length : false;
+        this.allSelected =
+            this.selectedList &&
+            this.list &&
+            this.selectedList.filter(e => !e.disabled).length === this.list.filter(e => !e.disabled).length;
 
         if (this.multi && this.searchText.length === 0) {
             this.displayList = [
                 {
                     id: "select-all",
                     optionItem: {
-                        key: "select-all",
                         value: "Select All",
                         label: "Select All",
                     },
@@ -310,10 +312,16 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
 
     /** The native event function that runs when a keyboard button is pressed on dropdown menu */
     handleKeyDownMenu(event: KeyboardEvent): void {
-        this.shouldFocus = true;
+        // this.shouldFocus = true;
         const key: string = event.key.toLowerCase();
+        console.log(this.currentFocused);
+
+        // console.log(this.displayList.length);
         if (this.open) {
             switch (key) {
+                case " ":
+                    event.preventDefault();
+                    break;
                 case "tab":
                 case "escape":
                     this.open = false;
@@ -334,6 +342,9 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
                     } else if (this.currentFocused === this.displayList.length - 1) {
                         this.currentFocused = -1;
                     }
+                    if (this.displayList[this.currentFocused] && this.displayList[this.currentFocused].optionItem.disabled) {
+                        this.handleKeyDownMenu(event);
+                    }
                     break;
                 case "arrowup":
                 case "up":
@@ -344,6 +355,9 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
                         this.currentFocused = this.currentFocused - 1;
                     } else if (this.currentFocused === 0) {
                         this.currentFocused = -1;
+                    }
+                    if (this.displayList[this.currentFocused] && this.displayList[this.currentFocused].optionItem.disabled) {
+                        this.handleKeyDownMenu(event);
                     }
                     break;
 
@@ -368,14 +382,14 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     /** Function which handles the logic of setting the native onChange prop (and sets the internal selected value as well) */
     handleNativeOnChange(event: UIEvent): void {
         if (!this.multi) {
-            const item: DropdownItem = this.list.filter((e: DropdownItem) => e.key === (event.target as HTMLSelectElement).value)[0];
+            const item: DropdownItem = this.list.filter((e: DropdownItem) => e.value === (event.target as HTMLSelectElement).value)[0];
             this.nativeOnChange && this.nativeOnChange(event);
             this.selectedValue = item;
         } else {
             const items: Array<DropdownItem> = Array.from((event.target as HTMLSelectElement).options as HTMLOptionsCollection)
                 .filter(e => e.selected)
                 .map(e => {
-                    const item = this.list.filter((el: DropdownItem) => el.key === e.value)[0];
+                    const item: DropdownItem = this.list.filter((el: DropdownItem) => el.value === e.value)[0];
                     return item;
                 });
             this.nativeOnChange && this.nativeOnChange(event);
@@ -405,6 +419,9 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
 
     /** Function containing the select dropdown item logic */
     optionItemSelected(item: DropdownItem): void {
+        if (item.disabled) {
+            return;
+        }
         if (!this.multi) {
             const newItem: DropdownItem = { ...item };
             this.handleOnChange(newItem);
@@ -413,13 +430,13 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
             const currentList: Array<DropdownItem> = (this.selectedValue as Array<DropdownItem>)
                 ? (this.selectedValue as Array<DropdownItem>)
                 : [];
-            const index: number = currentList.findIndex((e: DropdownItem) => e.key === item.key);
+            const index: number = currentList.findIndex((e: DropdownItem) => e.value === item.value);
             if (index === -1) {
                 const newItem: DropdownItem = { ...item };
                 const newList: Array<DropdownItem> = [...currentList, newItem];
                 this.handleOnChange(newList);
             } else {
-                const newList: Array<DropdownItem> = currentList.filter((e: DropdownItem) => e.key !== item.key);
+                const newList: Array<DropdownItem> = currentList.filter((e: DropdownItem) => e.value !== item.value);
                 this.handleOnChange(newList);
             }
         }
@@ -427,7 +444,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     }
 
     /** The native event function that runs when the dropdown button is clicked */
-    handleClickToggle(event: MouseEvent): void {
+    handleClickToggle(): void {
         if (!this.disabled) {
             this.open = !this.open;
         }
@@ -436,9 +453,9 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     /** Function containing the select all button logic */
     handleSelectAll(): void {
         if (this.allSelected) {
-            this.handleOnChange([]);
+            this.handleOnChange([...this.selectedList.filter(e => e.disabled)]);
         } else {
-            this.handleOnChange(this.list);
+            this.handleOnChange([...this.selectedList.filter(e => e.disabled), ...this.list.filter(e => !e.disabled)]);
         }
         this.handleFocus();
     }
@@ -471,9 +488,9 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
         return this.placeholder && this.placeholder.length ? this.placeholder : "Select ...";
     }
 
-    handleItemOnMouseMove(event: MouseEvent, index: number): void {
+    handleItemOnMouseMove(index: number): void {
         this.currentFocused = index;
-        this.shouldFocus = false;
+        // this.shouldFocus = false;
     }
 
     handleItemOnClick(event: MouseEvent, index: number, item: DisplayItem): void {
@@ -503,8 +520,8 @@ export interface DropdownItem<T = any> {
     label: string;
     /** any value which should be tied to the item */
     value: T;
-    /** The id or the unique key of the item */
-    key: T;
+    /** sets this items as view only or disabled */
+    disabled?: boolean;
 }
 
 interface UniqueItem {

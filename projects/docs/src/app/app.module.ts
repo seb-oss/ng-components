@@ -1,20 +1,21 @@
 import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
-import { RouterModule, Routes } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { DocsWrapperModule } from "./docs-wrapper/docs-wrapper.module";
+import { ScullyLibModule } from "@scullyio/ng-lib";
+import { LoaderModule } from "@sebgroup/ng-components/loader";
+import { AppRoutingModule } from "./app-routing.module";
 
-const routes: Routes = [
-    { path: "", loadChildren: () => import("./home/home.module").then(m => m.HomeModule) },
-    { path: "docs", loadChildren: () => import("./docs-wrapper/docs-wrapper.module").then(m => m.DocsWrapperModule) },
-    { path: "**", loadChildren: () => import("./common/not-found/not-found.module").then(m => m.NotFoundModule) },
-];
+declare global {
+    interface Window {
+        hljs?: typeof HLJS;
+    }
+}
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [CommonModule, BrowserModule, BrowserAnimationsModule, RouterModule.forRoot(routes), DocsWrapperModule],
+    imports: [CommonModule, BrowserModule, BrowserAnimationsModule, AppRoutingModule, ScullyLibModule, LoaderModule],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

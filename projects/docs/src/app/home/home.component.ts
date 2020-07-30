@@ -10,6 +10,12 @@ import { Subscription } from "rxjs";
 export class HomeComponent implements OnInit, OnDestroy {
     httpSub: Subscription;
     contributors: any;
+    designer: GithubContributor = {
+        login: "boonying",
+        type: "User",
+        html_url: "https://www.behance.net/boonying",
+        avatar_url: "assets/images/boonying-profile.png",
+    };
 
     constructor(private http: HttpClient) {
         document.title = "SEB Angular Components";
@@ -17,8 +23,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.httpSub = this.http.get("https://api.github.com/repos/sebgroup/ng-components/contributors").subscribe({
-            next: data => {
-                this.contributors = data;
+            next: (data: Array<GithubContributor>) => {
+                this.contributors = data.filter(
+                    (contributor: GithubContributor) => contributor.type === "User" && contributor.login !== "sebopensource"
+                );
             },
         });
     }

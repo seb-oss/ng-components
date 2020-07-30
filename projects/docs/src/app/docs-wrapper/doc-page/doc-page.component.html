@@ -1,25 +1,23 @@
-<span class="d-none" #contentNotes><ng-content select="[notes]"></ng-content></span>
-
-<div class="doc-page container" [class.centered-example]="centered" [ngClass]="class">
+<div class="doc-page container" [class.centered-example]="centered" [ngClass]="class" [ngSwitch]="section">
     <h1>{{ name }}</h1>
     <p>{{ description }}</p>
 
     <sebng-tabs
         className="doc-page-tabs"
-        [list]="contentNotes.innerText.length ? tabListWithNotes : tabList"
+        [list]="showNotes ? tabListWithNotes : tabList"
         [(ngModel)]="section"
         (ngModelChange)="afterTabChange($event)"
     ></sebng-tabs>
 
-    <app-doc-playground *ngIf="section === 0">
+    <app-doc-playground *ngSwitchCase="0">
         <ng-content select="[example]" example></ng-content>
         <ng-content select="[code]" code></ng-content>
         <ng-content select="[controls]" controls></ng-content>
     </app-doc-playground>
 
-    <app-doc-apis *ngIf="section === 1" [inputs]="inputs" [outputs]="outputs"></app-doc-apis>
+    <app-doc-apis *ngSwitchCase="1" [inputs]="inputs" [outputs]="outputs"></app-doc-apis>
 
-    <app-doc-notes *ngIf="contentNotes.innerText.length && section === 2">
-        <div [innerHTML]="contentNotes.innerHTML"></div>
-    </app-doc-notes>
+    <div class="card" *ngSwitchCase="2">
+        <ng-content select="[notes]"></ng-content>
+    </div>
 </div>

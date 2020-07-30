@@ -6,12 +6,11 @@ import { APIExtractService } from "../../common/services/api-extract.service";
 import { APIsComponent } from "./apis/apis.component";
 import { FormsModule } from "@angular/forms";
 import { PlaygroundComponent } from "./playground/playground.component";
-import { DocNotesComponent } from "./notes/notes.component";
 import { CodeSnippetModule } from "../../common/code-snippet/code-snippet.module";
 import { DynamicFormModule } from "../../common/dynamic-form/dynamic-form.module";
 
 @NgModule({
-    declarations: [DocPageComponent, PlaygroundComponent, APIsComponent, DocNotesComponent],
+    declarations: [DocPageComponent, PlaygroundComponent, APIsComponent],
     imports: [CommonModule, FormsModule, TabsModule, CodeSnippetModule, DynamicFormModule],
     exports: [DocPageComponent, DynamicFormModule],
     providers: [APIExtractService],

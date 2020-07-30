@@ -1,15 +1,16 @@
-import { Component, OnInit, OnDestroy, Input } from "@angular/core";
+import { Component, OnInit, OnDestroy, Input, ChangeDetectorRef, AfterViewChecked } from "@angular/core";
 import { Subscription } from "rxjs";
 import { TabsListItem } from "@sebgroup/ng-components/tabs";
 import { APIExtractService } from "../../common/services/api-extract.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
+import { Meta } from "@angular/platform-browser";
 
 @Component({
     selector: "app-doc-page",
     templateUrl: "./doc-page.component.html",
     styleUrls: ["./doc-page.component.scss"],
 })
-export class DocPageComponent implements OnInit, OnDestroy {
+export class DocPageComponent implements OnInit, OnDestroy, AfterViewChecked {
     paramSub: Subscription;
     apiSub: Subscription;
     section: number = 0;
@@ -23,8 +24,26 @@ export class DocPageComponent implements OnInit, OnDestroy {
     @Input() importString: string;
     @Input() centered?: boolean;
     @Input() class?: string;
+    @Input() showNotes?: boolean = false;
 
-    constructor(private apiService: APIExtractService, private route: ActivatedRoute, private router: Router) {}
+    constructor(
+        private apiService: APIExtractService,
+        private route: ActivatedRoute,
+        private router: Router,
+        private changeDetector: ChangeDetectorRef,
+        private meta: Meta
+    ) {}
+
+    /**
+     * This forces Angular to update again after it's been checked.
+     *
+     * Rendering the notest using `innerHTML` will throw an error
+     * indicating that the state of an element has changed after
+     * it was checked.
+     */
+    ngAfterViewChecked(): void {
+        this.changeDetector.detectChanges();
+    }
 
     ngOnInit(): void {
         if (this.importString) {
@@ -35,6 +54,7 @@ export class DocPageComponent implements OnInit, OnDestroy {
                         this.description = data[0].description;
                         this.inputs = [...data[0].properties, ...data[0].inputs];
                         this.outputs = data[0].outputs;
+                        this.meta.updateTag({ name: "description", content: this.description });
                     }
                 });
             } catch (e) {

@@ -19,7 +19,6 @@ aside.side-menu {
             padding: 1.25rem 0rem;
             overflow: hidden;
             opacity: 0;
-            transition: none;
         }
         > .toggle {
             transform: translateX(60px);
@@ -32,7 +31,7 @@ aside.side-menu {
         }
         &.mobile {
             > .sidemenu-content {
-                width: 0;
+                max-width: 0;
             }
         }
         @include IE_only {
@@ -133,6 +132,7 @@ aside.side-menu {
             padding $base-transition-time linear, opacity $base-transition-time * 1.25 linear;
         will-change: max-width, width;
         max-height: 100vh;
+        max-width: 100vw;
         overflow-y: scroll;
         direction: rtl;
         > img {
@@ -143,6 +143,9 @@ aside.side-menu {
         }
         > nav.components-list {
             overflow: hidden;
+            @include media-breakpoint-down(sm) {
+                min-width: calc(100vw - 2.5rem);
+            }
             &:last-of-type {
                 padding-bottom: 1.5rem;
             }

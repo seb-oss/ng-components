@@ -16,8 +16,6 @@ export interface RadioGroupItem {
     value: any;
     /** optional disabled flag. Will show the item grayed out and disabled */
     disabled?: boolean;
-    /** The id or the unique key of the item */
-    key: string;
 }
 
 interface UniqueItem {
@@ -104,7 +102,7 @@ export class RadioGroupComponent implements ControlValueAccessor, AfterViewCheck
      */
     focusCurrentItem(): void {
         if (!this.didFocus && this.list && this.list.length) {
-            const currentFocused: number = this.list.findIndex(e => e && this.selectedValue && e.key === this.selectedValue.key);
+            const currentFocused: number = this.list.findIndex(e => e && this.selectedValue && e.value === this.selectedValue.value);
             if (currentFocused > -1 && this.radioRefs.toArray()[currentFocused] && this.radioRefs.toArray()[currentFocused].nativeElement) {
                 this.radioRefs.toArray()[currentFocused].nativeElement.focus();
                 this.didFocus = true;
@@ -125,12 +123,12 @@ export class RadioGroupComponent implements ControlValueAccessor, AfterViewCheck
         this.uniqueList =
             this.list &&
             this.list
-                .filter((e: RadioGroupItem) => e && e.hasOwnProperty("key") && e.hasOwnProperty("value"))
+                .filter((e: RadioGroupItem) => e && e.hasOwnProperty("label") && e.hasOwnProperty("value"))
                 .map((e: RadioGroupItem, i: number) => {
-                    const id: string = `${e.key}-${i}`;
+                    const id: string = `${e.value}-${i}`;
                     let selected: boolean = false;
 
-                    if ((this.selectedValue as RadioGroupItem) && e.key === (this.selectedValue as RadioGroupItem).key) {
+                    if ((this.selectedValue as RadioGroupItem) && e.value === (this.selectedValue as RadioGroupItem).value) {
                         selected = true;
                     }
 

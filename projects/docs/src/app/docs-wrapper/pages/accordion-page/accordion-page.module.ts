@@ -4,14 +4,12 @@ import { CheckboxModule } from "@sebgroup/ng-components/checkbox";
 import { StepperModule } from "@sebgroup/ng-components/stepper";
 import { AccordionPageComponent } from "./accordion-page.component";
 import { CommonModule } from "@angular/common";
-import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule } from "@angular/forms";
-
-const routes: Routes = [{ path: "", component: AccordionPageComponent }];
+import { AccordionPageRoutingModule } from "./accordion-page-routing.module";
 
 @NgModule({
     declarations: [AccordionPageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, AccordionModule, CheckboxModule, StepperModule],
+    imports: [CommonModule, AccordionPageRoutingModule, FormsModule, DocPageModule, AccordionModule, CheckboxModule, StepperModule],
 })
 export class AccordionPageModule {}

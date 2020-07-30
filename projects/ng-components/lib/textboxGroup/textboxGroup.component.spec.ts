@@ -2,7 +2,7 @@ import { Component, DebugElement } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { TextboxGroupComponent } from "./textboxGroup.component";
-import { SafeHtmlPipe } from "./textboxGroup.pipe";
+import { TextboxGroupSafeHtmlPipe } from "./textboxGroup.pipe";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 
@@ -95,7 +95,7 @@ describe("TextboxGroupComponent", () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [CommonModule, FormsModule],
-            declarations: [TextboxGroupComponent, TextGroupTestComponent, SafeHtmlPipe],
+            declarations: [TextboxGroupComponent, TextGroupTestComponent, TextboxGroupSafeHtmlPipe],
         }).compileComponents();
     }));
 

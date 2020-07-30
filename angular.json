@@ -49,7 +49,8 @@
                     "options": {
                         "main": "projects/ng-components/test.ts",
                         "tsConfig": "projects/ng-components/tsconfig.spec.json",
-                        "karmaConfig": "projects/ng-components/karma.conf.js"
+                        "karmaConfig": "projects/ng-components/karma.conf.js",
+                        "codeCoverage": true
                     }
                 },
                 "lint": {
@@ -99,7 +100,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/docs",
+                        "outputPath": "dist/ng-docs",
                         "index": "projects/docs/src/index.html",
                         "main": "projects/docs/src/main.ts",
                         "polyfills": "projects/docs/src/polyfills.ts",
