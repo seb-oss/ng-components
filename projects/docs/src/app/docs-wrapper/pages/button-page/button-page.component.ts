@@ -8,19 +8,19 @@ import { DropdownItem } from "@sebgroup/ng-components/dropdown";
 })
 export class ButtonPageComponent {
     themeList: Array<DropdownItem<ButtonTheme>> = [
-        { label: "primary", value: "primary", key: "primary" },
-        { label: "outline-primary", value: "outline-primary", key: "outline-primary" },
-        { label: "secondary", value: "secondary", key: "secondary" },
-        { label: "danger", value: "danger", key: "danger" },
-        { label: "outline-danger", value: "outline-danger", key: "outline-danger" },
-        { label: "dark", value: "dark", key: "dark" },
-        { label: "light", value: "light", key: "light" },
-        { label: "link", value: "link", key: "link" },
+        { label: "primary", value: "primary" },
+        { label: "outline-primary", value: "outline-primary" },
+        { label: "secondary", value: "secondary" },
+        { label: "danger", value: "danger" },
+        { label: "outline-danger", value: "outline-danger" },
+        { label: "dark", value: "dark" },
+        { label: "light", value: "light" },
+        { label: "link", value: "link" },
     ];
     sizeList: Array<DropdownItem<ButtonSize>> = [
-        { label: "sm", value: "sm", key: "sm" },
-        { label: "md", value: "md", key: "md" },
-        { label: "lg", value: "lg", key: "lg" },
+        { label: "sm", value: "sm" },
+        { label: "md", value: "md" },
+        { label: "lg", value: "lg" },
     ];
     disabled: boolean = false;
     block: boolean = false;

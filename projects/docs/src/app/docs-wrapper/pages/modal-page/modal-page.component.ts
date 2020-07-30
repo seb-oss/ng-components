@@ -35,14 +35,14 @@ export class ModalPageComponent {
     toggle: boolean = false;
 
     sizeList: DynamicFormOption<ModalSize>[] = [
-        { key: "", value: null, label: "default" },
-        { key: "lg", value: "lg", label: "lg" },
-        { key: "sm", value: "sm", label: "sm" },
+        { value: null, label: "default" },
+        { value: "lg", label: "lg" },
+        { value: "sm", label: "sm" },
     ];
     positionList: DynamicFormOption<ModalPosition>[] = [
-        { key: "", value: null, label: "default" },
-        { key: "right", value: "right", label: "right" },
-        { key: "left", value: "left", label: "left" },
+        { value: null, label: "default" },
+        { value: "right", label: "right" },
+        { value: "left", label: "left" },
     ];
 
     constructor(private formService: FormService) {
