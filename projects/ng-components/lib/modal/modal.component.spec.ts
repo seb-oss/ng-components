@@ -1,6 +1,7 @@
-import { ModalComponent } from "./modal.component";
+import { ModalComponent, ModalSize, ModalPosition } from "./modal.component";
 import { TestBed, async, ComponentFixture, fakeAsync, tick } from "@angular/core/testing";
 import { Subscription } from "rxjs";
+import { Component } from "@angular/core";
 
 describe("Component: ModalComponent", () => {
     let component: ModalComponent;
@@ -34,6 +35,19 @@ describe("Component: ModalComponent", () => {
 
         expect(dialogElement.firstElementChild).not.toBeNull();
         expect(dialogElement.firstElementChild.classList.contains("modal-content")).toBeTrue();
+    });
+
+    it("Should render the component fullscreen or centered when passed", () => {
+        component.centered = true;
+        fixture.detectChanges();
+
+        expect(modalElement.classList.contains("modal-centered")).toBeTrue();
+
+        component.centered = false;
+        component.fullscreen = true;
+        fixture.detectChanges();
+
+        expect(modalElement.classList.contains("modal-fullscreen")).toBeTrue();
     });
 
     it("Should pass optional parameters correctly", () => {
@@ -94,26 +108,82 @@ describe("Component: ModalComponent", () => {
         const removeListenerSpy: jasmine.Spy = spyOn(window, "removeEventListener");
 
         // If the modal is hidden, no listener is added
-        component.toggle = false;
         component.escapeToDismiss = false;
+        component.toggle = false;
         fixture.detectChanges();
 
         expect(addListenerSpy).not.toHaveBeenCalled();
         expect(removeListenerSpy).not.toHaveBeenCalled();
 
         // It should not add a listener when escapeToDismiss is disabled
-        component.toggle = true;
         component.escapeToDismiss = false;
+        component.toggle = true;
         fixture.detectChanges();
 
         expect(addListenerSpy).not.toHaveBeenCalled();
 
         // It should try to remove the listner when the modal is hidden
-        component.toggle = false;
         component.escapeToDismiss = true;
+        component.toggle = false;
         fixture.detectChanges();
 
-        // expect(removeListenerSpy).toHaveBeenCalled();
-        // console.log("TEST");
+        expect(removeListenerSpy).toHaveBeenCalled();
+    });
+
+    describe("Should render with all supported sizes", () => {
+        const sizes: Array<ModalSize> = ["lg", "sm"];
+
+        sizes.forEach((size: ModalSize) => {
+            it(`- ${size}`, () => {
+                component.size = size;
+                fixture.detectChanges();
+
+                expect(modalElement.firstElementChild.classList.contains(`modal-${size}`)).toBeTrue();
+            });
+        });
+    });
+
+    describe("Should render with all supported positions", () => {
+        const positions: Array<ModalPosition> = ["left", "right"];
+
+        positions.forEach((position: ModalPosition) => {
+            it(`- ${position}`, () => {
+                component.position = position;
+                fixture.detectChanges();
+
+                expect(modalElement.classList.contains("modal-aside")).toBeTrue();
+                expect(modalElement.classList.contains(`modal-aside-${position}`)).toBeTrue();
+            });
+        });
+    });
+
+    it("Should render header, body, and footer", async () => {
+        await TestBed.resetTestingModule()
+            .configureTestingModule({
+                declarations: [TestComponent, ModalComponent],
+            })
+            .compileComponents()
+            .then(() => {
+                fixture = TestBed.createComponent(TestComponent) as any;
+                component = fixture.componentInstance;
+                fixture.detectChanges();
+            });
+
+        // Verifies if `disableCloseButton` is also working, otherwise, textContent will be `my headerx`
+        expect(fixture.debugElement.nativeElement.querySelector(".modal-header").textContent).toEqual("my header");
+        expect(fixture.debugElement.nativeElement.querySelector(".modal-body").textContent).toEqual("my body");
+        expect(fixture.debugElement.nativeElement.querySelector(".modal-footer").textContent).toEqual("my footer");
     });
 });
+
+@Component({
+    selector: "testbed",
+    template: `
+        <sebng-modal [disableCloseButton]="true">
+            <div header>my header</div>
+            <div body>my body</div>
+            <div footer>my footer</div>
+        </sebng-modal>
+    `,
+})
+class TestComponent {}
