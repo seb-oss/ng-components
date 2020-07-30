@@ -17,11 +17,7 @@
 
     <app-doc-apis *ngSwitchCase="1" [inputs]="inputs" [outputs]="outputs"></app-doc-apis>
 
-    <ng-container *ngIf="showNotes">
-        <div class="card" *ngSwitchCase="2">
-            <div>
-                <ng-content select="[notes]"></ng-content>
-            </div>
-        </div>
-    </ng-container>
+    <div class="card" *ngSwitchCase="2">
+        <ng-content select="[notes]"></ng-content>
+    </div>
 </div>

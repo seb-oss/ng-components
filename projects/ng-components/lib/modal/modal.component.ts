@@ -74,8 +74,8 @@ export class ModalComponent implements OnDestroy {
         return {
             show: this.toggle,
             hide: !this.toggle && !this.hidden,
-            "modal-centered": this.centered,
-            "modal-fullscreen": this.fullscreen,
+            "modal-centered": this.centered && !!!this.position && !this.fullscreen,
+            "modal-fullscreen": this.fullscreen && !!!this.position,
             [`modal-aside modal-aside-${this.position}`]: !!this.position,
             [this.className]: !!this.className,
         };

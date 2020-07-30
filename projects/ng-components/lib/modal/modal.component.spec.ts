@@ -1,7 +1,7 @@
 import { ModalComponent, ModalSize, ModalPosition } from "./modal.component";
-import { TestBed, async, ComponentFixture, fakeAsync, tick } from "@angular/core/testing";
+import { TestBed, async, ComponentFixture } from "@angular/core/testing";
 import { Subscription } from "rxjs";
-import { Component, COMPILER_OPTIONS } from "@angular/core";
+import { Component } from "@angular/core";
 
 describe("Component: ModalComponent", () => {
     let component: ModalComponent;
@@ -155,6 +155,21 @@ describe("Component: ModalComponent", () => {
                 expect(modalElement.classList.contains(`modal-aside-${position}`)).toBeTrue();
             });
         });
+    });
+
+    it("Should not render fullscreen when aside is enable and centered when fullscreen is enabled", () => {
+        component.fullscreen = true;
+        component.position = "left";
+        fixture.detectChanges();
+
+        expect(modalElement.classList.contains("modal-fullscreen")).toBeFalse();
+
+        component.position = undefined;
+        component.centered = true;
+        fixture.detectChanges();
+
+        expect(modalElement.classList.contains("modal-fullscreen")).toBeTrue();
+        expect(modalElement.classList.contains("modal-centered")).toBeFalse();
     });
 
     it("Should remove the hide class after the modal becomes hidden", () => {
