@@ -1,152 +1,116 @@
-import {
-    Component,
-    Input,
-    ViewEncapsulation,
-    ComponentRef,
-    HostListener,
-    ElementRef,
-    ViewChild,
-    NgZone,
-    Output,
-    EventEmitter,
-    AfterViewInit,
-} from "@angular/core";
-import { SebModalBackdropComponent } from "./modal.backdrop";
-import { ModalService } from "./modal.service";
-import { ModalSizeType, ModalPositionType } from "./modal.type";
-import { AnimationEvent } from "@angular/animations";
-import { fadeInAnimation } from "./animation";
-import { NgClass } from "@angular/common";
+import { Component, Input, Output, EventEmitter, OnDestroy } from "@angular/core";
+
+export type ModalPosition = "left" | "right" | null;
+export type ModalSize = "lg" | "sm" | null;
+
+type NgClassType = { [klass: string]: any };
 
 /** The modal component provides a solid foundation for creating dialogs or slideout modals  */
 @Component({
     selector: "sebng-modal",
     styleUrls: ["./modal.component.scss"],
     templateUrl: "./modal.component.html",
-    encapsulation: ViewEncapsulation.None,
-    animations: [fadeInAnimation],
 })
-export class ModalComponent implements AfterViewInit {
-    /** toggle to show or hide the modal */
-    @Input()
-    set toggle(param: boolean) {
-        param ? this.modalRef && this.open() : this.close();
-        this._toggle = param;
-    }
+export class ModalComponent implements OnDestroy {
+    /**
+     * Keeps track of whether the toggle prop is pristine or not.
+     * It's only used to not render `hide` class when the component just rendered.
+     */
+    private hidden: boolean = true;
+    private _toggle: boolean = false;
 
-    get toggle(): boolean {
+    /** Modal size follows bootstrap sizes: `lg` and `sm` */
+    @Input() size?: ModalSize;
+    /** Modal position. Available positions: `left`, `right` */
+    @Input() position?: ModalPosition;
+    /** Centers the modal in the middle of the screen. Default is `false` */
+    @Input() centered?: boolean = false;
+    /** Expands the modal to cover the whole screen. Default is `false` */
+    @Input() fullscreen?: boolean = false;
+    /** The ability to dismiss the modal when the backdrop is clicked. Default is true */
+    @Input() backdropDismiss?: boolean = true;
+    /** A toggle that shows a close button at the top right corner. Default is true */
+    @Input() closeButton?: boolean = true;
+    /** Fires a dismiss output when the escape key is registered. Default is true */
+    @Input() escapeToDismiss?: boolean = true;
+    /** Element class */
+    @Input() className?: string;
+    /** Element id */
+    @Input() id?: string;
+    /** Disability descriptor */
+    @Input() ariaLabel?: string;
+    /** Disability descriptor */
+    @Input() ariaLabelledby?: string;
+    /** Disability descriptor */
+    @Input() ariaDescribedby?: string;
+    /** Modal toggle */
+    @Input() get toggle(): boolean {
         return this._toggle;
     }
-    /** Optional id for the modal. */
-    @Input() id?: string;
-    /** Optional size of the modal window. Types: "modal-lg" | "modal-sm" */
-    @Input() size?: ModalSizeType;
-    /** Optional Input, toggles a vertically centered Modal. */
-    @Input() center?: boolean;
-    /** Optional position, toggles the modal from the left or right. Types: "right" | "left" */
-    @Input() position: ModalPositionType;
-    /** Optional Input, toggles the modal in fullscreen */
-    @Input() fullscreen?: boolean;
-    /** Optional Input, html class for the modal backdrop */
-    @Input() backdropClassName?: string;
-    /** Optional Input, if false it disables backdrop click dismiss */
-    @Input() backdropDismiss?: boolean = true;
-    /** Optional Input, if false it disables escape key dismiss */
-    @Input() escapeKeyDismiss?: boolean = true;
-    /** Optional custom class to append to the modal. */
-    @Input() className?: string;
-    /** Optional aria-label attribute value to set on the modal window. */
-    @Input() ariaLabel?: string;
-    /** Optional aria-labelledby attribute value to set on the modal window. */
-    @Input() ariaLabelledby?: string;
-    /** Optional aria-describedby attribute value to set on the modal window. */
-    @Input() ariaDescribedby?: string;
-    /** Optional Input, change the annimation duration, accepts values in second and millisecond ex: "3s" or "3000" */
-    @Input() animationDuration?: string = ".15s";
-    /** Dismiss modal method Output, use this to set the toggle property to false */
-    @Output() dismiss: EventEmitter<void> = new EventEmitter();
-    @ViewChild("modalRef") modalRef: ElementRef;
-    backDropRef: ComponentRef<SebModalBackdropComponent>;
-    _toggle: boolean = false; // toggle is required to enable the open or close animation
+    set toggle(toggle: boolean) {
+        if (this._toggle !== toggle) {
+            this._toggle = toggle;
 
-    constructor(private modalService: ModalService, private _ngZone: NgZone) {}
+            if (toggle && this.escapeToDismiss) {
+                window.addEventListener("keyup", this.escapeKeyListener);
+            }
 
-    // Required in case the parent wants to toggle the modal component before the modal view init
-    ngAfterViewInit(): void {
-        this.toggle && this.open();
-    }
+            // Unsubscribe as soon as the the modal is dismissed
+            if (!toggle && this.escapeToDismiss) {
+                window.removeEventListener("keyup", this.escapeKeyListener);
+            }
 
-    /**
-     * construct the class names that needs to be appended to the modal depending on the inputs requested
-     * @returns { [key: string]: boolean } key value pair for the positions of the modal
-     */
-    get modalPosition(): { [key: string]: boolean } {
-        return {
-            "modal-aside": !!this.position && !this.fullscreen,
-            "modal-aside-left": this.position === "left",
-            "modal-aside-right": this.position === "right",
-            "modal-fullscreen": this.fullscreen,
-        };
-    }
-
-    /**
-     * emit close event when backdrop is clicked
-     */
-    @HostListener("click", ["$event"])
-    onBackdropClick(event: MouseEvent): void {
-        if (this.backdropDismiss) {
-            if (event && event.target && event.target["classList"] && event.target["classList"].length) {
-                const classList: DOMTokenList = event.target["classList"];
-                if (classList.contains("modal")) {
-                    this.close();
-                }
+            // This only runs once when the toggle value is changed
+            if (toggle && this.hidden) {
+                this.hidden = false;
             }
         }
     }
 
-    /**
-     * emit close when escape key is clicked
-     */
-    @HostListener("keyup", ["$event"])
-    onEscKey(event: KeyboardEvent): void {
-        if (this.escapeKeyDismiss && event.key.toLowerCase() === "escape") {
-            this.close();
-        }
+    /** Event triggered when the modal is dismissed. Can be triggered with close button or backdrop click */
+    @Output() dismiss: EventEmitter<MouseEvent> = new EventEmitter();
+
+    get modalClassName(): NgClassType {
+        return {
+            show: this.toggle,
+            hide: !this.toggle && !this.hidden,
+            "modal-centered": this.centered && !!!this.position && !this.fullscreen,
+            "modal-fullscreen": this.fullscreen && !!!this.position,
+            [`modal-aside modal-aside-${this.position}`]: !!this.position,
+            [this.className]: !!this.className,
+        };
     }
 
-    /** toggles open and close state for the modal animation */
-    get toggleAnimationState(): string {
-        return this._toggle ? "open" : "close";
+    get dialogClassName(): NgClassType {
+        return {
+            [`modal-${this.size}`]: !!this.size,
+        };
     }
 
-    /**
-     * append backrop to the body, open the modal and trigger the animation
-     */
-    open(): void {
-        this.backDropRef = this.modalService.appendComponentToBody(SebModalBackdropComponent, this.backdropClassName);
-        this.modalService.open(this.modalRef);
-    }
-
-    /**
-     * close the modal, trigger the anumation and remove the backdrop from the body using its reference
-     */
-    close(): void {
-        if (this.modalRef) {
-            this.toggle && this.dismiss && this.dismiss.emit();
-            this.modalService.close(this.modalRef);
-            this.modalService.removeComponentFromBody(this.backDropRef);
+    animationEnded(e: TransitionEvent): void {
+        if (!this.toggle) {
+            this.hidden = true;
         }
     }
 
     /**
-     * callback when the animation is done
-     * @param event
+     * Dismisses the modal
+     * @param e clicked element
      */
-    onAnimationDone(event: AnimationEvent): void {
-        if (event.toState === "open") {
-            this._ngZone.runOutsideAngular(() => {
-                setTimeout(() => this.modalRef.nativeElement.focus(), 0);
-            });
+    backdropClick(e: MouseEvent): void {
+        e.stopPropagation();
+        if (this.backdropDismiss) {
+            this.dismiss.emit(e);
         }
+    }
+
+    escapeKeyListener = (e: KeyboardEvent): void => {
+        if (e.key.toLowerCase() === "escape" && this.escapeToDismiss) {
+            this.dismiss.emit();
+        }
+    };
+
+    ngOnDestroy(): void {
+        window.removeEventListener("keyup", this.escapeKeyListener);
     }
 }

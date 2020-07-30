@@ -7,6 +7,12 @@ import { ScullyLibModule } from "@scullyio/ng-lib";
 import { LoaderModule } from "@sebgroup/ng-components/loader";
 import { AppRoutingModule } from "./app-routing.module";
 
+declare global {
+    interface Window {
+        hljs?: typeof HLJS;
+    }
+}
+
 @NgModule({
     declarations: [AppComponent],
     imports: [CommonModule, BrowserModule, BrowserAnimationsModule, AppRoutingModule, ScullyLibModule, LoaderModule],

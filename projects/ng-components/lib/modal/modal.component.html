@@ -1,22 +1,35 @@
 <div
-    #modalRef
-    class="modal fade"
+    [ngClass]="modalClassName"
+    class="ac modal"
     role="dialog"
+    tabIndex="-1"
     aria-modal="true"
-    tabindex="-1"
     [attr.id]="id"
     [attr.aria-label]="ariaLabel"
     [attr.aria-labelledby]="ariaLabelledby"
     [attr.aria-describedby]="ariaDescribedby"
-    [attr.class]="className"
-    [ngClass]="modalPosition"
-    [@openClose]="{ value: toggleAnimationState, params: { time: animationDuration } }"
-    (@openClose.done)="onAnimationDone($event)"
+    (click)="backdropClick($event)"
 >
-    <div class="modal-dialog" [ngClass]="size" [class.modal-dialog-centered]="center" role="document">
+    <div
+        role="document"
+        class="modal-dialog"
+        [ngClass]="dialogClassName"
+        (click)="$event.stopPropagation()"
+        (animationend)="animationEnded($event)"
+    >
         <div class="modal-content">
             <div class="modal-header">
                 <ng-content select="[header]"></ng-content>
+                <button
+                    *ngIf="closeButton"
+                    type="button"
+                    class="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                    (click)="dismiss.emit($event)"
+                >
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <ng-content select="[body]"></ng-content>
