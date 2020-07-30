@@ -8,26 +8,26 @@ import { NotificationTheme, NotificationPosition, NotificationStyle, Notificatio
 })
 export class NotificationPageComponent {
     themeList: Array<DropdownItem<NotificationTheme>> = [
-        { label: "purple", value: "purple", key: "purple" },
-        { label: "primary", value: "primary", key: "primary" },
-        { label: "danger", value: "danger", key: "danger" },
-        { label: "success", value: "success", key: "success" },
-        { label: "warning", value: "warning", key: "warning" },
-        { label: "inverted", value: "inverted", key: "inverted" },
+        { label: "purple", value: "purple" },
+        { label: "primary", value: "primary" },
+        { label: "danger", value: "danger" },
+        { label: "success", value: "success" },
+        { label: "warning", value: "warning" },
+        { label: "inverted", value: "inverted" },
     ];
     positionList: Array<DropdownItem<NotificationPosition>> = [
-        { label: "bottom-left", value: "bottom-left", key: "bottom-left" },
-        { label: "bottom-right", value: "bottom-right", key: "bottom-right" },
-        { label: "top-left", value: "top-left", key: "top-left" },
-        { label: "top-right", value: "top-right", key: "top-right" },
+        { label: "bottom-left", value: "bottom-left" },
+        { label: "bottom-right", value: "bottom-right" },
+        { label: "top-left", value: "top-left" },
+        { label: "top-right", value: "top-right" },
     ];
     positionBarList: Array<DropdownItem<NotificationPosition>> = [
-        { label: "top", value: "top", key: "top" },
-        { label: "bottom", value: "bottom", key: "bottom" },
+        { label: "top", value: "top" },
+        { label: "bottom", value: "bottom" },
     ];
     styleList: Array<DropdownItem<NotificationStyle>> = [
-        { label: "slide-in", value: "slide-in", key: "slide-in" },
-        { label: "bar", value: "bar", key: "bar" },
+        { label: "slide-in", value: "slide-in" },
+        { label: "bar", value: "bar" },
     ];
     actions: Array<NotificationAction> = [
         { text: "Remind me later", action: () => (this.toggle = false) },

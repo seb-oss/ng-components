@@ -20,37 +20,37 @@ export class LoaderPageComponent {
     classNames: string;
     lightColors: Array<Color> = ["white", "secondary", "light"];
 
-    size: DropdownItem<LoaderSize> = { value: "md", key: "md", label: "Medium (md)" };
-    type: DropdownItem<LoaderType> = { value: "spinner", key: "spinner", label: "Spinner" };
+    size: DropdownItem<LoaderSize> = { value: "md", label: "Medium (md)" };
+    type: DropdownItem<LoaderType> = { value: "spinner", label: "Spinner" };
     color: DropdownItem<Color>;
     showText: Array<DropdownItem<boolean>> = [];
-    showTextList: Array<DropdownItem<boolean>> = [{ value: false, key: false, label: "show text" }];
+    showTextList: Array<DropdownItem<boolean>> = [{ value: false, label: "show text" }];
 
     sizeList: Array<DropdownItem<LoaderSize>> = [
-        { value: "xs", key: "xs", label: "Extra small (xs)" },
-        { value: "sm", key: "sm", label: "Small (sm)" },
-        { value: "md", key: "md", label: "Medium (md)" },
-        { value: "lg", key: "lg", label: "Large (lg)" },
+        { value: "xs", label: "Extra small (xs)" },
+        { value: "sm", label: "Small (sm)" },
+        { value: "md", label: "Medium (md)" },
+        { value: "lg", label: "Large (lg)" },
     ];
 
     typeList: Array<DropdownItem<LoaderType>> = [
-        { value: "spinner", key: "spinner", label: "Spinner" },
-        { value: "square", key: "square", label: "Square" },
+        { value: "spinner", label: "Spinner" },
+        { value: "square", label: "Square" },
     ];
 
     colorList: Array<DropdownItem<Color>> = [
-        { value: undefined, key: undefined, label: "none" },
-        { value: "primary", key: "primary", label: "text-primary" },
-        { value: "secondary", key: "secondary", label: "text-secondary" },
-        { value: "warning", key: "warning", label: "text-warning" },
-        { value: "danger", key: "danger", label: "text-danger" },
-        { value: "success", key: "success", label: "text-success" },
-        { value: "white", key: "white", label: "text-white" },
-        { value: "info", key: "info", label: "text-info" },
-        { value: "light", key: "light", label: "text-light" },
-        { value: "dark", key: "dark", label: "text-dark" },
-        { value: "body", key: "body", label: "text-body" },
-        { value: "muted", key: "muted", label: "text-muted" },
+        { value: undefined, label: "none" },
+        { value: "primary", label: "text-primary" },
+        { value: "secondary", label: "text-secondary" },
+        { value: "warning", label: "text-warning" },
+        { value: "danger", label: "text-danger" },
+        { value: "success", label: "text-success" },
+        { value: "white", label: "text-white" },
+        { value: "info", label: "text-info" },
+        { value: "light", label: "text-light" },
+        { value: "dark", label: "text-dark" },
+        { value: "body", label: "text-body" },
+        { value: "muted", label: "text-muted" },
     ];
 
     getSvgColor(): string {

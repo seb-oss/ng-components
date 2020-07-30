@@ -34,10 +34,10 @@ export class RadioGroupPageComponent implements OnInit {
     condensed: boolean;
     inline: boolean;
     list: RadioGroupItem[] = [
-        { key: "1", value: "1", label: "First", description: "with description" },
-        { key: "2", value: "2", label: "Second" },
-        { key: "3", value: "3", label: "Third (disabled)", disabled: true },
-        { key: "4", value: "4", customTemplate: "<code>4️⃣ Fourth (using custom template)</code> 😊" },
+        { value: "1", label: "First", description: "with description" },
+        { value: "2", label: "Second" },
+        { value: "3", label: "Third (disabled)", disabled: true },
+        { value: "4", customTemplate: "<code>4️⃣ Fourth (using custom template)</code> 😊" },
     ];
 
     constructor() {
