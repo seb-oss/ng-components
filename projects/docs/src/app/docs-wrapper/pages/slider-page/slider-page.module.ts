@@ -2,14 +2,12 @@ import { NgModule } from "@angular/core";
 import { SliderModule } from "@sebgroup/ng-components/slider";
 import { SliderPageComponent } from "./slider-page.component";
 import { CommonModule } from "@angular/common";
-import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-
-const routes: Routes = [{ path: "", component: SliderPageComponent }];
+import { SliderPageRoutingModule } from "./slider-page-routing.module";
 
 @NgModule({
     declarations: [SliderPageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, SliderModule, ReactiveFormsModule],
+    imports: [CommonModule, SliderPageRoutingModule, FormsModule, DocPageModule, SliderModule, ReactiveFormsModule],
 })
 export class SliderPageModule {}
