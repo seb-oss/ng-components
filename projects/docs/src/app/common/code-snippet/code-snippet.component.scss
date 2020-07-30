@@ -23,11 +23,10 @@
             padding: 20px;
             width: 100%;
             height: 100%;
-
-            &:hover {
-                & + div.snippet-icon {
-                    opacity: 1;
-                }
+        }
+        &:hover {
+            & + div.snippet-icon {
+                opacity: 1;
             }
         }
     }

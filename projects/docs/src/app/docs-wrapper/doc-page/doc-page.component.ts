@@ -24,6 +24,7 @@ export class DocPageComponent implements OnInit, OnDestroy, AfterViewChecked {
     @Input() importString: string;
     @Input() centered?: boolean;
     @Input() class?: string;
+    @Input() showNotes?: boolean = false;
 
     constructor(
         private apiService: APIExtractService,

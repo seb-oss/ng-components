@@ -10,12 +10,18 @@
     [attr.aria-describedby]="ariaDescribedby"
     (click)="backdropClick($event)"
 >
-    <div role="document" class="modal-dialog" [ngClass]="dialogClassName" (click)="$event.stopPropagation()">
+    <div
+        role="document"
+        class="modal-dialog"
+        [ngClass]="dialogClassName"
+        (click)="$event.stopPropagation()"
+        (animationend)="animationEnded($event)"
+    >
         <div class="modal-content">
             <div class="modal-header">
                 <ng-content select="[header]"></ng-content>
                 <button
-                    *ngIf="!disableCloseButton"
+                    *ngIf="closeButton"
                     type="button"
                     class="close"
                     data-dismiss="modal"

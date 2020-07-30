@@ -1,4 +1,4 @@
-<app-doc-page [importString]="importString" [centered]="true">
+<app-doc-page [importString]="importString" [centered]="true" [showNotes]="true">
     <ng-container example>
         <button class="btn btn-primary" (click)="this.toggle = true">Open Modal</button>
         <sebng-modal
@@ -9,7 +9,8 @@
             [centered]="extendedFormGroup.value.controls.centered"
             [fullscreen]="extendedFormGroup.value.controls.fullscreen"
             [escapeToDismiss]="extendedFormGroup.value.controls.escapeToDismiss"
-            [disableBackdropDismiss]="extendedFormGroup.value.controls.disableBackdropDismiss"
+            [backdropDismiss]="extendedFormGroup.value.controls.backdropDismiss"
+            [closeButton]="extendedFormGroup.value.controls.closeButton"
             (dismiss)="this.toggle = false"
         >
             <div class="custom-header" header>Title</div>

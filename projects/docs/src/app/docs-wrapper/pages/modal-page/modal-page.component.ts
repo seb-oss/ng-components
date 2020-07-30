@@ -11,37 +11,24 @@ import { DynamicFormOption } from "@common/dynamic-form/model/models";
 })
 export class ModalPageComponent {
     importString: string = require("!raw-loader!@sebgroup/ng-components/modal/modal.component");
-    snippet: string = `<sebng-modal
-    [toggle]="toggle"
-    (dismiss)="closeModal()>
+    snippet: string = `<sebng-modal [toggle]="toggle" (dismiss)="toggle = false">
+    <div header>Title</div>
 
-    <div class="custom-header" header>
-        Title
+    <div body>
+        <ng-template *ngTemplateOutlet="simpleBody"></ng-template>
     </div>
 
-    <div class="custom-body" body>
-        <ng-template #simpleBody>Body</ng-template>
-    </div>
-
-    <div class="custom-footer" footer>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="closeModal()">
+    <div footer>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="toggle = false">
             Close
         </button>
     </div>
 </sebng-modal>`;
 
     modalTemplate: string = `<sebng-modal>
-    <div class="custom-header" header>
-        Header
-    </div>
-
-    <div class="custom-body" body>
-        body
-    </div>
-
-    <div class="custom-footer" footer>
-        footer
-    </div>
+    <div header>Header</div>
+    <div body>body</div>
+    <div footer>footer</div>
 </sebng-modal>`;
     extendedFormGroup: ExtendedFormGroup;
 
@@ -93,22 +80,25 @@ export class ModalPageComponent {
                         value: false,
                     },
                     {
-                        key: "disableBackdropDismiss",
+                        key: "backdropDismiss",
                         controlType: "Checkbox",
-                        label: "Disable backdrop dismiss",
-                        value: false,
+                        label: "Backdrop dismiss",
+                        description: "Enables dismissing the modal when the backdrop is clicked",
+                        value: true,
                     },
                     {
                         key: "escapeToDismiss",
                         controlType: "Checkbox",
                         label: "Escape to dismiss",
-                        value: false,
+                        description: `Dismisses the modal when the "Escape" key is pressed`,
+                        value: true,
                     },
                     {
-                        key: "disableCloseButton",
+                        key: "closeButton",
                         controlType: "Checkbox",
-                        label: "Disable close button",
-                        value: false,
+                        label: "Close button",
+                        description: "Shows a close button at the top right corner to be used to dismiss the modal",
+                        value: true,
                     },
                 ],
             },

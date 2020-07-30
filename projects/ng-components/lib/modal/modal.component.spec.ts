@@ -1,7 +1,7 @@
 import { ModalComponent, ModalSize, ModalPosition } from "./modal.component";
 import { TestBed, async, ComponentFixture, fakeAsync, tick } from "@angular/core/testing";
 import { Subscription } from "rxjs";
-import { Component } from "@angular/core";
+import { Component, COMPILER_OPTIONS } from "@angular/core";
 
 describe("Component: ModalComponent", () => {
     let component: ModalComponent;
@@ -91,7 +91,7 @@ describe("Component: ModalComponent", () => {
 
         expect(onDismiss).toHaveBeenCalledTimes(3);
 
-        component.disableBackdropDismiss = true;
+        component.backdropDismiss = false;
         component.escapeToDismiss = false;
         fixture.detectChanges();
 
@@ -157,6 +157,26 @@ describe("Component: ModalComponent", () => {
         });
     });
 
+    it("Should remove the hide class after the modal becomes hidden", () => {
+        component.toggle = true;
+        modalElement.firstElementChild.dispatchEvent(new Event("animationend", { bubbles: true }));
+        fixture.detectChanges();
+
+        expect(modalElement.classList.contains("show")).toBeTrue();
+        expect(modalElement.classList.contains("hide")).toBeFalse();
+
+        component.toggle = false;
+        fixture.detectChanges();
+        expect(modalElement.classList.contains("show")).toBeFalse();
+        expect(modalElement.classList.contains("hide")).toBeTrue();
+
+        modalElement.firstElementChild.dispatchEvent(new Event("animationend", { bubbles: true }));
+        fixture.detectChanges();
+
+        expect(modalElement.classList.contains("show")).toBeFalse();
+        expect(modalElement.classList.contains("hide")).toBeFalse();
+    });
+
     it("Should render header, body, and footer", async () => {
         await TestBed.resetTestingModule()
             .configureTestingModule({
@@ -169,7 +189,7 @@ describe("Component: ModalComponent", () => {
                 fixture.detectChanges();
             });
 
-        // Verifies if `disableCloseButton` is also working, otherwise, textContent will be `my headerx`
+        // Verifies if `closeButton` is also working, otherwise, textContent will be `my headerx`
         expect(fixture.debugElement.nativeElement.querySelector(".modal-header").textContent).toEqual("my header");
         expect(fixture.debugElement.nativeElement.querySelector(".modal-body").textContent).toEqual("my body");
         expect(fixture.debugElement.nativeElement.querySelector(".modal-footer").textContent).toEqual("my footer");
@@ -179,7 +199,7 @@ describe("Component: ModalComponent", () => {
 @Component({
     selector: "testbed",
     template: `
-        <sebng-modal [disableCloseButton]="true">
+        <sebng-modal [closeButton]="false">
             <div header>my header</div>
             <div body>my body</div>
             <div footer>my footer</div>
