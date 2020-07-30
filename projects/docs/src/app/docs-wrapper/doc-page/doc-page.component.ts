@@ -3,6 +3,7 @@ import { Subscription } from "rxjs";
 import { TabsListItem } from "@sebgroup/ng-components/tabs";
 import { APIExtractService } from "../../common/services/api-extract.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
+import { Meta } from "@angular/platform-browser";
 
 @Component({
     selector: "app-doc-page",
@@ -28,7 +29,8 @@ export class DocPageComponent implements OnInit, OnDestroy, AfterViewChecked {
         private apiService: APIExtractService,
         private route: ActivatedRoute,
         private router: Router,
-        private changeDetector: ChangeDetectorRef
+        private changeDetector: ChangeDetectorRef,
+        private meta: Meta
     ) {}
 
     /**
@@ -51,6 +53,7 @@ export class DocPageComponent implements OnInit, OnDestroy, AfterViewChecked {
                         this.description = data[0].description;
                         this.inputs = [...data[0].properties, ...data[0].inputs];
                         this.outputs = data[0].outputs;
+                        this.meta.updateTag({ name: "description", content: this.description });
                     }
                 });
             } catch (e) {

@@ -2,14 +2,12 @@ import { NgModule } from "@angular/core";
 import { TextboxGroupModule } from "@sebgroup/ng-components/textboxGroup";
 import { TextboxgroupPageComponent } from "./textboxgroup-page.component";
 import { CommonModule } from "@angular/common";
-import { Routes, RouterModule } from "@angular/router";
 import { DocPageModule } from "../../doc-page/doc-page.module";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-
-const routes: Routes = [{ path: "", component: TextboxgroupPageComponent }];
+import { FormsModule } from "@angular/forms";
+import { TextboxgroupPageRoutingModule } from "./textboxgroup-page-routing.module";
 
 @NgModule({
     declarations: [TextboxgroupPageComponent],
-    imports: [CommonModule, RouterModule.forChild(routes), FormsModule, DocPageModule, TextboxGroupModule],
+    imports: [CommonModule, TextboxgroupPageRoutingModule, FormsModule, DocPageModule, TextboxGroupModule],
 })
 export class TextboxGroupPageModule {}
