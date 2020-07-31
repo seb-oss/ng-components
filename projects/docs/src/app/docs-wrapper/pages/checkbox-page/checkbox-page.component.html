@@ -11,10 +11,14 @@
                 <div class="custom-label">I am a custom label <a href="">read me please</a></div>
             </ng-template>
             <ng-template #description>
-                <div class="custom-description">I am a custom description <a href="www.google.com" target="_blank">read me please</a></div>
+                <div class="custom-description">
+                    I am a custom description <a href="www.google.com" rel="noopener noreferrer" target="_blank">read me please</a>
+                </div>
             </ng-template>
             <ng-template #error>
-                <div class="text-danger">Click on the <a href="www.google.com" target="_blank">error link</a></div>
+                <div class="text-danger">
+                    Click on the <a href="www.google.com" rel="noopener noreferrer" target="_blank">error link</a>
+                </div>
             </ng-template>
         </sebng-checkbox>
     </ng-container>
