@@ -66,12 +66,12 @@
             <h2>Contributors</h2>
             <div>
                 <div *ngFor="let person of contributors">
-                    <a [href]="person.html_url" target="_blank">
+                    <a [href]="person.html_url" rel="noopener noreferrer" target="_blank">
                         <img class="avatar" width="50px" [src]="person.avatar_url" [alt]="person.login" [title]="person.login" />
                     </a>
                 </div>
                 <div>
-                    <a [href]="designer.html_url" target="_blank">
+                    <a [href]="designer.html_url" rel="noopener noreferrer" target="_blank">
                         <img class="avatar" width="50px" [src]="designer.avatar_url" [alt]="designer.login" [title]="designer.login" />
                     </a>
                 </div>
