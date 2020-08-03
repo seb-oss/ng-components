@@ -104,8 +104,10 @@ export class RadioGroupComponent implements ControlValueAccessor, AfterViewCheck
         if (!this.didFocus && this.list && this.list.length) {
             const currentFocused: number = this.list.findIndex(e => e && this.selectedValue && e.value === this.selectedValue.value);
             if (currentFocused > -1 && this.radioRefs.toArray()[currentFocused] && this.radioRefs.toArray()[currentFocused].nativeElement) {
-                this.radioRefs.toArray()[currentFocused].nativeElement.focus();
-                this.didFocus = true;
+                setTimeout(() => {
+                    this.radioRefs.toArray()[currentFocused].nativeElement?.focus();
+                    this.didFocus = true;
+                }, 0);
             }
         }
     }
@@ -123,7 +125,10 @@ export class RadioGroupComponent implements ControlValueAccessor, AfterViewCheck
         this.uniqueList =
             this.list &&
             this.list
-                .filter((e: RadioGroupItem) => e && e.hasOwnProperty("label") && e.hasOwnProperty("value"))
+                .filter(
+                    (e: RadioGroupItem) =>
+                        e && (e.hasOwnProperty("label") || e.hasOwnProperty("customTemplate")) && e.hasOwnProperty("value")
+                )
                 .map((e: RadioGroupItem, i: number) => {
                     const id: string = `${e.value}-${i}`;
                     let selected: boolean = false;
