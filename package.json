@@ -65,7 +65,7 @@
         "highlight.js": "^9.18.1",
         "highlightjs-line-numbers.js": "^2.8.0",
         "ngx-highlightjs": "^4.1.1",
-        "rxjs": "~6.6.0",
+        "rxjs": "~6.6.2",
         "tslib": "^2.0.0",
         "typescript-parser-es5": "^1.0.0",
         "web-animations-js": "^2.3.2",
