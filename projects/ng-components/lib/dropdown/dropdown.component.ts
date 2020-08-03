@@ -312,11 +312,8 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
 
     /** The native event function that runs when a keyboard button is pressed on dropdown menu */
     handleKeyDownMenu(event: KeyboardEvent): void {
-        // this.shouldFocus = true;
         const key: string = event.key.toLowerCase();
-        console.log(this.currentFocused);
 
-        // console.log(this.displayList.length);
         if (this.open) {
             switch (key) {
                 case " ":
