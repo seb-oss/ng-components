@@ -5,9 +5,14 @@ import { Component } from "@angular/core";
     template: `
         <footer class="container">
             <nav class="navbar">
-                <div class="navbar-brand">Developed with ❤️ by <a href="https://seb.se" target="_blank"></a></div>
+                <div class="navbar-brand">Developed with ❤️ by <a href="https://seb.se" rel="noopener noreferrer" target="_blank"></a></div>
                 <div class="navbar-text">
-                    <a href="https://www.npmjs.com/package/@sebgroup/ng-components/v/beta" target="_blank" title="View in npm">
+                    <a
+                        href="https://www.npmjs.com/package/@sebgroup/ng-components/v/beta"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        title="View in npm"
+                    >
                         <img src="https://img.shields.io/npm/v/@sebgroup/ng-components/beta" alt="npm version" />
                     </a>
                 </div>

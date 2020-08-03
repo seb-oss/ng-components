@@ -23,11 +23,11 @@
         <nav class="components-list">
             <a [routerLink]="['/']" class="list-item">Home</a>
             <a [routerLink]="['/docs/getting-started']" routerLinkActive="highlighted" class="list-item">Getting Started</a>
-            <a [href]="urls.releases" target="_blank" class="list-item">
+            <a [href]="urls.releases" rel="noopener noreferrer" target="_blank" class="list-item">
                 <app-external-link-icon size="0.8em"></app-external-link-icon>
                 Release notes
             </a>
-            <a [href]="urls.issues" target="_blank" class="list-item">
+            <a [href]="urls.issues" rel="noopener noreferrer" target="_blank" class="list-item">
                 <app-external-link-icon size="0.8em"></app-external-link-icon>
                 Issues
             </a>

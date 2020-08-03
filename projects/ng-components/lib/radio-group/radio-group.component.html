@@ -39,7 +39,7 @@
             *ngIf="item.optionItem.customTemplate; else normal"
             [attr.for]="!(item.optionItem.disabled || disabled) ? item.id : null"
             class="custom-control-label"
-            [innerHtml]="item.optionItem.customTemplate"
+            [innerHtml]="item.optionItem.customTemplate | radioGroupSafeHtml"
         ></label>
         <ng-template #normal>
             <label [attr.for]="!(item.optionItem.disabled || disabled) ? item.id : null" class="custom-control-label"

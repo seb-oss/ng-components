@@ -20,7 +20,7 @@ import { Component, Input } from "@angular/core";
                             <td>
                                 <code>{{ input.type }}</code>
                             </td>
-                            <td>{{ input.description }}</td>
+                            <td [innerHtml]="input.description | safeHtml"></td>
                         </tr>
                     </tbody>
                 </table>
@@ -44,7 +44,7 @@ import { Component, Input } from "@angular/core";
                             <td>
                                 <code>{{ output.type }}</code>
                             </td>
-                            <td>{{ output.description }}</td>
+                            <td [innerHtml]="output.description | safeHtml"></td>
                         </tr>
                     </tbody>
                 </table>
