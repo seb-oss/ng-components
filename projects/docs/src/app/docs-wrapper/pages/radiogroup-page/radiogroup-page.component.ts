@@ -38,10 +38,11 @@ export class RadioGroupPageComponent implements OnInit {
         { value: "2", label: "Second" },
         { value: "3", label: "Third (disabled)", disabled: true },
         { value: "4", customTemplate: "<code>4️⃣ Fourth (using custom template)</code> 😊" },
+        { value: "5", label: "Fifth" },
     ];
 
     constructor() {
-        document.title = "RadioGroup - SEB Angular Components";
+        document.title = "Radio Group - SEB Angular Components";
     }
 
     ngOnInit(): void {}
