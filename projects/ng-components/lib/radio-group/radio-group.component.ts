@@ -105,7 +105,7 @@ export class RadioGroupComponent implements ControlValueAccessor, AfterViewCheck
             const currentFocused: number = this.list.findIndex(e => e && this.selectedValue && e.value === this.selectedValue.value);
             if (currentFocused > -1 && this.radioRefs.toArray()[currentFocused] && this.radioRefs.toArray()[currentFocused].nativeElement) {
                 setTimeout(() => {
-                    this.radioRefs.toArray()[currentFocused].nativeElement.focus();
+                    this.radioRefs.toArray()[currentFocused].nativeElement?.focus();
                     this.didFocus = true;
                 }, 0);
             }
