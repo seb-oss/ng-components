@@ -21,7 +21,10 @@ const CUSTOM_DROPDOWN_CONTROL_VALUE_ACCESSOR: Provider = {
     multi: true,
 };
 
-/** A dropdown allows the user to select an option from a list. Dropdowns enables users to make a quick selection of the available options for a specific entry. */
+/**
+ * A dropdown allows the user to select an option from a list.
+ * Dropdowns enables users to make a quick selection of the available options for a specific entry.
+ */
 @Component({
     selector: "sebng-dropdown",
     templateUrl: "./dropdown.component.html",
@@ -459,7 +462,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
 
     // HELPERS ================================
     /** Returns the appropriate title for different situations and component types */
-    getTitleLabel() {
+    getTitleLabel(): string {
         if (this.uniqueList && this.uniqueList.length === 0) {
             return "Empty";
         } else if (this.selectedList && this.selectedList.length > 0) {
@@ -472,14 +475,14 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
                 return this.selectedList
                     .map((item: DropdownItem, index: number) => {
                         if (index > 0) {
-                            return ` ${item.label}`;
+                            return ` ${item.shorthand || item.label}`;
                         } else {
-                            return item.label;
+                            return item.shorthand || item.label;
                         }
                     })
                     .toString();
             }
-            return (this.selectedValue as DropdownItem).label;
+            return (this.selectedValue as DropdownItem).shorthand || (this.selectedValue as DropdownItem).label;
         }
 
         return this.placeholder && this.placeholder.length ? this.placeholder : "Select ...";
@@ -515,6 +518,8 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
 export interface DropdownItem<T = any> {
     /** The label or text to be displayed in the list */
     label: string;
+    /** A text to be displayed when the item is selected, ideally, a shorthand of the label */
+    shorthand?: string;
     /** any value which should be tied to the item */
     value: T;
     /** sets this items as view only or disabled */

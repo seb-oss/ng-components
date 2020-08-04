@@ -16,7 +16,7 @@
         <sebng-dropdown
             class="col-12 mb-2"
             label="Multi select"
-            [list]="list2"
+            [list]="list"
             [multi]="true"
             [native]="isNative"
             [placeholder]="placeholder"
@@ -24,7 +24,7 @@
             [disabled]="disabled"
             [searchable]="searchable"
             [clearable]="clearable"
-            [(ngModel)]="selectedValue2"
+            [(ngModel)]="selectedValues"
         ></sebng-dropdown>
     </div>
 
@@ -55,6 +55,13 @@
                 [(ngModel)]="clearable"
                 label="Clearable"
                 description="Add the option to clear the dropdown of any selection (only single select)."
+            ></sebng-checkbox>
+
+            <sebng-checkbox
+                [(ngModel)]="useShorthand"
+                (ngModelChange)="onShorthandChange()"
+                label="Use shorthand"
+                description="You can render a shorthand of the label when it is selected when you pass it to the dropdown item"
             ></sebng-checkbox>
 
             <div>
