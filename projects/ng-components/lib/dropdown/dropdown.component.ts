@@ -520,9 +520,9 @@ export interface DropdownItem<T = any> {
     label: string;
     /** A text to be displayed when the item is selected, ideally, a shorthand of the label */
     shorthand?: string;
-    /** any value which should be tied to the item */
+    /** Any value which should be tied to the item */
     value: T;
-    /** sets this items as view only or disabled */
+    /** Sets this items as view only or disabled */
     disabled?: boolean;
 }
 
