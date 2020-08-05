@@ -34,6 +34,7 @@
 
         <button
             #dropdownToggleRef
+            type="button"
             [id]="id || toggleButtonId"
             class="btn btn-secondary dropdown-toggle custom-dropdown-toggle"
             [class.disabled]="disabled"
@@ -108,6 +109,7 @@
                 <ng-container *ngFor="let item of displayList; index as i">
                     <button
                         #listRefs
+                        type="button"
                         class="{{ item.className }}"
                         [class.highlighted]="currentFocused === i"
                         [class.disabled]="item.optionItem.disabled"
