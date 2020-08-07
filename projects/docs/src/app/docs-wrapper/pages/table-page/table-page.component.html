@@ -1,0 +1,52 @@
+<app-doc-page [importString]="importString">
+    <div class="w-100" example>
+        <sebng-table
+            [rows]="rows$ | async"
+            [headerList]="headerList$ | async"
+            [selectable]="selectable"
+            [selectedRowIndexes]="selectable ? (selectedRows$ | async)[0] : null"
+            [sortInfo]="sortInfo$ | async"
+            [fixedHeight]="hasFixedHeight ? height + 'px' : null"
+            (sortClicked)="changeSort($event)"
+            (selectAllClicked)="selectAll()"
+            (rowClicked)="selectRow($event.index)"
+        ></sebng-table>
+    </div>
+    <div controls>
+        <sebng-checkbox [(ngModel)]="selectable" label="Selectable" description="Enable selectable rows with checkboxes"></sebng-checkbox>
+
+        <sebng-checkbox
+            [(ngModel)]="hasFixedHeight"
+            label="Fixed Height"
+            description="Preserve table height and scroll the content"
+        ></sebng-checkbox>
+
+        <ng-container *ngIf="hasFixedHeight">
+            <label>Table height </label>
+            <sebng-stepper className="mb-0" [(ngModel)]="height" [min]="20" [max]="200" [step]="5"></sebng-stepper>
+            <p><small>Set the height of the table (in px)</small></p>
+        </ng-container>
+
+        <sebng-dropdown
+            className="mb-3"
+            [ngModel]="getDropdownItemByColumnName((sortInfo$ | async)?.column)"
+            (ngModelChange)="changeSort($event.value)"
+            [list]="sortDropdownList"
+            label="Sort table by"
+        ></sebng-dropdown>
+
+        <sebng-dropdown
+            [ngModel]="selectedColumnsDropdownList"
+            (ngModelChange)="changeColumns(getColumnsFromDropdownList($event)); selectedColumnsDropdownList = $event"
+            [list]="columnsDropdownList"
+            [multi]="true"
+            label="Show columns"
+        ></sebng-dropdown>
+        <p><small>(Note: Deselecting all columns will default to all columns being showed.)</small></p>
+    </div>
+    <ng-container code>{{ snippet }}</ng-container>
+    <!--
+        // TODO: Add info about the table service
+        <ng-container notes></ng-container>
+    -->
+</app-doc-page>

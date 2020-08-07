@@ -1,53 +1,24 @@
-import { Component, OnInit } from "@angular/core";
-import { TableService } from "@sebgroup/ng-components/table";
+import { Component } from "@angular/core";
+import { TableService, SortInfo, TableConfig, TableHeaderListItem } from "@sebgroup/ng-components/table";
 import { BehaviorSubject } from "rxjs";
+import { DropdownItem } from "@sebgroup/ng-components/dropdown";
+
+interface TablePageData {
+    country: string;
+    currency?: string;
+    language?: string;
+}
 
 @Component({
     selector: "app-table-page",
-    template: `
-        <app-doc-page [importString]="importString">
-            <ng-container example>
-                <sebng-table
-                    class="w-100"
-                    [rows]="rows$ | async"
-                    [headerList]="headerList$ | async"
-                    [selectable]="selectable"
-                    [fixedHeight]="hasFixedHeight ? height + 'px' : null"
-                ></sebng-table>
-            </ng-container>
-            <div class="row" controls>
-                <sebng-checkbox
-                    [(ngModel)]="selectable"
-                    label="Selectable"
-                    description="Enable selectable rows with checkboxes"
-                ></sebng-checkbox>
-
-                <sebng-checkbox
-                    [(ngModel)]="hasFixedHeight"
-                    label="Fixed Height"
-                    description="Preserve table height and scroll the content"
-                ></sebng-checkbox>
-
-                <label *ngIf="hasFixedHeight" class="p-3"
-                    >Table height
-                    <p><small>Set the height of the table (in px)</small></p>
-                    <sebng-stepper [(ngModel)]="height" [min]="20" [max]="200" [step]="5"></sebng-stepper>
-                </label>
-            </div>
-            <ng-container code>{{ snippet }}</ng-container>
-            <!--
-                // TODO: Add info about the table service
-                <ng-container notes></ng-container>
-            -->
-        </app-doc-page>
-    `,
+    templateUrl: "./table-page.component.html",
     providers: [TableService],
 })
 export class TablePageComponent {
     // controls
     selectable: boolean = false;
     hasFixedHeight: boolean = false;
-    height: number = 80;
+    height: number = 130;
 
     importString: string = require("!raw-loader!@sebgroup/ng-components/table/table.component");
     snippet: string = `<sebng-table
@@ -56,20 +27,60 @@ export class TablePageComponent {
     [selectable]="selectable"
     [fixedHeight]="hasFixedHeight ? height + 'px' : null"
 ></sebng-table>`;
-    data: any[] = [
+    data: TablePageData[] = [
         { country: "Malaysia", currency: "RM" },
         { country: "Slovenia", currency: "EUR", language: "Slovenian" },
         { country: "Iraq", currency: "IQD" },
         { country: "Nigeria", language: "English" },
+        { country: "Iceland", currency: "ISK" },
+        { country: "Lithuania", currency: "EUR", language: "Lithuanian" },
+        { country: "Spain", language: "Spanish" },
+        { country: "United Kingdom", currency: "GBP" },
+        { country: "China", currency: "CNY", language: "Mandarin" },
     ];
-    rows$: BehaviorSubject<any>;
-    headerList$: BehaviorSubject<any>;
+    columns: TableConfig<TablePageData>["columns"] = ["country", "currency", "language"];
+    columnsDropdownList: DropdownItem<keyof TablePageData>[] = [
+        ...this.columns.map((value: keyof TablePageData) => {
+            return { value, label: value.replace(/(\b[a-z](?!\s))/g, x => x.toUpperCase()) };
+        }),
+    ];
+    selectedColumnsDropdownList: DropdownItem<keyof TablePageData>[] = [...this.columnsDropdownList];
+    sortDropdownList: DropdownItem<keyof TablePageData>[] = [
+        {
+            value: null,
+            label: "None",
+        },
+        ...this.columnsDropdownList,
+    ];
 
-    constructor(private tableService: TableService<any>) {
+    sortInfo$: BehaviorSubject<SortInfo<keyof TablePageData>>;
+    rows$: BehaviorSubject<TablePageData[]>;
+    headerList$: BehaviorSubject<TableHeaderListItem<TablePageData>[]>;
+    selectedRows$: BehaviorSubject<number[][]>;
+    changeSort: TableService<TablePageData>["handleChangeSort"];
+    changeColumns: TableService<TablePageData>["handleChangeColumns"];
+    selectRow: TableService<TablePageData>["handleSelectRow"];
+    selectAll: TableService<TablePageData>["handleSelectAllRows"];
+
+    constructor(private tableService: TableService<TablePageData>) {
         document.title = "Table - SEB Angular Components";
 
         this.tableService.registerDatasource(this.data);
         this.rows$ = this.tableService.currentTable;
         this.headerList$ = this.tableService.tableHeaderList;
+        this.sortInfo$ = this.tableService.currentSortInfo;
+        this.selectedRows$ = this.tableService.selectedRows;
+        this.changeSort = this.tableService.handleChangeSort;
+        this.changeColumns = this.tableService.handleChangeColumns;
+        this.selectRow = this.tableService.handleSelectRow;
+        this.selectAll = this.tableService.handleSelectAllRows;
     }
+
+    getDropdownItemByColumnName = (col: string) => {
+        return this.sortDropdownList.find(e => e.value === col);
+    };
+
+    getColumnsFromDropdownList = (list: DropdownItem<keyof TablePageData>[]): (keyof TablePageData)[] => {
+        return list.map(e => e.value);
+    };
 }
