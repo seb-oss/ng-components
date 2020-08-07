@@ -3,12 +3,6 @@ export type TableHeaderListValueType = "number" | "string" | "date" | "datetime"
 
 /** The Table config object Interface */
 export interface TableConfig<T extends {} = {}> {
-    /** The title for the table */
-    title?: string;
-    /** Should display a number of results text unter the table title */
-    showResultsInfo?: boolean;
-    /** An explicit fixed height property for the table, defaults to 100% */
-    height?: string;
     /** a map of every column name what type of data it represents */
     types?: { [key in keyof T]?: TableHeaderListValueType };
     /** an optional map of column names and what label to display as column */
@@ -49,5 +43,5 @@ export interface SortInfo<K extends string | number | symbol = any> {
     /** is ascending (false for descending) */
     isAscending: boolean;
     /** the type of value: string, date or number */
-    type: TableHeaderListValueType;
+    type?: TableHeaderListValueType;
 }

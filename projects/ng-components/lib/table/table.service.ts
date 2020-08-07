@@ -47,7 +47,7 @@ export class TableService<T extends object> {
         return this._sortInfo;
     }
     private set sortInfo(value: SortInfo) {
-        this._sortInfo = { ...value };
+        this._sortInfo = value ? { ...value } : null;
     }
 
     @Output() currentSortInfo: BehaviorSubject<SortInfo<keyof T>> = new BehaviorSubject(null);
@@ -77,7 +77,17 @@ export class TableService<T extends object> {
     // ------------- CONSTRUCTOR ----------------
     constructor() {}
 
+    /**
+     * REGISTER DATASOURCE (INITIALIZE TABLE SERVICE)
+     * Initialize the table service with the table data and configuration object for initial settings
+     * @param {T[]} table the raw data
+     * @param {TableConfig<T>} config the table configuration settings
+     */
     public registerDatasource(table: T[], config: TableConfig<T> = {}) {
+        this.sortInfo = null;
+        this.currentSortInfo.next(this.sortInfo);
+        this._currentPageIndex = 0;
+        this.currentPageIndex.next(this._currentPageIndex);
         this.table = table;
         this.tableConfig = config;
         this.reloadTable();
@@ -116,12 +126,12 @@ export class TableService<T extends object> {
     private reloadTable(): void {
         const table: T[] = this.table && this.table.length ? [...this.table] : [];
 
-        const maxItems: number = this.calculateMaxItemsPerPage();
         const config: TableConfig<T> = this.tableConfig;
         const { types, labels, columns, order }: TableConfig<T> = config;
 
         this.setupColumnsList(columns, table, order);
 
+        const maxItems: number = this.calculateMaxItemsPerPage();
         this.setupTable(table, this.sortInfo, maxItems);
 
         this.setupTableHeader(types, labels);
@@ -266,7 +276,7 @@ export class TableService<T extends object> {
      * @returns the sorted table
      */
     private sortTable = (table: TableRowWithMeta<T>[], sortInfo: SortInfo): TableRowWithMeta<T>[] => {
-        const { column, isAscending, type }: SortInfo<keyof T> = sortInfo;
+        const { column, isAscending, type = "string" }: SortInfo<keyof T> = sortInfo;
         const newSortedTable: TableRowWithMeta<T>[] = table.sort((a: TableRowWithMeta<T>, b: TableRowWithMeta<T>) => {
             // flipping the first and second items based on ascending/descending
             const firstItem: any = isAscending ? a.row[column] : b.row[column];
@@ -327,6 +337,22 @@ export class TableService<T extends object> {
 
     // ------------- EVENTS -----------------------
     /**
+     * HANDLE CHANGE COLUMNS
+     * Handles the logic for changing the currently visible columns
+     * @param {Array<keyof T>} newColumns the new array of visible columns
+     */
+    public handleChangeColumns = (newColumns: TableConfig<T>["columns"]): void => {
+        const table: T[] = this.table || [];
+
+        const config: TableConfig<T> = this.tableConfig;
+        const { types, labels, columns = newColumns, order }: TableConfig<T> = config;
+
+        this.setupColumnsList(columns, table, order);
+        this.setupTableHeader(types, labels);
+        this.tableHeaderList.next(this._tableHeaderList);
+    };
+
+    /**
      * HANDLE CHANGE SORT
      * Handles the logic for sorting the table (updates the sortInfo and reloads the table)
      * @param {SortInfo} value the SortInfo
@@ -345,15 +371,19 @@ export class TableService<T extends object> {
             });
         }
 
-        let newSortInfo: Partial<SortInfo<keyof T>> = { column: selectedColumn };
+        if (selectedColumn) {
+            let newSortInfo: Partial<SortInfo<keyof T>> = { column: selectedColumn };
 
-        if (this.sortInfo && this.sortInfo?.column === selectedColumn) {
-            newSortInfo.isAscending = !this.sortInfo?.isAscending;
+            if (this.sortInfo && this.sortInfo?.column === selectedColumn) {
+                newSortInfo.isAscending = !this.sortInfo?.isAscending;
+            } else {
+                newSortInfo.isAscending = true;
+            }
+            newSortInfo.type = this._tableConfig?.types[selectedColumn] || "string";
+            this.sortInfo = newSortInfo as SortInfo<keyof T>;
         } else {
-            newSortInfo.isAscending = true;
+            this.sortInfo = null;
         }
-        newSortInfo.type = this._tableConfig?.types[selectedColumn] || "string";
-        this.sortInfo = newSortInfo as SortInfo<keyof T>;
 
         // setup the new table
         const table: T[] = this.table && this.table.length ? [...this.table] : [];
@@ -380,7 +410,7 @@ export class TableService<T extends object> {
      * @param {number} newIndex the new page navigation index
      */
     public handleChangePagination = (newIndex: number): void => {
-        const index: number = newIndex - 1;
+        const index: number = typeof newIndex === "number" ? newIndex - 1 : 0;
         if (index >= 0 && index < this._paginatedTable.length) {
             this._currentPageIndex = index;
             this._currentTable = [...this._paginatedTable[this._currentPageIndex]];
@@ -420,8 +450,8 @@ export class TableService<T extends object> {
     /**
      * handles the logic for toggling the state of selected rows to select all or deselect all
      */
-    public handleSelectAllRows(): void {
-        if (this._selectedRows.length === this._paginatedTable.length) {
+    public handleSelectAllRows = (): void => {
+        if (this._selectedRows && this._selectedRows.length === this._paginatedTable.length) {
             if (this.checkIsAllSelected()) {
                 this._selectedRows = [...this._paginatedTable.map(_ => [])];
             } else {
@@ -432,5 +462,5 @@ export class TableService<T extends object> {
         } else {
             console.warn("Error: please register table source before consuming the handle methods");
         }
-    }
+    };
 }
