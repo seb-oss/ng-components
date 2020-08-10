@@ -312,29 +312,6 @@ export class TableService<T extends object = {}> {
         return this._selectedRows?.map(e => e?.length > 0).some(e => e);
     }
 
-    /**
-     * GET PAGINATION OFFSET
-     * Calculates the offset (number of pages displayed) for pagination
-     * @returns the offset as integer
-     */
-    public getPaginationOffset(): number {
-        if (this._paginatedTable) {
-            const PTableLength: number = this._paginatedTable.length;
-            if (PTableLength > 5) {
-                const offset: number = Math.round(PTableLength / 2);
-                const max: number = 10;
-                if (offset > max) {
-                    return max;
-                }
-                return offset;
-            } else {
-                return PTableLength;
-            }
-        }
-
-        return 0;
-    }
-
     // ------------- EVENTS -----------------------
     /**
      * HANDLE CHANGE COLUMNS
@@ -342,14 +319,8 @@ export class TableService<T extends object = {}> {
      * @param {Array<keyof T>} newColumns the new array of visible columns
      */
     public handleChangeColumns = (newColumns: TableConfig<T>["columns"]): void => {
-        const table: T[] = this.table || [];
-
-        const config: TableConfig<T> = this.tableConfig;
-        const { types, labels, columns = newColumns, order }: TableConfig<T> = config;
-
-        this.setupColumnsList(columns, table, order);
-        this.setupTableHeader(types, labels);
-        this.tableHeaderList.next(this._tableHeaderList);
+        this.tableConfig = { ...this.tableConfig, columns: newColumns };
+        this.reloadTable();
     };
 
     /**
