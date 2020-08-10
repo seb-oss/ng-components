@@ -1,4 +1,15 @@
-import { ComponentRef, Directive, ElementRef, HostListener, Input, OnInit, TemplateRef, HostBinding, OnDestroy } from "@angular/core";
+import {
+    ComponentRef,
+    Directive,
+    ElementRef,
+    HostListener,
+    Input,
+    OnInit,
+    TemplateRef,
+    HostBinding,
+    OnDestroy,
+    NgZone,
+} from "@angular/core";
 import {
     Overlay,
     OverlayPositionBuilder,
@@ -7,17 +18,19 @@ import {
     PositionStrategy,
     FlexibleConnectedPositionStrategy,
     ConnectedOverlayPositionChange,
+    ScrollDispatcher,
+    CdkScrollable,
 } from "@angular/cdk/overlay";
 import { ComponentPortal } from "@angular/cdk/portal";
-
 import { TooltipContentComponent, TooltipTrigger, TooltipPosition, TooltipTheme } from "./tooltip-content/tooltip-content.component";
-import { Subscription } from "rxjs";
+import { Subscription, fromEvent, of } from "rxjs";
 import { distinctUntilChanged } from "rxjs/internal/operators/distinctUntilChanged";
 import { isEqual } from "lodash";
 
 type Placement = {
     [K in TooltipPosition]: ConnectedPosition;
 };
+
 /**
  * A text label that acts as a helper to a specific item
  */
@@ -56,16 +69,31 @@ export class TooltipDirective implements OnInit, OnDestroy {
     };
     /** <!-- skip --> */
     private obs: Subscription;
+    private isShown: boolean;
+    private scrollAncestors: Array<CdkScrollable>;
+    private globalSubscription: Subscription;
 
-    constructor(private overlay: Overlay, private overlayPositionBuilder: OverlayPositionBuilder, private elementRef: ElementRef) {}
+    constructor(
+        private overlay: Overlay,
+        private overlayPositionBuilder: OverlayPositionBuilder,
+        private scrollDispatcher: ScrollDispatcher,
+        private ngZone: NgZone,
+        private elementRef: ElementRef
+    ) {}
 
     ngOnInit(): void {
-        this.overlayRef = this.overlay.create({ positionStrategy: this.getOverlayPositionStrategy() });
+        this.overlayRef = this.overlay.create({
+            positionStrategy: this.getOverlayPositionStrategy(),
+            scrollStrategy: this.overlay.scrollStrategies.reposition(),
+        });
     }
 
     ngOnDestroy(): void {
         if (this.obs) {
             this.obs.unsubscribe();
+        }
+        if (this.globalSubscription) {
+            this.globalSubscription.unsubscribe();
         }
     }
 
@@ -77,15 +105,11 @@ export class TooltipDirective implements OnInit, OnDestroy {
         if (this.elementRef.nativeElement.contains(event.relatedTarget)) {
             return;
         }
-        this.trigger === "hover" && this.overlayRef.detach();
+        this.trigger === "hover" && this.removeTooltipFromOverlay();
     }
 
     @HostListener("click") showClick(): void {
         this.trigger === "click" && this.showTooltip();
-    }
-
-    @HostListener("focus") showFocus(): void {
-        this.trigger === "focus" && this.showTooltip();
     }
 
     @HostListener("focusin", ["$event"])
@@ -106,12 +130,18 @@ export class TooltipDirective implements OnInit, OnDestroy {
 
     /** get overlay position strategy */
     private getOverlayPositionStrategy(): PositionStrategy {
+        this.scrollAncestors = this.scrollDispatcher.getAncestorScrollContainers(this.elementRef);
         const positionStrategy: FlexibleConnectedPositionStrategy = this.overlayPositionBuilder
             .flexibleConnectedTo(this.elementRef)
-            .withPositions(this.getPosition());
+            .withPositions(this.getPosition())
+            .withScrollableContainers(this.scrollAncestors);
         this.obs = positionStrategy.positionChanges
             .pipe(distinctUntilChanged((prev: ConnectedOverlayPositionChange, curr: ConnectedOverlayPositionChange) => isEqual(prev, curr)))
             .subscribe((newPosition: ConnectedOverlayPositionChange) => {
+                if (newPosition.scrollableViewProperties.isOverlayClipped && this.isShown) {
+                    this.ngZone.run(() => this.removeTooltipFromOverlay());
+                    return;
+                }
                 Object.keys(this.placements).map((key: TooltipPosition) => {
                     if (isEqual(this.placements[key], newPosition.connectionPair)) {
                         this.position = key;
@@ -130,6 +160,34 @@ export class TooltipDirective implements OnInit, OnDestroy {
         overlayY: ConnectedPosition["overlayY"]
     ): ConnectedPosition {
         return { originX, originY, overlayX, overlayY };
+    }
+
+    /**
+     * <!-- skip -->
+     * remove tooltip from overlay
+     */
+    private removeTooltipFromOverlay(): void {
+        this.overlayRef.detach();
+        this.isShown = false;
+        if (this.globalSubscription) {
+            this.globalSubscription.unsubscribe();
+        }
+    }
+
+    /**
+     * add scroll event listener if cdkScrollable is not found
+     */
+    private addGlobalListener(): void {
+        if (
+            !this.scrollAncestors?.length ||
+            this.scrollAncestors.every((ancestor: CdkScrollable) =>
+                this.elementRef.nativeElement?.contains(ancestor.getElementRef().nativeElement)
+            )
+        ) {
+            this.globalSubscription = this.ngZone.runOutsideAngular(() => {
+                return fromEvent(window, "scroll", { capture: true }).subscribe(() => this.overlayRef.updatePosition());
+            });
+        }
     }
 
     /** <!-- skip --> get tooltip position */
@@ -215,10 +273,12 @@ export class TooltipDirective implements OnInit, OnDestroy {
         this.tooltipRef.instance.theme = this.theme;
         this.tooltipRef.instance.tooltipReference = this.elementRef;
         this.tooltipRef.instance.className = this.className;
-        this.tooltipRef.instance.defocus.subscribe(() => this.overlayRef.detach());
+        this.tooltipRef.instance.defocus.subscribe(() => this.removeTooltipFromOverlay());
 
         this.overlayRef.updatePositionStrategy(this.getOverlayPositionStrategy());
         this.overlayRef.updatePosition();
+        this.addGlobalListener();
+        this.isShown = true;
     }
 
     /**
@@ -228,7 +288,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
      */
     hideTooltip(relatedTarget: HTMLDivElement): void {
         if (!relatedTarget || !this.tooltipRef.instance.tooltip.nativeElement.contains(relatedTarget)) {
-            (this.trigger === "click" || this.trigger === "focus") && this.overlayRef.detach();
+            (this.trigger === "click" || this.trigger === "focus") && this.removeTooltipFromOverlay();
         }
     }
 }
