@@ -1,6 +1,12 @@
 /** The type of a data the values in a column represent  */
 export type TableHeaderListValueType = "number" | "string" | "date" | "datetime" | "bool" | "custom-html";
 
+/** The optional theme of the table header  */
+export type TableTHeadTheme = "light" | "dark";
+
+/** The maximum breakpoint with which to have a responsive table */
+export type TableResponsiveBreakpoint = "sm" | "md" | "lg" | "xl";
+
 /** The Table config object Interface */
 export interface TableConfig<T extends {} = {}> {
     /** a map of every column name what type of data it represents */
