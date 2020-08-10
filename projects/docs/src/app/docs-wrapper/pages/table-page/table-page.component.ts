@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { TableService, SortInfo, TableConfig, TableHeaderListItem } from "@sebgroup/ng-components/table";
 import { BehaviorSubject } from "rxjs";
 import { DropdownItem } from "@sebgroup/ng-components/dropdown";
+import { simpleTableHTML, tableServiceExampleSnippet, tableServiceSortSnippet, rawDataNotesExample } from "./notes-snippets";
 
 interface TablePageData {
     country: string;
@@ -43,6 +44,13 @@ export class TablePageComponent {
         ></sebng-table>
        `;
     };
+
+    // snippets and example data used in notes
+    rawDataNotesExample: any[] = rawDataNotesExample;
+    simpleTableHTML: string = simpleTableHTML;
+    tableServiceExampleSnippet: string = tableServiceExampleSnippet;
+    tableServiceSortSnippet: string = tableServiceSortSnippet;
+
     data: TablePageData[] = [
         { country: "Malaysia", currency: "RM" },
         { country: "Slovenia", currency: "EUR", language: "Slovenian" },

@@ -11,7 +11,7 @@ interface TableRowWithMeta<T extends object> {
 @Injectable({
     providedIn: "root",
 })
-export class TableService<T extends object> {
+export class TableService<T extends object = {}> {
     // ------------- INITIALISATION -------------
     // ============ TABLE =======================
     private _table: T[];

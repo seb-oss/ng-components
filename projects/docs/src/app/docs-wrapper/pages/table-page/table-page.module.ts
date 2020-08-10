@@ -8,9 +8,11 @@ import { CheckboxModule } from "@sebgroup/ng-components/checkbox";
 import { StepperModule } from "@sebgroup/ng-components/stepper";
 import { TablePageRoutingModule } from "./table-page-routing.module";
 import { PaginationModule } from "@sebgroup/ng-components/pagination";
+import { CodeSnippetModule } from "@common/code-snippet/code-snippet.module";
+import { MyTableComponent } from "./my-table-notes-example.component";
 
 @NgModule({
-    declarations: [TablePageComponent],
+    declarations: [MyTableComponent, TablePageComponent],
     imports: [
         CommonModule,
         TablePageRoutingModule,
@@ -20,6 +22,7 @@ import { PaginationModule } from "@sebgroup/ng-components/pagination";
         CheckboxModule,
         StepperModule,
         PaginationModule,
+        CodeSnippetModule,
     ],
 })
 export class TablePageModule {}
