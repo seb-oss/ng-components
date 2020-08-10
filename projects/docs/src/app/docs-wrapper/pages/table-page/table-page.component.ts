@@ -57,6 +57,7 @@ export class TablePageComponent {
     rows$: BehaviorSubject<TablePageData[]>;
     headerList$: BehaviorSubject<TableHeaderListItem<TablePageData>[]>;
     selectedRows$: BehaviorSubject<number[][]>;
+    isAllSelected$: BehaviorSubject<boolean>;
     changeSort: TableService<TablePageData>["handleChangeSort"];
     changeColumns: TableService<TablePageData>["handleChangeColumns"];
     selectRow: TableService<TablePageData>["handleSelectRow"];
@@ -70,6 +71,7 @@ export class TablePageComponent {
         this.headerList$ = this.tableService.tableHeaderList;
         this.sortInfo$ = this.tableService.currentSortInfo;
         this.selectedRows$ = this.tableService.selectedRows;
+        this.isAllSelected$ = this.tableService.isAllSelected;
         this.changeSort = this.tableService.handleChangeSort;
         this.changeColumns = this.tableService.handleChangeColumns;
         this.selectRow = this.tableService.handleSelectRow;

@@ -42,5 +42,15 @@
                 }
             }
         }
+
+        td,
+        th {
+            &.selectable {
+                cursor: pointer;
+                > input {
+                    cursor: pointer;
+                }
+            }
+        }
     }
 }

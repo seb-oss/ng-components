@@ -5,6 +5,7 @@
             [headerList]="headerList$ | async"
             [selectable]="selectable"
             [selectedRowIndexes]="selectable ? (selectedRows$ | async)[0] : null"
+            [isAllSelected]="isAllSelected$ | async"
             [sortInfo]="sortInfo$ | async"
             [fixedHeight]="hasFixedHeight ? height + 'px' : null"
             (sortClicked)="changeSort($event)"
@@ -23,7 +24,7 @@
 
         <ng-container *ngIf="hasFixedHeight">
             <label>Table height </label>
-            <sebng-stepper className="mb-0" [(ngModel)]="height" [min]="20" [max]="200" [step]="5"></sebng-stepper>
+            <sebng-stepper className="mb-0" [(ngModel)]="height" [min]="20" [max]="500" [step]="5"></sebng-stepper>
             <p><small>Set the height of the table (in px)</small></p>
         </ng-container>
 

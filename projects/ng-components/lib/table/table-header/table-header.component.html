@@ -1,5 +1,5 @@
 <tr *ngIf="list && list.length">
-    <th *ngIf="selectable" class="table-checkbox" (click)="allSelectedClicked.emit()">
+    <th [class.selectable]="selectable" *ngIf="selectable" class="table-checkbox" (click)="allSelectedClicked.emit()">
         <input type="checkbox" class="form-control" [checked]="isAllSelected" />
     </th>
 
