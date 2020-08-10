@@ -4,7 +4,7 @@
             [rows]="rows$ | async"
             [headerList]="headerList$ | async"
             [selectable]="selectable"
-            [selectedRowIndexes]="selectable ? (selectedRows$ | async)[0] : null"
+            [selectedRowIndexes]="selectable ? (selectedRows$ | async)[pageIndex$ | async] : null"
             [isAllSelected]="isAllSelected$ | async"
             [sortInfo]="sortInfo$ | async"
             [fixedHeight]="hasFixedHeight ? height + 'px' : null"
@@ -12,6 +12,14 @@
             (selectAllClicked)="selectAll()"
             (rowClicked)="selectRow($event.index)"
         ></sebng-table>
+        <sebng-pagination
+            *ngIf="usePagination"
+            [value]="(pageIndex$ | async) + 1"
+            [size]="data.length"
+            [offset]="itemsPerPage"
+            [pagingLength]="5"
+            (change)="changePage($event)"
+        ></sebng-pagination>
     </div>
     <div controls>
         <sebng-checkbox [(ngModel)]="selectable" label="Selectable" description="Enable selectable rows with checkboxes"></sebng-checkbox>
@@ -44,6 +52,13 @@
             label="Show columns"
         ></sebng-dropdown>
         <p><small>(Note: Deselecting all columns will default to all columns being showed.)</small></p>
+
+        <sebng-checkbox
+            [ngModel]="usePagination"
+            (ngModelChange)="handleChnageUsePagination($event)"
+            label="Use pagination"
+            description="Show as paginated table (example fixed to {{ itemsPerPage }} items per page)."
+        ></sebng-checkbox>
     </div>
     <ng-container code>{{ snippet(selectable, isAllSelected$ | async, sortInfo$ | async, height) }}</ng-container>
     <!--

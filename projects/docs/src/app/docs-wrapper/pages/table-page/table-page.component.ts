@@ -15,26 +15,32 @@ interface TablePageData {
     providers: [TableService],
 })
 export class TablePageComponent {
+    itemsPerPage: number = 4;
     // controls
     selectable: boolean = false;
+    usePagination: boolean = false;
     hasFixedHeight: boolean = false;
     height: number = 130;
 
     importString: string = require("!raw-loader!@sebgroup/ng-components/table/table.component");
     snippet = (selectable: boolean, isAllSelected: boolean, sortInfo: string, height: number): string => {
         return `
-       <sebng-table
-           [rows]="rows$ | async"
-           [headerList]="headerList$ | async"
-           [selectable]="${selectable}"
-           [selectedRowIndexes]="selectable ? (selectedRows$ | async)[pageIndex] : null"
-           [isAllSelected]="${isAllSelected}"
-           [sortInfo]="${JSON.stringify(sortInfo).replace(/"/g, "'")}"
-           [fixedHeight]="${height} + 'px'"
-           (sortClicked)="changeSort($event)"
-           (selectAllClicked)="selectAll()"
-           (rowClicked)="selectRow($event.index)"
-       ></sebng-table>
+        this.tableService.registerDatasource(this.data);
+        this.rows$ = this.tableService.currentTable;
+        this.headerList$ = this.tableService.tableHeaderList;
+
+        <sebng-table
+            [rows]="rows$ | async"
+            [headerList]="headerList$ | async"
+            [selectable]="${selectable}"
+            [selectedRowIndexes]="selectable ? (selectedRows$ | async)[pageIndex] : null"
+            [isAllSelected]="${isAllSelected}"
+            [sortInfo]="${JSON.stringify(sortInfo).replace(/"/g, "'")}"
+            [fixedHeight]="${height} + 'px'"
+            (sortClicked)="changeSort($event)"
+            (selectAllClicked)="selectAll()"
+            (rowClicked)="selectRow($event.index)"
+        ></sebng-table>
        `;
     };
     data: TablePageData[] = [
@@ -47,6 +53,7 @@ export class TablePageComponent {
         { country: "Spain", language: "Spanish" },
         { country: "United Kingdom", currency: "GBP" },
         { country: "China", currency: "CNY", language: "Mandarin" },
+        { country: "India", currency: "INR", language: "Hindi" },
     ];
     columns: TableConfig<TablePageData>["columns"] = ["country", "currency", "language"];
     columnsDropdownList: DropdownItem<keyof TablePageData>[] = [
@@ -68,7 +75,9 @@ export class TablePageComponent {
     headerList$: BehaviorSubject<TableHeaderListItem<TablePageData>[]>;
     selectedRows$: BehaviorSubject<number[][]>;
     isAllSelected$: BehaviorSubject<boolean>;
+    pageIndex$: BehaviorSubject<number>;
     changeSort: TableService<TablePageData>["handleChangeSort"];
+    changePage: TableService<TablePageData>["handleChangePagination"];
     changeColumns: TableService<TablePageData>["handleChangeColumns"];
     selectRow: TableService<TablePageData>["handleSelectRow"];
     selectAll: TableService<TablePageData>["handleSelectAllRows"];
@@ -82,10 +91,21 @@ export class TablePageComponent {
         this.sortInfo$ = this.tableService.currentSortInfo;
         this.selectedRows$ = this.tableService.selectedRows;
         this.isAllSelected$ = this.tableService.isAllSelected;
+        this.pageIndex$ = this.tableService.currentPageIndex;
         this.changeSort = this.tableService.handleChangeSort;
+        this.changePage = this.tableService.handleChangePagination;
         this.changeColumns = this.tableService.handleChangeColumns;
         this.selectRow = this.tableService.handleSelectRow;
         this.selectAll = this.tableService.handleSelectAllRows;
+    }
+
+    handleChnageUsePagination(newValue: boolean) {
+        this.usePagination = newValue;
+        if (newValue) {
+            this.tableService.registerDatasource(this.data, { pagination: { maxItems: this.itemsPerPage } });
+        } else {
+            this.tableService.registerDatasource(this.data);
+        }
     }
 
     getDropdownItemByColumnName = (col: string) => {
