@@ -45,7 +45,7 @@
         ></sebng-dropdown>
         <p><small>(Note: Deselecting all columns will default to all columns being showed.)</small></p>
     </div>
-    <ng-container code>{{ snippet }}</ng-container>
+    <ng-container code>{{ snippet(selectable, isAllSelected$ | async, sortInfo$ | async, height) }}</ng-container>
     <!--
         // TODO: Add info about the table service
         <ng-container notes></ng-container>

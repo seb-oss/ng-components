@@ -21,12 +21,22 @@ export class TablePageComponent {
     height: number = 130;
 
     importString: string = require("!raw-loader!@sebgroup/ng-components/table/table.component");
-    snippet: string = `<sebng-table
-    [rows]="rows$ | async"
-    [headerList]="headerList$ | async"
-    [selectable]="selectable"
-    [fixedHeight]="hasFixedHeight ? height + 'px' : null"
-></sebng-table>`;
+    snippet = (selectable: boolean, isAllSelected: boolean, sortInfo: string, height: number): string => {
+        return `
+       <sebng-table
+           [rows]="rows$ | async"
+           [headerList]="headerList$ | async"
+           [selectable]="${selectable}"
+           [selectedRowIndexes]="selectable ? (selectedRows$ | async)[pageIndex] : null"
+           [isAllSelected]="${isAllSelected}"
+           [sortInfo]="${JSON.stringify(sortInfo).replace(/"/g, "'")}"
+           [fixedHeight]="${height} + 'px'"
+           (sortClicked)="changeSort($event)"
+           (selectAllClicked)="selectAll()"
+           (rowClicked)="selectRow($event.index)"
+       ></sebng-table>
+       `;
+    };
     data: TablePageData[] = [
         { country: "Malaysia", currency: "RM" },
         { country: "Slovenia", currency: "EUR", language: "Slovenian" },
