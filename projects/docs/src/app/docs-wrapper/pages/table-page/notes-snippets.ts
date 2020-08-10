@@ -19,7 +19,8 @@ import { TableService } from "@sebgroup/ng-components/table";
 @Component({
     selector: "app-my-table",
     template: \`<sebng-table [rows]="rows$ | async" [headerList]="headerList$ | async"></sebng-table>\`
-    providers: [TableService], // STEP 1: Import and provide the service. (Each instance of a table should use it's own service).
+    // STEP 1: Import and provide the service. (Each instance of a table should use it's own service).
+    providers: [TableService],
 })
 export class MyTableComponent {
     rawData = ${JSON.stringify(rawDataNotesExample, null, 4)}      

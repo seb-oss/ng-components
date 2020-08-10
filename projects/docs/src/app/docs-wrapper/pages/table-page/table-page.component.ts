@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { TableService, SortInfo, TableConfig, TableHeaderListItem } from "@sebgroup/ng-components/table";
+import { TableService, SortInfo, TableConfig, TableHeaderListItem, TableTHeadTheme } from "@sebgroup/ng-components/table";
 import { BehaviorSubject } from "rxjs";
 import { DropdownItem } from "@sebgroup/ng-components/dropdown";
 import { simpleTableHTML, tableServiceExampleSnippet, tableServiceSortSnippet, rawDataNotesExample } from "./notes-snippets";
@@ -18,6 +18,9 @@ interface TablePageData {
 export class TablePageComponent {
     itemsPerPage: number = 4;
     // controls
+    compact: boolean = true;
+    striped: boolean = false;
+    dark: boolean = false;
     selectable: boolean = false;
     usePagination: boolean = false;
     hasFixedHeight: boolean = false;
@@ -77,6 +80,12 @@ export class TablePageComponent {
         },
         ...this.columnsDropdownList,
     ];
+    theadThemeList: DropdownItem<TableTHeadTheme>[] = [
+        { label: "None", value: null },
+        { label: "Dark", value: "dark" },
+        { label: "Light", value: "light" },
+    ];
+    selectedTheadTheme: DropdownItem<TableTHeadTheme> = this.theadThemeList[0];
 
     sortInfo$: BehaviorSubject<SortInfo<keyof TablePageData>>;
     rows$: BehaviorSubject<TablePageData[]>;

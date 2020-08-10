@@ -1,6 +1,10 @@
 <app-doc-page [importString]="importString" [showNotes]="true">
     <div class="w-100" example>
         <sebng-table
+            [darkTable]="dark"
+            [compact]="compact"
+            [striped]="striped"
+            [theadTheme]="selectedTheadTheme.value"
             [rows]="rows$ | async"
             [headerList]="headerList$ | async"
             [selectable]="selectable"
@@ -22,6 +26,18 @@
         ></sebng-pagination>
     </div>
     <div controls>
+        <sebng-checkbox
+            [(ngModel)]="compact"
+            label="Compact table"
+            description="Show a more compact table with less padding."
+        ></sebng-checkbox>
+
+        <sebng-checkbox
+            [(ngModel)]="striped"
+            label="Striped table"
+            description="Add zebra-striping to any row within the table body."
+        ></sebng-checkbox>
+
         <sebng-checkbox [(ngModel)]="selectable" label="Selectable" description="Enable selectable rows with checkboxes"></sebng-checkbox>
 
         <sebng-checkbox
@@ -35,6 +51,12 @@
             <sebng-stepper className="mb-0" [(ngModel)]="height" [min]="20" [max]="500" [step]="5"></sebng-stepper>
             <p><small>Set the height of the table (in px)</small></p>
         </ng-container>
+
+        <sebng-checkbox [(ngModel)]="dark" label="Dark table" description="Show a dark version of the table body."></sebng-checkbox>
+
+        <label>Table header theme</label>
+        <sebng-radio-group [condensed]="true" [inline]="true" [list]="theadThemeList" [(ngModel)]="selectedTheadTheme"></sebng-radio-group>
+        <p><small>For fixed height tables the header theme will be inferred if none is selected.</small></p>
 
         <sebng-dropdown
             className="mb-3"
