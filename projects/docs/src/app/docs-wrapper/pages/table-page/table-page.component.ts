@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
-import { TableService, SortInfo, TableConfig, TableHeaderListItem, TableTHeadTheme } from "@sebgroup/ng-components/table";
-import { BehaviorSubject } from "rxjs";
+import { TableService, TableConfig, TableTHeadTheme } from "@sebgroup/ng-components/table";
 import { DropdownItem } from "@sebgroup/ng-components/dropdown";
 import { simpleTableHTML, tableServiceExampleSnippet, tableServiceSortSnippet, rawDataNotesExample } from "./notes-snippets";
 
@@ -27,24 +26,23 @@ export class TablePageComponent {
     height: number = 130;
 
     importString: string = require("!raw-loader!@sebgroup/ng-components/table/table.component");
-    snippet = (selectable: boolean, isAllSelected: boolean, sortInfo: string, height: number): string => {
+    snippet = (sortInfo: string, fixedHeight: boolean, height: number, dark: boolean, compact: boolean, striped: boolean): string => {
         return `
-        this.tableService.registerDatasource(this.data);
-        this.rows$ = this.tableService.currentTable;
-        this.headerList$ = this.tableService.tableHeaderList;
+constructor(public tableService: TableService<any>) {
+    this.tableService.registerDatasource(this.data, { sort: ${JSON.stringify(sortInfo).replace(/"/g, "'")} });
+}
 
-        <sebng-table
-            [rows]="rows$ | async"
-            [headerList]="headerList$ | async"
-            [selectable]="${selectable}"
-            [selectedRowIndexes]="selectable ? (selectedRows$ | async)[pageIndex] : null"
-            [isAllSelected]="${isAllSelected}"
-            [sortInfo]="${JSON.stringify(sortInfo).replace(/"/g, "'")}"
-            [fixedHeight]="${height} + 'px'"
-            (sortClicked)="changeSort($event)"
-            (selectAllClicked)="selectAll()"
-            (rowClicked)="selectRow($event.index)"
-        ></sebng-table>
+<sebng-table
+    [darkTable]="${dark}"
+    [compact]="${compact}"
+    [striped]="${striped}"
+    [rows]="tableService.currentTable | async"
+    [headerList]="tableService.tableHeaderList | async"
+    [sortInfo]="tableService.currentSortInfo | async"
+    ${fixedHeight ? `[fixedHeight]="${height} + 'px'"}` : ""}
+    (sortClicked)="tableService.handleChangeSort($event)"
+    (rowClicked)="tableService.handleSelectRow($event.index)"
+></sebng-table>
        `;
     };
 
@@ -87,41 +85,21 @@ export class TablePageComponent {
     ];
     selectedTheadTheme: DropdownItem<TableTHeadTheme> = this.theadThemeList[0];
 
-    sortInfo$: BehaviorSubject<SortInfo<keyof TablePageData>>;
-    rows$: BehaviorSubject<TablePageData[]>;
-    headerList$: BehaviorSubject<TableHeaderListItem<TablePageData>[]>;
-    selectedRows$: BehaviorSubject<number[][]>;
-    isAllSelected$: BehaviorSubject<boolean>;
-    pageIndex$: BehaviorSubject<number>;
-    changeSort: TableService<TablePageData>["handleChangeSort"];
-    changePage: TableService<TablePageData>["handleChangePagination"];
-    changeColumns: TableService<TablePageData>["handleChangeColumns"];
-    selectRow: TableService<TablePageData>["handleSelectRow"];
-    selectAll: TableService<TablePageData>["handleSelectAllRows"];
-
-    constructor(private tableService: TableService<TablePageData>) {
+    constructor(public tableService: TableService<TablePageData>) {
         document.title = "Table - SEB Angular Components";
 
         this.tableService.registerDatasource(this.data);
-        this.rows$ = this.tableService.currentTable;
-        this.headerList$ = this.tableService.tableHeaderList;
-        this.sortInfo$ = this.tableService.currentSortInfo;
-        this.selectedRows$ = this.tableService.selectedRows;
-        this.isAllSelected$ = this.tableService.isAllSelected;
-        this.pageIndex$ = this.tableService.currentPageIndex;
-        this.changeSort = this.tableService.handleChangeSort;
-        this.changePage = this.tableService.handleChangePagination;
-        this.changeColumns = this.tableService.handleChangeColumns;
-        this.selectRow = this.tableService.handleSelectRow;
-        this.selectAll = this.tableService.handleSelectAllRows;
     }
 
-    handleChnageUsePagination(newValue: boolean) {
+    handleChangeUsePagination(newValue: boolean) {
         this.usePagination = newValue;
         if (newValue) {
-            this.tableService.registerDatasource(this.data, { pagination: { maxItems: this.itemsPerPage } });
+            this.tableService.registerDatasource(this.data, {
+                pagination: { maxItems: this.itemsPerPage },
+                columns: this.getColumnsFromDropdownList(this.selectedColumnsDropdownList),
+            });
         } else {
-            this.tableService.registerDatasource(this.data);
+            this.tableService.registerDatasource(this.data, { columns: this.getColumnsFromDropdownList(this.selectedColumnsDropdownList) });
         }
     }
 
