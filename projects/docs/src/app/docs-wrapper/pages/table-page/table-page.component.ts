@@ -7,6 +7,7 @@ interface TablePageData {
     country: string;
     currency?: string;
     language?: string;
+    founded?: Date;
 }
 
 @Component({
@@ -54,17 +55,20 @@ constructor(public tableService: TableService<any>) {
 
     data: TablePageData[] = [
         { country: "Malaysia", currency: "RM" },
-        { country: "Slovenia", currency: "EUR", language: "Slovenian" },
+        { country: "Slovenia", currency: "EUR", language: "Slovenian", founded: new Date(1918, 9, 29) },
         { country: "Iraq", currency: "IQD" },
         { country: "Nigeria", language: "English" },
-        { country: "Iceland", currency: "ISK" },
+        { country: "Iceland", currency: "ISK", founded: new Date(1944, 5, 17) },
         { country: "Lithuania", currency: "EUR", language: "Lithuanian" },
         { country: "Spain", language: "Spanish" },
         { country: "United Kingdom", currency: "GBP" },
-        { country: "China", currency: "CNY", language: "Mandarin" },
+        { country: "China", currency: "CNY", language: "Mandarin", founded: new Date(1949, 9, 1) },
         { country: "India", currency: "INR", language: "Hindi" },
     ];
-    columns: TableConfig<TablePageData>["columns"] = ["country", "currency", "language"];
+    columns: TableConfig<TablePageData>["columns"] = ["country", "currency", "language", "founded"];
+    types: TableConfig<TablePageData>["types"] = {
+        founded: "date",
+    };
     columnsDropdownList: DropdownItem<keyof TablePageData>[] = [
         ...this.columns.map((value: keyof TablePageData) => {
             return { value, label: value.replace(/(\b[a-z](?!\s))/g, x => x.toUpperCase()) };
@@ -88,7 +92,7 @@ constructor(public tableService: TableService<any>) {
     constructor(public tableService: TableService<TablePageData>) {
         document.title = "Table - SEB Angular Components";
 
-        this.tableService.registerDatasource(this.data);
+        this.tableService.registerDatasource(this.data, { types: this.types });
     }
 
     handleChangeUsePagination(newValue: boolean) {
@@ -97,9 +101,13 @@ constructor(public tableService: TableService<any>) {
             this.tableService.registerDatasource(this.data, {
                 pagination: { maxItems: this.itemsPerPage },
                 columns: this.getColumnsFromDropdownList(this.selectedColumnsDropdownList),
+                types: this.types,
             });
         } else {
-            this.tableService.registerDatasource(this.data, { columns: this.getColumnsFromDropdownList(this.selectedColumnsDropdownList) });
+            this.tableService.registerDatasource(this.data, {
+                columns: this.getColumnsFromDropdownList(this.selectedColumnsDropdownList),
+                types: this.types,
+            });
         }
     }
 
