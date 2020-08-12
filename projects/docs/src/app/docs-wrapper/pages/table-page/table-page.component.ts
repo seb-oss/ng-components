@@ -95,7 +95,7 @@ constructor(public tableService: TableService<any>) {
         this.tableService.registerDatasource(this.data, { types: this.types });
     }
 
-    handleChangeUsePagination(newValue: boolean) {
+    handleChangeUsePagination(newValue: boolean): void {
         this.usePagination = newValue;
         if (newValue) {
             this.tableService.registerDatasource(this.data, {
@@ -111,7 +111,7 @@ constructor(public tableService: TableService<any>) {
         }
     }
 
-    getDropdownItemByColumnName = (col: string) => {
+    getDropdownItemByColumnName = (col: string): DropdownItem<keyof TablePageData> => {
         return this.sortDropdownList.find(e => e.value === col);
     };
 
