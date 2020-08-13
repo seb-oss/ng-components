@@ -14,42 +14,66 @@ export const simpleTableHTML: string = `<sebng-table
 
 export const tableServiceExampleSnippet: string = `
 import { Component } from "@angular/core";
-import { TableService } from "@sebgroup/ng-components/table";
+import { TableService, TableHeaderListItem, TableServicePublicApi } from "@sebgroup/ng-components/table";
+import { BehaviorSubject } from "rxjs";
 
 @Component({
     selector: "app-my-table",
-    // STEP 3: Bind the values you need from table service to your template
-    template: \`<sebng-table [rows]="tableService.currentTable | async" [headerList]="tableService.tableHeaderList | async"></sebng-table>\`
-    // STEP 1: Import and provide the service. (Each instance of a table should use it's own service).
-    providers: [TableService],
+    template: \`<sebng-table
+        [rows]="rows$ | async"
+        [headerList]="headerList$ | async"
+    ></sebng-table>\`,
 })
 export class MyTableComponent {
-    rawData any[] = ${JSON.stringify(rawDataNotesExample, null, 4)}      
+    rawData = [
+        {
+            country: "United Kingdom",
+            currency: "GBP",
+        },
+        {
+            country: "China",
+            currency: "CNY",
+        },
+        {
+            country: "India",
+            currency: "INR",
+        },
+    ];
+    rows$: BehaviorSubject<any[]>;
+    headerList$: BehaviorSubject<TableHeaderListItem<any>[]>;
 
-    constructor(public tableService: TableService<any>) {
-        // STEP 2: Register the raw data with an optional cofiguration
-        this.tableService.registerDatasource(this.rawData);
+    constructor(private tableService: TableService) {
+        const api: TableServicePublicApi = this.tableService.registerDatasource("my-table", this.rawData);
+        this.rows$ = api.getSubscription("currentTable");
+        this.headerList$ = api.getSubscription("tableHeaderList");
     }
 }
 `;
 
-export const tableServiceSortSnippet: string = `
-import { TableConfig } from "@sebgroup/ng-components/table";
+export const tableServiceSortSnippet: string = `\
+...
+import { TableService, TableConfig, SortInfo, TableServicePublicApi } from "@sebgroup/ng-components/table";
+import { BehaviorSubject } from "rxjs";
 
 @Component({
-    ...
-    // STEP 2: Bind the sort properties and methods to the template
-    template: \`<sebng-table [sortInfo]="tableService.currentSortInfo | async" (sortClicked)="tableService.handleChangeSort($event)" ... ></sebng-table>\` 
-    ...
+    template: \`<sebng-table
+        ...
+        [sortInfo]="sortInfo$ | async"
+        (sortClicked)="sort($event)"
+    ></sebng-table>\`,
 })
-export class MyTableComponent {
+export class MyTableComponent {\
     ...
-    constructor(public tableService: TableService<any>) {
-        // STEP 1: Add sort info to the table config when registering data
+    sortInfo$: BehaviorSubject<SortInfo<string | number | symbol>>;
+    sort: (selectedColumn: string | number | symbol) => void;
+
+    constructor(private tableService: TableService) {
         const tableConfig: TableConfig<any> = {
-            sort: { column: "country", isAscending: true, type: "string" }
+            sort: { column: "country", isAscending: true, type: "string" },
         };
-        this.tableService.registerDatasource(this.rawData, tableConfig);
+        const api: TableServicePublicApi = this.tableService.registerDatasource("my-table", this.rawData, tableConfig);
+        ...
+        this.sortInfo$ = api.getSubscription("currentSortInfo");
+        this.sort = api.handle("changeSort");
     }
-}
-`;
+}`;

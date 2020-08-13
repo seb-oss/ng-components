@@ -1,5 +1,15 @@
-import { Injectable, Output } from "@angular/core";
-import { TableHeaderListItem, TableConfig, SortInfo, TableHeaderListValueType } from "./table.models";
+import { Injectable } from "@angular/core";
+import {
+    TableHeaderListItem,
+    TableConfig,
+    SortInfo,
+    TableHeaderListValueType,
+    TableServiceSubject,
+    TableServiceAction,
+    TableServiceSubscriber,
+    TableServiceHandler,
+    TableServicePublicApi,
+} from "./table.models";
 import { toDate } from "@sebgroup/frontend-tools/dist/toDate";
 import { readableFromCamelCase } from "./utils";
 import { BehaviorSubject } from "rxjs";
@@ -11,68 +21,92 @@ interface TableRowWithMeta<T extends object> {
 @Injectable({
     providedIn: "root",
 })
-export class TableService<T extends object = {}> {
+export class TableService {
     // ------------- INITIALISATION -------------
     // ============ TABLE =======================
-    private _table: T[];
-    private get table(): T[] {
-        return this._table;
-    }
-    private set table(table: T[]) {
-        this._table = table;
-    }
+    private table: { [k: string]: any[] } = {};
 
     // ============ TABLE CONFIG ================
-    private _tableConfig: TableConfig<T> = {};
-    private get tableConfig(): TableConfig<T> {
-        return this._tableConfig;
-    }
-    private set tableConfig(value: TableConfig<T>) {
-        const defaultTypes: TableConfig<T>["types"] = this.initConfigTypes();
-        this._tableConfig = {
+    private _tableConfigs: { [k: string]: TableConfig<any> } = {};
+    private getTableConfig = <T extends {} = {}>(id: string): TableConfig<T> => {
+        return this._tableConfigs[id];
+    };
+    private setTableConfig = (id: string, value: TableConfig): void => {
+        const defaultTypes: TableConfig["types"] = this.initConfigTypes(id);
+        this._tableConfigs[id] = {
             ...value,
             types: { ...defaultTypes, ...value.types },
         };
-    }
+    };
 
     // ============ SORT INFO ===================
-    private _sortInfo: SortInfo;
-    private get sortInfo(): SortInfo {
-        if (!this._sortInfo) {
-            if (this.tableConfig && this.tableConfig.sort) {
-                this._sortInfo = this.tableConfig.sort;
+    private _sortInfos: { [k: string]: SortInfo } = {};
+    private getSortInfo = (id: string): SortInfo => {
+        if (!this._sortInfos[id]) {
+            const tc: TableConfig = this.getTableConfig(id);
+            if (tc && tc.sort) {
+                this._sortInfos[id] = tc.sort;
             }
         }
 
-        return this._sortInfo;
-    }
-    private set sortInfo(value: SortInfo) {
-        this._sortInfo = value ? { ...value } : null;
-    }
+        return this._sortInfos[id];
+    };
+    private setSortInfo = (id: string, value: SortInfo): void => {
+        this._sortInfos[id] = value ? { ...value } : null;
+    };
 
-    @Output() currentSortInfo: BehaviorSubject<SortInfo<keyof T>> = new BehaviorSubject(null);
-    @Output() isAllSelected: BehaviorSubject<boolean> = new BehaviorSubject(false);
+    private currentSortInfo: { [k: string]: BehaviorSubject<SortInfo> } = {};
 
-    private columnsList: string[];
-
-    /** The Master Table, Sorted */
-    private _sortedTable: T[] = [];
-    @Output() sortedTable: BehaviorSubject<T[]> = new BehaviorSubject([]);
-    /** The Master Table, Paginated */
-    private _paginatedTable: T[][] = [[]];
-    @Output() paginatedTable: BehaviorSubject<T[][]> = new BehaviorSubject([[]]);
     /** The indexes of the selected rows, paginated */
-    private _selectedRows: number[][] = [[]];
-    @Output() selectedRows: BehaviorSubject<number[][]> = new BehaviorSubject([[]]);
-    /** The Currently Visible Page of the Sorted and Paginated Master Table */
-    private _currentTable: T[] = [];
-    @Output() currentTable: BehaviorSubject<T[]> = new BehaviorSubject([]);
+    private _selectedRows: { [k: string]: number[][] } = {};
+    private selectedRows: { [k: string]: BehaviorSubject<number[][]> } = {};
+
+    private isAllSelected: { [k: string]: BehaviorSubject<boolean> } = {};
+
+    private columnsList: { [k: string]: string[] } = {};
+
     /** The Index of the currently selected page */
-    private _currentPageIndex: number = 0;
-    @Output() currentPageIndex: BehaviorSubject<number> = new BehaviorSubject(0);
+    private _currentPageIndex: { [k: string]: number } = {};
+    private currentPageIndex: { [k: string]: BehaviorSubject<number> } = {};
+
     /** The Header List of The Master Table with all the Column Info */
-    private _tableHeaderList: Array<TableHeaderListItem<T>> = [];
-    @Output() tableHeaderList: BehaviorSubject<TableHeaderListItem<T>[]> = new BehaviorSubject([]);
+    private _tableHeaderList: { [k: string]: Array<TableHeaderListItem<any>> } = {};
+    private tableHeaderList: { [k: string]: BehaviorSubject<TableHeaderListItem<any>[]> } = {};
+    /** The Master Table, Sorted */
+    private _sortedTable: { [k: string]: any[] } = {};
+    private sortedTable: { [k: string]: BehaviorSubject<any[]> } = {};
+    /** The Master Table, Paginated */
+    private _paginatedTable: { [k: string]: any[][] } = {};
+    private paginatedTable: { [k: string]: BehaviorSubject<any[][]> } = {};
+    /** The Currently Visible Page of the Sorted and Paginated Master Table */
+    private _currentTable: { [k: string]: any[] } = {};
+    private currentTable: { [k: string]: BehaviorSubject<any[]> } = {};
+
+    /**
+     * GET
+     * Generic way of fetching subscribable properties like currentTable, tableHeaderList, etc...
+     * @param id the id of the table
+     * @param property the property to get
+     */
+    private get = (id: string): TableServiceSubscriber => (property: TableServiceSubject): any => {
+        if ((property as any) === "get") {
+            console.warn("Can't get self, please provide another key.");
+        } else if (property.startsWith("handle") || property.startsWith("register")) {
+            console.warn("Can't get table service methods, use them directly instead");
+        } else {
+            return this[property][id];
+        }
+    };
+
+    /**
+     * CHANGE
+     * Generic way of fetching handlers like changeSort, changePagination, etc...
+     * @param id the id of the table
+     * @param property the name of the handler to get
+     */
+    private change = (id: string): TableServiceHandler => (property: TableServiceAction): ((...args: any[]) => void) => {
+        return this[property](id);
+    };
 
     // ------------- CONSTRUCTOR ----------------
     constructor() {}
@@ -80,17 +114,38 @@ export class TableService<T extends object = {}> {
     /**
      * REGISTER DATASOURCE (INITIALIZE TABLE SERVICE)
      * Initialize the table service with the table data and configuration object for initial settings
-     * @param {T[]} table the raw data
-     * @param {TableConfig<T>} config the table configuration settings
+     * @param {any[]} name the unique name of your data
+     * @param {any[]} table the raw data
+     * @param {TableConfig} config the table configuration settings
+     * @returns {TableServiceSubscriber} a generic getter for any subscribable property
      */
-    public registerDatasource(table: T[], config: TableConfig<T> = {}) {
-        this.sortInfo = null;
-        this.currentSortInfo.next(this.sortInfo);
-        this._currentPageIndex = 0;
-        this.currentPageIndex.next(this._currentPageIndex);
-        this.table = table;
-        this.tableConfig = config;
-        this.reloadTable();
+    public registerDatasource(name: string, table: any[], config: TableConfig = {}): TableServicePublicApi {
+        this.setSortInfo(name, null);
+        this.currentSortInfo[name] = new BehaviorSubject<SortInfo>(null);
+        this.currentSortInfo[name].next(this.getSortInfo(name));
+        this._currentPageIndex[name] = 0;
+        this.currentPageIndex[name] = new BehaviorSubject<number>(0);
+        this.currentPageIndex[name].next(this._currentPageIndex[name]);
+        this.table[name] = table;
+        this.setTableConfig(name, config);
+
+        this._sortedTable[name] = [];
+        this.sortedTable[name] = new BehaviorSubject<any[]>(this._sortedTable[name]);
+        this._paginatedTable[name] = [[]];
+        this.paginatedTable[name] = new BehaviorSubject<any[][]>(this._paginatedTable[name]);
+        this._selectedRows[name] = [[]];
+        this.selectedRows[name] = new BehaviorSubject<number[][]>(this._selectedRows[name]);
+        this.isAllSelected[name] = new BehaviorSubject<boolean>(false);
+        this._currentTable[name] = [];
+        this.currentTable[name] = new BehaviorSubject<any[]>(this._currentTable[name]);
+        this._tableHeaderList[name] = [];
+        this.tableHeaderList[name] = new BehaviorSubject<TableHeaderListItem<any>[]>(this._tableHeaderList[name]);
+
+        this.reloadTable(name);
+        return {
+            getSubscription: this.get(name),
+            handle: this.change(name),
+        };
     }
 
     // ------------- HELPERS --------------------
@@ -98,9 +153,9 @@ export class TableService<T extends object = {}> {
      * INIT CONFIG TYPES
      * @returns the initial configuration for config types
      */
-    private initConfigTypes(): TableConfig<T>["types"] {
-        if (this.table && this.table.length) {
-            const types: TableConfig<T>["types"] = this.table.reduce((result, item) => {
+    private initConfigTypes<T>(id: string): TableConfig<T>["types"] {
+        if (this.table[id] && this.table[id].length) {
+            const types: TableConfig<T>["types"] = this.table[id].reduce((result, item) => {
                 for (const key in item) {
                     if (item[key]) {
                         const type: string = (typeof item[key]).toLowerCase();
@@ -123,38 +178,40 @@ export class TableService<T extends object = {}> {
      * RELOAD TABLE:
      * Responsible for recalculation (or initialisation) of everything needed for the table including the sort and pagination and rebuilds all the table components
      */
-    private reloadTable(): void {
-        const table: T[] = this.table && this.table.length ? [...this.table] : [];
+    private reloadTable(id: string): void {
+        const table: any[] = this.table[id] && this.table[id].length ? [...this.table[id]] : [];
 
-        const config: TableConfig<T> = this.tableConfig;
-        const { types, labels, columns, order }: TableConfig<T> = config;
+        const config: TableConfig = this.getTableConfig(id);
+        const { types, labels, columns, order }: TableConfig = config;
 
-        this.setupColumnsList(columns, table, order);
+        this.setupColumnsList(id, columns, table, order);
+        const sortInfo: SortInfo = this.getSortInfo(id);
 
-        const maxItems: number = this.calculateMaxItemsPerPage();
-        this.setupTable(table, this.sortInfo, maxItems);
+        const maxItems: number = this.calculateMaxItemsPerPage(id);
+        this.setupTable(id, table, sortInfo, maxItems);
 
-        this.setupTableHeader(types, labels);
+        this.setupTableHeader(id, types, labels);
 
-        this.currentSortInfo.next(this.sortInfo);
-        this.sortedTable.next(this._sortedTable);
-        this.paginatedTable.next(this._paginatedTable);
-        this.selectedRows.next(this._selectedRows);
-        this.isAllSelected.next(this.checkIsAllSelected());
-        this.currentTable.next(this._currentTable);
-        this.tableHeaderList.next(this._tableHeaderList);
-        this.currentPageIndex.next(this._currentPageIndex);
+        this.currentSortInfo[id].next(sortInfo);
+        this.sortedTable[id].next(this._sortedTable[id]);
+        this.paginatedTable[id].next(this._paginatedTable[id]);
+        this.selectedRows[id].next(this._selectedRows[id]);
+        this.isAllSelected[id].next(this.checkIsAllSelected(id));
+        this.currentTable[id].next(this._currentTable[id]);
+        this.tableHeaderList[id].next(this._tableHeaderList[id]);
+        this.currentPageIndex[id].next(this._currentPageIndex[id]);
     }
 
     /**
      * CALCULATE MAX ITEMS PER PAGE:
      * Calculates the current max items per page
      */
-    private calculateMaxItemsPerPage = (): number => {
-        if (this.tableConfig.pagination) {
-            return this.tableConfig.pagination.maxItems;
+    private calculateMaxItemsPerPage = (id: string): number => {
+        const config: TableConfig = this.getTableConfig(id);
+        if (config?.pagination) {
+            return config.pagination.maxItems;
         } else {
-            return this.table ? this.table.length : 0;
+            return this.table[id] ? this.table[id].length : 0;
         }
     };
 
@@ -165,7 +222,8 @@ export class TableService<T extends object = {}> {
      * @param table the table itself
      * @param order the order or the columns
      */
-    private setupColumnsList(columns: TableConfig<T>["columns"], table: T[], order?: TableConfig<T>["order"]): void {
+    private setupColumnsList(id: string, columns: TableConfig["columns"], table: any[], order?: TableConfig["order"]): void {
+        const config: TableConfig = this.getTableConfig(id);
         let columnsList: string[] = [];
         if (columns && columns.length) {
             columnsList = columns as string[];
@@ -176,14 +234,14 @@ export class TableService<T extends object = {}> {
 
             if (order) {
                 columnsList = columnsList.sort((a: string, b: string) => {
-                    const firstItem: number = this.tableConfig.order[a] ? this.tableConfig.order[a] : 1;
-                    const secondItem: number = this.tableConfig.order[b] ? this.tableConfig.order[b] : -1;
+                    const firstItem: number = config.order[a] ? config.order[a] : 1;
+                    const secondItem: number = config.order[b] ? config.order[b] : -1;
                     return firstItem - secondItem;
                 });
             }
         }
 
-        this.columnsList = [...columnsList];
+        this.columnsList[id] = [...columnsList];
     }
 
     /**
@@ -194,22 +252,24 @@ export class TableService<T extends object = {}> {
      * @param {number} maxItems The maximum number of items to be displayed per page
      * @param {number[]} selectedRowIndexes the indexes of the rows selected in the master table
      */
-    private setupTable(table: T[], sortInfo: SortInfo, maxItems: number, selectedRowIndexes?: number[]): void {
-        const tableWithMeta: TableRowWithMeta<T>[] = table.map((row: T, rowIndex: number) => {
+    private setupTable(id: string, table: any[], sortInfo: SortInfo, maxItems: number, selectedRowIndexes?: number[]): void {
+        const tableWithMeta: TableRowWithMeta<any>[] = table.map((row: any, rowIndex: number) => {
             return { row, selected: !!selectedRowIndexes?.includes(rowIndex) };
         });
-        const sortedTableWithMeta: TableRowWithMeta<T>[] = this.makeSortedTable(tableWithMeta, sortInfo);
-        this._sortedTable = [...sortedTableWithMeta.map(item => item.row)];
+        const sortedTableWithMeta: TableRowWithMeta<any>[] = this.makeSortedTable(tableWithMeta, sortInfo);
+        this._sortedTable[id] = [...sortedTableWithMeta.map(item => item.row)];
 
-        const paginatedTableWithMeta: TableRowWithMeta<T>[][] = this.makePaginatedTable(sortedTableWithMeta, maxItems);
-        this._paginatedTable = [...paginatedTableWithMeta.map(item => item.map(x => x.row))];
+        const paginatedTableWithMeta: TableRowWithMeta<any>[][] = this.makePaginatedTable(sortedTableWithMeta, maxItems);
+        this._paginatedTable[id] = [...paginatedTableWithMeta.map(item => item.map(x => x.row))];
 
-        this._selectedRows = [...paginatedTableWithMeta.map(item => item.map((x, i) => (x.selected ? i : null)).filter(y => y !== null))];
+        this._selectedRows[id] = [
+            ...paginatedTableWithMeta.map(item => item.map((x, i) => (x.selected ? i : null)).filter(y => y !== null)),
+        ];
 
-        if (this._currentPageIndex > this._paginatedTable.length - 1) {
-            this._currentPageIndex = this._paginatedTable.length - 1;
+        if (this._currentPageIndex[id] > this._paginatedTable[id].length - 1) {
+            this._currentPageIndex[id] = this._paginatedTable[id].length - 1;
         }
-        this._currentTable = [...this._paginatedTable[this._currentPageIndex]];
+        this._currentTable[id] = [...this._paginatedTable[id][this._currentPageIndex[id]]];
     }
 
     /**
@@ -218,7 +278,7 @@ export class TableService<T extends object = {}> {
      * @param sort the sort info
      * @returns The new sorted table
      */
-    private makeSortedTable(table: TableRowWithMeta<T>[], sort?: SortInfo): TableRowWithMeta<T>[] {
+    private makeSortedTable(table: TableRowWithMeta<any>[], sort?: SortInfo): TableRowWithMeta<any>[] {
         if (sort) {
             return this.sortTable(table, sort);
         }
@@ -231,8 +291,8 @@ export class TableService<T extends object = {}> {
      * @param maxItems the number of max items on one page
      * @returns the paginated table as array or arrays
      */
-    private makePaginatedTable(table: TableRowWithMeta<T>[], maxItems: number): TableRowWithMeta<T>[][] {
-        const paginatedTable: TableRowWithMeta<T>[][] = [];
+    private makePaginatedTable(table: TableRowWithMeta<any>[], maxItems: number): TableRowWithMeta<any>[][] {
+        const paginatedTable: TableRowWithMeta<any>[][] = [];
 
         while (table.length > 0) {
             paginatedTable.push(table.splice(0, maxItems));
@@ -251,11 +311,11 @@ export class TableService<T extends object = {}> {
      * @param {object} types a REQUIRED map of every column name what type of data it represents
      * @param {object} labels an OPTIONAL map of column names and what label to display as column
      */
-    private setupTableHeader(types: TableConfig<T>["types"], labels?: TableConfig<T>["labels"]): void {
-        const tableHeaderList: TableHeaderListItem<T>[] = [];
+    private setupTableHeader(id: string, types: TableConfig<any>["types"], labels?: TableConfig<any>["labels"]): void {
+        const tableHeaderList: TableHeaderListItem<any>[] = [];
 
-        for (const columnName of this.columnsList) {
-            const tableKeySelector: keyof T = columnName as keyof T;
+        for (const columnName of this.columnsList[id]) {
+            const tableKeySelector: string = columnName;
             const label: string = labels && labels[columnName] ? labels[columnName] : readableFromCamelCase(columnName);
             const valueType: TableHeaderListValueType = types[columnName] || "string";
             tableHeaderList.push({
@@ -264,7 +324,7 @@ export class TableService<T extends object = {}> {
                 label,
             });
         }
-        this._tableHeaderList = tableHeaderList;
+        this._tableHeaderList[id] = tableHeaderList;
     }
 
     /**
@@ -275,9 +335,9 @@ export class TableService<T extends object = {}> {
      * @param {SortInfo<keyof T>} sortInfo The information on how to sort the table: column name, type and asc/desc
      * @returns the sorted table
      */
-    private sortTable = (table: TableRowWithMeta<T>[], sortInfo: SortInfo): TableRowWithMeta<T>[] => {
-        const { column, isAscending, type = "string" }: SortInfo<keyof T> = sortInfo;
-        const newSortedTable: TableRowWithMeta<T>[] = table.sort((a: TableRowWithMeta<T>, b: TableRowWithMeta<T>) => {
+    private sortTable = (table: TableRowWithMeta<any>[], sortInfo: SortInfo): TableRowWithMeta<any>[] => {
+        const { column, isAscending, type = "string" }: SortInfo = sortInfo;
+        const newSortedTable: TableRowWithMeta<any>[] = table.sort((a: TableRowWithMeta<any>, b: TableRowWithMeta<any>) => {
             // flipping the first and second items based on ascending/descending
             const firstItem: any = isAscending ? a.row[column] : b.row[column];
             const secondItem: any = isAscending ? b.row[column] : a.row[column];
@@ -299,8 +359,8 @@ export class TableService<T extends object = {}> {
      * Checks the selected rows of each table and check returns true/false if all rows in every table are selected
      * @returns {boolean}
      */
-    private checkIsAllSelected(): boolean {
-        return this._selectedRows?.map((e, i) => e?.length === this._paginatedTable[i]?.length).every(e => e);
+    private checkIsAllSelected(id: string): boolean {
+        return this._selectedRows[id]?.map((e, i) => e?.length === this._paginatedTable[id][i]?.length).every(e => e);
     }
 
     /**
@@ -308,8 +368,8 @@ export class TableService<T extends object = {}> {
      * Checks if any rows (at least 1) are selected
      * @returns {boolean}
      */
-    private checkHasSelection(): boolean {
-        return this._selectedRows?.map(e => e?.length > 0).some(e => e);
+    private checkHasSelection(id: string): boolean {
+        return this._selectedRows[id]?.map(e => e?.length > 0).some(e => e);
     }
 
     // ------------- EVENTS -----------------------
@@ -318,9 +378,10 @@ export class TableService<T extends object = {}> {
      * Handles the logic for changing the currently visible columns
      * @param {Array<keyof T>} newColumns the new array of visible columns
      */
-    public handleChangeColumns = (newColumns: TableConfig<T>["columns"]): void => {
-        this.tableConfig = { ...this.tableConfig, columns: newColumns };
-        this.reloadTable();
+    private changeColumns = (id: string) => (newColumns: TableConfig["columns"]): void => {
+        const config: TableConfig = this.getTableConfig(id);
+        this.setTableConfig(id, { ...config, columns: newColumns });
+        this.reloadTable(id);
     };
 
     /**
@@ -328,51 +389,58 @@ export class TableService<T extends object = {}> {
      * Handles the logic for sorting the table (updates the sortInfo and reloads the table)
      * @param {SortInfo} value the SortInfo
      */
-    public handleChangeSort = (selectedColumn: keyof T): void => {
+    private changeSort = (id: string) => (selectedColumn: string): void => {
+        if (!id || typeof id !== "string") {
+            console.warn("The firt argument for changeSort needs to be the id of the table");
+            return;
+        }
+
         let selectedRowIndexes: number[] = [];
         // check if table has any rows selected
-        if (this._selectedRows && this.checkHasSelection()) {
+        if (this._selectedRows[id] && this.checkHasSelection(id)) {
             // map them against the current table to get the selected row indexes
             // and keep the metadata within the scope of this method
-            this._selectedRows.map((selectedRows: number[], pageIndex: number) => {
+            this._selectedRows[id].map((selectedRows: number[], pageIndex: number) => {
                 selectedRows?.map((selectedRowsIndex: number) => {
-                    const targetElement: T = this._paginatedTable[pageIndex][selectedRowsIndex];
-                    selectedRowIndexes.push(this.table.indexOf(targetElement));
+                    const targetElement: any = this._paginatedTable[id][pageIndex][selectedRowsIndex];
+                    selectedRowIndexes.push(this.table[id].indexOf(targetElement));
                 });
             });
         }
 
-        if (selectedColumn) {
-            let newSortInfo: Partial<SortInfo<keyof T>> = { column: selectedColumn };
+        const sortInfo: SortInfo = this.getSortInfo(id);
 
-            if (this.sortInfo && this.sortInfo?.column === selectedColumn) {
-                newSortInfo.isAscending = !this.sortInfo?.isAscending;
+        if (selectedColumn) {
+            let newSortInfo: Partial<SortInfo> = { column: selectedColumn };
+
+            if (sortInfo && sortInfo?.column === selectedColumn) {
+                newSortInfo.isAscending = !sortInfo.isAscending;
             } else {
                 newSortInfo.isAscending = true;
             }
-            newSortInfo.type = this._tableConfig?.types[selectedColumn] || "string";
-            this.sortInfo = newSortInfo as SortInfo<keyof T>;
+            newSortInfo.type = this.getTableConfig(id)?.types[selectedColumn] || "string";
+            this.setSortInfo(id, newSortInfo as SortInfo);
         } else {
-            this.sortInfo = null;
+            this.setSortInfo(id, null);
         }
 
         // setup the new table
-        const table: T[] = this.table && this.table.length ? [...this.table] : [];
-        const maxItems: number = this.calculateMaxItemsPerPage();
-        this.setupTable(table, this.sortInfo, maxItems, selectedRowIndexes);
+        const table: any[] = this.table[id] && this.table[id].length ? [...this.table[id]] : [];
+        const maxItems: number = this.calculateMaxItemsPerPage(id);
+        this.setupTable(id, table, this.getSortInfo(id), maxItems, selectedRowIndexes);
 
         // emmit new data =======
         // sort info
-        this.currentSortInfo.next(this.sortInfo);
+        this.currentSortInfo[id].next(this.getSortInfo(id));
 
         // tables
-        this.sortedTable.next(this._sortedTable);
-        this.paginatedTable.next(this._paginatedTable);
-        this.currentTable.next(this._currentTable);
+        this.sortedTable[id].next(this._sortedTable[id]);
+        this.paginatedTable[id].next(this._paginatedTable[id]);
+        this.currentTable[id].next(this._currentTable[id]);
 
         // selected rows
-        this.selectedRows.next(this._selectedRows);
-        this.isAllSelected.next(this.checkIsAllSelected());
+        this.selectedRows[id].next(this._selectedRows[id]);
+        this.isAllSelected[id].next(this.checkIsAllSelected(id));
     };
 
     /**
@@ -380,13 +448,13 @@ export class TableService<T extends object = {}> {
      * Handles the logic for changing the current pagination index
      * @param {number} newIndex the new page navigation index
      */
-    public handleChangePagination = (newIndex: number): void => {
+    private changePagination = (id: string) => (newIndex: number): void => {
         const index: number = typeof newIndex === "number" ? newIndex - 1 : 0;
-        if (index >= 0 && index < this._paginatedTable.length) {
-            this._currentPageIndex = index;
-            this._currentTable = [...this._paginatedTable[this._currentPageIndex]];
-            this.currentPageIndex.next(this._currentPageIndex);
-            this.currentTable.next(this._currentTable);
+        if (index >= 0 && index < this._paginatedTable[id].length) {
+            this._currentPageIndex[id] = index;
+            this._currentTable[id] = [...this._paginatedTable[id][this._currentPageIndex[id]]];
+            this.currentPageIndex[id].next(this._currentPageIndex[id]);
+            this.currentTable[id].next(this._currentTable[id]);
         } else {
             console.warn("The page index is out of range");
         }
@@ -397,39 +465,39 @@ export class TableService<T extends object = {}> {
      * Handles the logic for changing the state of a row (selected/not selected)
      * @param {number} index index of the row of which selection should be toggled
      */
-    public handleSelectRow = (index: number): void => {
-        if (this._currentPageIndex < 0 || index < 0) {
+    private selectRow = (id: string) => (index: number): void => {
+        if (this._currentPageIndex[id] < 0 || index < 0) {
             console.warn("Page or row index can not be negative");
         } else {
-            if (this._selectedRows.length === this._paginatedTable.length) {
-                const rowIsSelected: boolean = this._selectedRows[this._currentPageIndex]?.includes(index);
+            if (this._selectedRows[id].length === this._paginatedTable[id].length) {
+                const rowIsSelected: boolean = this._selectedRows[id][this._currentPageIndex[id]]?.includes(index);
                 if (rowIsSelected) {
-                    this._selectedRows[this._currentPageIndex] = [
-                        ...this._selectedRows[this._currentPageIndex].filter(val => val !== index),
+                    this._selectedRows[id][this._currentPageIndex[id]] = [
+                        ...this._selectedRows[id][this._currentPageIndex[id]].filter(val => val !== index),
                     ];
                 } else {
-                    this._selectedRows[this._currentPageIndex] = [...this._selectedRows[this._currentPageIndex], index];
+                    this._selectedRows[id][this._currentPageIndex[id]] = [...this._selectedRows[id][this._currentPageIndex[id]], index];
                 }
             } else {
                 console.warn("Error: please register table source before consuming the handle methods");
             }
-            this.selectedRows.next([...this._selectedRows]);
-            this.isAllSelected.next(this.checkIsAllSelected());
+            this.selectedRows[id].next([...this._selectedRows[id]]);
+            this.isAllSelected[id].next(this.checkIsAllSelected(id));
         }
     };
 
     /**
      * handles the logic for toggling the state of selected rows to select all or deselect all
      */
-    public handleSelectAllRows = (): void => {
-        if (this._selectedRows && this._selectedRows.length === this._paginatedTable.length) {
-            if (this.checkIsAllSelected()) {
-                this._selectedRows = [...this._paginatedTable.map(_ => [])];
+    private selectAllRows = (id: string) => (): void => {
+        if (this._selectedRows[id] && this._selectedRows[id].length === this._paginatedTable[id].length) {
+            if (this.checkIsAllSelected(id)) {
+                this._selectedRows[id] = [...this._paginatedTable[id].map(_ => [])];
             } else {
-                this._selectedRows = [...this._paginatedTable.map(e => [...e?.map((_, i) => i)])];
+                this._selectedRows[id] = [...this._paginatedTable[id].map(e => [...e?.map((_, i) => i)])];
             }
-            this.selectedRows.next([...this._selectedRows]);
-            this.isAllSelected.next(this.checkIsAllSelected());
+            this.selectedRows[id].next([...this._selectedRows[id]]);
+            this.isAllSelected[id].next(this.checkIsAllSelected(id));
         } else {
             console.warn("Error: please register table source before consuming the handle methods");
         }

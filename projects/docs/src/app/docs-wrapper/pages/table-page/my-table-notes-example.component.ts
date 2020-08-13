@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { TableService, TableConfig, SortInfo, TableHeaderListItem } from "@sebgroup/ng-components/table";
+import { TableService, TableConfig, SortInfo, TableHeaderListItem, TableServicePublicApi } from "@sebgroup/ng-components/table";
 import { BehaviorSubject } from "rxjs";
 // This component is being used to show the output of the example in the notes for sorting
 
@@ -9,9 +9,8 @@ import { BehaviorSubject } from "rxjs";
         [rows]="rows$ | async"
         [headerList]="headerList$ | async"
         [sortInfo]="sortInfo$ | async"
-        (sortClicked)="changeSort($event)"
+        (sortClicked)="sort($event)"
     ></sebng-table>`,
-    providers: [TableService],
 })
 export class MyTableComponent {
     rawData = [
@@ -31,16 +30,16 @@ export class MyTableComponent {
     rows$: BehaviorSubject<any[]>;
     headerList$: BehaviorSubject<TableHeaderListItem<any>[]>;
     sortInfo$: BehaviorSubject<SortInfo<string | number | symbol>>;
-    changeSort: (selectedColumn: string | number | symbol) => void;
+    sort: (selectedColumn: string | number | symbol) => void;
 
-    constructor(private tableService: TableService<any>) {
+    constructor(private tableService: TableService) {
         const tableConfig: TableConfig<any> = {
             sort: { column: "country", isAscending: true, type: "string" },
         };
-        this.tableService.registerDatasource(this.rawData, tableConfig);
-        this.rows$ = this.tableService.currentTable;
-        this.headerList$ = this.tableService.tableHeaderList;
-        this.sortInfo$ = this.tableService.currentSortInfo;
-        this.changeSort = this.tableService.handleChangeSort;
+        const api: TableServicePublicApi = this.tableService.registerDatasource("my-table", this.rawData, tableConfig);
+        this.rows$ = api.getSubscription("currentTable");
+        this.headerList$ = api.getSubscription("tableHeaderList");
+        this.sortInfo$ = api.getSubscription("currentSortInfo");
+        this.sort = api.handle("changeSort");
     }
 }

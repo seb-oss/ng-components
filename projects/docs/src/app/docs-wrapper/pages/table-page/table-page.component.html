@@ -5,24 +5,23 @@
             [compact]="compact"
             [striped]="striped"
             [theadTheme]="selectedTheadTheme.value"
-            [rows]="tableService.currentTable | async"
-            [headerList]="tableService.tableHeaderList | async"
+            [rows]="rows$ | async"
+            [headerList]="headerList$ | async"
             [selectable]="selectable"
-            [selectedRowIndexes]="selectable ? (tableService.selectedRows | async)[tableService.currentPageIndex | async] : null"
-            [isAllSelected]="tableService.isAllSelected | async"
-            [sortInfo]="tableService.currentSortInfo | async"
+            [selectedRowIndexes]="selectable ? (selectedRows$ | async)[page$ | async] : null"
+            [isAllSelected]="isAllSelected$ | async"
+            [sortInfo]="sortInfo$ | async"
             [fixedHeight]="hasFixedHeight ? height + 'px' : null"
-            (sortClicked)="tableService.handleChangeSort($event)"
-            (selectAllClicked)="tableService.handleSelectAllRows()"
-            (rowClicked)="tableService.handleSelectRow($event.index)"
+            (sortClicked)="tableApi.handle('changeSort')($event)"
+            (selectAllClicked)="tableApi.handle('selectAllRows')()"
+            (rowClicked)="tableApi.handle('selectRow')($event.index)"
         ></sebng-table>
         <sebng-pagination
-            *ngIf="usePagination"
-            [value]="(tableService.currentPageIndex | async) + 1"
+            [value]="(page$ | async) + 1"
             [size]="data.length"
             [offset]="itemsPerPage"
             [pagingLength]="5"
-            (change)="tableService.handleChangePagination($event)"
+            (change)="tableApi.handle('changePagination')($event)"
         ></sebng-pagination>
     </div>
     <div controls>
@@ -60,29 +59,22 @@
 
         <sebng-dropdown
             className="mb-3"
-            [ngModel]="getDropdownItemByColumnName((tableService.currentSortInfo | async)?.column)"
-            (ngModelChange)="tableService.handleChangeSort($event.value)"
+            [ngModel]="getDropdownItemByColumnName((sortInfo$ | async)?.column)"
+            (ngModelChange)="tableApi.handle('changeSort')($event.value)"
             [list]="sortDropdownList"
             label="Sort table by"
         ></sebng-dropdown>
 
         <sebng-dropdown
             [ngModel]="selectedColumnsDropdownList"
-            (ngModelChange)="tableService.handleChangeColumns(getColumnsFromDropdownList($event)); selectedColumnsDropdownList = $event"
+            (ngModelChange)="tableApi.handle('changeColumns')(getColumnsFromDropdownList($event)); selectedColumnsDropdownList = $event"
             [list]="columnsDropdownList"
             [multi]="true"
             label="Show columns"
         ></sebng-dropdown>
         <p><small>(Note: Deselecting all columns will default to all columns being showed.)</small></p>
-
-        <sebng-checkbox
-            [ngModel]="usePagination"
-            (ngModelChange)="handleChangeUsePagination($event)"
-            label="Use pagination"
-            description="Show as paginated table (example fixed to {{ itemsPerPage }} items per page)."
-        ></sebng-checkbox>
     </div>
-    <ng-container code>{{ snippet(tableService.currentSortInfo | async, hasFixedHeight, height, dark, compact, striped) }}</ng-container>
+    <ng-container code>{{ snippet(sortInfo$ | async, hasFixedHeight, height, selectable, compact, striped) }}</ng-container>
 
     <ng-container notes>
         <h3>Using the <code>TableComponent</code></h3>
@@ -90,7 +82,7 @@
             The table component needs both <code>rows</code> and <code>headerList</code> to display the data. Given the following simple
             example of raw <code>data</code>:
         </p>
-        <pre>const data = {{ rawDataNotesExample | json }}</pre>
+        <pre>const data: any[] = {{ rawDataNotesExample | json }}</pre>
         <p>
             If we wish to display a table with the columns <code>country</code> and <code>currency</code>, the <code>headerList</code> for
             it would look like this:

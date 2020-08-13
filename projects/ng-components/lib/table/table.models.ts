@@ -1,3 +1,23 @@
+export type TableServiceSubscriber = (property: TableServiceSubject) => any;
+export type TableServiceHandler = (property: TableServiceAction) => (...args: any[]) => void;
+
+export interface TableServicePublicApi {
+    getSubscription: TableServiceSubscriber;
+    handle: TableServiceHandler;
+}
+/** The name of a property that is possible to subscribe to from the Table Service */
+export type TableServiceSubject =
+    | "currentSortInfo"
+    | "selectedRows"
+    | "isAllSelected"
+    | "currentPageIndex"
+    | "tableHeaderList"
+    | "sortedTable"
+    | "paginatedTable"
+    | "currentTable";
+
+export type TableServiceAction = "changeColumns" | "changeSort" | "changePagination" | "selectRow" | "selectAllRows";
+
 /** The type of a data the values in a column represent  */
 export type TableHeaderListValueType = "number" | "string" | "date" | "datetime" | "bool" | "custom-html";
 
@@ -8,7 +28,7 @@ export type TableTHeadTheme = "light" | "dark";
 export type TableResponsiveBreakpoint = "sm" | "md" | "lg" | "xl";
 
 /** The Table config object Interface */
-export interface TableConfig<T extends {} = {}> {
+export interface TableConfig<T extends {} = { [k: string]: any }> {
     /** a map of every column name what type of data it represents */
     types?: { [key in keyof T]?: TableHeaderListValueType };
     /** an optional map of column names and what label to display as column */
@@ -16,7 +36,7 @@ export interface TableConfig<T extends {} = {}> {
     /** an optional map of column names and what order they should appear in */
     order?: { [key in keyof T]?: number };
     /** an optional initial sort */
-    sort?: SortInfo<keyof T>;
+    sort?: SortInfo<T>;
     /** an optional array of column names which shall not be displayed */
     columns?: Array<keyof T>;
     /** Pagination config */
@@ -43,9 +63,9 @@ export interface TableRowClickedEvent<T extends {} = {}> {
 }
 
 /** The information on the currently selected sort: column name, type and asc/desc  */
-export interface SortInfo<K extends string | number | symbol = any> {
+export interface SortInfo<T extends {} = { [k: string]: any }> {
     /** column name */
-    column: K;
+    column: keyof T;
     /** is ascending (false for descending) */
     isAscending: boolean;
     /** the type of value: string, date or number */

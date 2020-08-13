@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { TableModule } from "@sebgroup/ng-components/table";
+import { TableModule, TableService } from "@sebgroup/ng-components/table";
 import { TablePageComponent } from "./table-page.component";
 import { CommonModule } from "@angular/common";
 import { DocPageModule } from "../../doc-page/doc-page.module";
@@ -13,6 +13,7 @@ import { MyTableComponent } from "./my-table-notes-example.component";
 
 @NgModule({
     declarations: [MyTableComponent, TablePageComponent],
+    providers: [TableService],
     imports: [
         CommonModule,
         TablePageRoutingModule,

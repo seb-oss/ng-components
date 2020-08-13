@@ -1,7 +1,15 @@
 import { Component } from "@angular/core";
-import { TableService, TableConfig, TableTHeadTheme } from "@sebgroup/ng-components/table";
+import {
+    TableService,
+    TableConfig,
+    TableTHeadTheme,
+    TableHeaderListItem,
+    SortInfo,
+    TableServicePublicApi,
+} from "@sebgroup/ng-components/table";
 import { DropdownItem } from "@sebgroup/ng-components/dropdown";
 import { simpleTableHTML, tableServiceExampleSnippet, tableServiceSortSnippet, rawDataNotesExample } from "./notes-snippets";
+import { BehaviorSubject } from "rxjs";
 
 interface TablePageData {
     country: string;
@@ -13,36 +21,37 @@ interface TablePageData {
 @Component({
     selector: "app-table-page",
     templateUrl: "./table-page.component.html",
-    providers: [TableService],
 })
 export class TablePageComponent {
+    tableApi: TableServicePublicApi;
+    tableId: string = "table-page-table";
     itemsPerPage: number = 4;
     // controls
     compact: boolean = true;
     striped: boolean = false;
     dark: boolean = false;
     selectable: boolean = false;
-    usePagination: boolean = false;
     hasFixedHeight: boolean = false;
     height: number = 130;
 
     importString: string = require("!raw-loader!@sebgroup/ng-components/table/table.component");
-    snippet = (sortInfo: string, fixedHeight: boolean, height: number, dark: boolean, compact: boolean, striped: boolean): string => {
+    snippet = (sortInfo: string, fixedHeight: boolean, height: number, selectable: boolean, compact: boolean, striped: boolean): string => {
         return `
-constructor(public tableService: TableService<any>) {
-    this.tableService.registerDatasource(this.data, { sort: ${JSON.stringify(sortInfo).replace(/"/g, "'")} });
-}
-
 <sebng-table
-    [darkTable]="${dark}"
     [compact]="${compact}"
     [striped]="${striped}"
-    [rows]="tableService.currentTable | async"
-    [headerList]="tableService.tableHeaderList | async"
-    [sortInfo]="tableService.currentSortInfo | async"
-    ${fixedHeight ? `[fixedHeight]="${height} + 'px'"}` : ""}
-    (sortClicked)="tableService.handleChangeSort($event)"
-    (rowClicked)="tableService.handleSelectRow($event.index)"
+    [selectable]="${selectable}"
+    [rows]="rows"
+    [headerList]="headerList"
+    [sortInfo]="${JSON.stringify(sortInfo).replace(/"/g, "'")}"${
+            fixedHeight
+                ? `
+    [fixedHeight]="${height} + 'px'"}
+    `
+                : `
+    `
+        }(sortClicked)="sort($event)"
+    (rowClicked)="rowClicked($event.index)"
 ></sebng-table>
        `;
     };
@@ -89,26 +98,26 @@ constructor(public tableService: TableService<any>) {
     ];
     selectedTheadTheme: DropdownItem<TableTHeadTheme> = this.theadThemeList[0];
 
-    constructor(public tableService: TableService<TablePageData>) {
+    rows$: BehaviorSubject<TablePageData[]>;
+    headerList$: BehaviorSubject<TableHeaderListItem<TablePageData>[]>;
+    selectedRows$: BehaviorSubject<number[][]>;
+    page$: BehaviorSubject<number>;
+    isAllSelected$: BehaviorSubject<number>;
+    sortInfo$: BehaviorSubject<SortInfo<TablePageData>>;
+
+    constructor(public tableService: TableService) {
         document.title = "Table - SEB Angular Components";
 
-        this.tableService.registerDatasource(this.data, { types: this.types });
-    }
-
-    handleChangeUsePagination(newValue: boolean): void {
-        this.usePagination = newValue;
-        if (newValue) {
-            this.tableService.registerDatasource(this.data, {
-                pagination: { maxItems: this.itemsPerPage },
-                columns: this.getColumnsFromDropdownList(this.selectedColumnsDropdownList),
-                types: this.types,
-            });
-        } else {
-            this.tableService.registerDatasource(this.data, {
-                columns: this.getColumnsFromDropdownList(this.selectedColumnsDropdownList),
-                types: this.types,
-            });
-        }
+        this.tableApi = this.tableService.registerDatasource(this.tableId, this.data, {
+            types: this.types,
+            pagination: { maxItems: this.itemsPerPage },
+        });
+        this.rows$ = this.tableApi.getSubscription("currentTable");
+        this.headerList$ = this.tableApi.getSubscription("tableHeaderList");
+        this.selectedRows$ = this.tableApi.getSubscription("selectedRows");
+        this.page$ = this.tableApi.getSubscription("currentPageIndex");
+        this.isAllSelected$ = this.tableApi.getSubscription("isAllSelected");
+        this.sortInfo$ = this.tableApi.getSubscription("currentSortInfo");
     }
 
     getDropdownItemByColumnName = (col: string): DropdownItem<keyof TablePageData> => {
