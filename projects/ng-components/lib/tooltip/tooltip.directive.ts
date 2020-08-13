@@ -138,7 +138,11 @@ export class TooltipDirective implements OnInit, OnDestroy {
         this.obs = positionStrategy.positionChanges
             .pipe(distinctUntilChanged((prev: ConnectedOverlayPositionChange, curr: ConnectedOverlayPositionChange) => isEqual(prev, curr)))
             .subscribe((newPosition: ConnectedOverlayPositionChange) => {
-                if (newPosition.scrollableViewProperties.isOverlayClipped && this.isShown) {
+                if (
+                    newPosition.scrollableViewProperties.isOverlayClipped &&
+                    newPosition.scrollableViewProperties.isOverlayOutsideView &&
+                    this.isShown
+                ) {
                     this.ngZone.run(() => this.removeTooltipFromOverlay());
                     return;
                 }
