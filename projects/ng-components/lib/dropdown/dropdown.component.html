@@ -1,7 +1,5 @@
 <ng-container *ngIf="native; else notNative">
-    <label *ngIf="label" class="dropdown-label" [class.disabled]="disabled"
-        ><b>{{ label }}</b></label
-    >
+    <label *ngIf="label" class="dropdown-label" [class.disabled]="disabled">{{ label }}</label>
     <select
         [name]="name"
         [id]="id || toggleButtonId"
@@ -28,9 +26,7 @@
 
 <ng-template #notNative>
     <div *ngIf="list" class="dropdown custom-dropdown {{ className }}" [class.disabled]="disabled">
-        <label *ngIf="label" class="dropdown-label"
-            ><b>{{ label }}</b></label
-        >
+        <label *ngIf="label" class="dropdown-label">{{ label }}</label>
 
         <button
             #dropdownToggleRef
