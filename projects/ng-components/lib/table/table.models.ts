@@ -1,9 +1,24 @@
+import { BehaviorSubject } from "rxjs";
+
 export type TableServiceSubscriber = (property: TableServiceSubject) => any;
 export type TableServiceHandler = (property: TableServiceAction) => (...args: any[]) => void;
 
-export interface TableServicePublicApi {
-    getSubscription: TableServiceSubscriber;
-    handle: TableServiceHandler;
+export interface TableServiceDataAndHandlers<T extends {} = { [k: string]: any }> {
+    get: {
+        rows: BehaviorSubject<T[]>;
+        headerList: BehaviorSubject<TableHeaderListItem<T>[]>;
+        sortInfo: BehaviorSubject<SortInfo<T>>;
+        selectedRows: BehaviorSubject<number[][]>;
+        isAllSelected: BehaviorSubject<boolean>;
+        pageNo: BehaviorSubject<number>;
+    };
+    handle: {
+        changeColumns: (newColumns: TableConfig["columns"]) => void;
+        sort: (selectedColumn: string) => void;
+        changePage: (newIndex: number) => void;
+        selectRow: (index: number) => void;
+        selectAllRows: () => void;
+    };
 }
 /** The name of a property that is possible to subscribe to from the Table Service */
 export type TableServiceSubject =

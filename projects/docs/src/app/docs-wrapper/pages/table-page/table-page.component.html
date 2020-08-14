@@ -5,23 +5,24 @@
             [compact]="compact"
             [striped]="striped"
             [theadTheme]="selectedTheadTheme.value"
-            [rows]="rows$ | async"
-            [headerList]="headerList$ | async"
+            [rows]="tableData.rows | async"
+            [headerList]="tableData.headerList | async"
             [selectable]="selectable"
-            [selectedRowIndexes]="selectable ? (selectedRows$ | async)[page$ | async] : null"
-            [isAllSelected]="isAllSelected$ | async"
-            [sortInfo]="sortInfo$ | async"
+            [selectedRowIndexes]="selectable ? (tableData.selectedRows | async)[tableData.pageNo | async] : null"
+            [isAllSelected]="tableData.isAllSelected | async"
+            [sortInfo]="tableData.sortInfo | async"
             [fixedHeight]="hasFixedHeight ? height + 'px' : null"
-            (sortClicked)="tableApi.handle('changeSort')($event)"
-            (selectAllClicked)="tableApi.handle('selectAllRows')()"
-            (rowClicked)="tableApi.handle('selectRow')($event.index)"
+            (sortClicked)="tableHandlers.sort($event)"
+            (selectAllClicked)="tableHandlers.selectAllRows()"
+            (rowClicked)="tableHandlers.selectRow($event.index)"
         ></sebng-table>
+
         <sebng-pagination
-            [value]="(page$ | async) + 1"
+            [value]="(tableData.pageNo | async) + 1"
             [size]="data.length"
             [offset]="itemsPerPage"
             [pagingLength]="5"
-            (change)="tableApi.handle('changePagination')($event)"
+            (change)="tableHandlers.changePage($event)"
         ></sebng-pagination>
     </div>
     <div controls>
@@ -59,22 +60,22 @@
 
         <sebng-dropdown
             className="mb-3"
-            [ngModel]="getDropdownItemByColumnName((sortInfo$ | async)?.column)"
-            (ngModelChange)="tableApi.handle('changeSort')($event.value)"
+            [ngModel]="getDropdownItemByColumnName((tableData.sortInfo | async)?.column)"
+            (ngModelChange)="tableHandlers.sort($event.value)"
             [list]="sortDropdownList"
             label="Sort table by"
         ></sebng-dropdown>
 
         <sebng-dropdown
             [ngModel]="selectedColumnsDropdownList"
-            (ngModelChange)="tableApi.handle('changeColumns')(getColumnsFromDropdownList($event)); selectedColumnsDropdownList = $event"
+            (ngModelChange)="tableHandlers.changeColumns(getColumnsFromDropdownList($event)); selectedColumnsDropdownList = $event"
             [list]="columnsDropdownList"
             [multi]="true"
             label="Show columns"
         ></sebng-dropdown>
         <p><small>(Note: Deselecting all columns will default to all columns being showed.)</small></p>
     </div>
-    <ng-container code>{{ snippet(sortInfo$ | async, hasFixedHeight, height, selectable, compact, striped) }}</ng-container>
+    <ng-container code>{{ snippet(tableData.sortInfo | async, hasFixedHeight, height, selectable, compact, striped) }}</ng-container>
 
     <ng-container notes>
         <h3>Using the <code>TableComponent</code></h3>

@@ -1,15 +1,7 @@
 import { Component } from "@angular/core";
-import {
-    TableService,
-    TableConfig,
-    TableTHeadTheme,
-    TableHeaderListItem,
-    SortInfo,
-    TableServicePublicApi,
-} from "@sebgroup/ng-components/table";
+import { TableService, TableConfig, TableTHeadTheme, TableServiceDataAndHandlers } from "@sebgroup/ng-components/table";
 import { DropdownItem } from "@sebgroup/ng-components/dropdown";
 import { simpleTableHTML, tableServiceExampleSnippet, tableServiceSortSnippet, rawDataNotesExample } from "./notes-snippets";
-import { BehaviorSubject } from "rxjs";
 
 interface TablePageData {
     country: string;
@@ -23,7 +15,8 @@ interface TablePageData {
     templateUrl: "./table-page.component.html",
 })
 export class TablePageComponent {
-    tableApi: TableServicePublicApi;
+    tableData: TableServiceDataAndHandlers<TablePageData>["get"];
+    tableHandlers: TableServiceDataAndHandlers<TablePageData>["handle"];
     tableId: string = "table-page-table";
     itemsPerPage: number = 4;
     // controls
@@ -98,26 +91,15 @@ export class TablePageComponent {
     ];
     selectedTheadTheme: DropdownItem<TableTHeadTheme> = this.theadThemeList[0];
 
-    rows$: BehaviorSubject<TablePageData[]>;
-    headerList$: BehaviorSubject<TableHeaderListItem<TablePageData>[]>;
-    selectedRows$: BehaviorSubject<number[][]>;
-    page$: BehaviorSubject<number>;
-    isAllSelected$: BehaviorSubject<number>;
-    sortInfo$: BehaviorSubject<SortInfo<TablePageData>>;
-
     constructor(public tableService: TableService) {
         document.title = "Table - SEB Angular Components";
 
-        this.tableApi = this.tableService.registerDatasource(this.tableId, this.data, {
+        const { get, handle } = this.tableService.registerDatasource<TablePageData>(this.tableId, this.data, {
             types: this.types,
             pagination: { maxItems: this.itemsPerPage },
         });
-        this.rows$ = this.tableApi.getSubscription("currentTable");
-        this.headerList$ = this.tableApi.getSubscription("tableHeaderList");
-        this.selectedRows$ = this.tableApi.getSubscription("selectedRows");
-        this.page$ = this.tableApi.getSubscription("currentPageIndex");
-        this.isAllSelected$ = this.tableApi.getSubscription("isAllSelected");
-        this.sortInfo$ = this.tableApi.getSubscription("currentSortInfo");
+        this.tableData = get;
+        this.tableHandlers = handle;
     }
 
     getDropdownItemByColumnName = (col: string): DropdownItem<keyof TablePageData> => {

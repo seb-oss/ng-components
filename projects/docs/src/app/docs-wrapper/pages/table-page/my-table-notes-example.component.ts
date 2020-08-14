@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { TableService, TableConfig, SortInfo, TableHeaderListItem, TableServicePublicApi } from "@sebgroup/ng-components/table";
+import { TableService, TableConfig, SortInfo, TableHeaderListItem, TableServiceDataAndHandlers } from "@sebgroup/ng-components/table";
 import { BehaviorSubject } from "rxjs";
 // This component is being used to show the output of the example in the notes for sorting
 
@@ -29,17 +29,17 @@ export class MyTableComponent {
     ];
     rows$: BehaviorSubject<any[]>;
     headerList$: BehaviorSubject<TableHeaderListItem<any>[]>;
-    sortInfo$: BehaviorSubject<SortInfo<string | number | symbol>>;
+    sortInfo$: BehaviorSubject<SortInfo>;
     sort: (selectedColumn: string | number | symbol) => void;
 
     constructor(private tableService: TableService) {
         const tableConfig: TableConfig<any> = {
             sort: { column: "country", isAscending: true, type: "string" },
         };
-        const api: TableServicePublicApi = this.tableService.registerDatasource("my-table", this.rawData, tableConfig);
-        this.rows$ = api.getSubscription("currentTable");
-        this.headerList$ = api.getSubscription("tableHeaderList");
-        this.sortInfo$ = api.getSubscription("currentSortInfo");
-        this.sort = api.handle("changeSort");
+        const { get, handle }: TableServiceDataAndHandlers = this.tableService.registerDatasource("my-table", this.rawData, tableConfig);
+        this.rows$ = get.rows;
+        this.headerList$ = get.headerList;
+        this.sortInfo$ = get.sortInfo;
+        this.sort = handle.sort;
     }
 }

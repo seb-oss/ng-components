@@ -14,15 +14,17 @@ export const simpleTableHTML: string = `<sebng-table
 
 export const tableServiceExampleSnippet: string = `
 import { Component } from "@angular/core";
-import { TableService, TableHeaderListItem, TableServicePublicApi } from "@sebgroup/ng-components/table";
 import { BehaviorSubject } from "rxjs";
+import { TableService, TableHeaderListItem, TableServiceDataAndHandlers } from "@sebgroup/ng-components/table";
 
 @Component({
     selector: "app-my-table",
-    template: \`<sebng-table
+    template: \`
+    <sebng-table
         [rows]="rows$ | async"
         [headerList]="headerList$ | async"
-    ></sebng-table>\`,
+    ></sebng-table>
+    \`,
 })
 export class MyTableComponent {
     rawData = [
@@ -43,37 +45,44 @@ export class MyTableComponent {
     headerList$: BehaviorSubject<TableHeaderListItem<any>[]>;
 
     constructor(private tableService: TableService) {
-        const api: TableServicePublicApi = this.tableService.registerDatasource("my-table", this.rawData);
-        this.rows$ = api.getSubscription("currentTable");
-        this.headerList$ = api.getSubscription("tableHeaderList");
+        const { get }: TableServiceDataAndHandlers = this.tableService.registerDatasource("my-table", this.rawData);
+        this.rows$ = get.rows;
+        this.headerList$ = get.headerList;
     }
 }
 `;
 
-export const tableServiceSortSnippet: string = `\
+export const tableServiceSortSnippet: string = `
 ...
-import { TableService, TableConfig, SortInfo, TableServicePublicApi } from "@sebgroup/ng-components/table";
-import { BehaviorSubject } from "rxjs";
+import { TableService, TableConfig, SortInfo, TableHeaderListItem, TableServiceDataAndHandlers } from "@sebgroup/ng-components/table";
 
 @Component({
-    template: \`<sebng-table
+    ...
+    template: \`
+    <sebng-table
         ...
         [sortInfo]="sortInfo$ | async"
         (sortClicked)="sort($event)"
-    ></sebng-table>\`,
+    ></sebng-table>
+    \`,
 })
-export class MyTableComponent {\
+export class MyTableComponent {
     ...
-    sortInfo$: BehaviorSubject<SortInfo<string | number | symbol>>;
+    sortInfo$: BehaviorSubject<SortInfo>;
     sort: (selectedColumn: string | number | symbol) => void;
 
     constructor(private tableService: TableService) {
         const tableConfig: TableConfig<any> = {
             sort: { column: "country", isAscending: true, type: "string" },
         };
-        const api: TableServicePublicApi = this.tableService.registerDatasource("my-table", this.rawData, tableConfig);
+        const { get, handle }: TableServiceDataAndHandlers = this.tableService.registerDatasource(
+            "my-table",
+            this.rawData,
+            tableConfig
+        );
         ...
-        this.sortInfo$ = api.getSubscription("currentSortInfo");
-        this.sort = api.handle("changeSort");
+        this.sortInfo$ = get.sortInfo;
+        this.sort = handle.sort;
     }
-}`;
+}
+`;

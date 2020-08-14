@@ -8,7 +8,7 @@ import {
     TableServiceAction,
     TableServiceSubscriber,
     TableServiceHandler,
-    TableServicePublicApi,
+    TableServiceDataAndHandlers,
 } from "./table.models";
 import { toDate } from "@sebgroup/frontend-tools/dist/toDate";
 import { readableFromCamelCase } from "./utils";
@@ -31,7 +31,7 @@ export class TableService {
     private getTableConfig = <T extends {} = {}>(id: string): TableConfig<T> => {
         return this._tableConfigs[id];
     };
-    private setTableConfig = (id: string, value: TableConfig): void => {
+    private setTableConfig = (id: string, value: TableConfig<any>): void => {
         const defaultTypes: TableConfig["types"] = this.initConfigTypes(id);
         this._tableConfigs[id] = {
             ...value,
@@ -119,7 +119,11 @@ export class TableService {
      * @param {TableConfig} config the table configuration settings
      * @returns {TableServiceSubscriber} a generic getter for any subscribable property
      */
-    public registerDatasource(name: string, table: any[], config: TableConfig = {}): TableServicePublicApi {
+    public registerDatasource<T extends {} = { [k: string]: any }>(
+        name: string,
+        table: any[],
+        config: TableConfig<T> = {}
+    ): TableServiceDataAndHandlers<T> {
         this.setSortInfo(name, null);
         this.currentSortInfo[name] = new BehaviorSubject<SortInfo>(null);
         this.currentSortInfo[name].next(this.getSortInfo(name));
@@ -142,9 +146,23 @@ export class TableService {
         this.tableHeaderList[name] = new BehaviorSubject<TableHeaderListItem<any>[]>(this._tableHeaderList[name]);
 
         this.reloadTable(name);
+
         return {
-            getSubscription: this.get(name),
-            handle: this.change(name),
+            get: {
+                headerList: this.get(name)("tableHeaderList"),
+                rows: this.get(name)("currentTable"),
+                sortInfo: this.get(name)("currentSortInfo"),
+                selectedRows: this.get(name)("selectedRows"),
+                isAllSelected: this.get(name)("isAllSelected"),
+                pageNo: this.get(name)("currentPageIndex"),
+            },
+            handle: {
+                changeColumns: this.change(name)("changeColumns"),
+                changePage: this.change(name)("changePagination"),
+                sort: this.change(name)("changeSort"),
+                selectAllRows: this.change(name)("selectAllRows"),
+                selectRow: this.change(name)("selectRow"),
+            },
         };
     }
 
