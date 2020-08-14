@@ -54,7 +54,7 @@ export class MyTableComponent {
 
 export const tableServiceSortSnippet: string = `
 ...
-import { TableService, TableConfig, SortInfo, TableHeaderListItem, TableServiceDataAndHandlers } from "@sebgroup/ng-components/table";
+import { ..., TableConfig, SortInfo } from "@sebgroup/ng-components/table";
 
 @Component({
     ...

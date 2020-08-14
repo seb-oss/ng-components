@@ -64,7 +64,7 @@ export interface TableConfig<T extends {} = { [k: string]: any }> {
     /** an optional initial sort */
     sort?: SortInfo<T>;
     /** an optional array of column names which shall not be displayed */
-    columns?: Array<keyof T> | [];
+    columns?: Array<keyof T>;
     /** Pagination config */
     pagination?: {
         /** number of maximum items to display per page */

@@ -131,7 +131,7 @@ describe("TableService", () => {
 
     it("should display all columns by default and if whitelist is empty", () => {
         expect(data.headerList.value.length).toBe(Object.keys(datasource[0]).length); // showing all columns
-        const { get } = service.registerDatasource("test-whitelist-table", datasource, { columns: [] }); // set config for columns
+        const { get } = service.registerDatasource<TestTableDataType>("test-whitelist-table", datasource, { columns: [] }); // set config for columns
         expect(get.headerList.value.length).toBe(Object.keys(datasource[0]).length); // still showing all columns
     });
 
