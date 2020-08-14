@@ -192,6 +192,18 @@ describe("Component: ModalComponent", () => {
         expect(modalElement.classList.contains("hide")).toBeFalse();
     });
 
+    it("Should append `overflow-hidden` to the body", () => {
+        component.toggle = true;
+        fixture.detectChanges();
+
+        expect(document.body.classList.contains("overflow-hidden")).toBeTruthy();
+
+        component.toggle = false;
+        fixture.detectChanges();
+
+        expect(document.body.classList.contains("overflow-hidden")).toBeFalsy();
+    });
+
     it("Should render header, body, and footer", async () => {
         await TestBed.resetTestingModule()
             .configureTestingModule({

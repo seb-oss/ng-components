@@ -64,6 +64,12 @@ export class ModalComponent implements OnDestroy {
             if (toggle && this.hidden) {
                 this.hidden = false;
             }
+
+            if (toggle) {
+                document.body.classList.add("overflow-hidden");
+            } else {
+                document.body.classList.remove("overflow-hidden");
+            }
         }
     }
 
