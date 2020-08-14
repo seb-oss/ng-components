@@ -1,24 +1,35 @@
 import { BehaviorSubject } from "rxjs";
 
-export type TableServiceSubscriber = (property: TableServiceSubject) => any;
-export type TableServiceHandler = (property: TableServiceAction) => (...args: any[]) => void;
+export interface TableServiceData<T extends {} = { [k: string]: any }> {
+    /** The current table or rows to display in the table based on the current sort and page */
+    rows: BehaviorSubject<T[]>;
+    /** The entire data, sorted */
+    sortedTable: BehaviorSubject<T[]>;
+    /** The entire data, sorted and paginated */
+    paginatedTable: BehaviorSubject<T[][]>;
+    /** The Header List of the entire data with all the column info to be used with the table UI */
+    headerList: BehaviorSubject<TableHeaderListItem<T>[]>;
+    /** The information of which column the table is sorted by and extra info to be used with the table UI */
+    sortInfo: BehaviorSubject<SortInfo<T>>;
+    /** The information of which which rows are currently selected mapped to the paginated table (to be used with the table UI) */
+    selectedRows: BehaviorSubject<number[][]>;
+    /** Are all the rows of the table are selected? */
+    isAllSelected: BehaviorSubject<boolean>;
+    /** The current number of the page which is being displayed */
+    pageNo: BehaviorSubject<number>;
+}
+
+export interface TableServiceHandlers<T extends {} = { [k: string]: any }> {
+    changeColumns: (newColumns: TableConfig<T>["columns"]) => void;
+    sort: (selectedColumn: string) => void;
+    changePage: (newIndex: number) => void;
+    selectRow: (index: number) => void;
+    selectAllRows: () => void;
+}
 
 export interface TableServiceDataAndHandlers<T extends {} = { [k: string]: any }> {
-    get: {
-        rows: BehaviorSubject<T[]>;
-        headerList: BehaviorSubject<TableHeaderListItem<T>[]>;
-        sortInfo: BehaviorSubject<SortInfo<T>>;
-        selectedRows: BehaviorSubject<number[][]>;
-        isAllSelected: BehaviorSubject<boolean>;
-        pageNo: BehaviorSubject<number>;
-    };
-    handle: {
-        changeColumns: (newColumns: TableConfig["columns"]) => void;
-        sort: (selectedColumn: string) => void;
-        changePage: (newIndex: number) => void;
-        selectRow: (index: number) => void;
-        selectAllRows: () => void;
-    };
+    get: TableServiceData<T>;
+    handle: TableServiceHandlers<T>;
 }
 /** The name of a property that is possible to subscribe to from the Table Service */
 export type TableServiceSubject =
@@ -53,7 +64,7 @@ export interface TableConfig<T extends {} = { [k: string]: any }> {
     /** an optional initial sort */
     sort?: SortInfo<T>;
     /** an optional array of column names which shall not be displayed */
-    columns?: Array<keyof T>;
+    columns?: Array<keyof T> | [];
     /** Pagination config */
     pagination?: {
         /** number of maximum items to display per page */

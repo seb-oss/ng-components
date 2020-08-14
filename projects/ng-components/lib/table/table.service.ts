@@ -6,8 +6,6 @@ import {
     TableHeaderListValueType,
     TableServiceSubject,
     TableServiceAction,
-    TableServiceSubscriber,
-    TableServiceHandler,
     TableServiceDataAndHandlers,
 } from "./table.models";
 import { toDate } from "@sebgroup/frontend-tools/dist/toDate";
@@ -88,7 +86,7 @@ export class TableService {
      * @param id the id of the table
      * @param property the property to get
      */
-    private get = (id: string): TableServiceSubscriber => (property: TableServiceSubject): any => {
+    private get = (id: string) => (property: TableServiceSubject): any => {
         if ((property as any) === "get") {
             console.warn("Can't get self, please provide another key.");
         } else if (property.startsWith("handle") || property.startsWith("register")) {
@@ -104,7 +102,7 @@ export class TableService {
      * @param id the id of the table
      * @param property the name of the handler to get
      */
-    private change = (id: string): TableServiceHandler => (property: TableServiceAction): ((...args: any[]) => void) => {
+    private change = (id: string) => (property: TableServiceAction): ((...args: any[]) => void) => {
         return this[property](id);
     };
 
@@ -117,7 +115,7 @@ export class TableService {
      * @param {any[]} name the unique name of your data
      * @param {any[]} table the raw data
      * @param {TableConfig} config the table configuration settings
-     * @returns {TableServiceSubscriber} a generic getter for any subscribable property
+     * @returns {TableServiceDataAndHandlers} a generic getter for any subscribable property
      */
     public registerDatasource<T extends {} = { [k: string]: any }>(
         name: string,
@@ -151,6 +149,8 @@ export class TableService {
             get: {
                 headerList: this.get(name)("tableHeaderList"),
                 rows: this.get(name)("currentTable"),
+                sortedTable: this.get(name)("sortedTable"),
+                paginatedTable: this.get(name)("paginatedTable"),
                 sortInfo: this.get(name)("currentSortInfo"),
                 selectedRows: this.get(name)("selectedRows"),
                 isAllSelected: this.get(name)("isAllSelected"),
