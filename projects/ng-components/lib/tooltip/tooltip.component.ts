@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation, ElementRef, Input, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef } from "@angular/core";
 import { trigger, transition, style, animate } from "@angular/animations";
 import { TooltipTheme, TooltipTrigger, TooltipPosition } from "./tooltip-content/tooltip-content.component";
+import { ConnectedOverlayPositionChange } from "@angular/cdk/overlay";
 
 /** A text label that acts as a helper to a specific item */
 @Component({
@@ -29,7 +30,7 @@ export class TooltipComponent implements AfterViewInit {
     /** CSS class */
     @Input() className?: string = "";
 
-    @ViewChild("ngContent") contentref: ElementRef<HTMLDivElement>;
+    // @ViewChild("ngContent") contentref: ElementRef<HTMLDivElement>;
 
     stringContent: string = "";
     hasContent: boolean = true;
@@ -37,7 +38,7 @@ export class TooltipComponent implements AfterViewInit {
     constructor(private cdr: ChangeDetectorRef) {}
 
     ngAfterViewInit(): void {
-        this.hasContent = this.contentref && this.contentref.nativeElement.childNodes.length > 0;
-        this.cdr.detectChanges();
+        // this.hasContent = this.contentref && this.contentref.nativeElement.childNodes.length > 0;
+        // this.cdr.detectChanges();
     }
 }

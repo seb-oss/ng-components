@@ -1,5 +1,19 @@
-import { Component, ViewEncapsulation, ElementRef, Input, TemplateRef, ViewChild, Output, EventEmitter } from "@angular/core";
+import {
+    Component,
+    ViewEncapsulation,
+    ElementRef,
+    Input,
+    TemplateRef,
+    ViewChild,
+    Output,
+    EventEmitter,
+    OnInit,
+    AfterViewInit,
+    NgZone,
+    OnDestroy,
+} from "@angular/core";
 import { trigger, transition, style, animate } from "@angular/animations";
+import { Observable, BehaviorSubject } from "rxjs";
 
 export type TooltipTrigger = "hover" | "click" | "focus";
 export type TooltipPosition =
@@ -29,17 +43,25 @@ export type TooltipTheme = "default" | "light" | "primary" | "warning" | "succes
     ],
     encapsulation: ViewEncapsulation.None,
 })
-export class TooltipContentComponent {
+export class TooltipContentComponent implements AfterViewInit, OnDestroy {
     @Input() tooltipReference: ElementRef<HTMLDivElement>;
     @Input() position: TooltipPosition = "top";
     @Input() theme: TooltipTheme = "default";
     @Input() className?: string = "";
+    @Input() arrowClass: BehaviorSubject<string> = new BehaviorSubject("");
+
     @Output() defocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild("tooltip") tooltip: ElementRef<HTMLDivElement>;
 
     public isTemplateRef: boolean = false;
     public _content: string | TemplateRef<any> = "";
+
+    arrowClassName: string = "";
+
+    constructor(private ngZone: NgZone) {}
+
+    ngOnInit(): void {}
 
     get content(): string | TemplateRef<any> {
         return this._content;
@@ -56,4 +78,12 @@ export class TooltipContentComponent {
             this.defocus.emit();
         }
     }
+
+    ngAfterViewInit(): void {
+        this.arrowClass.subscribe((res: string) => {
+            this.ngZone.run(() => (this.arrowClassName = res));
+        });
+    }
+
+    ngOnDestroy(): void {}
 }

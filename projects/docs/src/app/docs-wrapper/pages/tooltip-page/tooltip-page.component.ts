@@ -9,7 +9,7 @@ export class TooltipPageComponent implements OnInit {
     importString: string = require("!raw-loader!@sebgroup/ng-components/tooltip/tooltip.component");
     code: string = `<sebng-tooltip [content]="content"></sebng-tooltip>`;
 
-    content: string | TemplateRef<any> = "This is a tooltip";
+    content: string | TemplateRef<any> = "This is a tooltip This is a tooltip This is a tooltip This is a tooltip This is a tooltip";
     textReference: string = "";
     className?: string = "";
 
@@ -43,7 +43,7 @@ export class TooltipPageComponent implements OnInit {
     ];
     position: TooltipPosition = this.positionList[0].value;
     theme: TooltipTheme = this.themeList[0].value;
-    trigger: TooltipTrigger = this.triggerList[0].value;
+    trigger: TooltipTrigger = this.triggerList[1].value;
 
     constructor() {
         document.title = "Tooltip - SEB Angular Components";
