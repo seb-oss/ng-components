@@ -43,7 +43,7 @@ export class TooltipPageComponent implements OnInit {
     ];
     position: TooltipPosition = this.positionList[0].value;
     theme: TooltipTheme = this.themeList[0].value;
-    trigger: TooltipTrigger = this.triggerList[1].value;
+    trigger: TooltipTrigger = this.triggerList[0].value;
 
     constructor() {
         document.title = "Tooltip - SEB Angular Components";

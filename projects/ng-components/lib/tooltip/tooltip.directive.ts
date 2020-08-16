@@ -11,8 +11,8 @@ import {
 } from "@angular/cdk/overlay";
 import { ComponentPortal } from "@angular/cdk/portal";
 import { TooltipContentComponent, TooltipTrigger, TooltipPosition, TooltipTheme } from "./tooltip-content/tooltip-content.component";
-import { Subscription } from "rxjs";
-import { distinctUntilChanged } from "rxjs/operators";
+import { Subscription, Subject } from "rxjs";
+import { distinctUntilChanged, takeUntil } from "rxjs/operators";
 import { isEqual } from "lodash";
 
 type Placement = {
@@ -25,7 +25,7 @@ export type TooltipAnchorPositionPair = ConnectionPositionPair;
  * A text label that acts as a helper to a specific item
  */
 @Directive({ selector: "[sebng-tooltip]" })
-export class TooltipDirective implements OnInit, OnDestroy {
+export class TooltipDirective implements OnDestroy {
     /** content of tooltip */
     @Input("sebng-tooltip") content: string | TemplateRef<any> = "";
     /** tooltip trigger method */
@@ -39,13 +39,16 @@ export class TooltipDirective implements OnInit, OnDestroy {
 
     @Input() closeOnScroll: boolean = false;
 
-    @Input() closeOnScrollThreshold: number = 0;
+    @Input() closeOnScrollThreshold: number = 200;
 
     @HostBinding("attr.tabindex") tabindex = -1;
     /** <!-- skip --> */
     private overlayRef: OverlayRef;
     /** <!-- skip --> */
     private tooltipRef: ComponentRef<TooltipContentComponent>;
+
+    /** <!-- skip --> */
+    destroy$: Subject<boolean> = new Subject<boolean>();
 
     positions: TooltipAnchorPositionPair[] = [
         { overlayX: "center", overlayY: "bottom", originX: "center", originY: "top", offsetX: 0, offsetY: 0 },
@@ -57,8 +60,6 @@ export class TooltipDirective implements OnInit, OnDestroy {
     ];
 
     constructor(private overlay: Overlay, private elementRef: ElementRef) {}
-
-    ngOnInit(): void {}
 
     private getOverlayConfig({ origin }): OverlayConfig {
         return new OverlayConfig({
@@ -88,7 +89,10 @@ export class TooltipDirective implements OnInit, OnDestroy {
             .withPush(false);
 
         positionStrategy.positionChanges
-            .pipe(distinctUntilChanged((prev: ConnectedOverlayPositionChange, curr: ConnectedOverlayPositionChange) => isEqual(prev, curr)))
+            .pipe(
+                distinctUntilChanged((prev: ConnectedOverlayPositionChange, curr: ConnectedOverlayPositionChange) => isEqual(prev, curr)),
+                takeUntil(this.destroy$)
+            )
             .subscribe((newPosition: ConnectedOverlayPositionChange) => {
                 const arrowClassNew: string = `arrow-${newPosition.connectionPair.overlayX} arrow-${newPosition.connectionPair.overlayY}`;
                 this.tooltipRef.instance.arrowClass && this.tooltipRef.instance.arrowClass.next(arrowClassNew);
@@ -108,18 +112,23 @@ export class TooltipDirective implements OnInit, OnDestroy {
         ];
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        this.destroy$.next(true);
+    }
 
-    // @HostListener("mouseenter") showHover(): void {
-    //     this.trigger === "hover" && this.showTooltip();
-    // }
+    @HostListener("mouseenter") showHover(): void {
+        this.trigger === "hover" && this.showTooltip();
+    }
 
-    // @HostListener("mouseout", ["$event"]) hideHover(event: MouseEvent): void {
-    //     if (this.elementRef.nativeElement.contains(event.relatedTarget)) {
-    //         return;
-    //     }
-    //     this.trigger === "hover" && this.overlayRef.dispose();
-    // }
+    @HostListener("mouseout", ["$event"]) hideHover(event: MouseEvent): void {
+        console.log(this.elementRef.nativeElement);
+        console.log(event.relatedTarget);
+        // if (this.elementRef.nativeElement.contains(event.relatedTarget)) {
+        //     return;
+        // }
+        console.log(this.overlayRef);
+        this.trigger === "hover" && this.overlayRef.attachments.length && this.overlayRef.dispose();
+    }
 
     @HostListener("click") showClick(): void {
         this.trigger === "click" && this.showTooltip();
@@ -144,7 +153,13 @@ export class TooltipDirective implements OnInit, OnDestroy {
     showTooltip(): void {
         this.overlayRef = this.overlay.create(this.getOverlayConfig({ origin: this.elementRef }));
         this.tooltipRef = this.overlayRef.attach(new ComponentPortal(TooltipContentComponent));
-        this.overlayRef.backdropClick().subscribe(() => this.overlayRef.dispose());
+        this.overlayRef
+            .backdropClick()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => this.overlayRef.dispose());
+        this.overlayRef.outsidePointerEvents().subscribe((event: MouseEvent) => {
+            console.log("event", event);
+        });
         this.tooltipRef.instance.content = this.content;
     }
 }

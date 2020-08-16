@@ -57,4 +57,33 @@
             </div>
         </div>
     </ng-container>
+    <ng-container code>{{ code }}</ng-container>
+    <div class="row" controls>
+        <label class="w-100">
+            textReference
+            <p><small> set string as reference of tooltip</small></p>
+            <input class="form-control" [(ngModel)]="textReference" />
+        </label>
+        <label class="w-100">
+            trigger
+            <p><small>define trigger method of tooltip</small></p>
+            <select class="custom-select" [(ngModel)]="trigger">
+                <option *ngFor="let item of triggerList" [value]="item.value">{{ item.label }}</option>
+            </select>
+        </label>
+        <label class="w-100">
+            position
+            <p><small>define position of the tooltip</small></p>
+            <select class="custom-select" [(ngModel)]="position">
+                <option *ngFor="let item of positionList" [value]="item.value">{{ item.label }}</option>
+            </select>
+        </label>
+        <label class="w-100">
+            theme
+            <p><small>define theme of the tooltip</small></p>
+            <select class="custom-select" [(ngModel)]="theme">
+                <option *ngFor="let item of themeList" [value]="item.value">{{ item.label }}</option>
+            </select>
+        </label>
+    </div>
 </app-doc-page>
