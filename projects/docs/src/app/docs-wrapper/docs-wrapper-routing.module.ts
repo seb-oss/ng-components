@@ -94,8 +94,8 @@ const routes: Routes = [
                 loadChildren: () => import("./pages/textarea-page/textarea-page.module").then(m => m.TextareaPageModule),
             },
             {
-                path: "textboxgroup",
-                loadChildren: () => import("./pages/textboxgroup-page/textboxgroup-page.module").then(m => m.TextboxGroupPageModule),
+                path: "Textbox",
+                loadChildren: () => import("./pages/Textbox-page/Textbox-page.module").then(m => m.TextboxPageModule),
             },
             {
                 path: "textlabel",

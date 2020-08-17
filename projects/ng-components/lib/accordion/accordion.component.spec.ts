@@ -7,7 +7,7 @@ import { DynamicStylePipe } from "./accordion-style.pipe";
 import { CommonModule } from "@angular/common";
 
 @Component({
-    selector: "test-sebng-textboxgroup",
+    selector: "test-sebng-textbox",
     template: `
         <sebng-accordion
             [className]="className"
