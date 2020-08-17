@@ -59,131 +59,67 @@
     position: relative;
     min-width: max-content;
     opacity: 1;
-    // &[class*="bs-tooltip-top"] {
-    //     @include tooltip-arrow("bottom", "top", "0.4rem 0.4rem 0", "0.4rem 0");
-    //     @include direction-theme("top");
-    // }
-    // &[class*="bs-tooltip-bottom"] {
-    //     @include tooltip-arrow("top", "bottom", "0 0.4rem 0.4rem", "0.4rem 0");
-    //     @include direction-theme("bottom");
-    // }
-    // &[class*="bs-tooltip-left"] {
-    //     @include tooltip-arrow("right", "left", "0.4rem 0 0.4rem 0.4rem", "0 0.4rem");
-    //     @include direction-theme("left");
-    // }
-    // &[class*="bs-tooltip-right"] {
-    //     @include tooltip-arrow("left", "right", "0.4rem 0.4rem 0.4rem 0", "0 0.4rem");
-    //     @include direction-theme("right");
-    // }
-    // &[class*="bs-tooltip-left"],
-    // &[class*="bs-tooltip-right"] {
-    //     > .arrow {
-    //         width: 0.4rem;
-    //         height: 0.8rem;
-    //     }
-    // }
-    // &.bs-tooltip-top,
-    // &.bs-tooltip-bottom {
-    //     > .arrow {
-    //         right: calc(50% - 0.4rem);
-    //     }
-    // }
-    // &.bs-tooltip-right,
-    // &.bs-tooltip-left {
-    //     > .arrow {
-    //         top: calc(50% - 0.4rem);
-    //     }
-    // }
-    // &.bs-tooltip-top-left,
-    // &.bs-tooltip-bottom-left {
-    //     > .arrow {
-    //         left: 0.4rem;
-    //     }
-    // }
-    // &.bs-tooltip-top-right,
-    // &.bs-tooltip-bottom-right {
-    //     > .arrow {
-    //         right: 0.4rem;
-    //     }
-    // }
-    // &.bs-tooltip-left-top,
-    // &.bs-tooltip-right-top {
-    //     > .arrow {
-    //         top: 0.4rem;
-    //     }
-    // }
-    // &.bs-tooltip-left-bottom,
-    // &.bs-tooltip-right-bottom {
-    //     > .arrow {
-    //         bottom: 0.4rem;
-    //     }
-    // }
-    // &.bs-tooltip-right {
-    //     @include direction-theme("right");
-    // }
-
-    .arrow {
-        background-color: $gray-900;
-        width: 12px;
-        height: 12px;
-        transform: rotate(45deg);
-        position: absolute;
+    &[class*="bs-tooltip-top"] {
+        @include tooltip-arrow("bottom", "top", "0.4rem 0.4rem 0", "0.4rem 0");
+        @include direction-theme("top");
     }
-
-    &.arrow-top {
-        margin-top: 10px;
-
-        .arrow {
-            top: -4px;
+    &[class*="bs-tooltip-bottom"] {
+        @include tooltip-arrow("top", "bottom", "0 0.4rem 0.4rem", "0.4rem 0");
+        @include direction-theme("bottom");
+    }
+    &[class*="bs-tooltip-left"] {
+        @include tooltip-arrow("right", "left", "0.4rem 0 0.4rem 0.4rem", "0 0.4rem");
+        @include direction-theme("left");
+    }
+    &[class*="bs-tooltip-right"] {
+        @include tooltip-arrow("left", "right", "0.4rem 0.4rem 0.4rem 0", "0 0.4rem");
+        @include direction-theme("right");
+    }
+    &[class*="bs-tooltip-left"],
+    &[class*="bs-tooltip-right"] {
+        > .arrow {
+            width: 0.4rem;
+            height: 0.8rem;
         }
     }
-
-    &.arrow-bottom {
-        margin-bottom: 10px;
-
-        .arrow {
-            bottom: -4px;
-        }
-    }
-
-    &.arrow-start {
-        margin-left: 10px;
-
-        .arrow {
-            left: -4px;
-        }
-    }
-
-    &.arrow-center {
-        .arrow {
+    &.bs-tooltip-top,
+    &.bs-tooltip-bottom {
+        > .arrow {
             right: calc(50% - 0.4rem);
         }
     }
-
-    &.arrow-end {
-        margin-right: 10px;
-
-        .arrow {
-            right: -4px;
+    &.bs-tooltip-right,
+    &.bs-tooltip-left {
+        > .arrow {
+            top: calc(50% - 0.4rem);
         }
     }
-
-    &.arrow-start.arrow-top,
-    &.arrow-start.arrow-bottom {
-        margin-left: 0;
-
-        .arrow {
-            left: 2px;
+    &.bs-tooltip-top-left,
+    &.bs-tooltip-bottom-left {
+        > .arrow {
+            left: 0.4rem;
         }
     }
-
-    &.arrow-end.arrow-top,
-    &.arrow-end.arrow-bottom {
-        margin-right: 0;
-
-        .arrow {
-            right: 2px;
+    &.bs-tooltip-top-right,
+    &.bs-tooltip-bottom-right {
+        > .arrow {
+            right: 0.4rem;
         }
+    }
+    &.bs-tooltip-left-top,
+    &.bs-tooltip-right-top {
+        > .arrow {
+            top: 0.4rem;
+        }
+    }
+    &.bs-tooltip-left-bottom,
+    &.bs-tooltip-right-bottom {
+        > .arrow {
+            bottom: 0.4rem;
+        }
+    }
+    &.bs-tooltip-right {
+        @include direction-theme("right");
     }
 }
 

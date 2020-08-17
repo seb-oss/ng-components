@@ -34,8 +34,9 @@ export type TooltipTheme = "default" | "light" | "primary" | "warning" | "succes
 export class TooltipContentComponent implements AfterViewInit, OnDestroy {
     @Input() tooltipReference: ElementRef<HTMLDivElement>;
     @Input() theme: TooltipTheme = "default";
+    @Input() position: TooltipPosition = "top";
+    @Input() arrowClass?: BehaviorSubject<string> = new BehaviorSubject("");
     @Input() className?: string = "";
-    @Input() arrowClass: BehaviorSubject<string> = new BehaviorSubject("");
 
     @ViewChild("tooltip") tooltip: ElementRef<HTMLDivElement>;
 

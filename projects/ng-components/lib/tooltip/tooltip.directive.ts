@@ -13,6 +13,7 @@ import { TooltipContentComponent, TooltipTrigger, TooltipPosition, TooltipTheme 
 import { Subject, fromEvent } from "rxjs";
 import { distinctUntilChanged, takeUntil } from "rxjs/operators";
 import { isEqual } from "lodash";
+import { getPlacementName } from "./tooltip.positions";
 
 export type TooltipAnchorPositionPair = ConnectionPositionPair;
 
@@ -80,8 +81,7 @@ export class TooltipDirective implements OnDestroy {
                 takeUntil(this.destroy$)
             )
             .subscribe((newPosition: ConnectedOverlayPositionChange) => {
-                const arrowClassNew: string = `arrow-${newPosition.connectionPair.overlayX} arrow-${newPosition.connectionPair.overlayY}`;
-                this.tooltipRef.instance.arrowClass && this.tooltipRef.instance.arrowClass.next(arrowClassNew);
+                this.tooltipRef.instance.arrowClass && this.tooltipRef.instance.arrowClass.next(getPlacementName(newPosition));
             });
 
         return positionStrategy;
@@ -89,12 +89,22 @@ export class TooltipDirective implements OnDestroy {
 
     private getPositions(): ConnectionPositionPair[] {
         return [
-            { overlayX: "center", overlayY: "bottom", originX: "center", originY: "top", offsetX: 0, offsetY: 0 },
-            { overlayX: "start", overlayY: "bottom", originX: "start", originY: "top", offsetX: 0, offsetY: 0 },
-            { overlayX: "end", overlayY: "bottom", originX: "end", originY: "top", offsetX: 0, offsetY: 0 },
-            { overlayX: "center", overlayY: "top", originX: "center", originY: "bottom", offsetX: 0, offsetY: 0 },
-            { overlayX: "start", overlayY: "top", originX: "start", originY: "bottom", offsetX: 0, offsetY: 0 },
-            { overlayX: "end", overlayY: "top", originX: "end", originY: "bottom", offsetX: 0, offsetY: 0 },
+            new ConnectionPositionPair({ originX: "center", originY: "top" }, { overlayX: "center", overlayY: "bottom" }), //top
+            new ConnectionPositionPair({ originX: "center", originY: "top" }, { overlayX: "center", overlayY: "bottom" }), //topCenter
+            new ConnectionPositionPair({ originX: "start", originY: "top" }, { overlayX: "start", overlayY: "bottom" }), //topLeft
+            new ConnectionPositionPair({ originX: "end", originY: "top" }, { overlayX: "end", overlayY: "bottom" }), //topRight:
+            new ConnectionPositionPair({ originX: "end", originY: "bottom" }, { overlayX: "start", overlayY: "bottom" }), //rightBottom:
+            new ConnectionPositionPair({ originX: "end", originY: "center" }, { overlayX: "start", overlayY: "center" }), //right:
+            new ConnectionPositionPair({ originX: "end", originY: "top" }, { overlayX: "start", overlayY: "top" }), //rightTop:
+
+            new ConnectionPositionPair({ originX: "start", originY: "bottom" }, { overlayX: "end", overlayY: "bottom" }), //leftBottom:
+            new ConnectionPositionPair({ originX: "start", originY: "center" }, { overlayX: "end", overlayY: "center" }), //left:
+            new ConnectionPositionPair({ originX: "start", originY: "top" }, { overlayX: "end", overlayY: "top" }), //leftTop:
+
+            new ConnectionPositionPair({ originX: "center", originY: "bottom" }, { overlayX: "center", overlayY: "top" }), //bottom:
+            new ConnectionPositionPair({ originX: "center", originY: "bottom" }, { overlayX: "center", overlayY: "top" }), //bottomCenter:
+            new ConnectionPositionPair({ originX: "start", originY: "bottom" }, { overlayX: "start", overlayY: "top" }), //bottomLeft:
+            new ConnectionPositionPair({ originX: "end", originY: "bottom" }, { overlayX: "end", overlayY: "top" }), //bottomRight:
         ];
     }
 
