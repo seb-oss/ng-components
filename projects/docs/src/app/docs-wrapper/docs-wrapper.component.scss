@@ -2,8 +2,6 @@
 
 .docs-wrapper {
     width: 100vw;
-
-    overflow: hidden;
     display: grid;
     display: -ms-grid;
     grid-template-areas: "aside main";
@@ -11,7 +9,7 @@
     -ms-grid-columns: 1fr 5fr;
     .content-wrapper {
         padding: 0rem 1rem;
-
+        height: 100vh;
         overflow-y: auto;
         -ms-grid-column: 2;
         display: flex;

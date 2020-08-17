@@ -1,8 +1,7 @@
-import { ComponentRef, Directive, ElementRef, HostListener, Input, OnInit, TemplateRef, HostBinding, OnDestroy } from "@angular/core";
+import { ComponentRef, Directive, ElementRef, HostListener, Input, TemplateRef, OnDestroy, NgZone } from "@angular/core";
 import {
     Overlay,
     OverlayRef,
-    ConnectedPosition,
     PositionStrategy,
     ConnectionPositionPair,
     OverlayConfig,
@@ -11,13 +10,9 @@ import {
 } from "@angular/cdk/overlay";
 import { ComponentPortal } from "@angular/cdk/portal";
 import { TooltipContentComponent, TooltipTrigger, TooltipPosition, TooltipTheme } from "./tooltip-content/tooltip-content.component";
-import { Subscription, Subject } from "rxjs";
+import { Subject, fromEvent } from "rxjs";
 import { distinctUntilChanged, takeUntil } from "rxjs/operators";
 import { isEqual } from "lodash";
-
-type Placement = {
-    [K in TooltipPosition]: ConnectedPosition;
-};
 
 export type TooltipAnchorPositionPair = ConnectionPositionPair;
 
@@ -36,12 +31,12 @@ export class TooltipDirective implements OnDestroy {
     @Input() theme: TooltipTheme = "default";
     /** CSS class */
     @Input() className?: string = "";
-
+    /** Close the tooltip once the user scrolls */
     @Input() closeOnScroll: boolean = false;
 
+    /** Amount of pixels the user has to scroll before the overlay is closed. */
     @Input() closeOnScrollThreshold: number = 200;
 
-    @HostBinding("attr.tabindex") tabindex = -1;
     /** <!-- skip --> */
     private overlayRef: OverlayRef;
     /** <!-- skip --> */
@@ -50,21 +45,11 @@ export class TooltipDirective implements OnDestroy {
     /** <!-- skip --> */
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    positions: TooltipAnchorPositionPair[] = [
-        { overlayX: "center", overlayY: "bottom", originX: "center", originY: "top", offsetX: 0, offsetY: 0 },
-        { overlayX: "start", overlayY: "bottom", originX: "start", originY: "top", offsetX: 0, offsetY: 0 },
-        { overlayX: "end", overlayY: "bottom", originX: "end", originY: "top", offsetX: 0, offsetY: 0 },
-        { overlayX: "center", overlayY: "top", originX: "center", originY: "bottom", offsetX: 0, offsetY: 0 },
-        { overlayX: "start", overlayY: "top", originX: "start", originY: "bottom", offsetX: 0, offsetY: 0 },
-        { overlayX: "end", overlayY: "top", originX: "end", originY: "bottom", offsetX: 0, offsetY: 0 },
-    ];
-
-    constructor(private overlay: Overlay, private elementRef: ElementRef) {}
+    constructor(private overlay: Overlay, private elementRef: ElementRef, private ngZone: NgZone) {}
 
     private getOverlayConfig({ origin }): OverlayConfig {
         return new OverlayConfig({
-            hasBackdrop: true,
-            backdropClass: "popover-backdrop",
+            hasBackdrop: false,
             positionStrategy: this.getOverlayPosition(origin),
             scrollStrategy: this.getScrollStrategy(),
         });
@@ -72,6 +57,7 @@ export class TooltipDirective implements OnDestroy {
 
     private getScrollStrategy(): ScrollStrategy {
         if (this.closeOnScroll) {
+            // TODO Not working
             return this.overlay.scrollStrategies.close({
                 threshold: this.closeOnScrollThreshold,
             });
@@ -112,39 +98,36 @@ export class TooltipDirective implements OnDestroy {
         ];
     }
 
-    ngOnDestroy(): void {
-        this.destroy$.next(true);
-    }
-
-    @HostListener("mouseenter") showHover(): void {
+    @HostListener("mouseenter")
+    showHover(): void {
         this.trigger === "hover" && this.showTooltip();
     }
 
-    @HostListener("mouseout", ["$event"]) hideHover(event: MouseEvent): void {
-        console.log(this.elementRef.nativeElement);
-        console.log(event.relatedTarget);
-        // if (this.elementRef.nativeElement.contains(event.relatedTarget)) {
-        //     return;
-        // }
-        console.log(this.overlayRef);
-        this.trigger === "hover" && this.overlayRef.attachments.length && this.overlayRef.dispose();
+    @HostListener("mouseout", ["$event"])
+    hideHover(event: MouseEvent): void {
+        if (this.elementRef.nativeElement.contains(event.relatedTarget)) {
+            return;
+        }
+        this.trigger === "hover" && this.overlayRef.dispose();
     }
 
-    @HostListener("click") showClick(): void {
+    @HostListener("click")
+    showClick(): void {
         this.trigger === "click" && this.showTooltip();
     }
 
-    // @HostListener("focusin", ["$event"])
-    // /** <!-- skip --> */
-    // showFocusWithin(event: FocusEvent): void {
-    //     if (this.elementRef.nativeElement.contains(event.target)) {
-    //         this.trigger === "focus" && this.showTooltip();
-    //     }
-    // }
+    @HostListener("focusin", ["$event"])
+    /** <!-- skip --> */
+    showFocusWithin(event: FocusEvent): void {
+        if (this.elementRef.nativeElement.contains(event.target)) {
+            this.trigger === "focus" && this.showTooltip();
+        }
+    }
 
-    // @HostListener("blur", ["$event.relatedTarget"]) hideClick(relatedTarget: HTMLDivElement): void {
-    //     this.hideTooltip(relatedTarget);
-    // }
+    @HostListener("blur", ["$event.relatedTarget"])
+    hideClick(relatedTarget: HTMLDivElement): void {
+        this.trigger === "focus" && this.overlayRef?.dispose();
+    }
 
     /**
      * <!-- skip -->
@@ -153,13 +136,19 @@ export class TooltipDirective implements OnDestroy {
     showTooltip(): void {
         this.overlayRef = this.overlay.create(this.getOverlayConfig({ origin: this.elementRef }));
         this.tooltipRef = this.overlayRef.attach(new ComponentPortal(TooltipContentComponent));
-        this.overlayRef
-            .backdropClick()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(() => this.overlayRef.dispose());
         this.overlayRef.outsidePointerEvents().subscribe((event: MouseEvent) => {
-            console.log("event", event);
+            this.overlayRef.dispose();
         });
+        this.ngZone.runOutsideAngular(() => {
+            return fromEvent(window, "scroll", { capture: true })
+                .pipe(takeUntil(this.destroy$))
+                .subscribe(() => (this.closeOnScroll ? this.overlayRef?.dispose() : this.overlayRef?.updatePosition()));
+        });
+
         this.tooltipRef.instance.content = this.content;
+    }
+
+    ngOnDestroy(): void {
+        this.destroy$.next(true);
     }
 }

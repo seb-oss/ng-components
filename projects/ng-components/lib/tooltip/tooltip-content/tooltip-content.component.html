@@ -5,11 +5,11 @@
     [ngClass]="[theme, className]"
     tabindex="-1"
     role="tooltip"
-    (blur)="onBlur($event)"
+    aria-hidden="true"
 >
     <div class="arrow"></div>
     <div class="tooltip-inner">
-        <ng-container *ngIf="isTemplateRef; else defaultContent" [ngTemplateOutlet]="content"></ng-container>
-        <ng-template #defaultContent>{{ content }}</ng-template>
+        <ng-container *ngIf="isTemplateRef; else defaultContent" [ngTemplateOutlet]="content" id="aria-describedby-message"></ng-container>
+        <ng-template #defaultContent id="aria-describedby-message">{{ content }}</ng-template>
     </div>
 </div>

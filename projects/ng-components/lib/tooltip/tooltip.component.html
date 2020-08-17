@@ -1,10 +1,13 @@
 <div
     class="custom-tooltip seb-default-tooltip"
+    tabindex="0"
     [sebng-tooltip]="content"
     [trigger]="trigger"
     [position]="position"
     [theme]="theme"
     [className]="className"
+    [attr.aria-label]="ariaLabel"
+    aria-describedby="aria-describedby-message"
 >
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
         <path

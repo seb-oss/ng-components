@@ -1,19 +1,7 @@
-import {
-    Component,
-    ViewEncapsulation,
-    ElementRef,
-    Input,
-    TemplateRef,
-    ViewChild,
-    Output,
-    EventEmitter,
-    OnInit,
-    AfterViewInit,
-    NgZone,
-    OnDestroy,
-} from "@angular/core";
+import { Component, ViewEncapsulation, ElementRef, Input, TemplateRef, ViewChild, AfterViewInit, NgZone, OnDestroy } from "@angular/core";
 import { trigger, transition, style, animate } from "@angular/animations";
-import { Observable, BehaviorSubject } from "rxjs";
+import { BehaviorSubject, Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 export type TooltipTrigger = "hover" | "click" | "focus";
 export type TooltipPosition =
@@ -45,12 +33,9 @@ export type TooltipTheme = "default" | "light" | "primary" | "warning" | "succes
 })
 export class TooltipContentComponent implements AfterViewInit, OnDestroy {
     @Input() tooltipReference: ElementRef<HTMLDivElement>;
-    @Input() position: TooltipPosition = "top";
     @Input() theme: TooltipTheme = "default";
     @Input() className?: string = "";
     @Input() arrowClass: BehaviorSubject<string> = new BehaviorSubject("");
-
-    @Output() defocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild("tooltip") tooltip: ElementRef<HTMLDivElement>;
 
@@ -58,10 +43,9 @@ export class TooltipContentComponent implements AfterViewInit, OnDestroy {
     public _content: string | TemplateRef<any> = "";
 
     arrowClassName: string = "";
+    destroy$: Subject<boolean> = new Subject();
 
     constructor(private ngZone: NgZone) {}
-
-    ngOnInit(): void {}
 
     get content(): string | TemplateRef<any> {
         return this._content;
@@ -72,18 +56,13 @@ export class TooltipContentComponent implements AfterViewInit, OnDestroy {
         this.isTemplateRef = value instanceof TemplateRef;
     }
 
-    /** on tooltip blur */
-    onBlur(event: FocusEvent): void {
-        if (!this.tooltipReference.nativeElement.contains(event.relatedTarget as any)) {
-            this.defocus.emit();
-        }
-    }
-
     ngAfterViewInit(): void {
-        this.arrowClass.subscribe((res: string) => {
+        this.arrowClass.pipe(takeUntil(this.destroy$)).subscribe((res: string) => {
             this.ngZone.run(() => (this.arrowClassName = res));
         });
     }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        this.destroy$.next(true);
+    }
 }
