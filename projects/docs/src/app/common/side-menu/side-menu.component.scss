@@ -131,7 +131,7 @@ aside.side-menu {
         transition: max-width ($base-transition-time * 2) linear, width ($base-transition-time * 2) linear,
             padding $base-transition-time linear, opacity $base-transition-time * 1.25 linear;
         will-change: max-width, width;
-        max-height: 100vh;
+        height: 100vh;
         max-width: 100vw;
         overflow-y: scroll;
         direction: rtl;
@@ -216,7 +216,7 @@ aside.side-menu {
     }
 }
 
-::ng-deep .form-group.input-box-group.sidemenu-search {
+::ng-deep .ac.input-box-group.sidemenu-search {
     direction: ltr;
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;

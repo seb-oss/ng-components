@@ -158,6 +158,10 @@ export class SideMenuComponent implements OnInit, OnDestroy {
                     }
                 }
                 break;
+            default:
+                if (e.key.length === 1) {
+                    this.highlighted = 0;
+                }
         }
     }
 

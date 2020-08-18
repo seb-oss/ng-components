@@ -1,9 +1,9 @@
 [
     {
-        "name": "Textbox Group",
-        "path": "/docs/textboxgroup",
-        "filePath": "./pages/textboxgroup-page/textboxgroup-page.module",
-        "module": "TextboxGroupPageModule"
+        "name": "Textbox",
+        "path": "/docs/Textbox",
+        "filePath": "./pages/Textbox-page/Textbox-page.module",
+        "module": "TextboxPageModule"
     },
     {
         "name": "Textarea",

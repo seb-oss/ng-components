@@ -1,0 +1,123 @@
+<app-doc-page [importString]="importString" [showNotes]="true">
+    <div class="w-100" example>
+        <sebng-table
+            [darkTable]="dark"
+            [compact]="compact"
+            [striped]="striped"
+            [theadTheme]="selectedTheadTheme.value"
+            [rows]="tableData.rows | async"
+            [headerList]="tableData.headerList | async"
+            [selectable]="selectable"
+            [selectedRowIndexes]="selectable ? (tableData.selectedRows | async)[tableData.pageNo | async] : null"
+            [isAllSelected]="tableData.isAllSelected | async"
+            [sortInfo]="tableData.sortInfo | async"
+            [fixedHeight]="hasFixedHeight ? height + 'px' : null"
+            (sortClicked)="tableHandlers.sort($event)"
+            (selectAllClicked)="tableHandlers.selectAllRows()"
+            (rowClicked)="tableHandlers.selectRow($event.index)"
+        ></sebng-table>
+
+        <sebng-pagination
+            [value]="(tableData.pageNo | async) + 1"
+            [size]="data.length"
+            [offset]="itemsPerPage"
+            [pagingLength]="5"
+            (change)="tableHandlers.changePage($event)"
+        ></sebng-pagination>
+    </div>
+    <div controls>
+        <sebng-checkbox
+            [(ngModel)]="compact"
+            label="Compact table"
+            description="Show a more compact table with less padding."
+        ></sebng-checkbox>
+
+        <sebng-checkbox
+            [(ngModel)]="striped"
+            label="Striped table"
+            description="Add zebra-striping to any row within the table body."
+        ></sebng-checkbox>
+
+        <sebng-checkbox [(ngModel)]="selectable" label="Selectable" description="Enable selectable rows with checkboxes"></sebng-checkbox>
+
+        <sebng-checkbox
+            [(ngModel)]="hasFixedHeight"
+            label="Fixed Height"
+            description="Preserve table height and scroll the content"
+        ></sebng-checkbox>
+
+        <ng-container *ngIf="hasFixedHeight">
+            <label>Table height </label>
+            <sebng-stepper className="mb-0" [(ngModel)]="height" [min]="20" [max]="500" [step]="5"></sebng-stepper>
+            <p><small>Set the height of the table (in px)</small></p>
+        </ng-container>
+
+        <sebng-checkbox [(ngModel)]="dark" label="Dark table" description="Show a dark version of the table body."></sebng-checkbox>
+
+        <label>Table header theme</label>
+        <sebng-radio-group [condensed]="true" [inline]="true" [list]="theadThemeList" [(ngModel)]="selectedTheadTheme"></sebng-radio-group>
+        <p><small>For fixed height tables the header theme will be inferred if none is selected.</small></p>
+
+        <sebng-dropdown
+            className="mb-3"
+            [ngModel]="getDropdownItemByColumnName((tableData.sortInfo | async)?.column)"
+            (ngModelChange)="tableHandlers.sort($event.value)"
+            [list]="sortDropdownList"
+            label="Sort table by"
+        ></sebng-dropdown>
+
+        <sebng-dropdown
+            [ngModel]="selectedColumnsDropdownList"
+            (ngModelChange)="tableHandlers.changeColumns(getColumnsFromDropdownList($event)); selectedColumnsDropdownList = $event"
+            [list]="columnsDropdownList"
+            [multi]="true"
+            label="Show columns"
+        ></sebng-dropdown>
+        <p><small>(Note: Deselecting all columns will default to all columns being showed.)</small></p>
+    </div>
+    <ng-container code>{{ snippet(tableData.sortInfo | async, hasFixedHeight, height, selectable, compact, striped) }}</ng-container>
+
+    <ng-container notes>
+        <h3>Using the <code>TableComponent</code></h3>
+        <p>
+            The table component needs both <code>rows</code> and <code>headerList</code> to display the data. Given the following simple
+            example of raw <code>data</code>:
+        </p>
+        <pre>const data: any[] = {{ rawDataNotesExample | json }}</pre>
+        <p>
+            If we wish to display a table with the columns <code>country</code> and <code>currency</code>, the <code>headerList</code> for
+            it would look like this:
+        </p>
+        <app-code-snippet [languages]="['html.handlebars']">{{ simpleTableHTML }}</app-code-snippet>
+
+        <p>The code above renders this table:</p>
+
+        <sebng-table
+            [rows]="rawDataNotesExample"
+            [headerList]="[
+                { tableKeySelector: 'country', label: 'Country', valueType: 'string' },
+                { tableKeySelector: 'currency', label: 'Currency code', valueType: 'string' }
+            ]"
+        ></sebng-table>
+
+        <h3 class="mt-5">Using the <code>TableComponent</code> with <code>TableService</code></h3>
+        <p>
+            The above example is good enough for displaying simple static tables. However if we wish to handle common features with tables
+            such as sorting, pagintion and selection we can use the <code>TableService</code> which handles the logic for that and returns
+            the values we should pass to the table component. So using the above example, instead of creating our own
+            <code>headerList</code> we could use the <code>TableService</code> instead which generates one based on the data being
+            registered.
+        </p>
+
+        <p>So let's try to get the same table to render but using the <code>TableService</code> instead.</p>
+        <app-code-snippet [languages]="['typescript']">{{ tableServiceExampleSnippet }}</app-code-snippet>
+
+        <p>This example would render the same table as the Basic example.</p>
+
+        <h4 class="mt-3">Sorting the table</h4>
+        <p>To below example shows how to enable sorting on the same table as above.</p>
+        <app-code-snippet [languages]="['typescript']">{{ tableServiceSortSnippet }}</app-code-snippet>
+
+        <app-my-table></app-my-table>
+    </ng-container>
+</app-doc-page>

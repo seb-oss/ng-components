@@ -1,15 +1,15 @@
-import { Component, DebugElement } from "@angular/core";
+import { Component } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { TextboxGroupComponent } from "./textboxGroup.component";
-import { TextboxGroupSafeHtmlPipe } from "./textboxGroup.pipe";
+import { TextboxComponent } from "./textbox.component";
+import { TextboxSafeHtmlPipe } from "./textboxSafeHtml.pipe";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 
 @Component({
-    selector: "test-sebng-textboxgroup",
+    selector: "test-sebng-textbox",
     template: `
-        <sebng-textboxgroup
+        <sebng-textbox
             [name]="name"
             [placeholder]="placeholder"
             [rightIcon]="rightIcon"
@@ -41,7 +41,7 @@ import { FormsModule } from "@angular/forms";
             [showErrorMessage]="showErrorMessage"
             [readOnly]="readOnly"
             [success]="success"
-        ></sebng-textboxgroup>
+        ></sebng-textbox>
     `,
 })
 class TextGroupTestComponent {
@@ -88,14 +88,14 @@ class TextGroupTestComponent {
     onKeyUp(event: KeyboardEvent) {}
 }
 
-describe("TextboxGroupComponent", () => {
+describe("TextboxComponent", () => {
     let component: TextGroupTestComponent;
     let fixture: ComponentFixture<TextGroupTestComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [CommonModule, FormsModule],
-            declarations: [TextboxGroupComponent, TextGroupTestComponent, TextboxGroupSafeHtmlPipe],
+            declarations: [TextboxComponent, TextGroupTestComponent, TextboxSafeHtmlPipe],
         }).compileComponents();
     }));
 
@@ -110,8 +110,8 @@ describe("TextboxGroupComponent", () => {
         expect(fixture.debugElement.query(By.css(".input-box-group"))).toBeTruthy();
     });
 
-    it("Should pass down the id or random id to the TextBoxGroup component", () => {
-        const id: string = "my-TextBoxGroup-id";
+    it("Should pass down the id or random id to the Textbox component", () => {
+        const id: string = "my-Textbox-id";
         component.id = id;
 
         fixture.detectChanges();
@@ -144,7 +144,7 @@ describe("TextboxGroupComponent", () => {
         let onBlur: jasmine.Spy;
         let onKeyUp: jasmine.Spy;
         beforeAll(() => {
-            component.name = "myTextboxgroup";
+            component.name = "myTextbox";
             component.textValue = "";
             onKeyDown = spyOn(component, "onKeyDown");
 
@@ -173,7 +173,7 @@ describe("TextboxGroupComponent", () => {
     });
 
     it("Should pass custom class", () => {
-        const className: string = "myTextboxGroup";
+        const className: string = "myTextbox";
         component.className = className;
 
         fixture.detectChanges();
