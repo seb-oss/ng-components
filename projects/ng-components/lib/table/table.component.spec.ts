@@ -117,8 +117,10 @@ describe("TableComponent", () => {
 
             component.selectedRows.map(row => {
                 expect(
-                    fixture.debugElement.queryAll(By.css(".seb-table>table>tbody>tr"))[row].queryAll(By.css("td"))[1].childNodes[0]
-                        .nativeNode.textContent
+                    fixture.debugElement
+                        .queryAll(By.css(".seb-table>table>tbody>tr"))
+                        [row].queryAll(By.css("td"))[1]
+                        .childNodes[0].nativeNode.textContent.trim()
                 ).toBe(component.rows[row].label);
             });
         });
