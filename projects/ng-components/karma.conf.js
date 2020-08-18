@@ -6,11 +6,12 @@ module.exports = function (config) {
         basePath: "",
         frameworks: ["jasmine", "@angular-devkit/build-angular"],
         plugins: [
-            require("karma-jasmine"),
-            require("karma-chrome-launcher"),
-            require("karma-jasmine-html-reporter"),
-            require("karma-coverage-istanbul-reporter"),
-            require("@angular-devkit/build-angular/plugins/karma"),
+            "karma-jasmine",
+            "karma-chrome-launcher",
+            "karma-jasmine-html-reporter",
+            "karma-coverage-istanbul-reporter",
+            "karma-spec-reporter",
+            "@angular-devkit/build-angular/plugins/karma",
         ],
         client: {
             clearContext: false, // leave Jasmine Spec Runner output visible in browser
@@ -20,7 +21,7 @@ module.exports = function (config) {
             reports: ["html", "lcovonly", "text-summary"],
             fixWebpackSourcePaths: true,
         },
-        reporters: ["progress", "kjhtml"],
+        reporters: ["spec", "kjhtml"],
         port: 9876,
         colors: true,
         logLevel: config.LOG_INFO,
