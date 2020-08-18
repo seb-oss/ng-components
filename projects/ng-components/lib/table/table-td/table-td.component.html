@@ -1,8 +1,8 @@
 <ng-container [ngSwitch]="valueType">
-    <span *ngSwitchCase="'string'">{{ row }}</span>
-    <span *ngSwitchCase="'number'">{{ row | number }}</span>
-    <span *ngSwitchCase="'datetime'">{{ row | date: dateFormat + " HH:mm:ss" }}</span>
-    <span *ngSwitchCase="'date'">{{ row | date: dateFormat }}</span>
-    <span *ngSwitchCase="'custom-html'" [innerHtml]="row | safeHtml"></span>
+    <span *ngSwitchCase="'string'"> {{ row || "–" }}</span>
+    <span *ngSwitchCase="'number'">{{ (row | number) || "–" }}</span>
+    <span *ngSwitchCase="'datetime'">{{ (row | date: dateFormat + " HH:mm:ss") || "–" }}</span>
+    <span *ngSwitchCase="'date'">{{ (row | date: dateFormat) || "–" }}</span>
+    <span *ngSwitchCase="'custom-html'" [innerHtml]="(row | safeHtml) || '–'"></span>
     <span *ngSwitchDefault>–</span>
 </ng-container>
