@@ -3,12 +3,12 @@ import { FormService } from "../../../common/dynamic-form/form.service";
 import { ExtendedFormGroup } from "../../../common/dynamic-form/model/custom-classes/extended-form-group";
 
 @Component({
-    selector: "app-textboxgroup-page",
+    selector: "app-textbox-page",
     template: `
         <app-doc-page [importString]="importString" [centered]="true">
             <ng-container example>
-                <sebng-textboxgroup
-                    [id]="'textboxgroup-example'"
+                <sebng-textbox
+                    [id]="'Textbox-example'"
                     [label]="extendedFormGroup.value.text.label"
                     [placeholder]="extendedFormGroup.value.text.placeholder"
                     [disabled]="extendedFormGroup.value.toggles.disabled"
@@ -25,7 +25,7 @@ import { ExtendedFormGroup } from "../../../common/dynamic-form/model/custom-cla
                         extendedFormGroup.value.radios.right?.label === 'Text' ? extendedFormGroup.value.radios.right?.value : null
                     "
                     [(ngModel)]="value"
-                ></sebng-textboxgroup>
+                ></sebng-textbox>
             </ng-container>
             <ng-container controls>
                 <app-dynamic-form [extendedFormGroup]="extendedFormGroup"></app-dynamic-form>
@@ -35,9 +35,9 @@ import { ExtendedFormGroup } from "../../../common/dynamic-form/model/custom-cla
     `,
     providers: [FormService],
 })
-export class TextboxgroupPageComponent implements OnInit {
-    importString: string = require("!raw-loader!@sebgroup/ng-components/textboxGroup/textboxGroup.component");
-    snippet: string = `<sebng-textboxgroup></sebng-textboxgroup>`;
+export class TextboxPageComponent implements OnInit {
+    importString: string = require("!raw-loader!@sebgroup/ng-components/textbox/textbox.component");
+    snippet: string = `<sebng-textbox></sebng-textbox>`;
     value: string = "Hello :)";
     extendedFormGroup: ExtendedFormGroup;
     icon: string = `
@@ -49,7 +49,7 @@ export class TextboxgroupPageComponent implements OnInit {
     `;
 
     constructor(private formService: FormService) {
-        document.title = "Textboxgroup - SEB Angular Components";
+        document.title = "Textbox - SEB Angular Components";
 
         this.extendedFormGroup = this.formService.dynamicFormSectionsToFormGroup([
             {
@@ -92,7 +92,7 @@ export class TextboxgroupPageComponent implements OnInit {
                     {
                         key: "min",
                         label: "Min",
-                        description: "Minimum length of input allowed for the textbox group.",
+                        description: "Minimum length of input allowed for the textbox.",
                         controlType: "Number",
                         value: 1,
                         min: 1,
@@ -101,7 +101,7 @@ export class TextboxgroupPageComponent implements OnInit {
                     {
                         key: "max",
                         label: "Max",
-                        description: "Maximum length of input allowed for the textbox group.",
+                        description: "Maximum length of input allowed for the textbox.",
                         controlType: "Number",
                         value: 100,
                         min: 1,
@@ -116,7 +116,7 @@ export class TextboxgroupPageComponent implements OnInit {
                         key: "required",
                         value: false,
                         controlType: "Checkbox",
-                        description: "Property sets whether textbox group is required.",
+                        description: "Property sets whether textbox is required.",
                         label: "Required",
                         order: 30,
                     },
@@ -124,7 +124,7 @@ export class TextboxgroupPageComponent implements OnInit {
                         key: "readonly",
                         value: false,
                         controlType: "Checkbox",
-                        description: "Property sets whether textbox group is readonly.",
+                        description: "Property sets whether textbox is readonly.",
                         label: "Read-only",
                         order: 20,
                     },
@@ -132,7 +132,7 @@ export class TextboxgroupPageComponent implements OnInit {
                         key: "disabled",
                         value: false,
                         controlType: "Checkbox",
-                        description: "Property sets whether textbox group is disabled.",
+                        description: "Property sets whether textbox is disabled.",
                         label: "Disabled",
                         order: 10,
                     },

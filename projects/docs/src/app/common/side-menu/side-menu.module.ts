@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { SideMenuComponent } from "./side-menu.component";
-import { TextboxGroupModule } from "@sebgroup/ng-components/textboxGroup";
+import { TextboxModule } from "@sebgroup/ng-components/textbox";
 import { FormsModule } from "@angular/forms";
 import { SideMenuSearchPipe } from "./side-menu-search.pipe";
 import { CommonModule } from "@angular/common";
@@ -10,7 +10,7 @@ import { BreakpointService } from "@services/breakpoint.service";
 
 @NgModule({
     declarations: [SideMenuComponent, SideMenuSearchPipe],
-    imports: [CommonModule, RouterModule, FormsModule, TextboxGroupModule, IconsModule],
+    imports: [CommonModule, RouterModule, FormsModule, TextboxModule, IconsModule],
     exports: [SideMenuComponent],
     providers: [BreakpointService],
 })
