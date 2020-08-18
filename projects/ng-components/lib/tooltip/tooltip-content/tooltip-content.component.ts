@@ -2,21 +2,10 @@ import { Component, ViewEncapsulation, ElementRef, Input, TemplateRef, ViewChild
 import { trigger, transition, style, animate } from "@angular/animations";
 import { BehaviorSubject, Subject } from "rxjs";
 import { takeUntil } from "rxjs/operators";
+import { TooltipPosition } from "../tooltip.positions";
 
 export type TooltipTrigger = "hover" | "click" | "focus";
-export type TooltipPosition =
-    | "top"
-    | "bottom"
-    | "left"
-    | "right"
-    | "top-right"
-    | "top-left"
-    | "bottom-right"
-    | "bottom-left"
-    | "left-top"
-    | "left-bottom"
-    | "right-top"
-    | "right-bottom";
+
 export type TooltipTheme = "default" | "light" | "primary" | "warning" | "success" | "danger" | "purple";
 
 @Component({
@@ -34,8 +23,7 @@ export type TooltipTheme = "default" | "light" | "primary" | "warning" | "succes
 export class TooltipContentComponent implements AfterViewInit, OnDestroy {
     @Input() tooltipReference: ElementRef<HTMLDivElement>;
     @Input() theme: TooltipTheme = "default";
-    @Input() position: TooltipPosition = "top";
-    @Input() arrowClass?: BehaviorSubject<string> = new BehaviorSubject("");
+    @Input() positionClass?: BehaviorSubject<TooltipPosition> = new BehaviorSubject("top");
     @Input() className?: string = "";
 
     @ViewChild("tooltip") tooltip: ElementRef<HTMLDivElement>;
@@ -43,7 +31,7 @@ export class TooltipContentComponent implements AfterViewInit, OnDestroy {
     public isTemplateRef: boolean = false;
     public _content: string | TemplateRef<any> = "";
 
-    arrowClassName: string = "";
+    position: TooltipPosition = "top";
     destroy$: Subject<boolean> = new Subject();
 
     constructor(private ngZone: NgZone) {}
@@ -58,8 +46,8 @@ export class TooltipContentComponent implements AfterViewInit, OnDestroy {
     }
 
     ngAfterViewInit(): void {
-        this.arrowClass.pipe(takeUntil(this.destroy$)).subscribe((res: string) => {
-            this.ngZone.run(() => (this.arrowClassName = res));
+        this.positionClass.pipe(takeUntil(this.destroy$)).subscribe((res: TooltipPosition) => {
+            this.ngZone.run(() => (this.position = res));
         });
     }
 
