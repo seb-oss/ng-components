@@ -95,7 +95,7 @@ const routes: Routes = [
             },
             {
                 path: "Textbox",
-                loadChildren: () => import("./pages/Textbox-page/Textbox-page.module").then(m => m.TextboxPageModule),
+                loadChildren: () => import("./pages/textbox-page/textbox-page.module").then(m => m.TextboxPageModule),
             },
             {
                 path: "textlabel",
