@@ -10,8 +10,7 @@ export class TooltipPageComponent implements OnInit {
     importString: string = require("!raw-loader!@sebgroup/ng-components/tooltip/tooltip.component");
     code: string = `<sebng-tooltip [content]="content"></sebng-tooltip>`;
 
-    content: string | TemplateRef<any> =
-        "This is a tooltip This is a tooltip This is a tooltip This is a tooltip This is a tooltip This is a tooltip This is a tooltip This is a tooltip This is a tooltip This is a tooltip";
+    content: string | TemplateRef<any> = "This is a tooltip";
     textReference: string = "";
     className?: string = "";
     cascade: boolean = false;
@@ -46,7 +45,7 @@ export class TooltipPageComponent implements OnInit {
         { value: "click", label: "click" },
         { value: "focus", label: "focus" },
     ];
-    position: TooltipPosition = this.positionList[3].value;
+    position: TooltipPosition = this.positionList[0].value;
     theme: TooltipTheme = this.themeList[0].value;
     trigger: TooltipTrigger = this.triggerList[0].value;
 

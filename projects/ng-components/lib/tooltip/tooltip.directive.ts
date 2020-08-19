@@ -58,13 +58,16 @@ export class TooltipDirective implements OnDestroy {
     /** <!-- skip --> */
     private tooltipRef: ComponentRef<TooltipContentComponent>;
 
-    private listeners: Array<VoidFunction> = [];
     /** <!-- skip --> */
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    constructor(private overlay: Overlay, private elementRef: ElementRef, private renderer: Renderer2, private ngZone: NgZone) {}
+    constructor(private overlay: Overlay, private elementRef: ElementRef) {}
 
-    private getOverlayConfig({ origin }): OverlayConfig {
+    /**
+     * configure the overlay with position and scroll strategies
+     * @param origin element ref to where the overlay will be connected to
+     */
+    private getOverlayConfig(origin: ElementRef): OverlayConfig {
         return new OverlayConfig({
             hasBackdrop: false,
             positionStrategy: this.getOverlayPosition(origin),
@@ -72,6 +75,11 @@ export class TooltipDirective implements OnDestroy {
         });
     }
 
+    /**
+     * Configure the overlay position in a flexible way
+     * listen for position changes and update the arrow of the tooltip accordingly
+     * @param origin element ref to where the overlay will be connected to
+     */
     private getOverlayPosition(origin: ElementRef): PositionStrategy {
         const positionStrategy: FlexibleConnectedPositionStrategy = this.overlay
             .position()
@@ -92,6 +100,11 @@ export class TooltipDirective implements OnDestroy {
         return positionStrategy;
     }
 
+    /**
+     * get possible overlay placements the first placement is the position Input
+     * Default Tooltip position will display the tooltip in the following order depending on how available space [top, right, bottom, left]
+     * Cascade Tooltip position have twelve different possible position like [top, top-right, top-bottom, right, right-top....]
+     */
     private getPositions(): ConnectionPositionPair[] {
         return [POSITION_MAP[this.position], ...(this.cascade ? CASCADE_TOOLTIP_POSITIONS : DEFAULT_TOOLTIP_POSITIONS)];
     }
@@ -132,22 +145,26 @@ export class TooltipDirective implements OnDestroy {
      * Show tooltip
      */
     showTooltip(): void {
-        this.overlayRef = this.overlay.create(this.getOverlayConfig({ origin: this.elementRef }));
+        this.overlayRef = this.overlay.create(this.getOverlayConfig(this.elementRef));
         this.tooltipRef = this.overlayRef.attach(new ComponentPortal(TooltipContentComponent));
-        this.overlayRef.outsidePointerEvents().subscribe(() => {
-            this.overlayRef.dispose();
-        });
+
+        // Close overlay when a click outside happens
+        this.overlayRef.outsidePointerEvents().subscribe(() => this.overlayRef.dispose());
+
+        // Update position on scroll
         fromEvent(window, "scroll", { capture: true })
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
                 this.overlayRef?.updatePosition();
                 if (this.closeOnScroll) {
+                    // delay closing overlay
                     setTimeout(() => {
                         this.overlayRef?.dispose();
                     }, this.closeOnScrollDelay);
                 }
             });
 
+        // initial position right and left needs to be updated
         if (this.position === ("right" || "left")) {
             setTimeout(() => {
                 this.overlayRef.updatePosition();
