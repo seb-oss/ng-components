@@ -94,7 +94,7 @@
                     name="search-input"
                     type="search"
                     class="search-input"
-                    [placeholder]="searchPlaceholder || 'Search ...'"
+                    [placeholder]="placeholders?.searchText || 'Search ...'"
                     [value]="searchText"
                     (keyup)="handleOnChangeSearch($event)"
                 />
@@ -140,7 +140,7 @@
 
             <ng-template #emptyList>
                 <a class="dropdown-item custom-dropdown-item disabled">
-                    <div class="label">No results</div>
+                    <div class="label">{{ placeholders?.noResultText || "No results" }}</div>
                 </a>
             </ng-template>
         </div>

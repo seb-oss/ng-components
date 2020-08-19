@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { DropdownItem } from "@sebgroup/ng-components/dropdown";
+import { DropdownItem, DropdownPlaceholders } from "@sebgroup/ng-components/dropdown";
 
 @Component({
     selector: "app-dropdown-page",
@@ -24,6 +24,11 @@ export class DropdownPageComponent {
     searchable: boolean = false;
     clearable: boolean = false;
     placeholder: string;
+    searchText: string;
+    selectAllOptionText: string;
+    selectAllText: string;
+    emptyText: string;
+    noResultText: string;
     useShorthand: boolean = false;
 
     constructor() {

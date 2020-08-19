@@ -21,6 +21,14 @@ const CUSTOM_DROPDOWN_CONTROL_VALUE_ACCESSOR: Provider = {
     multi: true,
 };
 
+export interface DropdownPlaceholders {
+    searchText?: string;
+    selectAllOptionText?: string;
+    selectAllText?: string;
+    emptyText?: string;
+    noResultText?: string;
+}
+
 /**
  * A dropdown allows the user to select an option from a list.
  * Dropdowns enables users to make a quick selection of the available options for a specific entry.
@@ -32,6 +40,7 @@ const CUSTOM_DROPDOWN_CONTROL_VALUE_ACCESSOR: Provider = {
     providers: [CUSTOM_DROPDOWN_CONTROL_VALUE_ACCESSOR],
 })
 export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDestroy {
+    static selectedDisplayLength: number = 2;
     /** Element name */
     @Input() name: string;
     /** List of dropdown items */
@@ -56,8 +65,8 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     @Input() clearable?: boolean = false;
     /** Property sets whether dropdown is searchable */
     @Input() searchable?: boolean = false;
-    /** Search field placedholer */
-    @Input() searchPlaceholder?: string = "";
+    /** Set custom placeholders for dropdown field */
+    @Input() placeholders?: DropdownPlaceholders;
     /** On native change callback */
     @Input() nativeOnChange?: (event: DropdownItem | Array<DropdownItem> | UIEvent) => void;
     /** Property sets whether dropdown is in ellipsis mode */
@@ -74,7 +83,6 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     private onChangeCallback: (_: any) => void;
 
     private _subscriber: Subscription = null;
-
     private _open: boolean = false;
     private _searchText: string = "";
     private _shouldFocus: boolean = true;
@@ -281,7 +289,7 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
                     id: "select-all",
                     optionItem: {
                         value: "Select All",
-                        label: "Select All",
+                        label: this.placeholders?.selectAllOptionText || "Select All",
                     },
                     selected: this.allSelected,
                     className: `dropdown-item select-all custom-dropdown-item multi${this.allSelected ? " selected" : ""}`,
@@ -464,23 +472,24 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     /** Returns the appropriate title for different situations and component types */
     getTitleLabel(): string {
         if (this.uniqueList && this.uniqueList.length === 0) {
-            return "Empty";
+            return this.placeholders?.emptyText || "Empty";
         } else if (this.selectedList && this.selectedList.length > 0) {
-            if (this.allSelected) {
-                return `All selected (${this.selectedList.length})`;
-            } else if (this.multi) {
+            if (this.multi) {
                 if (this.selectedList.length === 1) {
                     return this.selectedList[0].label;
                 }
-                return this.selectedList
-                    .map((item: DropdownItem, index: number) => {
-                        if (index > 0) {
-                            return ` ${item.shorthand || item.label}`;
-                        } else {
-                            return item.shorthand || item.label;
-                        }
-                    })
-                    .toString();
+                if (this.allSelected) {
+                    return this.placeholders?.selectAllText || `All selected (${this.selectedList.length})`;
+                }
+                const displayText: string = this.selectedList
+                    .slice(0, DropdownComponent.selectedDisplayLength)
+                    .map((item: DropdownItem) => item.shorthand || item.label)
+                    .join(", ");
+                return `${displayText}${
+                    this.selectedList.length > DropdownComponent.selectedDisplayLength
+                        ? `... (+${this.selectedList.slice(DropdownComponent.selectedDisplayLength).length})`
+                        : ""
+                }`;
             }
             return (this.selectedValue as DropdownItem).shorthand || (this.selectedValue as DropdownItem).label;
         }
