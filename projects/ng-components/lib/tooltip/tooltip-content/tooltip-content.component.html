@@ -1,15 +1,9 @@
-<div
-    #tooltip
-    @fadeOut
-    class="custom-tooltip-content tooltip bs-tooltip-{{ position }}"
-    [ngClass]="[theme, className]"
-    tabindex="-1"
-    role="tooltip"
-    aria-hidden="true"
->
-    <div class="arrow"></div>
-    <div class="tooltip-inner">
-        <ng-container *ngIf="isTemplateRef; else defaultContent" [ngTemplateOutlet]="content" id="aria-describedby-message"></ng-container>
-        <ng-template #defaultContent id="aria-describedby-message">{{ content }}</ng-template>
+<div class="sebng-tooltip bs-tooltip-{{ position }}" [ngClass]="[theme, className]">
+    <div class="custom-tooltip-content">
+        <div class="tooltip-inner" id="aria-label" role="tooltip">
+            <ng-container *ngIf="isTemplateRef; else defaultContent" [ngTemplateOutlet]="content"></ng-container>
+            <ng-template #defaultContent>{{ content }}</ng-template>
+        </div>
     </div>
+    <div class="arrow"></div>
 </div>

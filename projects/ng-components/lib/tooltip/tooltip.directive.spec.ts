@@ -172,15 +172,6 @@ describe("TooltipDirective", () => {
                         fixture.debugElement.query(By.css(".text-help")).nativeElement.dispatchEvent(new FocusEvent("blur"));
                     },
                 },
-                {
-                    trigger: "focus",
-                    eventToShow: () => {
-                        fixture.debugElement.query(By.css(".text-help")).nativeElement.dispatchEvent(new FocusEvent("focus"));
-                    },
-                    eventToHide: () => {
-                        fixture.debugElement.query(By.css(".text-help")).nativeElement.dispatchEvent(new FocusEvent("blur"));
-                    },
-                },
             ];
             triggerTestCases.map((triggerTestCase: TriggerTestCase) => {
                 it(triggerTestCase.trigger, async () => {

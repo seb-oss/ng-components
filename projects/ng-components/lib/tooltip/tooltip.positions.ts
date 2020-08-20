@@ -7,10 +7,8 @@ export type TooltipPosition =
     | "right"
     | "top-right"
     | "top-left"
-    | "top-center"
     | "bottom-right"
     | "bottom-left"
-    | "bottom-center"
     | "left-top"
     | "left-bottom"
     | "right-top"
@@ -18,7 +16,6 @@ export type TooltipPosition =
 
 export const POSITION_MAP: { [key in TooltipPosition]: ConnectionPositionPair } = {
     top: { originX: "center", originY: "top", overlayX: "center", overlayY: "bottom" },
-    "top-center": { originX: "center", originY: "top", overlayX: "center", overlayY: "bottom" },
     "top-left": { originX: "start", originY: "top", overlayX: "start", overlayY: "bottom" },
     "top-right": { originX: "end", originY: "top", overlayX: "end", overlayY: "bottom" },
     "right-bottom": { originX: "end", originY: "bottom", overlayX: "start", overlayY: "bottom" },
@@ -28,7 +25,6 @@ export const POSITION_MAP: { [key in TooltipPosition]: ConnectionPositionPair } 
     left: { originX: "start", originY: "center", overlayX: "end", overlayY: "center" },
     "left-top": { originX: "start", originY: "top", overlayX: "end", overlayY: "top" },
     bottom: { originX: "center", originY: "bottom", overlayX: "center", overlayY: "top" },
-    "bottom-center": { originX: "center", originY: "bottom", overlayX: "center", overlayY: "top" },
     "bottom-left": { originX: "start", originY: "bottom", overlayX: "start", overlayY: "top" },
     "bottom-right": { originX: "end", originY: "bottom", overlayX: "end", overlayY: "top" },
 };

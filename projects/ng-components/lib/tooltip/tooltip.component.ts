@@ -36,8 +36,7 @@ export class TooltipComponent {
     /** Delay before closing on scroll */
     @Input() closeOnScrollDelay: number = 0;
 
-    @Input() ariaLabel?: string = "";
-
+    /** reposition tooltip with more placement choices */
     @Input() cascade?: boolean = false;
 
     @ViewChild("ngContent") contentref: ElementRef<HTMLDivElement>;
