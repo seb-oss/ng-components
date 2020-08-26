@@ -1,6 +1,6 @@
-<div class="sebng-tooltip bs-tooltip-{{ position }}" [ngClass]="[theme, className]">
+<div @fadeOut class="sebng-tooltip bs-tooltip-{{ position }}" [ngClass]="[theme, className]">
     <div class="custom-tooltip-content">
-        <div class="tooltip-inner" id="aria-label" role="tooltip">
+        <div class="tooltip-inner" id="sebng-tooltip-label" role="tooltip">
             <ng-container *ngIf="isTemplateRef; else defaultContent" [ngTemplateOutlet]="content"></ng-container>
             <ng-template #defaultContent>{{ content }}</ng-template>
         </div>

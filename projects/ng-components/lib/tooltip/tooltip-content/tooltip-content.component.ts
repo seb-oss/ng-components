@@ -12,8 +12,8 @@ export type TooltipTheme = "default" | "light" | "primary" | "warning" | "succes
     styleUrls: ["./tooltip-content.component.scss"],
     animations: [
         trigger("fadeOut", [
-            transition(":enter", [style({ opacity: 0 }), animate(100, style({ opacity: 1 }))]),
-            transition(":leave", [animate(100, style({ opacity: 0 }))]),
+            transition(":enter", [style({ opacity: 0 }), animate(300, style({ opacity: 1 }))]),
+            transition(":leave", [animate(300, style({ opacity: 0 }))]),
         ]),
     ],
     encapsulation: ViewEncapsulation.None,

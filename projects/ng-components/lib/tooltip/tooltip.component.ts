@@ -36,7 +36,7 @@ export class TooltipComponent {
     /** Delay before closing on scroll */
     @Input() closeOnScrollDelay: number = 0;
 
-    /** reposition tooltip with more placement choices */
+    /** reposition tooltip with more position choices (top-right, bottom-left, right-top, ....) */
     @Input() cascade?: boolean = false;
 
     @ViewChild("ngContent") contentref: ElementRef<HTMLDivElement>;

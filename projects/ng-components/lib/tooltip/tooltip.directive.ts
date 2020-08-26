@@ -1,4 +1,4 @@
-import { ComponentRef, Directive, ElementRef, HostListener, Input, TemplateRef, OnDestroy, Renderer2 } from "@angular/core";
+import { ComponentRef, Directive, ElementRef, HostListener, Input, TemplateRef, OnDestroy } from "@angular/core";
 import {
     Overlay,
     OverlayRef,
@@ -12,7 +12,6 @@ import { ComponentPortal } from "@angular/cdk/portal";
 import { TooltipContentComponent, TooltipTrigger, TooltipTheme } from "./tooltip-content/tooltip-content.component";
 import { Subject, fromEvent } from "rxjs";
 import { distinctUntilChanged, takeUntil } from "rxjs/operators";
-import { isEqual } from "lodash";
 import { getPlacementName, POSITION_MAP, DEFAULT_TOOLTIP_POSITIONS, TooltipPosition, CASCADE_TOOLTIP_POSITIONS } from "./tooltip.positions";
 
 /**
@@ -49,7 +48,7 @@ export class TooltipDirective implements OnDestroy {
     /** <!-- skip --> */
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    constructor(private overlay: Overlay, private elementRef: ElementRef, private renderer: Renderer2) {}
+    constructor(private overlay: Overlay, private elementRef: ElementRef) {}
 
     /**
      * configure the overlay with position and scroll strategies
@@ -80,10 +79,15 @@ export class TooltipDirective implements OnDestroy {
 
         positionStrategy.positionChanges
             .pipe(
-                distinctUntilChanged((prev: ConnectedOverlayPositionChange, curr: ConnectedOverlayPositionChange) => isEqual(prev, curr)),
+                // filter the observable so that the subscription fires only when the prev and curr values are different
+                distinctUntilChanged(
+                    // comparing 2 objects with Object.keys will be safe because we have control over the type and order of prev and curr objects
+                    (prev: ConnectedOverlayPositionChange, curr: ConnectedOverlayPositionChange) => Object.keys(prev) === Object.keys(curr)
+                ),
                 takeUntil(this.destroy$)
             )
             .subscribe((newPosition: ConnectedOverlayPositionChange) => {
+                console.log("here");
                 this.tooltipRef.instance.position = getPlacementName(newPosition);
             });
 
