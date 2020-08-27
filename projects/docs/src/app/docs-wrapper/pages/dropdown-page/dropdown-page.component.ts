@@ -17,6 +17,7 @@ export class DropdownPageComponent {
     selectedValue: DropdownItem = { ...this.list[2] };
     selectedValues: DropdownItem[] = [{ ...this.list[0] }, { ...this.list[3] }, { ...this.list[4] }];
 
+    showPlaceholders: boolean = false;
     // controls
     isNative: boolean = false;
     isEllipsisMode: boolean = false;
