@@ -1,7 +1,7 @@
 import { ViewChild, Component, DebugElement } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { DropdownComponent, DropdownItem } from "./dropdown.component";
+import { DropdownComponent, DropdownItem, DropdownPlaceholders } from "./dropdown.component";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 
@@ -14,6 +14,7 @@ import { CommonModule } from "@angular/common";
             [label]="label"
             [error]="error"
             [placeholder]="placeholder"
+            [placeholders]="placeholders"
             [className]="className"
             [disabled]="disabled"
             [native]="native"
@@ -31,6 +32,7 @@ class DropdownTestComponent {
     label?: string;
     error?: string;
     placeholder?: string;
+    placeholders?: DropdownPlaceholders;
     className?: string;
     disabled?: boolean = false;
     native?: boolean = false;
@@ -75,7 +77,7 @@ describe("DropdownComponent", () => {
         component.label = "Country";
         component.error = "Some error";
         fixture.detectChanges();
-        const label = fixture.debugElement.query(By.css(".dropdown-label > b"));
+        const label = fixture.debugElement.query(By.css(".dropdown-label"));
         const error = fixture.debugElement.query(By.css(".alert"));
         expect(label).not.toBeNull();
         expect(label.nativeElement.innerHTML).toEqual("Country");
@@ -177,4 +179,39 @@ describe("DropdownComponent", () => {
         const menu: DebugElement = fixture.debugElement.query(By.css(".show"));
         expect(menu).toBeTruthy();
     }));
+
+    describe("Custom dropdown placeholders", () => {
+        it("Should set custom empty state message", () => {
+            const emptyText: string = "customEmptyText";
+            component.placeholders = { emptyText };
+            component.list = [];
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css(".title")).nativeElement.innerHTML).toContain(emptyText);
+        });
+        it("Should set custom search text when searchable enabled", async(() => {
+            const searchText: string = "customSearchText";
+            component.placeholders = { searchText };
+            component.searchable = true;
+            component.selectedItem = component.list[0];
+            fixture.detectChanges();
+
+            expect(fixture.debugElement.query(By.css(".search-input")).nativeElement.getAttribute("placeholder")).toBe(searchText);
+        }));
+        it("Should set custom no result text when searchable enabled", async(() => {
+            const noResultText: string = "customNoResultText";
+            component.placeholders = { noResultText };
+            component.searchable = true;
+            component.list = [];
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css(".dropdown-item.disabled > .label")).nativeElement.innerHTML).toBe(noResultText);
+        }));
+        it("Should set custom select all text when multi enabled", async(() => {
+            const selectAllOptionText: string = "customSelectAllOptionText";
+            const selectAllText: string = "customSelectAllText";
+            component.placeholders = { selectAllOptionText, selectAllText };
+            component.multi = true;
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css(".custom-control-label")).nativeElement.innerHTML).toContain(selectAllOptionText);
+        }));
+    });
 });
