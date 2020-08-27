@@ -101,7 +101,7 @@
                 <div class="dropdown-divider blue"></div>
             </ng-container>
 
-            <ng-container *ngIf="list.length > 0; else emptyList">
+            <ng-container *ngIf="displayList.length > 0; else emptyList">
                 <ng-container *ngFor="let item of displayList; index as i">
                     <button
                         #listRefs
