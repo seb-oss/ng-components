@@ -7,12 +7,20 @@
             [multi]="false"
             [native]="isNative"
             [placeholder]="placeholder"
+            [placeholders]="{
+                searchText: searchText,
+                selectAllOptionText: selectAllOptionText,
+                selectAllText: selectAllText,
+                emptyText: emptyText,
+                noResultText: noResultText
+            }"
             [ellipsisMode]="isEllipsisMode"
             [disabled]="disabled"
             [searchable]="searchable"
             [clearable]="clearable"
             [(ngModel)]="selectedValue"
-        ></sebng-dropdown>
+        >
+        </sebng-dropdown>
         <sebng-dropdown
             class="col-12 mb-2"
             label="Multi select"
@@ -20,12 +28,40 @@
             [multi]="true"
             [native]="isNative"
             [placeholder]="placeholder"
+            [placeholders]="{
+                searchText: searchText,
+                selectAllOptionText: selectAllOptionText,
+                selectAllText: selectAllText,
+                emptyText: emptyText,
+                noResultText: noResultText
+            }"
             [ellipsisMode]="isEllipsisMode"
             [disabled]="disabled"
             [searchable]="searchable"
             [clearable]="clearable"
             [(ngModel)]="selectedValues"
-        ></sebng-dropdown>
+        >
+        </sebng-dropdown>
+        <sebng-dropdown
+            class="col-12 mb-2"
+            label="Empty dropdown"
+            [list]="[]"
+            [multi]="false"
+            [native]="isNative"
+            [placeholder]="placeholder"
+            [placeholders]="{
+                searchText: searchText,
+                selectAllOptionText: selectAllOptionText,
+                selectAllText: selectAllText,
+                emptyText: emptyText,
+                noResultText: noResultText
+            }"
+            [ellipsisMode]="isEllipsisMode"
+            [disabled]="disabled"
+            [searchable]="searchable"
+            [clearable]="clearable"
+        >
+        </sebng-dropdown>
     </div>
 
     <div controls>
@@ -64,11 +100,41 @@
                 description="You can render a shorthand of the label when it is selected when you pass it to the dropdown item"
             ></sebng-checkbox>
 
-            <div>
-                <label>Placeholder:</label>
-                <p><small>Set a placeholder for when no item is selected (defaults to 'Select ...').</small></p>
-                <input class="form-control" type="text" [(ngModel)]="placeholder" />
-            </div>
+            <sebng-checkbox
+                [ngModel]="showPlaceholders"
+                (ngModelChange)="showPlaceholders = !showPlaceholders"
+                label="Use custom placeholders"
+                description="Show options for all custom text and placeholders."
+            ></sebng-checkbox>
+
+            <ng-container *ngIf="showPlaceholders">
+                <div class="mb-2">
+                    <label>Mian placeholder text:</label>
+                    <p><small>Set a placeholder for when no item is selected (defaults to 'Select ...').</small></p>
+                    <input class="form-control" type="text" [(ngModel)]="placeholder" />
+                </div>
+                <div class="mb-2">
+                    <label>Search text placeholder:</label>
+                    <p><small>Set custom placeholder for search input</small></p>
+                    <input class="form-control" type="text" [(ngModel)]="searchText" />
+                </div>
+                <div class="mb-2">
+                    <label>"Select All" text:</label>
+                    <input class="form-control" type="text" [(ngModel)]="selectAllOptionText" />
+                </div>
+                <div class="mb-2">
+                    <label>"All Selected" text:</label>
+                    <input class="form-control" type="text" [(ngModel)]="selectAllText" />
+                </div>
+                <div class="mb-2">
+                    <label>"Empty" text:</label>
+                    <input class="form-control" type="text" [(ngModel)]="emptyText" />
+                </div>
+                <div class="mb-2">
+                    <label>"No Results" text:</label>
+                    <input class="form-control" type="text" [(ngModel)]="noResultText" />
+                </div>
+            </ng-container>
         </ng-container>
     </div>
     <ng-container code>{{ snippet }}</ng-container>

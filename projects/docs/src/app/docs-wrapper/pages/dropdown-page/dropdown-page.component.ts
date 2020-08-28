@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { DropdownItem } from "@sebgroup/ng-components/dropdown";
+import { DropdownItem, DropdownPlaceholders } from "@sebgroup/ng-components/dropdown";
 
 @Component({
     selector: "app-dropdown-page",
@@ -17,6 +17,7 @@ export class DropdownPageComponent {
     selectedValue: DropdownItem = { ...this.list[2] };
     selectedValues: DropdownItem[] = [{ ...this.list[0] }, { ...this.list[3] }, { ...this.list[4] }];
 
+    showPlaceholders: boolean = false;
     // controls
     isNative: boolean = false;
     isEllipsisMode: boolean = false;
@@ -24,6 +25,11 @@ export class DropdownPageComponent {
     searchable: boolean = false;
     clearable: boolean = false;
     placeholder: string;
+    searchText: string;
+    selectAllOptionText: string;
+    selectAllText: string;
+    emptyText: string;
+    noResultText: string;
     useShorthand: boolean = false;
 
     constructor() {

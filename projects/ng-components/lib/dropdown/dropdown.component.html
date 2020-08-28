@@ -94,14 +94,14 @@
                     name="search-input"
                     type="search"
                     class="search-input"
-                    [placeholder]="searchPlaceholder || 'Search ...'"
+                    [placeholder]="placeholders?.searchText || 'Search ...'"
                     [value]="searchText"
                     (keyup)="handleOnChangeSearch($event)"
                 />
                 <div class="dropdown-divider blue"></div>
             </ng-container>
 
-            <ng-container *ngIf="list.length > 0; else emptyList">
+            <ng-container *ngIf="displayList.length > 0; else emptyList">
                 <ng-container *ngFor="let item of displayList; index as i">
                     <button
                         #listRefs
@@ -140,7 +140,7 @@
 
             <ng-template #emptyList>
                 <a class="dropdown-item custom-dropdown-item disabled">
-                    <div class="label">No results</div>
+                    <div class="label">{{ placeholders?.noResultText || "No results" }}</div>
                 </a>
             </ng-template>
         </div>
