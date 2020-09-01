@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, Input, TemplateRef, ChangeDetectorRef, ElementRef, ViewChild } from "@angular/core";
+import { Component, ViewEncapsulation, Input, TemplateRef, ChangeDetectorRef, ElementRef, ViewChild, AfterViewInit } from "@angular/core";
 import { trigger, transition, style, animate } from "@angular/animations";
 import { TooltipTheme, TooltipTrigger } from "./tooltip-content/tooltip-content.component";
 import { TooltipPosition } from "./tooltip.positions";
@@ -16,7 +16,7 @@ import { TooltipPosition } from "./tooltip.positions";
     ],
     encapsulation: ViewEncapsulation.None,
 })
-export class TooltipComponent {
+export class TooltipComponent implements AfterViewInit {
     /** content of tooltip */
     @Input() content: string | TemplateRef<any> = "";
     /** tooltip text reference with default SEB style */
