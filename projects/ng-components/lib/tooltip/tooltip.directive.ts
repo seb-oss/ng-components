@@ -87,7 +87,6 @@ export class TooltipDirective implements OnDestroy {
                 takeUntil(this.destroy$)
             )
             .subscribe((newPosition: ConnectedOverlayPositionChange) => {
-                console.log("here");
                 this.tooltipRef.instance.position = getPlacementName(newPosition);
             });
 
