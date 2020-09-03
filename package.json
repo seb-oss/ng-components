@@ -101,7 +101,7 @@
         "ng-packagr": "^10.0.4",
         "package-lock-sanitizer": "^1.0.1",
         "prettier": "^2.0.5",
-        "pretty-quick": "^2.0.1",
+        "pretty-quick": "^3.0.0",
         "protractor": "~7.0.0",
         "raw-loader": "^4.0.1",
         "rimraf": "^3.0.2",
