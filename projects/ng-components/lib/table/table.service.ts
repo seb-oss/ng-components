@@ -8,7 +8,7 @@ import {
     TableServiceAction,
     TableServiceDataAndHandlers,
 } from "./table.models";
-import { toDate } from "@sebgroup/frontend-tools/dist/toDate";
+import { toDate } from "@sebgroup/frontend-tools";
 import { readableFromCamelCase } from "./utils";
 import { BehaviorSubject } from "rxjs";
 

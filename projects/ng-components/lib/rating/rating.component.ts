@@ -1,6 +1,6 @@
 import { Component, Input, forwardRef, ViewEncapsulation, ViewChildren, QueryList, ElementRef, OnInit } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
-import { randomId } from "@sebgroup/frontend-tools/dist/randomId";
+import { randomId } from "@sebgroup/frontend-tools";
 
 export const CUSTOM_RATING_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
