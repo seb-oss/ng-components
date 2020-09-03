@@ -1,20 +1,9 @@
-import { Component, ViewEncapsulation, ElementRef, Input, TemplateRef, ViewChild, Output, EventEmitter } from "@angular/core";
+import { Component, ViewEncapsulation, ElementRef, Input, TemplateRef } from "@angular/core";
 import { trigger, transition, style, animate } from "@angular/animations";
+import { TooltipPosition } from "../tooltip.positions";
 
-export type TooltipTrigger = "hover" | "click" | "focus";
-export type TooltipPosition =
-    | "top"
-    | "bottom"
-    | "left"
-    | "right"
-    | "top-right"
-    | "top-left"
-    | "bottom-right"
-    | "bottom-left"
-    | "left-top"
-    | "left-bottom"
-    | "right-top"
-    | "right-bottom";
+export type TooltipTrigger = "hover" | "click";
+
 export type TooltipTheme = "default" | "light" | "primary" | "warning" | "success" | "danger" | "purple";
 
 @Component({
@@ -31,12 +20,9 @@ export type TooltipTheme = "default" | "light" | "primary" | "warning" | "succes
 })
 export class TooltipContentComponent {
     @Input() tooltipReference: ElementRef<HTMLDivElement>;
-    @Input() position: TooltipPosition = "top";
     @Input() theme: TooltipTheme = "default";
     @Input() className?: string = "";
-    @Output() defocus: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-    @ViewChild("tooltip") tooltip: ElementRef<HTMLDivElement>;
+    @Input() position?: TooltipPosition = "top";
 
     public isTemplateRef: boolean = false;
     public _content: string | TemplateRef<any> = "";
@@ -48,12 +34,5 @@ export class TooltipContentComponent {
     @Input("content") set content(value: string | TemplateRef<any>) {
         this._content = value;
         this.isTemplateRef = value instanceof TemplateRef;
-    }
-
-    /** on tooltip blur */
-    onBlur(event: FocusEvent): void {
-        if (!this.tooltipReference.nativeElement.contains(event.relatedTarget as any)) {
-            this.defocus.emit();
-        }
     }
 }

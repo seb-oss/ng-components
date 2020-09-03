@@ -1,14 +1,13 @@
 import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
-
-import { TooltipComponent } from "./tooltip.component";
 import { By } from "@angular/platform-browser";
 import { Component, TemplateRef, ElementRef } from "@angular/core";
-import { TooltipTrigger, TooltipPosition, TooltipTheme, TooltipModule } from ".";
+import { TooltipTrigger, TooltipTheme, TooltipModule } from ".";
 import { OverlayContainer, OverlayModule } from "@angular/cdk/overlay";
 import { Direction, Directionality } from "@angular/cdk/bidi";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Platform } from "@angular/cdk/platform";
 import { FocusMonitor } from "@angular/cdk/a11y";
+import { TooltipPosition } from "./tooltip.positions";
 
 type TriggerTestCase = {
     trigger: TooltipTrigger;
@@ -168,15 +167,6 @@ describe("TooltipDirective", () => {
                     trigger: "click",
                     eventToShow: () => {
                         fixture.debugElement.query(By.css(".text-help")).nativeElement.dispatchEvent(new MouseEvent("click"));
-                    },
-                    eventToHide: () => {
-                        fixture.debugElement.query(By.css(".text-help")).nativeElement.dispatchEvent(new FocusEvent("blur"));
-                    },
-                },
-                {
-                    trigger: "focus",
-                    eventToShow: () => {
-                        fixture.debugElement.query(By.css(".text-help")).nativeElement.dispatchEvent(new FocusEvent("focus"));
                     },
                     eventToHide: () => {
                         fixture.debugElement.query(By.css(".text-help")).nativeElement.dispatchEvent(new FocusEvent("blur"));
