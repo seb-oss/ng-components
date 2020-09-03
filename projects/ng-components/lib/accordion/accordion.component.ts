@@ -13,7 +13,7 @@ import {
     AfterViewChecked,
     OnDestroy,
 } from "@angular/core";
-import { randomId } from "@sebgroup/frontend-tools/dist/randomId";
+import { randomId } from "@sebgroup/frontend-tools";
 import { Subscription } from "rxjs";
 
 export type AccordionIconRotation = "deg-180" | "deg-180-counter" | "deg-90" | "deg-90-counter";

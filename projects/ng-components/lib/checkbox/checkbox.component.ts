@@ -1,6 +1,6 @@
 import { Component, Input, forwardRef, ViewEncapsulation, OnInit, TemplateRef, Output, EventEmitter, Provider } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
-import { randomId } from "@sebgroup/frontend-tools/dist/randomId";
+import { randomId } from "@sebgroup/frontend-tools";
 import { NgClass } from "@angular/common";
 
 export const CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR: Provider = {
