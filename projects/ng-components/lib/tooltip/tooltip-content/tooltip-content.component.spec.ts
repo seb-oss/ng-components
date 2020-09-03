@@ -1,16 +1,16 @@
 import { Component, TemplateRef, ElementRef } from "@angular/core";
 import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { TooltipContentComponent, TooltipPosition, TooltipTheme } from "./tooltip-content.component";
+import { TooltipContentComponent, TooltipTheme } from "./tooltip-content.component";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { TooltipPosition } from "../tooltip.positions";
 
 @Component({
     selector: "test-sebng-tooltip-content",
     template: `
         <sebng-tooltip-content
-            (defocus)="defocus($event)"
             [className]="className"
             [content]="content"
             [tooltipReference]="tooltipReference"

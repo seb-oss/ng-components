@@ -9,43 +9,68 @@
                     [position]="position"
                     [theme]="theme"
                     [className]="className"
+                    [cascade]="cascade"
+                    [closeOnScroll]="closeOnScroll"
+                    [closeOnScrollDelay]="closeOnScrollDelay"
                 >
                 </sebng-tooltip>
             </div>
             <div class="col-12">
-                <sebng-tooltip [content]="content" [trigger]="trigger" [position]="position" [theme]="theme" [className]="className">
+                <sebng-tooltip
+                    [content]="content"
+                    [trigger]="trigger"
+                    [position]="position"
+                    [theme]="theme"
+                    [className]="className"
+                    [cascade]="cascade"
+                    [closeOnScroll]="closeOnScroll"
+                    [closeOnScrollDelay]="closeOnScrollDelay"
+                >
                     Tooltip Reference in ng-content
                 </sebng-tooltip>
             </div>
         </div>
     </ng-container>
     <ng-container code>{{ code }}</ng-container>
-    <div class="row" controls>
-        <label class="w-100">
+    <section controls>
+        <div>
             textReference
             <p><small> set string as reference of tooltip</small></p>
             <input class="form-control" [(ngModel)]="textReference" />
-        </label>
-        <label class="w-100">
+        </div>
+        <div>
             trigger
             <p><small>define trigger method of tooltip</small></p>
             <select class="custom-select" [(ngModel)]="trigger">
                 <option *ngFor="let item of triggerList" [value]="item.value">{{ item.label }}</option>
             </select>
-        </label>
-        <label class="w-100">
+        </div>
+        <div>
             position
             <p><small>define position of the tooltip</small></p>
             <select class="custom-select" [(ngModel)]="position">
                 <option *ngFor="let item of positionList" [value]="item.value">{{ item.label }}</option>
             </select>
-        </label>
-        <label class="w-100">
+        </div>
+        <div>
             theme
             <p><small>define theme of the tooltip</small></p>
             <select class="custom-select" [(ngModel)]="theme">
                 <option *ngFor="let item of themeList" [value]="item.value">{{ item.label }}</option>
             </select>
-        </label>
-    </div>
+        </div>
+        <div>
+            Cascade
+            <p><small>Add more flexible positions to the tooltip (top, top-right, bottom-right...), default is false</small></p>
+            <sebng-checkbox [(ngModel)]="cascade" label="Cascade"></sebng-checkbox>
+        </div>
+
+        <div>
+            Close on Scroll
+            <p><small>Close the tooltip when scroll happens</small></p>
+            <sebng-checkbox [(ngModel)]="closeOnScroll" label="Close on scroll"></sebng-checkbox>
+            <p><small>Delay </small></p>
+            <input class="form-control" [(ngModel)]="closeOnScrollDelay" />
+        </div>
+    </section>
 </app-doc-page>
