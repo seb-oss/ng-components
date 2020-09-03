@@ -2,7 +2,6 @@ import {
     Component,
     Input,
     ViewEncapsulation,
-    ElementRef,
     forwardRef,
     Provider,
     OnChanges,
@@ -11,27 +10,27 @@ import {
     Output,
     EventEmitter,
 } from "@angular/core";
-import { randomId } from "@sebgroup/frontend-tools/dist/randomId";
+import { randomId } from "@sebgroup/frontend-tools";
 
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 
 const CUSTOM_DROPDOWN_CONTROL_VALUE_ACCESSOR: Provider = {
     provide: NG_VALUE_ACCESSOR,
-    useExisting: forwardRef(() => TextboxGroupComponent),
+    useExisting: forwardRef(() => TextboxComponent),
     multi: true,
 };
 
 type Value = number | string;
 
-/** TextboxGroup is a component that allows user to add or edit text */
+/** Textbox is a component that allows user to add or edit text */
 @Component({
-    selector: "sebng-textboxgroup",
-    templateUrl: "./textboxGroup.component.html",
-    styleUrls: ["./textboxGroup.component.scss"],
+    selector: "sebng-textbox",
+    templateUrl: "./textbox.component.html",
+    styleUrls: ["./textbox.component.scss"],
     encapsulation: ViewEncapsulation.None,
     providers: [CUSTOM_DROPDOWN_CONTROL_VALUE_ACCESSOR],
 })
-export class TextboxGroupComponent implements ControlValueAccessor, OnInit, OnChanges {
+export class TextboxComponent implements ControlValueAccessor, OnInit, OnChanges {
     /** Property sets to check if textbox is allowed to auto complete */
     @Input() autocomplete?: string;
     /** Element class name */

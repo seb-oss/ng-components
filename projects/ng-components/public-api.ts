@@ -22,7 +22,7 @@ export * from "./lib/table";
 export * from "./lib/tabs";
 export * from "./lib/textarea";
 export * from "./lib/textLabel";
-export * from "./lib/textboxGroup";
+export * from "./lib/textbox";
 export * from "./lib/timeline";
 export * from "./lib/timer";
 export * from "./lib/toggle";

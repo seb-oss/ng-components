@@ -5,7 +5,7 @@
     </p>
 
     <ng-container *ngSwitchCase="controlType.Text.toString()">
-        <sebng-textboxgroup
+        <sebng-textbox
             *ngIf="!control.formItem.multi; else multi"
             [id]="makeId()"
             className="dynamic-form-item"
@@ -14,7 +14,7 @@
             [placeholder]="control.formItem.placeholder"
             [formControl]="control"
         >
-        </sebng-textboxgroup>
+        </sebng-textbox>
 
         <ng-template #multi>
             <div *ngFor="let arrayControl of getFormArrayControls(control); let i = index">

@@ -1,7 +1,20 @@
-<div [style.height]="fixedHeight" class="table-responsive seb-table" [class.seb-table-fixed-height]="!!fixedHeight">
-    <table [class.table-hover]="selectable" class="table table-sm">
+<div
+    [style.height]="fixedHeight"
+    class="table-responsive{{ responsiveBreakpoint && '-' + responsiveBreakpoint }} seb-table"
+    [class.seb-table-fixed-height]="!!fixedHeight"
+    [ngClass]="className"
+>
+    <table
+        [class.table-striped]="striped"
+        [class.table-dark]="darkTable"
+        [class.table-hover]="selectable"
+        [class.table-sm]="compact"
+        class="table"
+    >
         <thead
             seb-table-header
+            [class.thead-light]="(!theadTheme && fixedHeight && !darkTable) || theadTheme === 'light'"
+            [class.thead-dark]="(!theadTheme && fixedHeight && darkTable) || theadTheme === 'dark'"
             [selectable]="selectable"
             [isAllSelected]="isAllSelected"
             [list]="headerList"

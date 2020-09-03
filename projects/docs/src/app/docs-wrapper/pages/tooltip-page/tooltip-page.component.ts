@@ -1,5 +1,6 @@
-import { Component, OnInit, TemplateRef, ElementRef } from "@angular/core";
-import { TooltipTrigger, TooltipPosition, TooltipTheme } from "@sebgroup/ng-components/tooltip";
+import { Component, OnInit, TemplateRef } from "@angular/core";
+import { TooltipTrigger, TooltipTheme } from "@sebgroup/ng-components/tooltip";
+import { TooltipPosition } from "@sebgroup/ng-components/tooltip/tooltip.positions";
 
 @Component({
     selector: "app-tooltip-page",
@@ -12,6 +13,9 @@ export class TooltipPageComponent implements OnInit {
     content: string | TemplateRef<any> = "This is a tooltip";
     textReference: string = "";
     className?: string = "";
+    cascade: boolean = false;
+    closeOnScroll: boolean = false;
+    closeOnScrollDelay: number = 0;
 
     positionList: Array<DocDropdownItem<TooltipPosition>> = [
         { value: "top", label: "top" },
@@ -39,7 +43,6 @@ export class TooltipPageComponent implements OnInit {
     triggerList: Array<DocDropdownItem<TooltipTrigger>> = [
         { value: "hover", label: "hover" },
         { value: "click", label: "click" },
-        { value: "focus", label: "focus" },
     ];
     position: TooltipPosition = this.positionList[0].value;
     theme: TooltipTheme = this.themeList[0].value;

@@ -22,7 +22,7 @@
     { "route": "/docs/table" },
     { "route": "/docs/tabs" },
     { "route": "/docs/textarea" },
-    { "route": "/docs/textboxgroup" },
+    { "route": "/docs/Textbox" },
     { "route": "/docs/textlabel" },
     { "route": "/docs/timeline" },
     { "route": "/docs/timer" },

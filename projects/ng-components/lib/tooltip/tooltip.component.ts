@@ -1,6 +1,7 @@
-import { Component, ViewEncapsulation, ElementRef, Input, TemplateRef, ViewChild, AfterViewInit, ChangeDetectorRef } from "@angular/core";
+import { Component, ViewEncapsulation, Input, TemplateRef, ChangeDetectorRef, ElementRef, ViewChild, AfterViewInit } from "@angular/core";
 import { trigger, transition, style, animate } from "@angular/animations";
-import { TooltipTheme, TooltipTrigger, TooltipPosition } from "./tooltip-content/tooltip-content.component";
+import { TooltipTheme, TooltipTrigger } from "./tooltip-content/tooltip-content.component";
+import { TooltipPosition } from "./tooltip.positions";
 
 /** A text label that acts as a helper to a specific item */
 @Component({
@@ -29,10 +30,19 @@ export class TooltipComponent implements AfterViewInit {
     /** CSS class */
     @Input() className?: string = "";
 
+    /** Close the tooltip once the user scrolls */
+    @Input() closeOnScroll: boolean = false;
+
+    /** Delay before closing on scroll */
+    @Input() closeOnScrollDelay: number = 0;
+
+    /** reposition tooltip with more position choices (top-right, bottom-left, right-top, ....) */
+    @Input() cascade?: boolean = false;
+
     @ViewChild("ngContent") contentref: ElementRef<HTMLDivElement>;
 
     stringContent: string = "";
-    hasContent: boolean = true;
+    hasContent: boolean = false;
 
     constructor(private cdr: ChangeDetectorRef) {}
 
