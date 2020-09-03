@@ -1,4 +1,4 @@
-import { capitalize } from "@sebgroup/frontend-tools/dist/capitalize";
+import { capitalize } from "@sebgroup/frontend-tools";
 
 /**
  * Creates a human readable text from camel case

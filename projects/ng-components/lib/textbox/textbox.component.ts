@@ -10,7 +10,7 @@ import {
     Output,
     EventEmitter,
 } from "@angular/core";
-import { randomId } from "@sebgroup/frontend-tools/dist/randomId";
+import { randomId } from "@sebgroup/frontend-tools";
 
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 
