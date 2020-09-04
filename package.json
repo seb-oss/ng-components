@@ -98,7 +98,7 @@
         "karma-jasmine": "~4.0.1",
         "karma-jasmine-html-reporter": "^1.5.0",
         "karma-spec-reporter": "0.0.32",
-        "ng-packagr": "^10.0.4",
+        "ng-packagr": "^10.1.0",
         "package-lock-sanitizer": "^1.0.1",
         "prettier": "^2.0.5",
         "pretty-quick": "^2.0.1",
