@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from "@angular/router";
+import { MetaService } from "@services/meta.service";
+import components from "@assets/components-list.json";
 
 @Component({
     selector: "app-root",
@@ -10,10 +12,12 @@ import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationErr
 })
 export class AppComponent implements OnInit {
     loading: boolean = false;
+    components: Array<string> = components.map((item: ComponentsListItem) => item.name);
 
-    constructor(private router: Router) {}
+    constructor(private router: Router, private metaSrv: MetaService) {}
 
     ngOnInit(): void {
+        this.metaSrv.initMetaConfiguration();
         this.router.events.subscribe(event => {
             switch (true) {
                 case event instanceof NavigationStart: {
