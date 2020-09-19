@@ -12,6 +12,7 @@ export class MetaService {
     initMetaConfiguration(): void {
         this.setCanonicalURL();
         this.setCommonMetaTag();
+        this.setJsonLD();
     }
 
     setCanonicalURL(url?: string): void {
@@ -45,5 +46,12 @@ export class MetaService {
             { name: "twitter:description", content: metaConfigs.description },
             { name: "twitter:image", content: metaConfigs.sitePreviewImageUrl },
         ]);
+    }
+
+    setJsonLD(): void {
+        const script: HTMLScriptElement = this.dom.createElement("script");
+        script.type = "application/json+ld";
+        script.text = JSON.stringify(metaConfigs.jsonLD);
+        this.dom.head.appendChild(script);
     }
 }

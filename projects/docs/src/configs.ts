@@ -7,14 +7,32 @@ export const urls: NavsURLs = {
     issues: "https://github.com/sebgroup/ng-components/issues",
 };
 
-export const getMetaTag: (keyword: string) => string = (keyword: string) => {
-    return `A set of ng components based on SEB design library guidelines for mobile and web Angular applications - ${keyword}`;
-};
+const imageUrl: string = `${pkg.homepage}assets/images/site-preview.png`;
+const siteName: string = "SEB Angular Components";
 
 export const metaConfigs: MetaConfig = {
     keywords: "SEB, Angular, ng component, angular component, typescript, mobile, web, ui, ux, open source, components",
     siteUrl: pkg.homepage,
     description: pkg.description,
-    title: "SEB Angular Components",
-    sitePreviewImageUrl: `${pkg.homepage}assets/images/site-preview.png`,
+    title: siteName,
+    sitePreviewImageUrl: imageUrl,
+    jsonLD: {
+        "@context": "http://schema.org",
+        "@type": "WebApplication",
+        name: siteName,
+        description: pkg.description,
+        url: pkg.homepage,
+        image: imageUrl,
+        screenshot: imageUrl,
+        applicationCategory: "Software Documentation",
+        operatingSystem: "Android, Chrome OS, iOS, iPadOS, macOS, OS X, Linux, Windows",
+        author: {
+            "@type": "Organization",
+            name: "SEB",
+            description:
+                "SEB is a Swedish financial group for corporate customers, institutions and private individuals with headquarters in Stockholm",
+            url: "https://seb.se",
+            logo: "https://seb.se/Static/Images/SebLogo.svg",
+        },
+    },
 };
