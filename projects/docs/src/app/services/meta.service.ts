@@ -1,5 +1,4 @@
-import { Injectable, Inject } from "@angular/core";
-import { DOCUMENT } from "@angular/common";
+import { Injectable } from "@angular/core";
 import { Meta } from "@angular/platform-browser";
 import { metaConfigs } from "@configs";
 
@@ -7,7 +6,7 @@ import { metaConfigs } from "@configs";
     providedIn: "root",
 })
 export class MetaService {
-    constructor(@Inject(DOCUMENT) private dom, private meta: Meta) {}
+    constructor(private meta: Meta) {}
 
     initMetaConfiguration(): void {
         this.setCanonicalURL();
@@ -16,11 +15,11 @@ export class MetaService {
     }
 
     setCanonicalURL(url?: string): void {
-        const canURL = url === undefined ? this.dom.URL : url;
-        const link: HTMLLinkElement = this.dom.createElement("link");
+        const canonicalUrl: string = url === undefined ? document.URL : url;
+        const link: HTMLLinkElement = document.createElement("link");
         link.setAttribute("rel", "canonical");
-        this.dom.head.appendChild(link);
-        link.setAttribute("href", canURL);
+        document.head.appendChild(link);
+        link.setAttribute("href", canonicalUrl);
     }
 
     setCommonMetaTag(): void {
@@ -49,9 +48,9 @@ export class MetaService {
     }
 
     setJsonLD(): void {
-        const script: HTMLScriptElement = this.dom.createElement("script");
+        const script: HTMLScriptElement = document.createElement("script");
         script.type = "application/json+ld";
         script.text = JSON.stringify(metaConfigs.jsonLD);
-        this.dom.head.appendChild(script);
+        document.head.appendChild(script);
     }
 }
