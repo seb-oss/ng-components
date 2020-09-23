@@ -14,6 +14,8 @@ import { Subject, fromEvent } from "rxjs";
 import { distinctUntilChanged, takeUntil } from "rxjs/operators";
 import { getPlacementName, POSITION_MAP, DEFAULT_TOOLTIP_POSITIONS, TooltipPosition, CASCADE_TOOLTIP_POSITIONS } from "./tooltip.positions";
 
+type DeviceType = "mobile" | "tablet" | "desktop";
+
 /**
  * A text label that acts as a helper to a specific item
  */
@@ -117,7 +119,8 @@ export class TooltipDirective implements OnDestroy {
 
     @HostListener("click")
     showClick(): void {
-        this.trigger === "click" && this.showTooltip();
+        /** Enable toogle by clicking when DeviceType is mobile or desktop */
+        (this.trigger === "click" || this.deviceType !== "desktop") && this.showTooltip();
     }
 
     @HostListener("focusin", ["$event"])
@@ -172,6 +175,22 @@ export class TooltipDirective implements OnDestroy {
         this.overlayRef?.detach();
         this.tooltipRef?.destroy();
         this.overlayRef?.dispose();
+    }
+
+    /**
+     * <!-- skip -->
+     * Detect device type
+     * @returns DeviceType (desktop, mobile ipad)
+     */
+    get deviceType(): DeviceType {
+        const ua = navigator.userAgent;
+        if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+            return "tablet";
+        }
+        if (/Mobile|iP(hone|od|ad)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {
+            return "mobile";
+        }
+        return "desktop";
     }
 
     ngOnDestroy(): void {
