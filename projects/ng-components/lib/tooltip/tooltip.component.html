@@ -10,8 +10,8 @@
     [cascade]="cascade"
     [closeOnScroll]="closeOnScroll"
     [closeOnScrollDelay]="closeOnScrollDelay"
+    aria-labelledby="sebng-tooltip-label"
 >
-    <span aria-labelledby="sebng-tooltip-label"></span>
     {{ textReference }}
 </abbr>
 <ng-template #ngContentTemplate>
@@ -28,8 +28,8 @@
         [cascade]="cascade"
         [closeOnScroll]="closeOnScroll"
         [closeOnScrollDelay]="closeOnScrollDelay"
+        aria-labelledby="sebng-tooltip-label"
     >
-        <span aria-labelledby="sebng-tooltip-label"></span>
         <ng-content></ng-content>
     </div>
 </ng-template>
