@@ -1,0 +1,21 @@
+<ng-container *ngFor="let item of list">
+    <div class="sdv-field-toggle-selector" [class.error]="error">
+        <input
+            [type]="inputType"
+            [attr.aria-label]="item.label"
+            [id]="item.value"
+            [name]="name"
+            [disabled]="disabled || item.disabled"
+            [defaultChecked]="value?.value === item.value"
+            [checked]="inputType === 'checkbox' && item.checked"
+            (click)="handleItemOnClick(item)"
+        />
+        <label [attr.for]="item.value">{{ item.label }}</label>
+    </div>
+</ng-container>
+
+<span *ngIf="error">{{ errorMessage }}</span>
+
+<!-- <ng-container *ngFor="let item of list">
+    {{ item | json }}
+</ng-container> -->

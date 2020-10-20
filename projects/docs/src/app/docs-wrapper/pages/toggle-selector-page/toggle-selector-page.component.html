@@ -1,0 +1,14 @@
+<app-doc-page [importString]="importString">
+    <ng-container example>
+        <sebng-toggle [(ngModel)]="checked" [disabled]="disabled" [label]="label"> </sebng-toggle>
+    </ng-container>
+    <ng-container code>{{ code }}</ng-container>
+    <div class="row" controls>
+        <label>
+            label
+            <p><small>Set label of toggle</small></p>
+            <input class="form-control" [(ngModel)]="label" />
+        </label>
+        <sebng-checkbox class="w-100" label="disabled" [(ngModel)]="disabled"></sebng-checkbox>
+    </div>
+</app-doc-page>

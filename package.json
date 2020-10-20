@@ -58,6 +58,7 @@
         "@angular/router": "~10.0.7",
         "@sebgroup/bootstrap": "^5.3.0",
         "@sebgroup/frontend-tools": "^2.0.1",
+        "@sebgroup/vanilla": "^4.13.0",
         "bootstrap-icons": "^1.0.0-alpha5",
         "highlight.js": "^9.18.1",
         "highlightjs-line-numbers.js": "^2.8.0",

@@ -1,0 +1,13 @@
+@import "~@sebgroup/vanilla/src/components/inputs/toggle-selector";
+
+.my-toggle-selector {
+    @include vanilla-field-toggle-selector();
+}
+
+.sdv-field-toggle-selector {
+    &.error {
+        label {
+            border-color: var(--danger);
+        }
+    }
+}
