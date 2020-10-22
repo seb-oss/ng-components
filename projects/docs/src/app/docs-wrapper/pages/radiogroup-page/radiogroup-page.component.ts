@@ -33,14 +33,13 @@ export class RadioGroupPageComponent implements OnInit {
     disabled: boolean;
     condensed: boolean;
     inline: boolean;
-    list: any = [
+    list: RadioGroupItem[] = [
         { value: "1", label: "First", description: "with description" },
         { value: "2", label: "Second" },
         { value: "3", label: "Third (disabled)", disabled: true },
         { value: "4", customTemplate: "<code>4️⃣ Fourth (using custom template)</code> 😊" },
         { value: "5", label: "Fifth" },
     ];
-    model: any = this.list;
 
     constructor() {
         document.title = "Radio Group - SEB Angular Components";

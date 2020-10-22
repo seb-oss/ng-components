@@ -6,18 +6,9 @@ import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule } from "@angular/forms";
 import { CheckboxModule } from "@sebgroup/ng-components/checkbox";
 import { RadioGroupPageRoutingModule } from "./radiogroup-page-routing.module";
-import { ToggleSelectorModule } from "@sebgroup/ng-components/toggle-selector";
 
 @NgModule({
     declarations: [RadioGroupPageComponent],
-    imports: [
-        CommonModule,
-        RadioGroupPageRoutingModule,
-        FormsModule,
-        DocPageModule,
-        RadioGroupModule,
-        CheckboxModule,
-        ToggleSelectorModule,
-    ],
+    imports: [CommonModule, RadioGroupPageRoutingModule, FormsModule, DocPageModule, RadioGroupModule, CheckboxModule],
 })
 export class RadioGroupPageModule {}
