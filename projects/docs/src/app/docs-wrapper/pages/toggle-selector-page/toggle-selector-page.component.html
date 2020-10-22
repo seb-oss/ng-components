@@ -1,6 +1,6 @@
 <app-doc-page [importString]="importString">
     <ng-container example>
-        <sebng-toggle [(ngModel)]="checked" [disabled]="disabled" [label]="label"> </sebng-toggle>
+        <sebng-toggle-selector [multi]="multi" [list]="list" [(ngModel)]="model"></sebng-toggle-selector>
     </ng-container>
     <ng-container code>{{ code }}</ng-container>
     <div class="row" controls>
@@ -9,6 +9,6 @@
             <p><small>Set label of toggle</small></p>
             <input class="form-control" [(ngModel)]="label" />
         </label>
-        <sebng-checkbox class="w-100" label="disabled" [(ngModel)]="disabled"></sebng-checkbox>
+        <sebng-checkbox class="w-100" label="disabled" [(ngModel)]="multi"></sebng-checkbox>
     </div>
 </app-doc-page>

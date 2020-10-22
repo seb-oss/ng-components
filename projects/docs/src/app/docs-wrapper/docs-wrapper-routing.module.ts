@@ -114,6 +114,11 @@ const routes: Routes = [
                 loadChildren: () => import("./pages/toggle-page/toggle-page.module").then(m => m.TogglePageModule),
             },
             {
+                path: "toggle-selector",
+                loadChildren: () =>
+                    import("./pages/toggle-selector-page/toggle-selector-page.module").then(m => m.ToggleSelectorPageModule),
+            },
+            {
                 path: "tooltip",
                 loadChildren: () => import("./pages/tooltip-page/tooltip-page.module").then(m => m.TooltipPageModule),
             },
