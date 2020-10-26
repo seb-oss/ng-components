@@ -1,9 +1,81 @@
 @import "~@sebgroup/vanilla/src/components/inputs/toggle-selector";
+@import "~@sebgroup/bootstrap/scss/variables";
 
 .sdv-field-toggle-selector {
     &.error {
         label {
             border-color: var(--danger);
+        }
+    }
+}
+
+.ac.toggle-selector {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 4.5em;
+    background-color: $white;
+    border: 1px solid $gray-400;
+    padding: 0 1.5rem;
+    font-weight: $font-weight-medium;
+    border-radius: 0.25em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: $gray-800;
+    text-align: center;
+    margin-bottom: 0.25rem;
+    &:not(.disabled) {
+        &:hover {
+            border-color: $blue;
+            * {
+                color: $blue;
+                fill: $blue;
+            }
+        }
+        &:focus {
+            color: $blue-dark;
+            border-color: $blue-dark;
+            label {
+                color: red;
+            }
+        }
+        &.checked {
+            border-color: $blue-darker;
+            border-width: 2px;
+            padding: calc(0.5em - 1px) calc(1.5em - 1px);
+            * {
+                color: $blue-darker;
+                fill: $blue-darker;
+            }
+        }
+        &.error {
+            border-color: var(--danger);
+            * {
+                color: var(--danger);
+                fill: var(--danger);
+            }
+        }
+    }
+    &.disabled {
+        background-color: $gray-200;
+        border-color: $gray-200;
+        * {
+            color: $gray-300;
+            fill: $gray-300;
+        }
+    }
+
+    input {
+        position: absolute;
+        opacity: 0;
+    }
+    .icon-container {
+        margin-right: 1.5rem;
+        ::ng-deep {
+            > svg {
+                width: 40px;
+            }
         }
     }
 }

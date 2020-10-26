@@ -1,14 +1,16 @@
 <app-doc-page [importString]="importString">
     <ng-container example>
-        <sebng-toggle-selector [multi]="multi" [list]="list" [(ngModel)]="model"></sebng-toggle-selector>
+        <sebng-toggle-selector
+            [multi]="multi"
+            [list]="list"
+            name="test"
+            [(ngModel)]="model"
+            [disabled]="disabled"
+            [error]="error"
+        ></sebng-toggle-selector>
     </ng-container>
     <ng-container code>{{ code }}</ng-container>
     <div class="row" controls>
-        <label>
-            label
-            <p><small>Set label of toggle</small></p>
-            <input class="form-control" [(ngModel)]="label" />
-        </label>
-        <sebng-checkbox class="w-100" label="disabled" [(ngModel)]="multi"></sebng-checkbox>
+        <sebng-checkbox class="w-100" label="multi select" [(ngModel)]="multi"></sebng-checkbox>
     </div>
 </app-doc-page>

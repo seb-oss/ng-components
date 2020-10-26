@@ -1,14 +1,24 @@
 import { Component, Input, Provider, forwardRef, Pipe, PipeTransform } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
+import { DomSanitizer } from "@angular/platform-browser";
 import { randomId } from "@sebgroup/frontend-tools/randomId";
 
 export type InputType = "checkbox" | "radio";
+export type IconPosition = "left" | "right";
 
 export interface IToggleSelector {
     value: string;
     label?: string;
+    icon?: string;
+    iconPosition?: string;
+    customLabel: HTMLElement;
     description?: string;
     disabled?: boolean;
+}
+
+interface IDisplayToggleSelector extends IToggleSelector {
+    optionItem: any;
+    selected: boolean;
 }
 
 const TOGGLE_SELECTOR_CONTROL_VALUE_ACCESSOR: Provider = {
@@ -25,28 +35,77 @@ const TOGGLE_SELECTOR_CONTROL_VALUE_ACCESSOR: Provider = {
     providers: [TOGGLE_SELECTOR_CONTROL_VALUE_ACCESSOR],
 })
 export class ToggleSelectorComponent implements ControlValueAccessor {
-    @Input() list: Array<any> = [];
+    @Input() list: Array<IToggleSelector> = [];
     @Input() name?: string = randomId("name");
     @Input() multi?: boolean = false;
     @Input() disabled?: boolean = false;
     @Input() error?: boolean = false;
     @Input() errorMessage?: string;
 
-    /** internal value */
-    value: any;
+    value: any = [];
+
+    displayList: Array<IDisplayToggleSelector> = [];
+
+    constructor() {}
 
     get inputType(): InputType {
         return this.multi ? "checkbox" : "radio";
     }
 
-    // HELPERS ================================
-    handleItemOnClick(item: any, idx: number): void {
-        if (this.value?.value !== item.value) {
-            item.checked = !item.checked;
-            !this.multi ? (this.value = item) : (this.value[idx] = item);
-            this.onChangeCallback && this.onChangeCallback(item);
-            this.onTouchedCallback && this.onTouchedCallback();
+    handleItemOnClick(event: Event, idx: number): void {
+        console.log("here");
+        event.preventDefault();
+        if (this.list[idx].disabled) {
+            return;
         }
+        const item: any = this.list[idx];
+
+        // if (!this.multi) {
+        //     if (item && (this.value as IToggleSelector)?.value !== item.value) {
+        //         (this.value = item)
+        //     }
+        // } else {
+        //     if ((this.value as Array<IToggleSelector>)?.includes(item)) {
+        //         (this.value as Array<IToggleSelector>).splice((this.value as Array<IToggleSelector>).indexOf(item), 1)
+        //     } else {
+        //         if (this.value) {
+        //             (this.value as Array<IToggleSelector>).push(item)
+        //         } else {
+        //             (this.value = [item])
+        //         }
+        //     }
+        // }
+
+        if (item && this.value?.value !== item.value) {
+            !this.multi
+                ? (this.value = item)
+                : this.value?.includes(item)
+                ? this.value.splice(this.value.indexOf(item), 1)
+                : this.value
+                ? this.value.push(item)
+                : (this.value = [item]);
+            this.onChangeCallback && this.onChangeCallback(this.value);
+            this.onTouchedCallback && this.onTouchedCallback();
+            this.generateCheckedItems();
+        }
+    }
+
+    trackByFn = (index): number => index;
+
+    generateCheckedItems(): void {
+        this.displayList =
+            this.list &&
+            this.list.map(e => {
+                if (this.multi) {
+                    let selected: boolean = (this.value as Array<IToggleSelector>)?.find((element: any) => element.value === e.value)
+                        ? true
+                        : false;
+                    return { optionItem: e, selected } as IDisplayToggleSelector;
+                } else {
+                    let selected: boolean = (this.value as IToggleSelector)?.value === e.value;
+                    return { optionItem: e, selected } as IDisplayToggleSelector;
+                }
+            });
     }
 
     // Placeholders for the callbacks which are later provided
@@ -56,7 +115,7 @@ export class ToggleSelectorComponent implements ControlValueAccessor {
 
     writeValue(value: any): void {
         this.value = value;
-        console.log("writeValue", value, this.value);
+        this.generateCheckedItems();
     }
     registerOnChange(fn: any): void {
         this.onChangeCallback = fn;
@@ -66,13 +125,10 @@ export class ToggleSelectorComponent implements ControlValueAccessor {
     }
 }
 
-@Pipe({
-    name: "checked",
-})
-export class CheckedPipe implements PipeTransform {
-    transform(value: any, item: any, multi: boolean): boolean {
-        return !multi
-            ? value?.value === item.value
-            : value?.find((element: any) => element.value === item.value && element.checked === true);
+@Pipe({ name: "safeHtml" })
+export class ToggleSelectorSafeHtmlPipe implements PipeTransform {
+    constructor(private sanitizer: DomSanitizer) {}
+    transform(value: string) {
+        return this.sanitizer.bypassSecurityTrustHtml(value);
     }
 }

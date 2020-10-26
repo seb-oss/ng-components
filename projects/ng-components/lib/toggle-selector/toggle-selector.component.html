@@ -1,15 +1,24 @@
-<ng-container *ngFor="let item of list; let idx = index">
-    <div class="sdv-field-toggle-selector" [class.error]="error">
+<ng-container *ngFor="let item of displayList; let idx = index; trackBy: trackByFn">
+    <div
+        class="ac toggle-selector"
+        [class.error]="error"
+        [class.checked]="item.selected"
+        [class.disabled]="disabled || item.optionItem.disabled"
+        (click)="handleItemOnClick($event, idx)"
+    >
         <input
             [type]="inputType"
-            [attr.aria-label]="item.label"
-            [id]="item.value"
+            [attr.aria-label]="item.optionItem.label"
+            [id]="item.optionItem.value"
             [name]="name"
-            [disabled]="disabled || item.disabled"
-            [checked]="value | checked: item:multi"
-            (click)="handleItemOnClick(item, idx)"
+            [disabled]="disabled || item.optionItem.disabled"
+            [defaultChecked]="item.selected"
         />
-        <label [attr.for]="item.value">{{ item.value }} {{ value?.value === item.value }}</label>
+        <div class="icon-container" *ngIf="item.optionItem.icon" [innerHTML]="item.optionItem.icon | safeHtml"></div>
+        <label [attr.for]="item.optionItem.value" *ngIf="!item.optionItem.customLabel; customLabel">
+            {{ item.optionItem.label }}
+        </label>
+        <div #customLabel [innerHtml]="item.optionItem.customLabel"></div>
     </div>
 </ng-container>
 
