@@ -160,7 +160,7 @@ describe("ToggleSelectorComponent", () => {
             element[1].dispatchEvent(new Event("click"));
             fixture.detectChanges();
             const inputEl: DebugElement[] = fixture.debugElement.queryAll(By.css("input"));
-            expect(inputEl.every(el => el.nativeElement.checked === true)).toBeFalsy();
+            expect(inputEl.every(el => el.nativeElement.checked)).toBeFalsy();
             expect(inputEl[1].nativeElement.checked).toBeTruthy();
 
             element[0].dispatchEvent(new Event("click"));
