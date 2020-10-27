@@ -152,7 +152,7 @@ describe("ToggleSelectorComponent", () => {
 
         it("should not have anything checked", () => {
             const inputEl: DebugElement[] = fixture.debugElement.queryAll(By.css("input"));
-            expect(inputEl.every(el => el.nativeElement.checked === true)).toBeFalsy();
+            expect(inputEl.every(el => el.nativeElement.checked)).toBeFalsy();
         });
 
         it("Should have only one checked when an option is clicked and move to another option if it's clicked", () => {
