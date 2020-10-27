@@ -118,7 +118,7 @@ describe("ToggleSelectorComponent", () => {
 
             element[0].dispatchEvent(new Event("click"));
             fixture.detectChanges();
-            expect(inputEl.every(el => el.nativeElement.checked === true)).toBeTruthy();
+            expect(inputEl.every(el => el.nativeElement.checked)).toBeTruthy();
         });
 
         it("should uncheck when previously checked option is clicked", () => {
@@ -127,11 +127,11 @@ describe("ToggleSelectorComponent", () => {
             fixture.detectChanges();
             const inputEl: DebugElement[] = fixture.debugElement.queryAll(By.css("input"));
 
-            expect(inputEl.every(el => el.nativeElement.checked === true)).toBeFalsy();
+            expect(inputEl.every(el => el.nativeElement.checked)).toBeFalsy();
 
             element[1].dispatchEvent(new Event("click"));
             fixture.detectChanges();
-            expect(inputEl.some(el => el.nativeElement.checked === true)).toBeFalsy();
+            expect(inputEl.some(el => el.nativeElement.checked)).toBeFalsy();
         });
     });
 
