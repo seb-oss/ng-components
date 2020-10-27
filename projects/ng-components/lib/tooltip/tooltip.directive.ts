@@ -115,11 +115,9 @@ export class TooltipDirective implements OnDestroy {
         this.trigger === "hover" && this.hideTooltip();
     }
 
-    @HostListener("click")
-    showClick(): void {
-        this.trigger === "click" && this.showTooltip();
-    }
-
+    /**
+     * This Listener triggers both on focus and on click
+     */
     @HostListener("focusin", ["$event"])
     /** <!-- skip --> */
     showFocusWithin(event: FocusEvent): void {
@@ -146,9 +144,6 @@ export class TooltipDirective implements OnDestroy {
         this.tooltipRef.instance.className = this.className;
         this.tooltipRef.instance.theme = this.theme;
         this.tooltipRef.instance.content = this.content;
-
-        // Close overlay when a click outside happens
-        this.overlayRef.outsidePointerEvents().subscribe(() => this.hideTooltip());
 
         // Update position on scroll
         fromEvent(window, "scroll", { capture: true })
