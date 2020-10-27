@@ -165,7 +165,7 @@ describe("ToggleSelectorComponent", () => {
 
             element[0].dispatchEvent(new Event("click"));
             fixture.detectChanges();
-            expect(inputEl.every(el => el.nativeElement.checked === true)).toBeFalsy();
+            expect(inputEl.every(el => el.nativeElement.checked)).toBeFalsy();
             expect(inputEl[0].nativeElement.checked).toBeTruthy();
         });
     });
