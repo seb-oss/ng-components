@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { IToggleSelector } from "@sebgroup/ng-components/toggle-selector";
 
 @Component({
     selector: "app-toggle-page",
@@ -15,8 +16,6 @@ export class ToggleSelectorPageComponent {
     </svg>
     `;
 
-    disabled: boolean = false;
-
     list: any = [
         {
             value: "1",
@@ -29,9 +28,11 @@ export class ToggleSelectorPageComponent {
         { value: "4", label: "Four mississipi" },
         { value: "5", label: "Five mississipi" },
     ];
-    model: any = [this.list[0]];
+    model: IToggleSelector;
     multi: boolean = true;
+    disabled: boolean = false;
     error: boolean = false;
+    errorMessage: string = "i am an error";
 
     constructor() {
         document.title = "Toggle Selector - SEB Angular Components";

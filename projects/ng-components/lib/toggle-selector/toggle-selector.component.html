@@ -4,6 +4,7 @@
         [class.error]="error"
         [class.checked]="item.selected"
         [class.disabled]="disabled || item.optionItem.disabled"
+        [class.focus]="focusedItem === idx"
         (click)="handleItemOnClick($event, idx)"
     >
         <input
@@ -12,6 +13,8 @@
             [id]="item.optionItem.value"
             [name]="name"
             [disabled]="disabled || item.optionItem.disabled"
+            (focus)="focus(idx)"
+            (blur)="blur()"
             [defaultChecked]="item.selected"
         />
         <div class="icon-container" *ngIf="item.optionItem.icon" [innerHTML]="item.optionItem.icon | safeHtml"></div>
@@ -22,4 +25,4 @@
     </div>
 </ng-container>
 
-<span *ngIf="error">{{ errorMessage }}</span>
+<span *ngIf="error" class="text-danger">{{ errorMessage }}</span>

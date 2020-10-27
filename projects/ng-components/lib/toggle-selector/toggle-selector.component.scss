@@ -1,11 +1,9 @@
-@import "~@sebgroup/vanilla/src/components/inputs/toggle-selector";
 @import "~@sebgroup/bootstrap/scss/variables";
 
-.sdv-field-toggle-selector {
-    &.error {
-        label {
-            border-color: var(--danger);
-        }
+@mixin toggle-color($color) {
+    > * {
+        color: $color;
+        fill: $color;
     }
 }
 
@@ -26,44 +24,33 @@
     text-align: center;
     margin-bottom: 0.25rem;
     &:not(.disabled) {
+        &.error {
+            border-color: $danger;
+            border-width: 1px;
+            @include toggle-color($danger);
+        }
         &:hover {
             border-color: $blue;
-            * {
-                color: $blue;
-                fill: $blue;
-            }
+            @include toggle-color($blue);
         }
-        &:focus {
+        &.focus {
             color: $blue-dark;
             border-color: $blue-dark;
-            label {
-                color: red;
-            }
+            box-shadow: 0 0 0 3px rgba($blue-darker, 0.2);
+            transition: box-shadow 250ms;
+            @include toggle-color($blue);
         }
         &.checked {
             border-color: $blue-darker;
             border-width: 2px;
             padding: calc(0.5em - 1px) calc(1.5em - 1px);
-            * {
-                color: $blue-darker;
-                fill: $blue-darker;
-            }
-        }
-        &.error {
-            border-color: var(--danger);
-            * {
-                color: var(--danger);
-                fill: var(--danger);
-            }
+            @include toggle-color($blue-darker);
         }
     }
     &.disabled {
         background-color: $gray-200;
         border-color: $gray-200;
-        * {
-            color: $gray-300;
-            fill: $gray-300;
-        }
+        @include toggle-color($gray-300);
     }
 
     input {
