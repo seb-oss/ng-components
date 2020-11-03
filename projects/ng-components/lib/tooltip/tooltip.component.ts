@@ -42,7 +42,7 @@ export class TooltipComponent implements AfterViewInit {
     @ViewChild("ngContent") contentref: ElementRef<HTMLDivElement>;
 
     stringContent: string = "";
-    hasContent: boolean = false;
+    hasContent: boolean = true;
 
     constructor(private cdr: ChangeDetectorRef) {}
 
