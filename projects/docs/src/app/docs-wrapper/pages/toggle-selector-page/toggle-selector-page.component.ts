@@ -4,6 +4,18 @@ import { IToggleSelector } from "@sebgroup/ng-components/toggle-selector";
 @Component({
     selector: "app-toggle-page",
     templateUrl: "./toggle-selector-page.component.html",
+    styles: [
+        `
+            ::ng-deep .custom-option {
+                background-color: lightblue;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                align-self: stretch;
+            }
+        `,
+    ],
 })
 export class ToggleSelectorPageComponent {
     importString: string = require("!raw-loader!@sebgroup/ng-components/toggle-selector/toggle-selector.component");
@@ -16,17 +28,17 @@ export class ToggleSelectorPageComponent {
     </svg>
     `;
 
-    list: any = [
+    list: Array<IToggleSelector> = [
         {
             value: "1",
-            label: "This is the label of the toggle selector",
+            label: "One Missisipi",
             description: "with description",
-            icon: this.icon,
         },
-        { value: "2", label: "Two mississipi" },
-        { value: "3", label: "Three mississipi", disabled: true },
-        { value: "4", label: "Four mississipi" },
-        { value: "5", label: "Five mississipi" },
+        { value: "2", label: "Two mississipi", icon: this.icon },
+        { value: "3", label: "Three mississipi", icon: this.icon, iconPosition: "right" },
+        { value: "4", label: "", icon: this.icon },
+        { value: "5", label: "Five mississipi", disabled: true },
+        { value: "6", customLabel: ("<div class='custom-option w-100'>Six mississipi</div>" as unknown) as HTMLElement },
     ];
     model: IToggleSelector;
     multi: boolean = true;

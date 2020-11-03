@@ -150,7 +150,6 @@ export class RadioGroupComponent implements ControlValueAccessor, AfterViewCheck
             });
 
         this.selectedList = this.uniqueList && this.uniqueList.filter((e: UniqueItem) => e.selected).map((e: UniqueItem) => e.optionItem);
-        console.log("helper arrays");
     }
 
     /** Function which handles the logic of setting the non-native onChange prop (and sets the internal selected value as well) */

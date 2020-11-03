@@ -5,6 +5,8 @@
         [class.checked]="item.selected"
         [class.disabled]="disabled || item.optionItem.disabled"
         [class.focus]="focusedItem === idx"
+        [class.icon-right]="item.optionItem.iconPosition === 'right'"
+        [class.custom-label]="item.optionItem.customLabel"
         (click)="handleItemOnClick($event, idx)"
     >
         <input
@@ -17,11 +19,14 @@
             (blur)="blur()"
             [defaultChecked]="item.selected"
         />
-        <div class="icon-container" *ngIf="item.optionItem.icon" [innerHTML]="item.optionItem.icon | safeHtml"></div>
-        <label [attr.for]="item.optionItem.value" *ngIf="!item.optionItem.customLabel; customLabel">
-            {{ item.optionItem.label }}
-        </label>
-        <div #customLabel [innerHtml]="item.optionItem.customLabel"></div>
+        <div
+            class="icon-container"
+            [class.icon-only]="!item.optionItem.label"
+            *ngIf="item.optionItem.icon"
+            [innerHTML]="item.optionItem.icon | safeHtml"
+        ></div>
+        <label [attr.for]="item.optionItem.value" *ngIf="!item.optionItem.customLabel; customLabel">{{ item.optionItem.label }}</label>
+        <div #customLabel [outerHTML]="item.optionItem.customLabel"></div>
     </div>
 </ng-container>
 
