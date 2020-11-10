@@ -1,0 +1,16 @@
+<app-doc-page [importString]="importString">
+    <ng-container example>
+        <sebng-toggle-selector
+            [multi]="multi"
+            [list]="list"
+            [(ngModel)]="model"
+            [disabled]="disabled"
+            [error]="error"
+            [errorMessage]="errorMessage"
+        ></sebng-toggle-selector>
+    </ng-container>
+    <ng-container code>{{ code }}</ng-container>
+    <div class="row" controls>
+        <sebng-checkbox class="w-100" label="multi select" [(ngModel)]="multi"></sebng-checkbox>
+    </div>
+</app-doc-page>

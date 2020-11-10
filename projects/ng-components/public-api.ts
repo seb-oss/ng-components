@@ -26,6 +26,7 @@ export * from "./lib/textbox";
 export * from "./lib/timeline";
 export * from "./lib/timer";
 export * from "./lib/toggle";
+export * from "./lib/toggle-selector";
 export * from "./lib/tooltip";
 export * from "./lib/video";
 export * from "./lib/wizard";
