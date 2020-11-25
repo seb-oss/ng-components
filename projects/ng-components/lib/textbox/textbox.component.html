@@ -6,8 +6,8 @@
         <div class="input-box-group-wrapper">
             <div
                 class="input-group-prepend"
-                [class.clickable]="onLeftClick"
-                [attr.role]="onLeftClick ? 'button' : ''"
+                [class.clickable]="onLeftClick.observers.length"
+                [attr.role]="onLeftClick.observers.length ? 'button' : ''"
                 (click)="handleLeftIconClick($event)"
                 *ngIf="leftIcon || leftText"
             >
@@ -45,9 +45,9 @@
 
             <div
                 class="input-group-append"
-                [class.clickable]="onRightClick"
+                [class.clickable]="onRightClick.observers.length"
                 (click)="handleRightIconClick($event)"
-                [attr.role]="onRightClick ? 'button' : ''"
+                [attr.role]="onRightClick.observers.length ? 'button' : ''"
                 *ngIf="rightIcon || rightText"
             >
                 <span class="input-group-text" *ngIf="rightText" [attr.title]="rightTitle">
