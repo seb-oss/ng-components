@@ -37,7 +37,6 @@
         &.error {
             border-color: $danger;
             border-width: 1px;
-            @include toggle-color($danger);
         }
         &:hover {
             border-color: $blue;
