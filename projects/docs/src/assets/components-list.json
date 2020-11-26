@@ -54,6 +54,12 @@
         "module": "TogglePageModule"
     },
     {
+        "name": "Toggle Selector",
+        "path": "/docs/toggle-selector",
+        "filePath": "./pages/toggle-selector-page/toggle-selector-page.module",
+        "module": "ToggleSelectorPageModule"
+    },
+    {
         "name": "Slider",
         "path": "/docs/slider",
         "filePath": "./pages/slider-page/slider-page.module",

@@ -4,6 +4,7 @@
             <ng-container *ngFor="let breadcrumb of list; index as i">
                 <li
                     class="breadcrumb-item"
+                    [tabindex]="i === list.length - 1 ? -1 : 0"
                     [ngClass]="{ active: i === list.length - 1 }"
                     (click)="handleClick(i, $event)"
                     [innerHTML]="breadcrumb | safeHtml"
