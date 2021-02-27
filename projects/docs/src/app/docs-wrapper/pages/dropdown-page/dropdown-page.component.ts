@@ -36,6 +36,14 @@ export class DropdownPageComponent {
         document.title = "Dropdown - SEB Angular Components";
     }
 
+    changed(e) {
+        console.log(e);
+    }
+
+    setItem() {
+        this.selectedValue = this.list[0];
+    }
+
     onShorthandChange(): void {
         if (this.useShorthand) {
             this.list = this.list.map((item, i) => ({ ...item, shorthand: i.toString() }));

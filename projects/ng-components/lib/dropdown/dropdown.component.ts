@@ -11,6 +11,7 @@ import {
     NgZone,
     Provider,
     HostBinding,
+    SimpleChanges,
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 import { fromEvent, Subscription } from "rxjs";
@@ -149,9 +150,6 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     set selectedValue(state: DropdownItem | Array<DropdownItem>) {
         if (state !== this._selectedValue) {
             this._selectedValue = state;
-            this.onChangeCallback && this.onChangeCallback(state);
-            this.onTouchedCallback && this.onTouchedCallback();
-
             this._generateHelperArrays();
         }
     }
@@ -226,7 +224,8 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
         });
     }
 
-    ngOnChanges(): void {
+    ngOnChanges(changes: SimpleChanges): void {
+        console.log("change", changes);
         this._generateHelperArrays();
     }
 
@@ -409,6 +408,8 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
     handleOnChange(value: DropdownItem | Array<DropdownItem>): void {
         this.nativeOnChange && this.nativeOnChange(value);
         this.selectedValue = value;
+        this.onChangeCallback && this.onChangeCallback(this.selectedValue);
+        this.onTouchedCallback && this.onTouchedCallback();
     }
 
     /** Function containing the clear button logic */

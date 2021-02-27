@@ -1,5 +1,6 @@
 <app-doc-page [importString]="importString">
     <div class="row w-100" example>
+        <button (click)="setItem()">Set item</button>
         <sebng-dropdown
             class="col-12 mb-2"
             label="Single select"
@@ -19,8 +20,10 @@
             [searchable]="searchable"
             [clearable]="clearable"
             [(ngModel)]="selectedValue"
+            (ngModelChange)="changed($event)"
         >
         </sebng-dropdown>
+        {{ selectedValues | json }}
         <sebng-dropdown
             class="col-12 mb-2"
             label="Multi select"
