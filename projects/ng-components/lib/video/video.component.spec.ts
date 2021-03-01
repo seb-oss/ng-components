@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { VideoComponent, VideoSourceType } from "./video.component";
 import { CommonModule } from "@angular/common";
@@ -41,12 +41,14 @@ describe("VideoComponent", () => {
     let component: VideoTestComponent;
     let fixture: ComponentFixture<VideoTestComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [CommonModule],
-            declarations: [VideoComponent, VideoTestComponent],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [CommonModule],
+                declarations: [VideoComponent, VideoTestComponent],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(VideoTestComponent);

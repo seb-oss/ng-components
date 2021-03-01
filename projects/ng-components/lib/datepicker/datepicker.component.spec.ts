@@ -1,5 +1,5 @@
 import { DatepickerComponent } from "./datepicker.component";
-import { TestBed, async, ComponentFixture, fakeAsync, tick } from "@angular/core/testing";
+import { TestBed, ComponentFixture, fakeAsync, tick, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
@@ -42,42 +42,53 @@ describe("Component: DatepickerComponent", () => {
     let fixture: ComponentFixture<CustomTestClass>;
     let component: CustomTestClass;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [FormsModule, CommonModule],
-            declarations: [DatepickerComponent, CustomTestClass],
-            providers: [],
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [FormsModule, CommonModule],
+                declarations: [DatepickerComponent, CustomTestClass],
+                providers: [],
+            })
+                .compileComponents()
+                .then(() => {
+                    fixture = TestBed.createComponent(CustomTestClass);
+                    component = fixture.componentInstance;
+                });
         })
-            .compileComponents()
-            .then(() => {
-                fixture = TestBed.createComponent(CustomTestClass);
-                component = fixture.componentInstance;
-            });
-    }));
+    );
 
-    it("should render and be defined", async(() => {
-        fixture.detectChanges();
-        expect(component).toBeTruthy();
-    }));
+    it(
+        "should render and be defined",
+        waitForAsync(() => {
+            fixture.detectChanges();
+            expect(component).toBeTruthy();
+        })
+    );
 
-    it("should render and receive the correct class parameter", async(() => {
-        fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css(".my-class"))).toBeTruthy();
-        expect(fixture.debugElement.query(By.css(".wrongClass"))).toBeFalsy();
-    }));
+    it(
+        "should render and receive the correct class parameter",
+        waitForAsync(() => {
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css(".my-class"))).toBeTruthy();
+            expect(fixture.debugElement.query(By.css(".wrongClass"))).toBeFalsy();
+        })
+    );
 
-    it("should be able to write and update value using the writevalue method", async(() => {
-        fixture.detectChanges();
+    it(
+        "should be able to write and update value using the writevalue method",
+        waitForAsync(() => {
+            fixture.detectChanges();
 
-        expect(isNaN(component.datepickerComponent.value.getTime())).toBeTrue(); // Is invalid date
+            expect(isNaN(component.datepickerComponent.value.getTime())).toBeTrue(); // Is invalid date
 
-        const expectedObj: Date = new Date();
-        component.datepickerComponent.writeValue(expectedObj);
+            const expectedObj: Date = new Date();
+            component.datepickerComponent.writeValue(expectedObj);
 
-        fixture.detectChanges();
+            fixture.detectChanges();
 
-        expect(component.datepickerComponent.value.getTime()).toBe(expectedObj.getTime());
-    }));
+            expect(component.datepickerComponent.value.getTime()).toBe(expectedObj.getTime());
+        })
+    );
 
     it("should call touch and change events when the value is set", fakeAsync(() => {
         fixture.detectChanges();

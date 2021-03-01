@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { TextboxComponent } from "./textbox.component";
 import { TextboxSafeHtmlPipe } from "./textboxSafeHtml.pipe";
@@ -92,12 +92,14 @@ describe("TextboxComponent", () => {
     let component: TextGroupTestComponent;
     let fixture: ComponentFixture<TextGroupTestComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [CommonModule, FormsModule],
-            declarations: [TextboxComponent, TextGroupTestComponent, TextboxSafeHtmlPipe],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [CommonModule, FormsModule],
+                declarations: [TextboxComponent, TextGroupTestComponent, TextboxSafeHtmlPipe],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TextGroupTestComponent);

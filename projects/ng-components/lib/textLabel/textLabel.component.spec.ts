@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { TextLabelComponent } from "./textLabel.component";
 import { By } from "@angular/platform-browser";
@@ -8,11 +8,13 @@ describe("TextLabelComponent", () => {
     let component: TextLabelComponent;
     let fixture: ComponentFixture<TextLabelComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [TextLabelComponent],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [TextLabelComponent],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TextLabelComponent);
@@ -24,21 +26,27 @@ describe("TextLabelComponent", () => {
         expect(component).toBeTruthy();
     });
 
-    it("should display the correct css className", async(() => {
-        component.className = "my-text";
-        fixture.detectChanges();
+    it(
+        "should display the correct css className",
+        waitForAsync(() => {
+            component.className = "my-text";
+            fixture.detectChanges();
 
-        expect(fixture.debugElement.query(By.css(".my-text"))).toBeTruthy();
-        expect(fixture.debugElement.query(By.css(".wrong-class"))).toBeFalsy();
-    }));
+            expect(fixture.debugElement.query(By.css(".my-text"))).toBeTruthy();
+            expect(fixture.debugElement.query(By.css(".wrong-class"))).toBeFalsy();
+        })
+    );
 
-    it("should display the correct label text", async(() => {
-        expect(fixture.debugElement.query(By.css("label"))).toBeNull();
-        component.label = "my text";
-        fixture.detectChanges();
+    it(
+        "should display the correct label text",
+        waitForAsync(() => {
+            expect(fixture.debugElement.query(By.css("label"))).toBeNull();
+            component.label = "my text";
+            fixture.detectChanges();
 
-        expect(fixture.debugElement.query(By.css("label")).nativeElement.innerHTML).toEqual("my text");
-    }));
+            expect(fixture.debugElement.query(By.css("label")).nativeElement.innerHTML).toEqual("my text");
+        })
+    );
 });
 
 describe("TestTextLabelComponent", () => {
@@ -56,11 +64,13 @@ describe("TestTextLabelComponent", () => {
     let component: TextLabelComponent;
     let fixture: ComponentFixture<WrapperComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [WrapperComponent, TextLabelComponent],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [WrapperComponent, TextLabelComponent],
+            }).compileComponents();
+        })
+    );
     beforeEach(() => {
         fixture = TestBed.createComponent(WrapperComponent);
         const wrapperComponent = fixture.debugElement.componentInstance;

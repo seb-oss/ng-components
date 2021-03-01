@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { ProgressbarComponent, ProggressTheme, BarItem } from "./progressbar.component";
 import { CommonModule } from "@angular/common";
@@ -37,12 +37,14 @@ describe("ProgressbarComponent", () => {
     let component: ProgressbarTestComponent;
     let fixture: ComponentFixture<ProgressbarTestComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [CommonModule],
-            declarations: [ProgressbarComponent, ProgressbarTestComponent, ProgressThemePipe],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [CommonModule],
+                declarations: [ProgressbarComponent, ProgressbarTestComponent, ProgressThemePipe],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ProgressbarTestComponent);

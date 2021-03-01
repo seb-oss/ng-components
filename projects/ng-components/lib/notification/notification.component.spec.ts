@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from "@angular/core/testing";
+import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import {
     NotificationComponent,
@@ -55,12 +55,14 @@ describe("NotificationComponent", () => {
     let onDismiss: jasmine.Spy;
     let onClick: jasmine.Spy;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [CommonModule],
-            declarations: [NotificationComponent, NotificationTestComponent],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [CommonModule],
+                declarations: [NotificationComponent, NotificationTestComponent],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(NotificationTestComponent);

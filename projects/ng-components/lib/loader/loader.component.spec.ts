@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
 import { LoaderComponent, LoaderSize, LoaderType } from "./loader.component";
 import { LoaderClassesPipe } from "./loader.pipe";
@@ -38,11 +38,13 @@ describe("LoaderComponent", () => {
     let component: LoaderTestComponent;
     let fixture: ComponentFixture<LoaderTestComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [LoaderTestComponent, LoaderComponent, LoaderClassesPipe],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [LoaderTestComponent, LoaderComponent, LoaderClassesPipe],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(LoaderTestComponent);

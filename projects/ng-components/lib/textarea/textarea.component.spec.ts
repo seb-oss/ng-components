@@ -1,5 +1,5 @@
 import { Component, DebugElement } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { TextareaComponent } from "./textarea.component";
 import { CommonModule } from "@angular/common";
@@ -58,12 +58,14 @@ describe("TextareaComponent", () => {
     let component: TextareaTestComponent;
     let fixture: ComponentFixture<TextareaTestComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [CommonModule],
-            declarations: [TextareaTestComponent, TextareaComponent],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [CommonModule],
+                declarations: [TextareaTestComponent, TextareaComponent],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TextareaTestComponent);

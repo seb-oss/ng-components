@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed, tick, fakeAsync, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { SliderTheme, RangeSliderLabel, SliderAppearance } from "./slider.component";
 import { SliderModule } from "./slider.module";
@@ -70,12 +70,14 @@ describe("SliderComponent", () => {
     let fixture: ComponentFixture<SliderTestComponent>;
     let onClick: jasmine.Spy;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [CommonModule, FormsModule, SliderModule],
-            declarations: [SliderTestComponent],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [CommonModule, FormsModule, SliderModule],
+                declarations: [SliderTestComponent],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(SliderTestComponent);

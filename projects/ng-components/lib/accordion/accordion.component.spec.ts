@@ -1,5 +1,5 @@
-import { Component, DebugElement } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { Component } from "@angular/core";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { AccordionComponent, AccordionIconRotation, AccrodionListItem } from "./accordion.component";
 import { AccordionSafeHtmlPipe } from "./accordion.pipe";
@@ -50,12 +50,14 @@ describe("AccordionComponent", () => {
         { header: "Item 3", content: [{ desc: "desc" }, { desc: "desc" }] },
     ];
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [CommonModule],
-            declarations: [AccordionComponent, AccordionTestComponent, AccordionSafeHtmlPipe, DynamicStylePipe],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [CommonModule],
+                declarations: [AccordionComponent, AccordionTestComponent, AccordionSafeHtmlPipe, DynamicStylePipe],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(AccordionTestComponent);

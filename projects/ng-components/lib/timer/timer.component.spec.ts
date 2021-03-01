@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from "@angular/core/testing";
+import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from "@angular/core/testing";
 
 import { TimerComponent } from "./timer.component";
 import { By } from "@angular/platform-browser";
@@ -19,11 +19,13 @@ describe("TimerComponent", () => {
     let component: TimerTestComponent;
     let fixture: ComponentFixture<TimerTestComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [TimerTestComponent, TimerComponent],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                declarations: [TimerTestComponent, TimerComponent],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TimerTestComponent);

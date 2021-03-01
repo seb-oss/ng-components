@@ -1,5 +1,5 @@
 import { CheckboxComponent, CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR } from "./checkbox.component";
-import { TestBed, async, ComponentFixture } from "@angular/core/testing";
+import { TestBed, ComponentFixture, waitForAsync } from "@angular/core/testing";
 import { DebugElement, Component, ViewChild, TemplateRef } from "@angular/core";
 import { By } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
@@ -35,19 +35,21 @@ describe("Component: CheckBoxComponent", () => {
     let component: CheckboxTestComponent;
     let fixture: ComponentFixture<CheckboxTestComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [FormsModule, CommonModule],
-            declarations: [CheckboxComponent, CheckboxTestComponent],
-            providers: [CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR],
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [FormsModule, CommonModule],
+                declarations: [CheckboxComponent, CheckboxTestComponent],
+                providers: [CUSTOM_CHECKBOX_CONTROL_VALUE_ACCESSOR],
+            })
+                .compileComponents()
+                .then(() => {
+                    fixture = TestBed.createComponent(CheckboxTestComponent);
+                    component = fixture.componentInstance;
+                    fixture.detectChanges();
+                });
         })
-            .compileComponents()
-            .then(() => {
-                fixture = TestBed.createComponent(CheckboxTestComponent);
-                component = fixture.componentInstance;
-                fixture.detectChanges();
-            });
-    }));
+    );
 
     it("should create", () => {
         expect(component).toBeTruthy();

@@ -38,7 +38,7 @@ export class ButtonComponent {
     /** Element title */
     @Input() title?: string;
 
-    @HostBinding("style") get styles(): string {
+    @HostBinding("style") get styles(): string | null {
         return this.block ? "width: 100%;" : null;
     }
 }
