@@ -62,10 +62,11 @@
         "bootstrap-icons": "^1.0.0-alpha5",
         "highlight.js": "^9.18.1",
         "highlightjs-line-numbers.js": "^2.8.0",
+        "new-event-polyfill": "^1.0.1",
         "ngx-highlightjs": "^4.1.1",
         "rxjs": "~6.6.2",
         "tslib": "^2.0.0",
-        "typescript-parser-es5": "^1.0.0",
+        "typescript-parser": "^2.6.1",
         "web-animations-js": "^2.3.2",
         "zone.js": "~0.10.3"
     },
