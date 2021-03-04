@@ -88,6 +88,16 @@ div.ac.modal.modal-fullscreen {
     }
 }
 
+.ac.modal {
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        &:empty {
+            display: none;
+        }
+    }
+}
+
 @keyframes fade-in-modal-container {
     0% {
         display: none;
