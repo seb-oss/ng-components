@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable, from, merge } from "rxjs";
 import { map, reduce } from "rxjs/operators";
-import { File as ParsedFile } from "typescript-parser-es5/resources/File";
+import { File as ParsedFile } from "typescript-parser/resources/File";
 import {
     Declaration,
     TypescriptParser,
@@ -10,7 +10,7 @@ import {
     PropertyDeclaration,
     MethodDeclaration,
     ParameterDeclaration,
-} from "typescript-parser-es5";
+} from "typescript-parser";
 
 interface ParsedAccessorDeclaration extends AccessorDeclaration {
     isOptional?: boolean;

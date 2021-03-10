@@ -1,5 +1,5 @@
 import { ViewChild, Component, DebugElement } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { TableComponent } from "./table.component";
 import { TableHeaderListItem, SortInfo } from "./table.models";
 import { TableModule } from "./table.module";
@@ -54,12 +54,14 @@ describe("TableComponent", () => {
     let component: TableTestComponent;
     let fixture: ComponentFixture<TableTestComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [TableModule],
-            declarations: [TableTestComponent],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [TableModule],
+                declarations: [TableTestComponent],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TableTestComponent);

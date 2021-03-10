@@ -1,5 +1,5 @@
 import { Component, TemplateRef, ElementRef } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { TooltipContentComponent, TooltipTheme } from "./tooltip-content.component";
 import { CommonModule } from "@angular/common";
@@ -34,12 +34,14 @@ describe("TooltipContentComponent", () => {
     let fixture: ComponentFixture<TooltipContentTestComponent>;
     let onChange: jasmine.Spy;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [CommonModule, FormsModule, BrowserAnimationsModule],
-            declarations: [TooltipContentComponent, TooltipContentTestComponent],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [CommonModule, FormsModule, BrowserAnimationsModule],
+                declarations: [TooltipContentComponent, TooltipContentTestComponent],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TooltipContentTestComponent);

@@ -1,5 +1,5 @@
 import { Component, DebugElement } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { TabsComponent, TabsListItem } from "./tabs.component";
 import { CommonModule } from "@angular/common";
@@ -35,12 +35,14 @@ describe("TabsComponent", () => {
     let fixture: ComponentFixture<TabsTestComponent>;
     let onClick: jasmine.Spy;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [CommonModule],
-            declarations: [TabsComponent, TabsTestComponent],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [CommonModule],
+                declarations: [TabsComponent, TabsTestComponent],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(TabsTestComponent);

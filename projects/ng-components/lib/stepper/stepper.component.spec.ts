@@ -1,5 +1,5 @@
 import { StepperComponent } from "./stepper.component";
-import { TestBed, async, ComponentFixture, fakeAsync, tick } from "@angular/core/testing";
+import { TestBed, ComponentFixture, fakeAsync, tick, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { FormsModule } from "@angular/forms";
 import { CommonModule } from "@angular/common";
@@ -39,18 +39,20 @@ describe("Component: StepperComponent", () => {
     let fixture: ComponentFixture<CustomTestClass>;
     let component: CustomTestClass;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [FormsModule, CommonModule],
-            declarations: [CustomTestClass, StepperComponent],
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [FormsModule, CommonModule],
+                declarations: [CustomTestClass, StepperComponent],
+            })
+                .compileComponents()
+                .then(() => {
+                    fixture = TestBed.createComponent(CustomTestClass);
+                    component = fixture.componentInstance;
+                    fixture.detectChanges();
+                });
         })
-            .compileComponents()
-            .then(() => {
-                fixture = TestBed.createComponent(CustomTestClass);
-                component = fixture.componentInstance;
-                fixture.detectChanges();
-            });
-    }));
+    );
 
     it("should render and be defined", () => {
         expect(component).toBeTruthy();

@@ -1,5 +1,5 @@
-import { Component, DebugElement } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { Component } from "@angular/core";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { BreadcrumbComponent } from "./breadcrumb.component";
 import { BreadcrumbSafeHtmlPipe } from "./breadcrumb.pipe";
@@ -30,12 +30,14 @@ describe("BreadcrumbComponent", () => {
     let fixture: ComponentFixture<BreadcrumbTestComponent>;
     let onClick: jasmine.Spy;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [CommonModule],
-            declarations: [BreadcrumbSafeHtmlPipe, BreadcrumbComponent, BreadcrumbTestComponent],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [CommonModule],
+                declarations: [BreadcrumbSafeHtmlPipe, BreadcrumbComponent, BreadcrumbTestComponent],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(BreadcrumbTestComponent);

@@ -1,5 +1,4 @@
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
-import { ButtonModule } from "./button.module";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { ButtonTheme, ButtonSize, ButtonTag, ButtonComponent } from "./button.component";
 import { By } from "@angular/platform-browser";
 import { Component } from "@angular/core";
@@ -52,12 +51,14 @@ describe("ButtonComponent", () => {
     let fixture: ComponentFixture<ButtonTestComponent>;
     let onClick: jasmine.Spy;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [CommonModule],
-            declarations: [ButtonComponent, ButtonClassesPipe, ButtonTestComponent],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [CommonModule],
+                declarations: [ButtonComponent, ButtonClassesPipe, ButtonTestComponent],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ButtonTestComponent);

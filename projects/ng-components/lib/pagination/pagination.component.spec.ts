@@ -1,5 +1,5 @@
 import { Component, DebugElement } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { PaginationComponent } from "./pagination.component";
 import { CommonModule } from "@angular/common";
@@ -51,12 +51,14 @@ describe("PaginationComponent", () => {
     let component: PaginationTestComponent;
     let fixture: ComponentFixture<PaginationTestComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [CommonModule],
-            declarations: [PaginationComponent, PaginationTestComponent],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [CommonModule],
+                declarations: [PaginationComponent, PaginationTestComponent],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(PaginationTestComponent);
