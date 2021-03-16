@@ -1,5 +1,5 @@
 import { ModalComponent, ModalSize, ModalPosition } from "./modal.component";
-import { TestBed, async, ComponentFixture } from "@angular/core/testing";
+import { TestBed, ComponentFixture, waitForAsync } from "@angular/core/testing";
 import { Subscription } from "rxjs";
 import { Component } from "@angular/core";
 
@@ -8,9 +8,11 @@ describe("Component: ModalComponent", () => {
     let fixture: ComponentFixture<ModalComponent>;
     let modalElement: HTMLDivElement;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({ declarations: [ModalComponent] }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({ declarations: [ModalComponent] }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(ModalComponent);

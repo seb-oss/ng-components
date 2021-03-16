@@ -1,5 +1,5 @@
 import { ViewChild, Component, DebugElement } from "@angular/core";
-import { async, ComponentFixture, TestBed } from "@angular/core/testing";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { RadioGroupComponent, RadioGroupItem } from "./radio-group.component";
 import { FormsModule } from "@angular/forms";
@@ -42,12 +42,14 @@ describe("RadioGroupComponent", () => {
     let component: RadioGroupTestComponent;
     let fixture: ComponentFixture<RadioGroupTestComponent>;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [FormsModule, CommonModule],
-            declarations: [RadioGroupComponent, RadioGroupTestComponent],
-        }).compileComponents();
-    }));
+    beforeEach(
+        waitForAsync(() => {
+            TestBed.configureTestingModule({
+                imports: [FormsModule, CommonModule],
+                declarations: [RadioGroupComponent, RadioGroupTestComponent],
+            }).compileComponents();
+        })
+    );
 
     beforeEach(() => {
         fixture = TestBed.createComponent(RadioGroupTestComponent);
@@ -59,19 +61,25 @@ describe("RadioGroupComponent", () => {
         expect(component).toBeTruthy();
     });
 
-    it("Should render label", async(() => {
-        component.label = "Country";
-        fixture.detectChanges();
-        const label = fixture.debugElement.query(By.css(".radio-group-label > b"));
-        expect(label).not.toBeNull();
-        expect(label.nativeElement.innerHTML).toEqual("Country");
-    }));
+    it(
+        "Should render label",
+        waitForAsync(() => {
+            component.label = "Country";
+            fixture.detectChanges();
+            const label = fixture.debugElement.query(By.css(".radio-group-label > b"));
+            expect(label).not.toBeNull();
+            expect(label.nativeElement.innerHTML).toEqual("Country");
+        })
+    );
 
-    it("Should pass custom className prop to component", async(() => {
-        component.className = "custom-class";
-        fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css(".custom-class"))).toBeTruthy();
-    }));
+    it(
+        "Should pass custom className prop to component",
+        waitForAsync(() => {
+            component.className = "custom-class";
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css(".custom-class"))).toBeTruthy();
+        })
+    );
 
     it("Testing two-way data binding", async () => {
         const ngModelChange = spyOn(component.radioGroupComponent, "writeValue");
@@ -80,27 +88,33 @@ describe("RadioGroupComponent", () => {
         await fixture.whenStable().then(() => expect(ngModelChange).toHaveBeenCalled());
     });
 
-    it("Should disable the element when disabled prop is set to true", async(() => {
-        component.disabled = true;
-        fixture.detectChanges();
-        const container: DebugElement = fixture.debugElement.query(By.css(".disabled"));
-        const elements: DebugElement[] = fixture.debugElement.queryAll(By.css(".custom-control.custom-radio > input:disabled"));
-        expect(container).toBeDefined();
-        expect(container).not.toBeNull();
-        expect(elements).toBeDefined();
-        expect(elements).toBeTruthy();
-        expect(elements.length).toBe(component.list.length);
-    }));
+    it(
+        "Should disable the element when disabled prop is set to true",
+        waitForAsync(() => {
+            component.disabled = true;
+            fixture.detectChanges();
+            const container: DebugElement = fixture.debugElement.query(By.css(".disabled"));
+            const elements: DebugElement[] = fixture.debugElement.queryAll(By.css(".custom-control.custom-radio > input:disabled"));
+            expect(container).toBeDefined();
+            expect(container).not.toBeNull();
+            expect(elements).toBeDefined();
+            expect(elements).toBeTruthy();
+            expect(elements.length).toBe(component.list.length);
+        })
+    );
 
-    it("Should select the item when clicked on it", async(() => {
-        const elements: DebugElement[] = fixture.debugElement.queryAll(By.css(".custom-control.custom-radio > input"));
-        expect(elements).toBeDefined();
-        expect(elements).toBeTruthy();
-        expect(elements.length).toBe(component.list.length);
+    it(
+        "Should select the item when clicked on it",
+        waitForAsync(() => {
+            const elements: DebugElement[] = fixture.debugElement.queryAll(By.css(".custom-control.custom-radio > input"));
+            expect(elements).toBeDefined();
+            expect(elements).toBeTruthy();
+            expect(elements.length).toBe(component.list.length);
 
-        // TODO: simulate a click on first element
-        // TODO: check to see if .custom-control.custom-radio.selected > input equals 1
-    }));
+            // TODO: simulate a click on first element
+            // TODO: check to see if .custom-control.custom-radio.selected > input equals 1
+        })
+    );
 
     // TODO: check if currently selected element is focused
     // TODO: simulate tab button or arrow buttons and check if element is selected and focused

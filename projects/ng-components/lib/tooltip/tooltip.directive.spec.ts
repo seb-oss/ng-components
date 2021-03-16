@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, inject } from "@angular/core/testing";
+import { ComponentFixture, TestBed, inject, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { Component, TemplateRef, ElementRef } from "@angular/core";
 import { TooltipTrigger, TooltipTheme, TooltipModule } from ".";
@@ -50,32 +50,34 @@ describe("TooltipDirective", () => {
     let platform: { IOS: boolean; isBrowser: boolean; ANDROID: boolean };
     let focusMonitor: FocusMonitor;
 
-    beforeEach(async(() => {
-        // Set the default Platform override that can be updated before component creation.
-        platform = { IOS: false, isBrowser: true, ANDROID: false };
+    beforeEach(
+        waitForAsync(() => {
+            // Set the default Platform override that can be updated before component creation.
+            platform = { IOS: false, isBrowser: true, ANDROID: false };
 
-        TestBed.configureTestingModule({
-            imports: [TooltipModule, OverlayModule, NoopAnimationsModule],
-            declarations: [TooltipTestComponent],
-            providers: [
-                { provide: Platform, useFactory: () => platform },
-                {
-                    provide: Directionality,
-                    useFactory: () => {
-                        return (dir = { value: "ltr" });
+            TestBed.configureTestingModule({
+                imports: [TooltipModule, OverlayModule, NoopAnimationsModule],
+                declarations: [TooltipTestComponent],
+                providers: [
+                    { provide: Platform, useFactory: () => platform },
+                    {
+                        provide: Directionality,
+                        useFactory: () => {
+                            return (dir = { value: "ltr" });
+                        },
                     },
-                },
-            ],
-        });
+                ],
+            });
 
-        TestBed.compileComponents();
+            TestBed.compileComponents();
 
-        inject([OverlayContainer, FocusMonitor], (oc: OverlayContainer, fm: FocusMonitor) => {
-            overlayContainer = oc;
-            overlayContainerElement = oc.getContainerElement();
-            focusMonitor = fm;
-        })();
-    }));
+            inject([OverlayContainer, FocusMonitor], (oc: OverlayContainer, fm: FocusMonitor) => {
+                overlayContainer = oc;
+                overlayContainerElement = oc.getContainerElement();
+                focusMonitor = fm;
+            })();
+        })
+    );
 
     afterEach(inject([OverlayContainer], (currentOverlayContainer: OverlayContainer) => {
         // Since we're resetting the testing module in some of the tests,

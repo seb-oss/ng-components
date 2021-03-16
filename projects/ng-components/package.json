@@ -3,13 +3,13 @@
     "version": "0.0.0-semantically-released",
     "homepage": "https://sebgroup.github.io/ng-components/",
     "peerDependencies": {
-        "@angular/common": "^10.0.2",
-        "@angular/core": "^10.0.2"
+        "@angular/common": "^11.2.3",
+        "@angular/core": "^11.2.3"
     },
     "dependencies": {
         "tslib": "^2.0.0",
         "@sebgroup/bootstrap": "^5.3.0",
         "@sebgroup/frontend-tools": "^1.6.0",
-        "@angular/cdk": "^10.0.2"
+        "@angular/cdk": "^10.2.7"
     }
 }
