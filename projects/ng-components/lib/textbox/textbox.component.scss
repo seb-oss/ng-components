@@ -48,6 +48,9 @@ $transition-time: 200ms;
                 margin: 0;
 
                 > .input-group-text {
+                    &:empty {
+                        display: none;
+                    }
                     position: relative;
                     border: 0;
                     background: none;

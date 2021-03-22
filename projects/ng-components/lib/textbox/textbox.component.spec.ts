@@ -28,7 +28,8 @@ import { FormsModule } from "@angular/forms";
             [leftIcon]="leftIcon"
             [leftText]="leftText"
             [rightText]="rightText"
-            [leftTitle]="leftTitle"
+            [rightTemplate]="rightTemplate"
+            [leftTemplate]="leftTemplate"
             [maxLength]="maxLength"
             [minLength]="minLength"
             [pattern]="pattern"
@@ -41,7 +42,10 @@ import { FormsModule } from "@angular/forms";
             [showErrorMessage]="showErrorMessage"
             [readOnly]="readOnly"
             [success]="success"
-        ></sebng-textbox>
+        >
+            <sebng-loader rightTemplate size="md" toggle="true" className="text-success"></sebng-loader>
+            <sebng-loader leftTemplate size="md" toggle="true" className="text-success"></sebng-loader>
+        </sebng-textbox>
     `,
 })
 class TextGroupTestComponent {
@@ -55,6 +59,7 @@ class TextGroupTestComponent {
     leftIcon?: string;
     leftText?: string;
     leftTitle?: string;
+    leftTemplate?: boolean;
     maxLength?: number;
     minLength?: number;
     name: string;
@@ -65,6 +70,7 @@ class TextGroupTestComponent {
     rightIcon?: string;
     rightText?: string;
     rightTitle?: string;
+    rightTemplate?: string;
     type?: string;
     success?: boolean;
     showErrorMessage?: boolean;
@@ -284,6 +290,12 @@ describe("TextboxComponent", () => {
             fixture.debugElement.query(By.css(".input-group-prepend")).nativeElement.dispatchEvent(new Event("click"));
 
             expect(onLeftClick).toHaveBeenCalled();
+        });
+
+        it("Should render template when property is true and selector exists", () => {
+            component.leftTemplate = true;
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css(".input-group-prepend .input-group-text sebng-loader"))).toBeTruthy();
         });
     });
 

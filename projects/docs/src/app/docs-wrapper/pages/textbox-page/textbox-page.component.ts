@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild, TemplateRef } from "@angular/core";
 import { FormService } from "../../../common/dynamic-form/form.service";
 import { ExtendedFormGroup } from "../../../common/dynamic-form/model/custom-classes/extended-form-group";
 
@@ -16,16 +16,31 @@ import { ExtendedFormGroup } from "../../../common/dynamic-form/model/custom-cla
                     [required]="extendedFormGroup.value.toggles.required"
                     [minLength]="extendedFormGroup.value.numbers.min"
                     [maxLength]="extendedFormGroup.value.numbers.max"
-                    [leftIcon]="extendedFormGroup.value.radios.left?.label === 'Icon' ? extendedFormGroup.value.radios.left?.value : null"
-                    [leftText]="extendedFormGroup.value.radios.left?.label === 'Text' ? extendedFormGroup.value.radios.left?.value : null"
+                    [leftIcon]="
+                        extendedFormGroup.value.dropdowns.left?.label === 'Icon' ? extendedFormGroup.value.dropdowns.left?.value : null
+                    "
+                    [leftTemplate]="
+                        extendedFormGroup.value.dropdowns.left?.label === 'Template' ? extendedFormGroup.value.dropdowns.left?.value : null
+                    "
+                    [leftText]="
+                        extendedFormGroup.value.dropdowns.left?.label === 'Text' ? extendedFormGroup.value.dropdowns.left?.value : null
+                    "
                     [rightIcon]="
-                        extendedFormGroup.value.radios.right?.label === 'Icon' ? extendedFormGroup.value.radios.right?.value : null
+                        extendedFormGroup.value.dropdowns.right?.label === 'Icon' ? extendedFormGroup.value.dropdowns.right?.value : null
+                    "
+                    [rightTemplate]="
+                        extendedFormGroup.value.dropdowns.right?.label === 'Template'
+                            ? extendedFormGroup.value.dropdowns.right?.value
+                            : null
                     "
                     [rightText]="
-                        extendedFormGroup.value.radios.right?.label === 'Text' ? extendedFormGroup.value.radios.right?.value : null
+                        extendedFormGroup.value.dropdowns.right?.label === 'Text' ? extendedFormGroup.value.dropdowns.right?.value : null
                     "
                     [(ngModel)]="value"
-                ></sebng-textbox>
+                >
+                    <sebng-loader rightTemplate size="md" toggle="true" className="text-success"></sebng-loader>
+                    <sebng-loader leftTemplate size="md" toggle="true" className="text-success"></sebng-loader>
+                </sebng-textbox>
             </ng-container>
             <ng-container controls>
                 <app-dynamic-form [extendedFormGroup]="extendedFormGroup"></app-dynamic-form>
@@ -47,6 +62,7 @@ export class TextboxPageComponent implements OnInit {
         <path d="M71.3,88.8A17.5,17.5,0,1,1,88.8,71.3,17.5,17.5,0,0,1,71.3,88.8Zm0-29A11.5,11.5,0,1,0,82.8,71.3,11.5,11.5,0,0,0,71.3,59.8Z"></path>
     </svg>
     `;
+    @ViewChild("rightTemplate") rightTemplate: TemplateRef<HTMLElement>;
 
     constructor(private formService: FormService) {
         document.title = "Textbox - SEB Angular Components";
@@ -60,28 +76,29 @@ export class TextboxPageComponent implements OnInit {
                 ],
             },
             {
-                key: "radios",
+                key: "dropdowns",
                 items: [
                     {
                         key: "left",
-                        label: "Left icon or text?",
-                        description: "The element to be displayed on the left.",
-                        controlType: "Radio",
+                        label: "Left prepend",
+                        controlType: "Dropdown",
                         options: [
                             { label: "None", value: null },
                             { label: "Icon", value: this.icon },
                             { label: "Text", value: "kr" },
+                            { label: "Template", value: true },
                         ],
                     },
                     {
                         key: "right",
-                        label: "Right icon or text?",
+                        label: "Right append",
                         description: "The element to be displayed on the right.",
-                        controlType: "Radio",
+                        controlType: "Dropdown",
                         options: [
                             { label: "None", value: null },
                             { label: "Icon", value: this.icon },
                             { label: "Text", value: "$" },
+                            { label: "Template", value: true },
                         ],
                     },
                 ],

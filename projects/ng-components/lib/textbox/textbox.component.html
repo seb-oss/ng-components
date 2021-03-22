@@ -9,7 +9,7 @@
                 [class.clickable]="onLeftClick.observers.length"
                 [attr.role]="onLeftClick.observers.length ? 'button' : ''"
                 (click)="handleLeftIconClick($event)"
-                *ngIf="leftIcon || leftText"
+                *ngIf="leftIcon || leftText || leftTemplate"
             >
                 <ng-container *ngIf="leftText">
                     <span class="input-group-text" [attr.title]="leftTitle">
@@ -19,7 +19,11 @@
                 <ng-container *ngIf="leftIcon && !leftText">
                     <span class="input-group-text" [innerHTML]="leftIcon | safeHtml"></span>
                 </ng-container>
+                <span class="input-group-text" *ngIf="leftTemplate && !leftIcon && !leftIcon">
+                    <ng-content select="[leftTemplate]"></ng-content>
+                </span>
             </div>
+
             <input
                 [attr.id]="internalId"
                 [attr.name]="name"
@@ -48,13 +52,17 @@
                 [class.clickable]="onRightClick.observers.length"
                 (click)="handleRightIconClick($event)"
                 [attr.role]="onRightClick.observers.length ? 'button' : ''"
-                *ngIf="rightIcon || rightText"
+                *ngIf="rightIcon || rightText || rightTemplate"
             >
                 <span class="input-group-text" *ngIf="rightText" [attr.title]="rightTitle">
                     {{ rightText }}
                 </span>
 
                 <span class="input-group-text" *ngIf="rightIcon && !rightText" [innerHTML]="rightIcon | safeHtml"></span>
+
+                <span class="input-group-text" *ngIf="rightTemplate && !rightIcon && !rightText">
+                    <ng-content select="[rightTemplate]"></ng-content>
+                </span>
             </div>
         </div>
 

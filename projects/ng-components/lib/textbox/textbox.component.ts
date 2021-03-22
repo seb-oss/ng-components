@@ -9,6 +9,8 @@ import {
     OnInit,
     Output,
     EventEmitter,
+    TemplateRef,
+    ElementRef,
 } from "@angular/core";
 import { randomId } from "@sebgroup/frontend-tools";
 
@@ -49,6 +51,8 @@ export class TextboxComponent implements ControlValueAccessor, OnInit, OnChanges
     @Input() leftIcon?: string;
     /** Element left text */
     @Input() leftText?: string;
+    /** Element left custom template */
+    @Input() leftTemplate?: boolean;
     /** Element left title */
     @Input() leftTitle?: string;
     /** Maximum allowed length for input */
@@ -69,6 +73,8 @@ export class TextboxComponent implements ControlValueAccessor, OnInit, OnChanges
     @Input() rightIcon?: string;
     /** Element right text */
     @Input() rightText?: string;
+    /** Element right custom template */
+    @Input() rightTemplate?: boolean;
     /** Element right title */
     @Input() rightTitle?: string;
     /** Input type */
@@ -141,7 +147,6 @@ export class TextboxComponent implements ControlValueAccessor, OnInit, OnChanges
             this.onChange && this.onChange.emit(v);
         }
     }
-
     // event
     handleBlur(e: MouseEvent): void {
         this.onBlur?.emit(e);
