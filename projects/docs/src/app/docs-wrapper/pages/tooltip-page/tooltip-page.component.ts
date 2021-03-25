@@ -42,7 +42,7 @@ export class TooltipPageComponent implements OnInit {
     ];
     triggerList: Array<DocDropdownItem<TooltipTrigger>> = [
         { value: "hover", label: "hover" },
-        { value: "click", label: "click" },
+        { value: "focus", label: "focus" },
     ];
     position: TooltipPosition = this.positionList[0].value;
     theme: TooltipTheme = this.themeList[0].value;
