@@ -1,109 +1,37 @@
-import { Component } from "@angular/core";
+import { EventEmitter } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { TextboxComponent } from "./textbox.component";
 import { TextboxSafeHtmlPipe } from "./textboxSafeHtml.pipe";
-import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 
-@Component({
-    selector: "test-sebng-textbox",
-    template: `
-        <sebng-textbox
-            [name]="name"
-            [placeholder]="placeholder"
-            [rightIcon]="rightIcon"
-            (onLeftClick)="onLeftClick($event)"
-            (onChange)="onChange(value)"
-            (onRightClick)="onRightClick($event)"
-            [leftTitle]="leftTitle"
-            [rightTitle]="rightTitle"
-            [error]="error"
-            [(ngModel)]="textValue"
-            [className]="className"
-            [disabled]="disabled"
-            [error]="error"
-            [id]="id"
-            [label]="label"
-            [leftIcon]="leftIcon"
-            [leftText]="leftText"
-            [rightText]="rightText"
-            [leftTitle]="leftTitle"
-            [maxLength]="maxLength"
-            [minLength]="minLength"
-            [pattern]="pattern"
-            [required]="required"
-            (onKeyDown)="onKeyDown($event)"
-            (onKeyPress)="onKeyPress($event)"
-            (onBlur)="onBlur($events)"
-            (onFocus)="onFocus($events)"
-            (onKeyUp)="onKeyUp($events)"
-            [showErrorMessage]="showErrorMessage"
-            [readOnly]="readOnly"
-            [success]="success"
-        ></sebng-textbox>
-    `,
-})
-class TextGroupTestComponent {
-    autoComplete?: "on" | "off";
-    className?: string;
-    disabled?: boolean;
-    error?: string;
-    focus?: boolean;
-    id?: string;
-    label?: string;
-    leftIcon?: string;
-    leftText?: string;
-    leftTitle?: string;
-    maxLength?: number;
-    minLength?: number;
-    name: string;
-    pattern?: string;
-    placeholder?: string;
-    readOnly?: boolean;
-    required?: boolean;
-    rightIcon?: string;
-    rightText?: string;
-    rightTitle?: string;
-    type?: string;
-    success?: boolean;
-    showErrorMessage?: boolean;
-
-    textValue: string = "";
-
-    onLeftClick(e: Event) {
-        alert("Left icon clicked!");
-    }
-
-    onRightClick(e: Event) {
-        alert("Right icon clicked");
-    }
-
-    onChange(value: string | number) {}
-
-    onBlur(event: FocusEvent) {}
-    onFocus(event: FocusEvent) {}
-    onKeyDown(event: KeyboardEvent) {}
-    onKeyPress(event: KeyboardEvent) {}
-    onKeyUp(event: KeyboardEvent) {}
-}
-
 describe("TextboxComponent", () => {
-    let component: TextGroupTestComponent;
-    let fixture: ComponentFixture<TextGroupTestComponent>;
+    let component: TextboxComponent;
+    let fixture: ComponentFixture<TextboxComponent>;
 
     beforeEach(
         waitForAsync(() => {
             TestBed.configureTestingModule({
-                imports: [CommonModule, FormsModule],
-                declarations: [TextboxComponent, TextGroupTestComponent, TextboxSafeHtmlPipe],
+                imports: [FormsModule],
+                declarations: [TextboxComponent, TextboxSafeHtmlPipe],
             }).compileComponents();
         })
     );
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TextGroupTestComponent);
+        fixture = TestBed.createComponent(TextboxComponent);
         component = fixture.componentInstance;
+        component.onKeyDown = new EventEmitter<KeyboardEvent>();
+        component.onKeyPress = new EventEmitter<KeyboardEvent>();
+        component.onKeyUp = new EventEmitter<KeyboardEvent>();
+        component.onFocus = new EventEmitter<MouseEvent>();
+        component.onBlur = new EventEmitter<MouseEvent>();
+
+        component.onKeyDown.subscribe(() => {});
+        component.onKeyPress.subscribe(() => {});
+        component.onKeyUp.subscribe(() => {});
+        component.onFocus.subscribe(() => {});
+        component.onBlur.subscribe(() => {});
         fixture.detectChanges();
     });
 
@@ -115,8 +43,9 @@ describe("TextboxComponent", () => {
     it("Should pass down the id or random id to the Textbox component", () => {
         const id: string = "my-Textbox-id";
         component.id = id;
-
+        component.ngOnInit();
         fixture.detectChanges();
+
         expect(fixture.debugElement.queryAll(By.css(`#${id}`)).length).toBeTruthy();
         component.label = "test label";
 
@@ -132,11 +61,10 @@ describe("TextboxComponent", () => {
 
         fixture.detectChanges();
         const componentProps = fixture.debugElement.query(By.css("input")).attributes;
-
         expect(componentProps.pattern).toEqual("my-pattern");
         expect(componentProps.minlength).toEqual("2");
         expect(componentProps.maxlength).toEqual("4");
-        expect(componentProps.required).toEqual("true");
+        expect(componentProps.required).toEqual("");
     });
 
     describe("Testing optional events", () => {
@@ -147,13 +75,13 @@ describe("TextboxComponent", () => {
         let onKeyUp: jasmine.Spy;
         beforeAll(() => {
             component.name = "myTextbox";
-            component.textValue = "";
-            onKeyDown = spyOn(component, "onKeyDown");
+            component.value = "";
 
-            onKeyUp = spyOn(component, "onKeyUp");
-            onKeyPress = spyOn(component, "onKeyPress");
-            onFocus = spyOn(component, "onFocus");
-            onBlur = spyOn(component, "onBlur");
+            onKeyDown = spyOn(component.onKeyDown, "emit").and.callThrough();
+            onKeyUp = spyOn(component.onKeyUp, "emit").and.callThrough();
+            onKeyPress = spyOn(component.onKeyPress, "emit").and.callThrough();
+            onFocus = spyOn(component.onFocus, "emit").and.callThrough();
+            onBlur = spyOn(component.onBlur, "emit").and.callThrough();
 
             fixture.detectChanges();
 
@@ -202,7 +130,6 @@ describe("TextboxComponent", () => {
         expect(fixture.debugElement.queryAll(By.css(".alert-danger")).length).toBe(1);
         expect(fixture.debugElement.query(By.css(".alert-danger")).nativeElement.textContent.trim()).toEqual(error);
 
-        component.error = error;
         component.showErrorMessage = false;
         component.success = true;
 
@@ -211,20 +138,6 @@ describe("TextboxComponent", () => {
         expect(fixture.debugElement.query(By.css(".input-group.success"))).toBeTruthy();
         expect(fixture.debugElement.queryAll(By.css(".alert-danger")).length).toBe(0);
 
-        component.error = error;
-        component.showErrorMessage = false;
-
-        fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css(".input-group.has-error"))).toBeTruthy();
-        expect(fixture.debugElement.queryAll(By.css(".alert-danger")).length).toBe(0);
-        component.error = error;
-        component.showErrorMessage = true;
-
-        fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css(".input-group.has-error"))).toBeTruthy();
-        expect(fixture.debugElement.queryAll(By.css(".alert-danger")).length).toBe(1);
-
-        component.error = error;
         component.showErrorMessage = null;
 
         fixture.detectChanges();
@@ -232,35 +145,31 @@ describe("TextboxComponent", () => {
         expect(fixture.debugElement.queryAll(By.css(".alert-danger")).length).toBe(0);
     });
 
-    it("Testing optional properties", () => {
+    it("Testing optional properties", async () => {
         component.name = "my-textbox-name";
         component.pattern = "my-pattern";
         component.minLength = 2;
         component.maxLength = 4;
         component.required = true;
-        component.autoComplete = "on";
+        component.autocomplete = "on";
         component.type = "number";
         component.disabled = true;
-        component.readOnly = true;
+        component.readonly = true;
         component.placeholder = "my placeholder";
 
         fixture.detectChanges();
-
+        await fixture.whenRenderingDone();
         expect(fixture.debugElement.query(By.css("input")).attributes.name.trim()).toEqual("my-textbox-name");
         expect(fixture.debugElement.query(By.css("input")).attributes.pattern.trim()).toEqual("my-pattern");
         expect(fixture.debugElement.query(By.css("input")).attributes.minlength.trim()).toEqual("2");
         expect(fixture.debugElement.query(By.css("input")).attributes.maxlength.trim()).toEqual("4");
-        expect(fixture.debugElement.query(By.css("input")).attributes.required.trim()).toEqual("true");
+        expect(fixture.debugElement.query(By.css("input")).attributes.required.trim()).toEqual("");
         expect(fixture.debugElement.query(By.css("input")).attributes.placeholder.trim()).toEqual("my placeholder");
-        expect(fixture.debugElement.query(By.css("input")).attributes.disabled).toEqual("true");
-        expect(fixture.debugElement.query(By.css("input")).attributes.readonly).toEqual("true");
+        expect(fixture.debugElement.query(By.css("input")).attributes.disabled).toEqual("");
+        expect(fixture.debugElement.query(By.css("input")).attributes.readonly).toEqual("");
     });
 
     describe("Test left append", () => {
-        let onLeftClick: jasmine.Spy;
-        beforeEach(() => {
-            onLeftClick = spyOn(component, "onLeftClick");
-        });
         it("Should render text and title", () => {
             component.leftText = "leftText";
             component.leftTitle = "leftTitle";
@@ -277,21 +186,20 @@ describe("TextboxComponent", () => {
             const testIcon: string = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 170"></svg>`;
             component.leftIcon = testIcon;
             component.rightText = null;
+            component.onLeftClick = new EventEmitter<MouseEvent>();
+            component.onLeftClick.subscribe(() => {});
+            const leftClickSpy: jasmine.Spy = spyOn(component.onLeftClick, "emit").and.callThrough();
 
             fixture.detectChanges();
             expect(fixture.debugElement.query(By.css(".input-group-prepend.clickable"))).toBeTruthy();
             expect(fixture.debugElement.query(By.css(".input-group-text")).nativeElement.innerHTML).toEqual(testIcon);
             fixture.debugElement.query(By.css(".input-group-prepend")).nativeElement.dispatchEvent(new Event("click"));
 
-            expect(onLeftClick).toHaveBeenCalled();
+            expect(leftClickSpy).toHaveBeenCalled();
         });
     });
 
     describe("Test right append", () => {
-        let onRightClick: jasmine.Spy;
-        beforeEach(() => {
-            onRightClick = spyOn(component, "onRightClick");
-        });
         it("Should render text and title", () => {
             component.rightText = "rightText";
             component.rightTitle = "rightTitle";
@@ -309,15 +217,17 @@ describe("TextboxComponent", () => {
             const testIcon: string = `<svg></svg>`;
             component.rightIcon = testIcon;
             component.onLeftClick = null;
+            component.onRightClick = new EventEmitter<MouseEvent>();
+            component.onRightClick.subscribe(() => {});
             component.rightText = null;
+            const rightClickSpy: jasmine.Spy = spyOn(component.onRightClick, "emit").and.callThrough();
 
             fixture.detectChanges();
-
             expect(fixture.debugElement.query(By.css(".input-group-append.clickable"))).toBeTruthy();
             expect(fixture.debugElement.query(By.css(".input-group-text")).nativeElement.innerHTML).toContain(testIcon);
             fixture.debugElement.query(By.css(".input-group-append")).nativeElement.dispatchEvent(new Event("click"));
 
-            expect(onRightClick).toHaveBeenCalled();
+            expect(rightClickSpy).toHaveBeenCalled();
         });
     });
 });

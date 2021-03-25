@@ -1,15 +1,4 @@
-import {
-    OnChanges,
-    Component,
-    ViewEncapsulation,
-    Input,
-    Output,
-    EventEmitter,
-    OnInit,
-    SimpleChanges,
-    OnDestroy,
-    HostListener,
-} from "@angular/core";
+import { OnChanges, Component, ViewEncapsulation, Input, Output, EventEmitter, OnInit, SimpleChanges, OnDestroy } from "@angular/core";
 
 export type NotificationStyle = "slide-in" | "bar";
 export type NotificationPosition = "bottom-left" | "bottom-right" | "top-left" | "top-right" | "top" | "bottom";
@@ -56,8 +45,6 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
     @Output() dismiss?: EventEmitter<void> = new EventEmitter();
 
     public notificationClassNames: string;
-    public showNotificationBody: boolean = false;
-    public showNotificationTitle: boolean = false;
     private timerRef: { current: any } = { current: null };
     private defaultTimeout: any = 5000;
 
@@ -76,9 +63,6 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
         }
 
         this.notificationClassNames += " " + styleClass;
-
-        this.showNotificationTitle = this.title && styleClass === "style-slide-in";
-        this.showNotificationBody = styleClass === "style-slide-in" && this.actions && this.actions.length && this.actions.length < 3;
     }
 
     /** Get the theme class based on the theme passed though the props */
@@ -124,12 +108,11 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
                 positionClass = "bottom-left";
             }
         }
-
         this.notificationClassNames += " " + positionClass;
     }
 
     /** Start the timer to dismiss the notification */
-    private startTimer(): void {
+    startTimer(): void {
         this.clearTimer();
         this.timerRef.current = setTimeout(() => {
             this.dismissNotification();
@@ -137,26 +120,25 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
     }
 
     /** Dismiss the notification */
-    public dismissNotification(): void {
+    dismissNotification(): void {
         this.clearTimer();
         this.dismiss.emit();
     }
 
     /** Clear the timer that dismisses the notification */
-    private clearTimer(): void {
+    clearTimer(): void {
         if (this.timerRef.current) {
             clearTimeout(this.timerRef.current);
             this.timerRef.current = null;
         }
     }
 
-    private setClassNames(): void {
+    setClassNames(): void {
         this.notificationClassNames = "custom-notification";
         this.getStyleClass();
         this.getThemeClass();
         this.getPositionClass();
 
-        this.notificationClassNames += this.toggle ? " open" : "";
         this.notificationClassNames += this.className ? ` ${this.className}` : "";
     }
 

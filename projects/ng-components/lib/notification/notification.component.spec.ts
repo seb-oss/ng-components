@@ -1,80 +1,33 @@
-import { Component } from "@angular/core";
+import { EventEmitter } from "@angular/core";
 import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import {
-    NotificationComponent,
-    NotificationAction,
-    NotificationPosition,
-    NotificationTheme,
-    NotificationStyle,
-} from "./notification.component";
-import { CommonModule } from "@angular/common";
-
-@Component({
-    selector: "test-sebng-notification",
-    template: `
-        <sebng-notification
-            [className]="className"
-            [dismissable]="dismissable"
-            [dismissTimeout]="dismissTimeout"
-            [message]="message"
-            (onClick)="onClick()"
-            (onDismiss)="onDismiss($event)"
-            [persist]="persist"
-            [position]="position"
-            [style]="style"
-            [theme]="theme"
-            [title]="title"
-            [toggle]="toggle"
-            [actions]="actions"
-        >
-            <div class="testing">test</div></sebng-notification
-        >
-    `,
-})
-class NotificationTestComponent {
-    className?: string;
-    dismissable?: boolean;
-    dismissTimeout?: number;
-    message?: string;
-    onClick() {}
-
-    onDismiss() {}
-    persist?: boolean;
-    position?: NotificationPosition;
-    style?: NotificationStyle;
-    theme?: NotificationTheme;
-    title?: string;
-    toggle: boolean;
-    actions?: Array<NotificationAction>;
-}
+import { NotificationComponent, NotificationAction, NotificationPosition, NotificationStyle } from "./notification.component";
 
 describe("NotificationComponent", () => {
-    let component: NotificationTestComponent;
-    let fixture: ComponentFixture<NotificationTestComponent>;
+    let component: NotificationComponent;
+    let fixture: ComponentFixture<NotificationComponent>;
     let onDismiss: jasmine.Spy;
     let onClick: jasmine.Spy;
 
     beforeEach(
         waitForAsync(() => {
             TestBed.configureTestingModule({
-                imports: [CommonModule],
-                declarations: [NotificationComponent, NotificationTestComponent],
+                declarations: [NotificationComponent],
             }).compileComponents();
         })
     );
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(NotificationTestComponent);
+        fixture = TestBed.createComponent(NotificationComponent);
         component = fixture.componentInstance;
 
         component.toggle = true;
-        onDismiss = spyOn(component, "onDismiss");
-        onClick = spyOn(component, "onClick");
+        onDismiss = spyOn(component.dismiss, "emit");
+
         component.message = "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.";
         component.actions = [
-            { text: "Yes, I'm in", action: () => this.onToggle2(false) },
-            { text: "Ignore", action: () => this.onToggle2(false) },
+            { text: "Yes, I'm in", action: () => {} },
+            { text: "Ignore", action: () => {} },
         ];
         fixture.detectChanges();
     });
@@ -92,6 +45,7 @@ describe("NotificationComponent", () => {
 
         it("bar style should render with top position and purple theme", () => {
             component.style = "bar";
+            component.ngOnInit();
             fixture.detectChanges();
 
             expect(fixture.debugElement.query(By.css(".style-bar"))).toBeTruthy();
@@ -99,37 +53,43 @@ describe("NotificationComponent", () => {
             expect(fixture.debugElement.query(By.css(".theme-purple"))).toBeTruthy();
         });
 
-        it(
-            "Should dismiss when the default timer is done",
-            <any>fakeAsync((): void => {
-                component.toggle = true;
-                component.dismissTimeout = 500;
-                component.onDismiss = () => (component.toggle = false);
+        it("Should dismiss when the default timer is done", fakeAsync(() => {
+            component.toggle = true;
+            component.persist = false;
+            component.dismissTimeout = 200;
+            component.dismiss = new EventEmitter();
+            component.dismiss.subscribe(() => {
+                component.toggle = false;
+            });
 
-                fixture.detectChanges();
+            component.ngOnInit();
+            fixture.detectChanges();
 
-                expect(fixture.debugElement.query(By.css(".open"))).toBeTruthy();
+            expect(fixture.debugElement.query(By.css(".open"))).toBeTruthy();
 
-                tick(600);
-                expect(fixture.debugElement.query(By.css(".open"))).toBeTruthy();
-            })
-        );
+            tick(300);
+
+            fixture.detectChanges();
+            expect(fixture.debugElement.query(By.css(".open"))).toBeFalsy();
+        }));
 
         it("Should render with defaults if style or position props passed is not supported", () => {
             component.style = "bingo" as NotificationStyle;
             component.position = "top-right";
+            component.ngOnInit();
             fixture.detectChanges();
 
-            expect(fixture.debugElement.query(By.css(".style-slide-in"))).toBeTruthy();
-            expect(fixture.debugElement.query(By.css(".top-right"))).toBeTruthy();
+            expect(fixture.debugElement.query(By.css(".style-slide-in.top-right"))).toBeTruthy();
+
             component.style = "slide-in" as NotificationStyle;
             component.position = "top-left";
+            component.ngOnInit();
             fixture.detectChanges();
 
-            expect(fixture.debugElement.query(By.css(".style-slide-in"))).toBeTruthy();
-            expect(fixture.debugElement.query(By.css(".top-left"))).toBeTruthy();
+            expect(fixture.debugElement.query(By.css(".style-slide-in.top-left"))).toBeTruthy();
 
             component.position = "bingo" as NotificationPosition;
+            component.ngOnInit();
             fixture.detectChanges();
 
             expect(fixture.debugElement.query(By.css(".bottom-left"))).toBeTruthy();
@@ -140,7 +100,7 @@ describe("NotificationComponent", () => {
         component.style = "bar";
         component.theme = "primary";
         component.position = "bottom";
-
+        component.ngOnInit();
         fixture.detectChanges();
 
         expect(fixture.debugElement.query(By.css(".style-bar"))).toBeTruthy();
@@ -150,6 +110,7 @@ describe("NotificationComponent", () => {
 
     it("Should pass custom class", () => {
         component.className = "myNotification";
+        component.ngOnInit();
         fixture.detectChanges();
 
         expect(fixture.debugElement.query(By.css(".myNotification"))).toBeTruthy();
@@ -178,6 +139,10 @@ describe("NotificationComponent", () => {
     });
 
     it("Should call onClick when notification is clicked", () => {
+        component.notificationClick = new EventEmitter<MouseEvent>();
+        component.notificationClick.subscribe(() => {});
+        onClick = spyOn(component.notificationClick, "emit");
+        fixture.detectChanges();
         fixture.debugElement.query(By.css(".content-wrapper")).nativeElement.dispatchEvent(new Event("click"));
 
         expect(fixture.debugElement.query(By.css(".content-wrapper")).classes.clickable).toBeTrue();
@@ -185,50 +150,25 @@ describe("NotificationComponent", () => {
         expect(onClick).toHaveBeenCalled();
     });
 
-    it("Should render child element when passed", () => {
-        expect(fixture.debugElement.queryAll(By.css(".testing")).length).not.toBe(0);
-    });
-
     describe("Should render actions when passed", () => {
-        it("Should not render actions if more than two actions are passed", () => {
-            const actions: Array<NotificationAction> = [
-                { text: "action1", action: () => {} },
-                { text: "action2", action: () => {} },
-                { text: "action3", action: () => {} },
-                { text: "action4", action: () => {} },
-            ];
-            component.actions = actions;
-            fixture.detectChanges();
-
-            expect(fixture.debugElement.queryAll(By.css(".action-wrapper")).length).toBe(0);
-        });
-
-        it("Should not render actions if the style is set to bar", () => {
-            component.style = "bar";
-            component.actions = [{ text: "actions1", action: () => {} }];
-            fixture.detectChanges();
-            expect(fixture.debugElement.queryAll(By.css(".action-wrapper")).length).toBe(0);
-        });
-
         it("Should render one action taking the whole width", () => {
             component.actions = [
                 { text: "action1", action: () => {} },
                 { text: "action2", action: () => {} },
             ];
             fixture.detectChanges();
-
+            console.log(fixture.nativeElement);
             expect(fixture.debugElement.queryAll(By.css(".action-wrapper")).length).not.toBe(0);
-            expect(fixture.debugElement.query(By.css(".actions-wrapper")).classes.partitioned).toBeTrue();
+            expect(fixture.debugElement.query(By.css(".actions-wrapper")).classes.partitioned).toBeFalsy();
         });
 
         it("Should render two actions with equal width", () => {
-            const actions: Array<NotificationAction> = [
+            component.style = "slide-in";
+            component.actions = [
                 { text: "action1", action: () => {} },
                 { text: "action2", action: () => {} },
             ];
-            component.actions = actions;
             fixture.detectChanges();
-
             expect(fixture.debugElement.queryAll(By.css(".action-wrapper")).length).not.toBe(0);
             expect(fixture.debugElement.query(By.css(".actions-wrapper")).classes.partitioned).toBeTrue();
         });
@@ -239,9 +179,7 @@ describe("NotificationComponent", () => {
                 { text: "action2", action: () => {} },
             ];
             component.actions = actions;
-
             fixture.detectChanges();
-
             expect(fixture.debugElement.queryAll(By.css(".action-wrapper"))[0].query(By.css("button")).nativeElement.textContent).toContain(
                 "action1"
             );
