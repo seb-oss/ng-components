@@ -157,7 +157,6 @@ describe("NotificationComponent", () => {
                 { text: "action2", action: () => {} },
             ];
             fixture.detectChanges();
-            console.log(fixture.nativeElement);
             expect(fixture.debugElement.queryAll(By.css(".action-wrapper")).length).not.toBe(0);
             expect(fixture.debugElement.query(By.css(".actions-wrapper")).classes.partitioned).toBeFalsy();
         });
