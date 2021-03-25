@@ -15,25 +15,22 @@ describe("TextboxComponent", () => {
                 imports: [FormsModule],
                 declarations: [TextboxComponent, TextboxSafeHtmlPipe],
             }).compileComponents();
+            fixture = TestBed.createComponent(TextboxComponent);
+            component = fixture.componentInstance;
+            component.onKeyDown = new EventEmitter<KeyboardEvent>();
+            component.onKeyPress = new EventEmitter<KeyboardEvent>();
+            component.onKeyUp = new EventEmitter<KeyboardEvent>();
+            component.onFocus = new EventEmitter<MouseEvent>();
+            component.onBlur = new EventEmitter<MouseEvent>();
+
+            component.onKeyDown.subscribe(() => {});
+            component.onKeyPress.subscribe(() => {});
+            component.onKeyUp.subscribe(() => {});
+            component.onFocus.subscribe(() => {});
+            component.onBlur.subscribe(() => {});
+            fixture.detectChanges();
         })
     );
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(TextboxComponent);
-        component = fixture.componentInstance;
-        component.onKeyDown = new EventEmitter<KeyboardEvent>();
-        component.onKeyPress = new EventEmitter<KeyboardEvent>();
-        component.onKeyUp = new EventEmitter<KeyboardEvent>();
-        component.onFocus = new EventEmitter<MouseEvent>();
-        component.onBlur = new EventEmitter<MouseEvent>();
-
-        component.onKeyDown.subscribe(() => {});
-        component.onKeyPress.subscribe(() => {});
-        component.onKeyUp.subscribe(() => {});
-        component.onFocus.subscribe(() => {});
-        component.onBlur.subscribe(() => {});
-        fixture.detectChanges();
-    });
 
     it("should create", () => {
         expect(component).toBeTruthy();
