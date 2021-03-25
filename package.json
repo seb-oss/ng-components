@@ -32,7 +32,7 @@
         "prebuild:docs": "npm run clean:docs",
         "build:docs": "ng build docs --prod",
         "postbuild:docs": "npm run build:scully",
-        "test": "ng test ng-components",
+        "test": "ng test ng-components --watch=false",
         "sanitize": "package-lock-sanitizer && git add package-lock.json",
         "lint": "ng lint ng-components",
         "e2e": "ng e2e ng-components",
