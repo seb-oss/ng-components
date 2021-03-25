@@ -1,59 +1,29 @@
-import { Component } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { ToggleComponent } from "./toggle.component";
-import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 
-@Component({
-    selector: "test-sebng-toggle",
-    template: `
-        <sebng-toggle
-            [name]="name"
-            [placeholder]="placeholder"
-            [rightIcon]="rightIcon"
-            (onLeftClick)="onLeftClick($event)"
-            (onChange)="onChange(value)"
-            [(ngModel)]="value"
-            [className]="className"
-            [disabled]="disabled"
-            [id]="id"
-            [label]="label"
-        ></sebng-toggle>
-    `,
-})
-class ToggleTestComponent {
-    className?: string;
-    disabled?: boolean;
-    id?: string;
-    label?: string;
-    name: string;
-    value: boolean = false;
-
-    onChange(value: boolean) {}
-}
-
 describe("ToggleComponent", () => {
-    let component: ToggleTestComponent;
-    let fixture: ComponentFixture<ToggleTestComponent>;
+    let component: ToggleComponent;
+    let fixture: ComponentFixture<ToggleComponent>;
     let onChange: jasmine.Spy;
 
     beforeEach(
         waitForAsync(() => {
             TestBed.configureTestingModule({
-                imports: [CommonModule, FormsModule],
-                declarations: [ToggleComponent, ToggleTestComponent],
+                imports: [FormsModule],
+                declarations: [ToggleComponent],
             }).compileComponents();
         })
     );
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ToggleTestComponent);
+        fixture = TestBed.createComponent(ToggleComponent);
         component = fixture.componentInstance;
         component.name = "myToggle";
         fixture.detectChanges();
 
-        onChange = spyOn(component, "onChange");
+        onChange = spyOn(component.valueChange, "emit");
     });
 
     it("render and be defined", () => {

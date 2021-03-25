@@ -21,7 +21,7 @@
         [attr.name]="name"
         [attr.title]="title"
     >
-        <ng-content></ng-content>
+        <ng-container *ngTemplateOutlet="content"></ng-container>
     </a>
 
     <button
@@ -35,6 +35,9 @@
         [attr.name]="name"
         [attr.title]="title"
     >
-        <ng-content></ng-content>
+        <ng-container *ngTemplateOutlet="content"></ng-container>
     </button>
+    <ng-template #content>
+        <ng-content></ng-content>
+    </ng-template>
 </ng-container>
