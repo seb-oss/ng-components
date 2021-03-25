@@ -9,7 +9,7 @@ module.exports = function (config) {
             "karma-jasmine",
             "karma-chrome-launcher",
             "karma-jasmine-html-reporter",
-            "karma-coverage-istanbul-reporter",
+            "karma-coverage",
             "karma-spec-reporter",
             "@angular-devkit/build-angular/plugins/karma",
         ],
