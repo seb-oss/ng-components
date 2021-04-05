@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, inject, waitForAsync } from "@angular/core/t
 
 import { TooltipComponent } from "./tooltip.component";
 import { By } from "@angular/platform-browser";
-import { Component, TemplateRef, ElementRef } from "@angular/core";
+import { Component, TemplateRef, ElementRef, ViewChild } from "@angular/core";
 import { TooltipTrigger, TooltipTheme, TooltipModule } from ".";
 import { OverlayContainer, OverlayModule } from "@angular/cdk/overlay";
 import { Direction, Directionality } from "@angular/cdk/bidi";
@@ -14,7 +14,7 @@ import { TooltipPosition } from "./tooltip.positions";
 @Component({
     selector: "test-sebng-tooltip",
     template: `
-        <sebng-tooltip [content]="content" [className]="className" [trigger]="trigger" [theme]="theme" [position]="position"
+        <sebng-tooltip #tooltip [content]="content" [className]="className" [trigger]="trigger" [theme]="theme" [position]="position"
             >Test</sebng-tooltip
         >
     `,
@@ -27,6 +27,7 @@ class TooltipTestComponent {
     trigger: TooltipTrigger = "hover";
     position: TooltipPosition = "top";
     theme: TooltipTheme = "default";
+    @ViewChild("tooltip") tooltipRef: TooltipComponent;
 }
 
 describe("TooltipComponent", () => {
@@ -95,6 +96,20 @@ describe("TooltipComponent", () => {
             await fixture.whenStable();
             expect(overlayContainer.getContainerElement().querySelector(".custom-tooltip-content")).not.toBeNull();
             expect(overlayContainer.getContainerElement().querySelector(`.${customClassName}`)).not.toBeNull();
+        });
+
+        it("should show tooltip if show function is called called", () => {
+            component.tooltipRef.show();
+            fixture.detectChanges();
+            expect(overlayContainer.getContainerElement().querySelector(".custom-tooltip-content")).not.toBeNull();
+        });
+
+        it("should hide tooltip if show function is called called", () => {
+            fixture.debugElement.query(By.css(".custom-tooltip")).nativeElement.dispatchEvent(new MouseEvent("mouseenter"));
+            fixture.detectChanges();
+            component.tooltipRef.hide();
+            fixture.detectChanges();
+            expect(overlayContainer.getContainerElement().querySelector(".custom-tooltip-content")).toBeNull();
         });
     });
 });

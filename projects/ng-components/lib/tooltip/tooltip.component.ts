@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation, Input, TemplateRef, ChangeDetectorRef, El
 import { trigger, transition, style, animate } from "@angular/animations";
 import { TooltipTheme, TooltipTrigger } from "./tooltip-content/tooltip-content.component";
 import { TooltipPosition } from "./tooltip.positions";
+import { TooltipDirective } from "./tooltip.directive";
 
 /** A text label that acts as a helper to a specific item */
 @Component({
@@ -41,6 +42,8 @@ export class TooltipComponent implements AfterViewInit {
 
     @ViewChild("ngContent") contentref: ElementRef<HTMLDivElement>;
 
+    @ViewChild(TooltipDirective) tooltipDirective: TooltipDirective;
+
     stringContent: string = "";
     hasContent: boolean = true;
 
@@ -49,5 +52,13 @@ export class TooltipComponent implements AfterViewInit {
     ngAfterViewInit(): void {
         this.hasContent = this.contentref && this.contentref.nativeElement.childNodes.length > 0;
         this.cdr.detectChanges();
+    }
+
+    show(): void {
+        this.tooltipDirective.showTooltip();
+    }
+
+    hide(): void {
+        this.tooltipDirective.hideTooltip();
     }
 }

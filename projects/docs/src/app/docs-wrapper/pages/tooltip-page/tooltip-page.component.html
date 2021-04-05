@@ -1,8 +1,9 @@
-<app-doc-page [importString]="importString">
+<app-doc-page [importString]="importString" [showNotes]="true">
     <ng-container example>
         <div class="row">
             <div class="col-12">
                 <sebng-tooltip
+                    #tooltip
                     [content]="content"
                     [textReference]="textReference"
                     [trigger]="trigger"
@@ -33,6 +34,10 @@
     </ng-container>
     <ng-container code>{{ code }}</ng-container>
     <section controls>
+        <div class="mb-3">
+            <button class="btn btn-primary mr-3" (click)="show()">Open tooltip</button>
+            <button class="btn btn-primary" (click)="hide()">Close tooltip</button>
+        </div>
         <div>
             textReference
             <p><small> set string as reference of tooltip</small></p>
@@ -73,4 +78,19 @@
             <input class="form-control" [(ngModel)]="closeOnScrollDelay" />
         </div>
     </section>
+    <ng-container notes>
+        <div class="">
+            <p>
+                Tooltip can be toggled using the <code>show()</code> and <code>hide()</code> functions, those can be useful in case you want
+                to display the tooltip based on some condition and not the keyboard/mouse events.
+            </p>
+            <p>In order to utilize the functions you will need to use the tooltip component reference like in below snippet.</p>
+            <app-code-snippet [languages]="['html.handlebars']">{{ refTemplate }}</app-code-snippet>
+            <p>Then declare the tooltip ref</p>
+            <app-code-snippet [languages]="['typescript']">{{ refDeclaration }}</app-code-snippet>
+            <p>Then simply call show or hide.</p>
+            <app-code-snippet [languages]="['typescript']">{{ "this.tooltipRef.show();  \nthis.tooltipRef.hide();" }} </app-code-snippet>
+            <p><code>Mouseout</code> and <code>Blur</code> Events will still dismiss the tooltip.</p>
+        </div>
+    </ng-container>
 </app-doc-page>
