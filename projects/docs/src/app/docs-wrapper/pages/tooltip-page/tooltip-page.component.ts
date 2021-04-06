@@ -1,12 +1,12 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
-import { TooltipTrigger, TooltipTheme } from "@sebgroup/ng-components/tooltip";
+import { Component, TemplateRef, ViewChild } from "@angular/core";
+import { TooltipTrigger, TooltipTheme, TooltipComponent } from "@sebgroup/ng-components/tooltip";
 import { TooltipPosition } from "@sebgroup/ng-components/tooltip/tooltip.positions";
 
 @Component({
     selector: "app-tooltip-page",
     templateUrl: "./tooltip-page.component.html",
 })
-export class TooltipPageComponent implements OnInit {
+export class TooltipPageComponent {
     importString: string = require("!raw-loader!@sebgroup/ng-components/tooltip/tooltip.component");
     code: string = `<sebng-tooltip [content]="content"></sebng-tooltip>`;
 
@@ -16,6 +16,7 @@ export class TooltipPageComponent implements OnInit {
     cascade: boolean = false;
     closeOnScroll: boolean = false;
     closeOnScrollDelay: number = 0;
+    @ViewChild("tooltip") tooltipRef: TooltipComponent;
 
     positionList: Array<DocDropdownItem<TooltipPosition>> = [
         { value: "top", label: "top" },
@@ -48,9 +49,19 @@ export class TooltipPageComponent implements OnInit {
     theme: TooltipTheme = this.themeList[0].value;
     trigger: TooltipTrigger = this.triggerList[0].value;
 
+    refTemplate: string = `<sebng-tooltip #tooltip [content]="content"> </sebng-tooltip>`;
+
+    refDeclaration: string = `@ViewChild("tooltip") tooltipRef: TooltipComponent;`;
+
     constructor() {
         document.title = "Tooltip - SEB Angular Components";
     }
 
-    ngOnInit(): void {}
+    show(): void {
+        this.tooltipRef.show();
+    }
+
+    hide(): void {
+        this.tooltipRef.hide();
+    }
 }
