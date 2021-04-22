@@ -2,7 +2,7 @@ import { Component, ViewEncapsulation, ElementRef, Input, TemplateRef } from "@a
 import { trigger, transition, style, animate } from "@angular/animations";
 import { TooltipPosition } from "../tooltip.positions";
 
-export type TooltipTrigger = "hover" | "click";
+export type TooltipTrigger = "hover" | "focus";
 
 export type TooltipTheme = "default" | "light" | "primary" | "warning" | "success" | "danger" | "purple";
 

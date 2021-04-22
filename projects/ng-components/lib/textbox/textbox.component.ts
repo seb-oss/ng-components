@@ -114,19 +114,6 @@ export class TextboxComponent implements ControlValueAccessor, OnInit, OnChanges
         if (changes.id || changes.label) {
             this.internalId = changes.id ? changes.id?.currentValue : randomId("tbg-");
         }
-
-        if (changes.showErrorMessage || changes.success) {
-            if (changes.success?.currentValue === true) {
-                // Only false when success is enabled
-                this.displayError = false;
-            } else if (!changes.showErrorMessage?.currentValue) {
-                // `showErrorMessage` is set to boolean false
-                this.displayError = false;
-            } else {
-                // If set to true, or it will be defaulted if the value is not passed
-                this.displayError = true;
-            }
-        }
     }
 
     @Input()

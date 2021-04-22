@@ -1,77 +1,35 @@
-import { Component, DebugElement } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { TextareaComponent } from "./textarea.component";
-import { CommonModule } from "@angular/common";
-
-@Component({
-    selector: "test-sebng-textarea",
-    template: `
-        <sebng-textarea
-            [className]="className"
-            [cols]="cols"
-            [disabled]="disabled"
-            [error]="error"
-            [focus]="focus"
-            [id]="id"
-            [label]="label"
-            [max]="max"
-            [name]="name"
-            [placeholder]="placeholder"
-            [readonly]="readonly"
-            [resizable]="resizable"
-            [rows]="rows"
-            (onBlur)="onBlur($event)"
-            (onChange)="onChange($event)"
-            (onFocus)="onFocus($event)"
-            (onKeyDown)="onKeyDown($event)"
-            (onKeyPress)="onKeyPress($event)"
-            (onKeyUp)="onKeyUp($event)"
-        ></sebng-textarea>
-    `,
-})
-class TextareaTestComponent {
-    className?: string;
-    cols?: number;
-    disabled?: boolean;
-    error?: string;
-    focus?: boolean;
-    id?: string;
-    label?: string;
-    max?: number;
-    name: string;
-    placeholder?: string;
-    readonly?: boolean;
-    resizable?: boolean;
-    rows?: number;
-    value: string;
-
-    onBlur() {}
-    onChange() {}
-    onFocus() {}
-    onKeyDown() {}
-    onKeyPress() {}
-    onKeyUp() {}
-}
+import { FormsModule } from "@angular/forms";
+import { EventEmitter } from "@angular/core";
 
 describe("TextareaComponent", () => {
-    let component: TextareaTestComponent;
-    let fixture: ComponentFixture<TextareaTestComponent>;
+    let component: TextareaComponent;
+    let fixture: ComponentFixture<TextareaComponent>;
 
     beforeEach(
         waitForAsync(() => {
             TestBed.configureTestingModule({
-                imports: [CommonModule],
-                declarations: [TextareaTestComponent, TextareaComponent],
+                imports: [FormsModule],
+                declarations: [TextareaComponent],
             }).compileComponents();
+            fixture = TestBed.createComponent(TextareaComponent);
+            component = fixture.componentInstance;
+            component.onKeyDown = new EventEmitter<KeyboardEvent>();
+            component.onKeyPress = new EventEmitter<KeyboardEvent>();
+            component.onKeyUp = new EventEmitter<KeyboardEvent>();
+            component.onFocus = new EventEmitter<MouseEvent>();
+            component.onBlur = new EventEmitter<MouseEvent>();
+
+            component.onKeyDown.subscribe(() => {});
+            component.onKeyPress.subscribe(() => {});
+            component.onKeyUp.subscribe(() => {});
+            component.onFocus.subscribe(() => {});
+            component.onBlur.subscribe(() => {});
+            fixture.detectChanges();
         })
     );
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(TextareaTestComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    });
 
     it("should create", () => {
         expect(component).toBeTruthy();
@@ -122,37 +80,29 @@ describe("TextareaComponent", () => {
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css("textarea.resiable"))).toBeFalsy();
     });
-    describe("Testing optional events", () => {
-        let onKeyDown: jasmine.Spy;
-        let onKeyPress: jasmine.Spy;
-        let onFocus: jasmine.Spy;
-        let onBlur: jasmine.Spy;
-        let onKeyUp: jasmine.Spy;
-        beforeAll(() => {
-            component.name = "myTextarea";
-            onKeyDown = spyOn(component, "onKeyDown");
 
-            onKeyUp = spyOn(component, "onKeyUp");
-            onKeyPress = spyOn(component, "onKeyPress");
-            onFocus = spyOn(component, "onFocus");
-            onBlur = spyOn(component, "onBlur");
+    it("Should emit optinal events", () => {
+        const onKeyDown: jasmine.Spy = spyOn(component.onKeyDown, "emit").and.callThrough();
+        const onKeyPress: jasmine.Spy = spyOn(component.onKeyUp, "emit").and.callThrough();
+        const onFocus: jasmine.Spy = spyOn(component.onKeyPress, "emit").and.callThrough();
+        const onBlur: jasmine.Spy = spyOn(component.onFocus, "emit").and.callThrough();
+        const onKeyUp: jasmine.Spy = spyOn(component.onBlur, "emit").and.callThrough();
 
-            fixture.detectChanges();
+        component.name = "myTextarea";
+        fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new KeyboardEvent("keydown"));
 
-            fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new KeyboardEvent("keydown"));
+        fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new KeyboardEvent("keyup"));
+        fixture.debugElement
+            .query(By.css(".form-control"))
+            .nativeElement.dispatchEvent(new KeyboardEvent("keypress", { key: "a", code: "65" }));
+        fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new MouseEvent("focus"));
+        fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new MouseEvent("blur"));
 
-            fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new KeyboardEvent("keyup"));
-            fixture.debugElement
-                .query(By.css(".form-control"))
-                .nativeElement.dispatchEvent(new KeyboardEvent("keypress", { key: "a", code: "65" }));
-            fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new MouseEvent("focus"));
-            fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new MouseEvent("blur"));
-        });
-
-        it("KeyDown", () => expect(onKeyDown).toHaveBeenCalled());
-        it("KeyUp", () => expect(onKeyUp).toHaveBeenCalled());
-        it("KeyPress", () => expect(onKeyPress).toHaveBeenCalled());
-        it("Focus", () => expect(onFocus).toHaveBeenCalled());
-        it("Blur", () => expect(onBlur).toHaveBeenCalled());
+        fixture.detectChanges();
+        expect(onKeyDown).toHaveBeenCalled();
+        expect(onKeyUp).toHaveBeenCalled();
+        expect(onKeyPress).toHaveBeenCalled();
+        expect(onFocus).toHaveBeenCalled();
+        expect(onBlur).toHaveBeenCalled();
     });
 });

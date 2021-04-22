@@ -166,9 +166,9 @@ describe("TooltipDirective", () => {
                     },
                 },
                 {
-                    trigger: "click",
+                    trigger: "focus",
                     eventToShow: () => {
-                        fixture.debugElement.query(By.css(".text-help")).nativeElement.dispatchEvent(new MouseEvent("click"));
+                        fixture.debugElement.query(By.css(".text-help")).nativeElement.dispatchEvent(new MouseEvent("focusin"));
                     },
                     eventToHide: () => {
                         fixture.debugElement.query(By.css(".text-help")).nativeElement.dispatchEvent(new FocusEvent("blur"));

@@ -19,7 +19,7 @@ type ButtonTestItem<T, K> = { value: T; expected: K };
             [size]="size"
             [className]="className"
             [theme]="theme"
-            (onClick)="onClick($event)"
+            (click)="onClick()"
         >
             <ng-container button>
                 Button
@@ -44,12 +44,11 @@ class ButtonTestComponent {
     block: boolean;
     disabled: boolean;
     label: string;
-    onClick(e: Event): void {}
+    onClick(): void {}
 }
 describe("ButtonComponent", () => {
     let component: ButtonTestComponent;
     let fixture: ComponentFixture<ButtonTestComponent>;
-    let onClick: jasmine.Spy;
 
     beforeEach(
         waitForAsync(() => {
@@ -64,7 +63,7 @@ describe("ButtonComponent", () => {
         fixture = TestBed.createComponent(ButtonTestComponent);
         component = fixture.componentInstance;
         component.id = "button-id";
-        onClick = spyOn(component, "onClick");
+
         fixture.detectChanges();
     });
 
@@ -121,12 +120,6 @@ describe("ButtonComponent", () => {
 
     it("Should render icon inside button", () => {
         expect(fixture.debugElement.query(By.css("button svg")).attributes.id).toEqual("my-svg");
-    });
-
-    it("should handle click event", () => {
-        fixture.debugElement.query(By.css("button")).nativeElement.dispatchEvent(new Event("click"));
-
-        expect(onClick).toHaveBeenCalled();
     });
 
     it("should handle button of different tags ", () => {

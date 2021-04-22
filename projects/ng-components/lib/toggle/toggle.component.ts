@@ -27,7 +27,6 @@ export class ToggleComponent implements ControlValueAccessor {
     }
 
     set id(v: string) {
-        console.log(v);
         this._id = v || randomId("toggle-");
     }
     /** Element label */
