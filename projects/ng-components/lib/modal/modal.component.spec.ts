@@ -3,7 +3,7 @@ import { TestBed, ComponentFixture, waitForAsync } from "@angular/core/testing";
 import { Subscription } from "rxjs";
 import { Component } from "@angular/core";
 
-fdescribe("Component: ModalComponent", () => {
+describe("Component: ModalComponent", () => {
     let component: ModalComponent;
     let fixture: ComponentFixture<ModalComponent>;
     let modalElement: HTMLDivElement;
