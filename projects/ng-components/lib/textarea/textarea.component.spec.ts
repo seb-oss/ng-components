@@ -80,37 +80,29 @@ describe("TextareaComponent", () => {
         fixture.detectChanges();
         expect(fixture.debugElement.query(By.css("textarea.resiable"))).toBeFalsy();
     });
-    describe("Testing optional events", () => {
-        let onKeyDown: jasmine.Spy;
-        let onKeyPress: jasmine.Spy;
-        let onFocus: jasmine.Spy;
-        let onBlur: jasmine.Spy;
-        let onKeyUp: jasmine.Spy;
-        beforeAll(() => {
-            component.name = "myTextarea";
-            onKeyDown = spyOn(component.onKeyDown, "emit");
 
-            onKeyUp = spyOn(component.onKeyUp, "emit");
-            onKeyPress = spyOn(component.onKeyPress, "emit");
-            onFocus = spyOn(component.onFocus, "emit");
-            onBlur = spyOn(component.onBlur, "emit");
+    it("Should emit optinal events", () => {
+        const onKeyDown: jasmine.Spy = spyOn(component.onKeyDown, "emit").and.callThrough();
+        const onKeyPress: jasmine.Spy = spyOn(component.onKeyUp, "emit").and.callThrough();
+        const onFocus: jasmine.Spy = spyOn(component.onKeyPress, "emit").and.callThrough();
+        const onBlur: jasmine.Spy = spyOn(component.onFocus, "emit").and.callThrough();
+        const onKeyUp: jasmine.Spy = spyOn(component.onBlur, "emit").and.callThrough();
 
-            fixture.detectChanges();
+        component.name = "myTextarea";
+        fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new KeyboardEvent("keydown"));
 
-            fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new KeyboardEvent("keydown"));
+        fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new KeyboardEvent("keyup"));
+        fixture.debugElement
+            .query(By.css(".form-control"))
+            .nativeElement.dispatchEvent(new KeyboardEvent("keypress", { key: "a", code: "65" }));
+        fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new MouseEvent("focus"));
+        fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new MouseEvent("blur"));
 
-            fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new KeyboardEvent("keyup"));
-            fixture.debugElement
-                .query(By.css(".form-control"))
-                .nativeElement.dispatchEvent(new KeyboardEvent("keypress", { key: "a", code: "65" }));
-            fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new MouseEvent("focus"));
-            fixture.debugElement.query(By.css(".form-control")).nativeElement.dispatchEvent(new MouseEvent("blur"));
-        });
-
-        it("KeyDown", () => expect(onKeyDown).toHaveBeenCalled());
-        it("KeyUp", () => expect(onKeyUp).toHaveBeenCalled());
-        it("KeyPress", () => expect(onKeyPress).toHaveBeenCalled());
-        it("Focus", () => expect(onFocus).toHaveBeenCalled());
-        it("Blur", () => expect(onBlur).toHaveBeenCalled());
+        fixture.detectChanges();
+        expect(onKeyDown).toHaveBeenCalled();
+        expect(onKeyUp).toHaveBeenCalled();
+        expect(onKeyPress).toHaveBeenCalled();
+        expect(onFocus).toHaveBeenCalled();
+        expect(onBlur).toHaveBeenCalled();
     });
 });
