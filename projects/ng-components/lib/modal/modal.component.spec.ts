@@ -3,7 +3,7 @@ import { TestBed, ComponentFixture, waitForAsync } from "@angular/core/testing";
 import { Subscription } from "rxjs";
 import { Component } from "@angular/core";
 
-describe("Component: ModalComponent", () => {
+fdescribe("Component: ModalComponent", () => {
     let component: ModalComponent;
     let fixture: ComponentFixture<ModalComponent>;
     let modalElement: HTMLDivElement;
@@ -222,6 +222,15 @@ describe("Component: ModalComponent", () => {
         expect(fixture.debugElement.nativeElement.querySelector(".modal-header").textContent).toEqual("my header");
         expect(fixture.debugElement.nativeElement.querySelector(".modal-body").textContent).toEqual("my body");
         expect(fixture.debugElement.nativeElement.querySelector(".modal-footer").textContent).toEqual("my footer");
+    });
+
+    it("should remove overflow-hidden from body when modal is destroyed", () => {
+        component.toggle = true;
+        fixture.detectChanges();
+
+        expect(document.body.classList.contains("overflow-hidden")).toBeTruthy();
+        component.ngOnDestroy();
+        expect(document.body.classList.contains("overflow-hidden")).toBeFalsy();
     });
 });
 
