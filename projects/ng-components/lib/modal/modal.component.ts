@@ -118,5 +118,6 @@ export class ModalComponent implements OnDestroy {
 
     ngOnDestroy(): void {
         window.removeEventListener("keyup", this.escapeKeyListener);
+        document.body.classList.remove("overflow-hidden");
     }
 }
