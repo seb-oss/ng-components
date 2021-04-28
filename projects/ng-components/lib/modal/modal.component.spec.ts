@@ -223,6 +223,15 @@ describe("Component: ModalComponent", () => {
         expect(fixture.debugElement.nativeElement.querySelector(".modal-body").textContent).toEqual("my body");
         expect(fixture.debugElement.nativeElement.querySelector(".modal-footer").textContent).toEqual("my footer");
     });
+
+    it("should remove overflow-hidden from body when modal is destroyed", () => {
+        component.toggle = true;
+        fixture.detectChanges();
+
+        expect(document.body.classList.contains("overflow-hidden")).toBeTruthy();
+        component.ngOnDestroy();
+        expect(document.body.classList.contains("overflow-hidden")).toBeFalsy();
+    });
 });
 
 @Component({

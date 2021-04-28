@@ -9,14 +9,14 @@ module.exports = function (config) {
             "karma-jasmine",
             "karma-chrome-launcher",
             "karma-jasmine-html-reporter",
-            "karma-coverage-istanbul-reporter",
+            "karma-coverage",
             "karma-spec-reporter",
             "@angular-devkit/build-angular/plugins/karma",
         ],
         client: {
             clearContext: false, // leave Jasmine Spec Runner output visible in browser
         },
-        coverageIstanbulReporter: {
+        coverageReporter: {
             dir: require("path").join(__dirname, "../../coverage/ng-components"),
             reports: ["html", "lcovonly", "text-summary"],
             fixWebpackSourcePaths: true,

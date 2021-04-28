@@ -1,56 +1,26 @@
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-
 import { LoaderComponent, LoaderSize, LoaderType } from "./loader.component";
 import { LoaderClassesPipe } from "./loader.pipe";
 import { By } from "@angular/platform-browser";
-import { Component } from "@angular/core";
-
-@Component({
-    selector: "test-sebng-loader",
-    template: `<sebng-loader
-        [className]="className"
-        [size]="size"
-        [type]="type"
-        [cover]="cover"
-        [backdrop]="backdrop"
-        [toggle]="toggle"
-        [role]="role"
-        [fullscreen]="fullscreen"
-    >
-        <p *ngIf="showText">Loading, please wait...</p>
-    </sebng-loader>`,
-})
-class LoaderTestComponent {
-    size?: LoaderSize;
-    type?: LoaderType;
-    cover?: boolean;
-    fullscreen?: boolean;
-    backdrop?: boolean;
-    srText?: string;
-    toggle?: boolean;
-    role?: string = "status";
-    className?: string;
-
-    showText?: boolean;
-}
 
 describe("LoaderComponent", () => {
-    let component: LoaderTestComponent;
-    let fixture: ComponentFixture<LoaderTestComponent>;
+    let component: LoaderComponent;
+    let fixture: ComponentFixture<LoaderComponent>;
 
     beforeEach(
         waitForAsync(() => {
             TestBed.configureTestingModule({
-                declarations: [LoaderTestComponent, LoaderComponent, LoaderClassesPipe],
+                declarations: [LoaderComponent, LoaderClassesPipe],
             }).compileComponents();
         })
     );
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(LoaderTestComponent);
+        fixture = TestBed.createComponent(LoaderComponent);
         component = fixture.componentInstance;
         component.size = "md";
         component.type = "spinner";
+        component.toggle = true;
         fixture.detectChanges();
     });
 
@@ -110,10 +80,9 @@ describe("LoaderComponent", () => {
     });
 
     it("Should render children under the loader and sr-only at the end with option to pass custom text to it", () => {
-        component.showText = true;
-
+        const text: string = "i am a loading text";
+        component.srText = text;
         fixture.detectChanges();
-
-        expect(fixture.debugElement.query(By.css("p")).nativeElement.textContent).toEqual("Loading, please wait...");
+        expect(fixture.nativeElement.querySelector(".sr-only").textContent).toEqual(text);
     });
 });
