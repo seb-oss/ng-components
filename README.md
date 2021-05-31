@@ -72,11 +72,9 @@ export class YourModule { }
 
 For your feedback please contact us via emails below:
 
-1. yousif.alraheem@seb.se
-2. mario.subotic@seb.se
-3. nuru.salihuabdullahi@seb.se
-4. omar.boudfoust@seb.se
-5. kherphay.chang@seb.se
+1. mario.subotic@seb.se
+2. omar.boudfoust@seb.se
+3. kherphay.chang@seb.se
 
 ## For React Users
 
