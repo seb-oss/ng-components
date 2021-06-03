@@ -1,20 +1,21 @@
-<ng-container [ngSwitch]="control.formItem.controlType">
+<ng-container [ngSwitch]="control.formItem?.controlType">
     <label *ngIf="control.formItem.label && control.formItem.controlType !== 'Checkbox'">{{ control.formItem.label }}</label>
     <p class="dynamic-form-item-description" *ngIf="control.formItem.description && control.formItem.controlType !== 'Checkbox'">
         <small>{{ control.formItem.description }}</small>
     </p>
 
     <ng-container *ngSwitchCase="controlType.Text.toString()">
-        <sebng-textbox
+        <input [formControl]="control" />
+        <!-- <sebng-textbox
             *ngIf="!control.formItem.multi; else multi"
             [id]="makeId()"
             className="dynamic-form-item"
-            [maxLength]="control.formItem.max"
             [name]="makeId()"
             [placeholder]="control.formItem.placeholder"
             [formControl]="control"
+            [error]="error"
         >
-        </sebng-textbox>
+        </sebng-textbox> -->
 
         <ng-template #multi>
             <div *ngFor="let arrayControl of getFormArrayControls(control); let i = index">
@@ -25,8 +26,6 @@
                         [id]="makeId(null, i)"
                         [formControl]="arrayControl"
                         [placeholder]="control.formItem.placeholder ? control.formItem.placeholder : ''"
-                        [minlength]="control.formItem.min"
-                        [maxlength]="control.formItem.max"
                     />
                     <div *ngIf="getFormArrayControls(control).length > 1" class="input-group-append">
                         <button
@@ -56,20 +55,12 @@
             className="dynamic-form-item"
             [id]="makeId()"
             [placeholder]="control.formItem.placeholder"
-            [minlength]="control.formItem.min"
-            [maxlength]="control.formItem.max"
             [formControl]="control"
         ></sebng-textarea>
     </ng-container>
 
     <ng-container *ngSwitchCase="controlType.Number?.toString()">
-        <sebng-stepper
-            className="dynamic-form-item"
-            [id]="makeId()"
-            [min]="control.formItem.min"
-            [max]="control.formItem.max"
-            [formControl]="control"
-        ></sebng-stepper>
+        <sebng-stepper className="dynamic-form-item" [id]="makeId()" [formControl]="control"></sebng-stepper>
     </ng-container>
 
     <ng-container *ngSwitchCase="controlType.Checkbox.toString()">
@@ -98,8 +89,6 @@
             className="dynamic-form-item"
             [formControl]="control"
             [id]="makeId()"
-            [min]="control.formItem.min"
-            [max]="control.formItem.max"
             [placeholder]="control.formItem.placeholder || 'yyyy-mm-dd'"
         ></sebng-datepicker>
     </ng-container>

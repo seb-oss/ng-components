@@ -1,8 +1,7 @@
 import { Component } from "@angular/core";
 import { ModalSize, ModalPosition } from "@sebgroup/ng-components/modal";
-import { FormService } from "@common/dynamic-form/form.service";
-import { ExtendedFormGroup } from "@common/dynamic-form/model/custom-classes/extended-form-group";
-import { DynamicFormOption } from "@common/dynamic-form/model/models";
+import { ExtendedFormGroup } from "@sebgroup/ng-components/dynamic-form/model/custom-classes/extended-form-group";
+import { DynamicFormOption, FormService } from "@sebgroup/ng-components/dynamic-form";
 
 @Component({
     selector: "app-modal-page",

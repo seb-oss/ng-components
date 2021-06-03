@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { FormService } from "../../../common/dynamic-form/form.service";
-import { ExtendedFormGroup } from "../../../common/dynamic-form/model/custom-classes/extended-form-group";
+import { FormService, RuleType } from "@sebgroup/ng-components/dynamic-form";
+import { ExtendedFormGroup } from "@sebgroup/ng-components/dynamic-form/model/custom-classes/extended-form-group";
 
 @Component({
     selector: "app-textbox-page",
@@ -95,8 +95,18 @@ export class TextboxPageComponent implements OnInit {
                         description: "Minimum length of input allowed for the textbox.",
                         controlType: "Number",
                         value: 1,
-                        min: 1,
-                        max: 1000,
+                        rules: [
+                            {
+                                type: RuleType.min,
+                                message: "min should be higher than",
+                                value: 1,
+                            },
+                            {
+                                type: RuleType.max,
+                                message: "min should be higher than",
+                                value: 1000,
+                            },
+                        ],
                     },
                     {
                         key: "max",
@@ -104,8 +114,18 @@ export class TextboxPageComponent implements OnInit {
                         description: "Maximum length of input allowed for the textbox.",
                         controlType: "Number",
                         value: 100,
-                        min: 1,
-                        max: 1000,
+                        rules: [
+                            {
+                                type: RuleType.min,
+                                message: "min should be higher than",
+                                value: 1,
+                            },
+                            {
+                                type: RuleType.max,
+                                message: "min should be higher than",
+                                value: 1000,
+                            },
+                        ],
                     },
                 ],
             },

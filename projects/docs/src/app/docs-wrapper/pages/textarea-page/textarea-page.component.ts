@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { FormService } from "../../../common/dynamic-form/form.service";
-import { ExtendedFormGroup } from "../../../common/dynamic-form/model/custom-classes/extended-form-group";
+import { FormService, RuleType } from "@sebgroup/ng-components/dynamic-form";
+import { ExtendedFormGroup } from "@sebgroup/ng-components/dynamic-form/model/custom-classes/extended-form-group";
 
 @Component({
     selector: "app-textarea-page",
@@ -54,8 +54,18 @@ export class TextareaPageComponent implements OnInit {
                         description: "The visible width of the textarea.",
                         controlType: "Number",
                         value: 22,
-                        min: 1,
-                        max: 80,
+                        rules: [
+                            {
+                                type: RuleType.min,
+                                message: "min should be higher than",
+                                value: 1,
+                            },
+                            {
+                                type: RuleType.max,
+                                message: "max should be less than",
+                                value: 80,
+                            },
+                        ],
                     },
                     {
                         key: "rows",
@@ -63,8 +73,18 @@ export class TextareaPageComponent implements OnInit {
                         description: "The visible height of the textarea.",
                         controlType: "Number",
                         value: 6,
-                        min: 1,
-                        max: 20,
+                        rules: [
+                            {
+                                type: RuleType.min,
+                                message: "min should be higher than",
+                                value: 1,
+                            },
+                            {
+                                type: RuleType.max,
+                                message: "max should be less than",
+                                value: 20,
+                            },
+                        ],
                     },
                     {
                         key: "max",
@@ -72,8 +92,18 @@ export class TextareaPageComponent implements OnInit {
                         description: "Maximum length of input allowed for the textarea.",
                         controlType: "Number",
                         value: 100,
-                        min: 1,
-                        max: 1000,
+                        rules: [
+                            {
+                                type: RuleType.min,
+                                message: "min should be higher than",
+                                value: 1,
+                            },
+                            {
+                                type: RuleType.max,
+                                message: "max should be less than",
+                                value: 1000,
+                            },
+                        ],
                     },
                 ],
             },

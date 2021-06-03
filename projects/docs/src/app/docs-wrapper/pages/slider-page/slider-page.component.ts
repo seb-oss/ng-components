@@ -1,8 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { ExtendedFormGroup } from "../../../common/dynamic-form/model/custom-classes/extended-form-group";
-import { FormService } from "../../../common/dynamic-form/form.service";
+import { ExtendedFormGroup } from "@sebgroup/ng-components/dynamic-form/model/custom-classes/extended-form-group";
+import { FormService } from "@sebgroup/ng-components/dynamic-form";
 import { RangeSliderLabel, SliderTheme } from "@sebgroup/ng-components/slider";
-import { DynamicFormOption } from "../../../common/dynamic-form/model/models";
+import { DynamicFormOption } from "@sebgroup/ng-components/dynamic-form/";
 
 @Component({
     selector: "app-slider-page",

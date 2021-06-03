@@ -14,6 +14,10 @@ const routes: Routes = [
                 loadChildren: () => import("./getting-started/getting-started.module").then(m => m.GettingStartedModule),
             },
             {
+                path: "dynamic-form",
+                loadChildren: () => import("./pages/dynamic-form-page/dynamic-form-page.module").then(m => m.DynamicFormPageModule),
+            },
+            {
                 path: "accordion",
                 loadChildren: () => import("./pages/accordion-page/accordion-page.module").then(m => m.AccordionPageModule),
             },

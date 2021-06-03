@@ -1,0 +1,80 @@
+<form *ngIf="extendedFormGroup" #ngForm="ngForm" [formGroup]="extendedFormGroup">
+    <div class="dynamic-form-section-item" *ngFor="let section of [extendedFormGroup.controls[step]] | keyvalue: orderForm">
+        <h3 *ngIf="$any(section).value.sectionItem.title">{{ $any(section).value.sectionItem.title }}</h3>
+
+        <div [class]="$any(section).value.sectionItem?.className" *ngIf="!$any(section).value.sectionItem?.multi; else multi">
+            <ng-container *ngFor="let control of $any(section).value.controls | keyvalue: orderForm">
+                <div
+                    [class]="$any(control).value.formItem?.className"
+                    *ngIf="shouldRenderControl(section.key, $any(control).value.formItem)"
+                >
+                    <app-dynamic-form-item
+                        [control]="control.value"
+                        [submitted]="ngForm.submitted"
+                        [sectionId]="$any(section).value.sectionItem.key"
+                        (itemAddedClicked)="addNewItemToFormArrayWithId(section.key, $event)"
+                        (itemRemovedClicked)="removeItemAtIndexFromFormArrayWithId(section.key, $event)"
+                    ></app-dynamic-form-item>
+
+                    <div *ngIf="(shouldRenderFollowUpControls(section.key, $any(control).value.formItem) | keyvalue)?.length">
+                        <div
+                            *ngFor="
+                                let item of shouldRenderFollowUpControls(section.key, $any(control).value.formItem) | keyvalue: orderForm
+                            "
+                        >
+                            <app-dynamic-form-item [control]="item.value"></app-dynamic-form-item>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+
+        <ng-template #multi>
+            <div
+                class="dynamic-form-section-item"
+                [class]="$any(section).value.sectionItem.className"
+                *ngFor="let arrayControl of getFormArrayControls(section.value); let i = index"
+            >
+                <ng-container *ngFor="let control of arrayControl.controls | keyvalue: orderForm">
+                    <div
+                        class="form-group"
+                        [class]="$any(control).value.formItem.className"
+                        *ngIf="shouldRenderControl($any(section).value.sectionItem.key, $any(control).value.formItem, i)"
+                    >
+                        <app-dynamic-form-item
+                            [control]="control.value"
+                            [sectionId]="$any(section).value.sectionItem.key + $any(control).key + i"
+                            [submitted]="ngForm.submitted"
+                            (itemAddedClicked)="addNewItemToFormArrayWithId(section.key, $event, i)"
+                            (itemRemovedClicked)="removeItemAtIndexFromFormArrayWithId(section.key, $event, i)"
+                        ></app-dynamic-form-item>
+                        <span
+                            *ngIf="getValidationErrorFor($any(section).value.sectionItem.key, $any(control).value.formItem, i)"
+                            class="alert alert-danger"
+                            >{{ getValidationErrorFor($any(section).value.sectionItem.key, $any(control).value.formItem, i) }}</span
+                        >
+                    </div>
+                </ng-container>
+
+                <button
+                    *ngIf="getFormArrayControls(section.value).length > 1"
+                    [id]="$any(section).value.sectionItem.key + i + '-remove'"
+                    class="btn btn-sm btn-outline-danger"
+                    type="button"
+                    (click)="removeItemAtIndexFromFormArrayWithId(section.key, null, i)"
+                >
+                    - Remove {{ $any(section).value.sectionItem.title }}
+                </button>
+            </div>
+
+            <button
+                [id]="$any(section).value.sectionItem.key + '-add'"
+                class="btn btn-sm btn-secondary"
+                type="button"
+                (click)="addNewItemToFormArrayWithId($any(section).value.sectionItem.key)"
+            >
+                + Add new {{ $any(section).value.sectionItem.title }}
+            </button>
+        </ng-template>
+    </div>
+</form>

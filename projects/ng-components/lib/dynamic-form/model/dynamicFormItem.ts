@@ -2,22 +2,47 @@ import { DynamicFormType } from "./dynamicFormType";
 import { DynamicFormOption } from "./dynamicFormOption";
 import { AttributeTypeMap } from "./models";
 
+export enum RuleType {
+    required,
+    min,
+    max,
+    minLength,
+    maxLength,
+    pattern,
+    minThanReference,
+    minThanEqualsReference,
+    maxThanReference,
+    maxThanEqualReference,
+}
+
+export interface formItemValidation {
+    required?: boolean;
+    min?: number | string;
+    max?: number | string;
+    minLength?: number | string;
+    maxLength?: number | string;
+}
+
+export interface Rule {
+    value?: any;
+    message?: string;
+    type: RuleType;
+}
+
 export interface DynamicFormItem {
     key: string | null;
     value?: any;
     label?: string | null;
     description?: string | null;
     className?: string | null;
-    required?: boolean;
     multi?: boolean;
-    min?: any;
-    max?: any;
     order?: number;
     placeholder?: string | null;
     options?: Array<DynamicFormOption> | null;
     rulerKey?: string | null;
     condition?: any;
     controlType: DynamicFormType;
+    rules?: Rule[];
 }
 
 export const attributeTypeMapDynamicFormItem: AttributeTypeMap[] = [

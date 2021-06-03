@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import { FormService } from "../../../common/dynamic-form/form.service";
-import { ExtendedFormGroup } from "../../../common/dynamic-form/model/custom-classes/extended-form-group";
+import { FormService, RuleType } from "@sebgroup/ng-components/dynamic-form";
+import { ExtendedFormGroup } from "@sebgroup/ng-components/dynamic-form/model/custom-classes/extended-form-group";
 
 @Component({
     selector: "app-stepper-page",
@@ -52,8 +52,18 @@ export class StepperPageComponent {
                         label: "Step",
                         description: "Value that changes on every increment/decrement.",
                         value: 10,
-                        min: 1,
-                        max: 500,
+                        rules: [
+                            {
+                                type: RuleType.min,
+                                message: "min should be higher than",
+                                value: 1,
+                            },
+                            {
+                                type: RuleType.max,
+                                message: "max should be higher than",
+                                value: 500,
+                            },
+                        ],
                     },
                     {
                         key: "min",
@@ -61,8 +71,18 @@ export class StepperPageComponent {
                         label: "Min",
                         description: "Minimum value of the range.",
                         value: 0,
-                        min: -1000,
-                        max: 0,
+                        rules: [
+                            {
+                                type: RuleType.min,
+                                message: "min should be higher than",
+                                value: -1000,
+                            },
+                            {
+                                type: RuleType.max,
+                                message: "max should be higher than",
+                                value: 0,
+                            },
+                        ],
                     },
                     {
                         key: "max",
@@ -70,8 +90,18 @@ export class StepperPageComponent {
                         label: "Max",
                         description: "Maximum value of the range.",
                         value: 100,
-                        min: 0,
-                        max: 1000,
+                        rules: [
+                            {
+                                type: RuleType.min,
+                                message: "min should be higher than",
+                                value: 0,
+                            },
+                            {
+                                type: RuleType.max,
+                                message: "max should be higher than",
+                                value: 1000,
+                            },
+                        ],
                     },
                 ],
             },

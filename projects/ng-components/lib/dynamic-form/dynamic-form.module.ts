@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
@@ -6,13 +6,13 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DynamicFormComponent } from "./dynamic-form.component";
 import { DynamicFormItemComponent } from "./dynamic-form-item/dynamic-form-item.component";
 
-import { CheckboxModule } from "@sebgroup/ng-components/checkbox";
-import { RadioGroupModule } from "@sebgroup/ng-components/radio-group";
-import { TextboxModule } from "@sebgroup/ng-components/textbox";
-import { DatepickerModule } from "@sebgroup/ng-components/datepicker";
-import { DropdownModule } from "@sebgroup/ng-components/dropdown";
-import { TextareaModule } from "@sebgroup/ng-components/textarea";
-import { StepperModule } from "@sebgroup/ng-components/stepper";
+import { CheckboxModule } from "../checkbox";
+import { RadioGroupModule } from "../radio-group";
+import { TextboxModule } from "../textbox";
+import { DatepickerModule } from "../datepicker";
+import { DropdownModule } from "../dropdown";
+import { TextareaModule } from "../textarea";
+import { StepperModule } from "../stepper";
 
 @NgModule({
     declarations: [DynamicFormComponent, DynamicFormItemComponent],
@@ -36,11 +36,11 @@ import { StepperModule } from "@sebgroup/ng-components/stepper";
         DropdownModule,
         CheckboxModule,
         RadioGroupModule,
-        TextboxModule,
         TextareaModule,
         DatepickerModule,
         StepperModule,
     ],
     bootstrap: [DynamicFormItemComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class DynamicFormModule {}

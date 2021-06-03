@@ -1,0 +1,9 @@
+<app-doc-page [importString]="importString" [centered]="true" [showNotes]="true">
+    <ng-container example>
+        <div class="row">
+            <app-dynamic-form [extendedFormGroup]="extendedFormGroup" [step]="step"></app-dynamic-form>
+            <button (click)="validateForm()">Validate Form</button>
+            <button class="btn btn-primary" (click)="goToNextStep()">Next</button>
+        </div>
+    </ng-container>
+</app-doc-page>

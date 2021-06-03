@@ -1,5 +1,11 @@
 [
     {
+        "name": "Dynamic Form",
+        "path": "/docs/dynamic-form",
+        "filePath": "./pages/dynamic-form-page/dynamic-form-page.module",
+        "module": "DynamicFormPageModule"
+    },
+    {
         "name": "Textbox",
         "path": "/docs/Textbox",
         "filePath": "./pages/Textbox-page/Textbox-page.module",

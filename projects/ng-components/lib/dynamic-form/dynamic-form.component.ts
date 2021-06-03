@@ -15,7 +15,7 @@ interface DynamicFormValidationError {
     sectionIndex: number;
     formItem: Partial<DynamicFormItem>;
 }
-
+/** some comment */
 @Component({
     selector: "app-dynamic-form",
     templateUrl: "./dynamic-form.component.html",
@@ -31,8 +31,22 @@ interface DynamicFormValidationError {
 export class DynamicFormComponent {
     @Input() extendedFormGroup: ExtendedFormGroup;
     @Input() validationErrors: DynamicFormValidationError[];
+    @Input() step?: string = "form1";
 
     constructor(private formService: FormService) {}
+
+    shouldRenderFollowUpControls(key: string, formItem: DynamicFormItem, index?: number): ExtendedFormGroupControls {
+        const selectedAnswer: string = this.extendedFormGroup.controls[this.step].value[formItem?.key]?.id;
+        if (selectedAnswer) {
+            const option: DynamicFormOption = formItem.options.find((option: DynamicFormOption) => option.id === selectedAnswer);
+
+            return this.formService.dynamicFormItemsToControls(option.followUpItems);
+        }
+    }
+
+    log(e) {
+        console.log("log ====>", e);
+    }
 
     /**
      * SHOULD RENDER CONTROL:
@@ -42,57 +56,58 @@ export class DynamicFormComponent {
      * @param index if the formgroup is an array this is the index of the formgroup item
      */
     shouldRenderControl(key: string, formItem: DynamicFormItem, index?: number): boolean {
-        if (formItem.rulerKey) {
-            // It has a ruler key, trying to find the ruler and it's value
-            let ruler: ExtendedFormControl;
-            if (index > -1) {
-                // the form control where the ruler should be is an array
-                const target: ExtendedFormControl = (this.extendedFormGroup.get(key) as ExtendedFormGroupArray)
-                    .at(index)
-                    .get(formItem.rulerKey) as ExtendedFormControl;
-                if (target) {
-                    ruler = target;
+        if (this.extendedFormGroup.controls[this.step])
+            if (formItem?.rulerKey) {
+                // It has a ruler key, trying to find the ruler and it's value
+                let ruler: ExtendedFormControl;
+                if (index > -1) {
+                    // the form control where the ruler should be is an array
+                    const target: ExtendedFormControl = (this.extendedFormGroup.get(key) as ExtendedFormGroupArray)
+                        .at(index)
+                        .get(formItem.rulerKey) as ExtendedFormControl;
+                    if (target) {
+                        ruler = target;
+                    }
+                } else {
+                    // no array index: the form control where the ruler should be is a regular form
+                    ruler = this.extendedFormGroup.get(key).get(formItem.rulerKey) as ExtendedFormControl;
                 }
-            } else {
-                // no array index: the form control where the ruler should be is a regular form
-                ruler = this.extendedFormGroup.get(key).get(formItem.rulerKey) as ExtendedFormControl;
-            }
-            const rulerValue: any = ruler.value;
-            const { condition }: DynamicFormItem = formItem;
-            if (rulerValue === undefined || condition === undefined) {
-                console.warn("Something went wrong in shouldRenderControl: Ruler value or condition could not be found.");
-                return false;
-            }
-            if (typeof rulerValue === "string" && rulerValue === (condition as any)) {
-                return this.shouldRenderControl(key, ruler.formItem, index);
-            } else if (rulerValue && condition && typeof condition === "object" && Array.isArray(condition)) {
-                for (const conditionItem of condition as Array<any>) {
-                    if (conditionItem) {
-                        if (typeof rulerValue === "object" && Array.isArray(rulerValue)) {
-                            for (const rulerValueItem of rulerValue as Array<any>) {
-                                if (rulerValueItem && rulerValueItem.value === conditionItem.value) {
+                const rulerValue: any = ruler.value;
+                const { condition }: DynamicFormItem = formItem;
+                if (rulerValue === undefined || condition === undefined) {
+                    console.warn("Something went wrong in shouldRenderControl: Ruler value or condition could not be found.");
+                    return false;
+                }
+                if (typeof rulerValue === "string" && rulerValue === (condition as any)) {
+                    return this.shouldRenderControl(key, ruler.formItem, index);
+                } else if (rulerValue && condition && typeof condition === "object" && Array.isArray(condition)) {
+                    for (const conditionItem of condition as Array<any>) {
+                        if (conditionItem) {
+                            if (typeof rulerValue === "object" && Array.isArray(rulerValue)) {
+                                for (const rulerValueItem of rulerValue as Array<any>) {
+                                    if (rulerValueItem && rulerValueItem.value === conditionItem.value) {
+                                        return this.shouldRenderControl(key, ruler.formItem, index);
+                                    }
+                                }
+                            } else if (typeof rulerValue === "object" && !Array.isArray(rulerValue)) {
+                                if (rulerValue && rulerValue.value === conditionItem.value) {
                                     return this.shouldRenderControl(key, ruler.formItem, index);
                                 }
                             }
-                        } else if (typeof rulerValue === "object" && !Array.isArray(rulerValue)) {
-                            if (rulerValue && rulerValue.value === conditionItem.value) {
-                                return this.shouldRenderControl(key, ruler.formItem, index);
-                            }
                         }
                     }
+                } else if (
+                    rulerValue &&
+                    typeof rulerValue === "object" &&
+                    !Array.isArray(rulerValue) &&
+                    rulerValue.value === (condition as DynamicFormOption).value
+                ) {
+                    return this.shouldRenderControl(key, ruler.formItem, index);
+                } else if (rulerValue && typeof rulerValue === "boolean" && rulerValue === condition) {
+                    return this.shouldRenderControl(key, ruler.formItem, index);
                 }
-            } else if (
-                rulerValue &&
-                typeof rulerValue === "object" &&
-                !Array.isArray(rulerValue) &&
-                rulerValue.value === (condition as DynamicFormOption).value
-            ) {
-                return this.shouldRenderControl(key, ruler.formItem, index);
-            } else if (rulerValue && typeof rulerValue === "boolean" && rulerValue === condition) {
-                return this.shouldRenderControl(key, ruler.formItem, index);
+                return false;
             }
-            return false;
-        }
         return true;
     }
 
@@ -190,13 +205,13 @@ export class DynamicFormComponent {
             sectionErrors = this.validationErrors.filter(error => error.sectionId === key);
         }
 
-        if (sectionErrors && sectionErrors.length) {
+        sectionErrors?.length &&
             sectionErrors.forEach(error => {
                 if (error.key === formItem.key) {
                     errorMessage = error.errorMessage;
                 }
             });
-        }
+
         return errorMessage;
     };
 }

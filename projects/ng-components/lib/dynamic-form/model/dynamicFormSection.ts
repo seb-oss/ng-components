@@ -7,7 +7,7 @@ export interface DynamicFormSection {
     key?: string | null;
     order?: number;
     multi?: boolean;
-    items?: Array<DynamicFormItem> | null;
+    items?: DynamicFormItem[] | null;
 }
 
 export const attributeTypeMapDynamicFormSection: AttributeTypeMap[] = [

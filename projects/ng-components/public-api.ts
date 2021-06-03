@@ -1,7 +1,6 @@
 /*
  * Public API Surface of ng-components
  */
-
 export * from "./lib/accordion";
 export * from "./lib/breadcrumb";
 export * from "./lib/button";
@@ -30,3 +29,4 @@ export * from "./lib/toggle-selector";
 export * from "./lib/tooltip";
 export * from "./lib/video";
 export * from "./lib/wizard";
+export * from "./lib/dynamic-form";
