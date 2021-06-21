@@ -5,9 +5,10 @@ import { CommonModule } from "@angular/common";
 import { DocPageModule } from "../../doc-page/doc-page.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SliderPageRoutingModule } from "./slider-page-routing.module";
+import { StepperModule } from "@sebgroup/ng-components/stepper";
 
 @NgModule({
     declarations: [SliderPageComponent],
-    imports: [CommonModule, SliderPageRoutingModule, FormsModule, DocPageModule, SliderModule, ReactiveFormsModule],
+    imports: [CommonModule, SliderPageRoutingModule, FormsModule, DocPageModule, SliderModule, ReactiveFormsModule, StepperModule],
 })
 export class SliderPageModule {}

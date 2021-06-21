@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { ChangeDetectorRef, Component, ContentChild, EventEmitter, Input, Output, TemplateRef } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { KeyValue } from "@angular/common";
 import { DynamicFormItem, DynamicFormOption } from "./model/models";
@@ -31,21 +31,64 @@ interface DynamicFormValidationError {
 export class DynamicFormComponent {
     @Input() extendedFormGroup: ExtendedFormGroup;
     @Input() validationErrors: DynamicFormValidationError[];
-    @Input() step?: string = "form1";
+    @Input() activeStep: number;
+    @Input() sectionTemplate: TemplateRef<any>;
+    @Input() itemTemplate: TemplateRef<any>;
+    @Input() actionsTemplate: TemplateRef<any>;
+    @Input() disclaimerTemplate: TemplateRef<any>;
+    @Input() itemCustomClass: string;
+    @Output() previousEvent: EventEmitter<any> = new EventEmitter();
+    @Output() nextEvent: EventEmitter<any> = new EventEmitter();
+    @Output() cancelEvent: EventEmitter<any> = new EventEmitter();
 
-    constructor(private formService: FormService) {}
+    submitted: boolean = false;
 
-    shouldRenderFollowUpControls(key: string, formItem: DynamicFormItem, index?: number): ExtendedFormGroupControls {
-        const selectedAnswer: string = this.extendedFormGroup.controls[this.step].value[formItem?.key]?.id;
-        if (selectedAnswer) {
-            const option: DynamicFormOption = formItem.options.find((option: DynamicFormOption) => option.id === selectedAnswer);
+    newFormGroup: { form: ExtendedFormGroup; index: number } = { form: null, index: null };
 
-            return this.formService.dynamicFormItemsToControls(option.followUpItems);
+    followUpModalToggle: boolean = false;
+
+    constructor(private formService: FormService, private cd: ChangeDetectorRef) {}
+
+    shouldRenderFollowUpControlsType(key: any): string {
+        if (key.value?.followUpItems) {
+            return key.value?.followUpItems.type;
         }
     }
 
-    log(e) {
-        console.log("log ====>", e);
+    dimissFollowUpModal(item: ExtendedFormControl): void {
+        this.followUpModalToggle = false;
+        !item.formGroup && item?.reset();
+    }
+
+    saveFollowUpModal(param: { item: ExtendedFormGroup; control: ExtendedFormControl }): void {
+        const { item, control } = param;
+        if (item.valid) {
+            if (this.newFormGroup.index !== null) {
+                (control.formGroup as ExtendedFormGroupArray).setControl(this.newFormGroup.index, item);
+            } else {
+                if (!control.formGroup?.controls?.length) {
+                    control.formGroup = new ExtendedFormGroupArray([item]);
+                } else {
+                    (control.formGroup as ExtendedFormGroupArray).push(item);
+                }
+            }
+            this.followUpModalToggle = false;
+            this.cd.detectChanges();
+        }
+    }
+
+    createFormGroup(item: any) {
+        this.newFormGroup = {
+            form: this.formService.dynamicFormItemsToFormGroup(item),
+            index: null,
+        };
+        this.followUpModalToggle = true;
+    }
+
+    modalShouldBeRendered(control): boolean {
+        if (control.value?.followUpItems) {
+            return !!this.newFormGroup.form;
+        }
     }
 
     /**
@@ -56,7 +99,7 @@ export class DynamicFormComponent {
      * @param index if the formgroup is an array this is the index of the formgroup item
      */
     shouldRenderControl(key: string, formItem: DynamicFormItem, index?: number): boolean {
-        if (this.extendedFormGroup.controls[this.step])
+        if (this.extendedFormGroup.controls)
             if (formItem?.rulerKey) {
                 // It has a ruler key, trying to find the ruler and it's value
                 let ruler: ExtendedFormControl;
@@ -170,9 +213,28 @@ export class DynamicFormComponent {
         }
     }
 
+    removeItemFromParent(param: { form: ExtendedFormControl; index: number }): void {
+        const { form, index } = param;
+        (form.formGroup as ExtendedFormGroupArray).removeAt(index);
+        // reset parent control if the formGroup property doesn't have controls
+        if (!(form.formGroup as ExtendedFormGroupArray).controls?.length) {
+            form.reset();
+        }
+        this.followUpModalToggle = false;
+    }
+
+    editItemFromParent(param: { formArray: ExtendedFormArray; index: number }): void {
+        const { formArray, index } = param;
+        this.newFormGroup = {
+            form: new ExtendedFormGroup((formArray.at(index) as ExtendedFormGroup).controls as ExtendedFormGroupControls),
+            index,
+        };
+        this.followUpModalToggle = true;
+    }
+
     orderForm = (
-        a: KeyValue<number, ExtendedFormGroup | ExtendedFormControl>,
-        b: KeyValue<number, ExtendedFormGroup | ExtendedFormControl>
+        a: KeyValue<string, ExtendedFormGroup | ExtendedFormControl>,
+        b: KeyValue<string, ExtendedFormGroup | ExtendedFormControl>
     ): number => {
         if (a.value["sectionItem"] && b.value["sectionItem"]) {
             return (a.value as ExtendedFormGroup).sectionItem.order - (b.value as ExtendedFormGroup).sectionItem.order;
@@ -214,4 +276,32 @@ export class DynamicFormComponent {
 
         return errorMessage;
     };
+
+    controlValueChanged(): void {
+        this.submitted &&= false;
+    }
+
+    get sectionList() {
+        if (this.activeStep !== null) {
+            return [this.extendedFormGroup.controls[Object.keys(this.extendedFormGroup.controls)[this.activeStep]]];
+        } else {
+            return this.extendedFormGroup.controls;
+        }
+    }
+
+    cancel(): void {
+        this.cancelEvent.emit();
+    }
+
+    next(): void {
+        this.submitted = true;
+        if (this.formService.validateForm(this.extendedFormGroup)) {
+            this.nextEvent?.emit();
+            this.submitted = false;
+        }
+    }
+
+    previous(): void {
+        this.previousEvent.emit();
+    }
 }

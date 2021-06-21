@@ -13,6 +13,12 @@ export enum RuleType {
     minThanEqualsReference,
     maxThanReference,
     maxThanEqualReference,
+    confirm,
+}
+
+export enum MediaKind {
+    Image,
+    Video,
 }
 
 export interface formItemValidation {
@@ -29,11 +35,24 @@ export interface Rule {
     type: RuleType;
 }
 
+export interface Media {
+    id: string;
+    url: string;
+    kind: MediaKind;
+    mimeType: string;
+    name: string;
+    description: string;
+}
+
 export interface DynamicFormItem {
     key: string | null;
+    category?: string | null; //subTitle
+    title?: string | null; //name
     value?: any;
     label?: string | null;
+    descriptionHeader?: string | null; //text
     description?: string | null;
+    media?: Media[];
     className?: string | null;
     multi?: boolean;
     order?: number;
@@ -43,6 +62,12 @@ export interface DynamicFormItem {
     condition?: any;
     controlType: DynamicFormType;
     rules?: Rule[];
+    controlMetaData?: {
+        label?: string;
+        description?: string;
+        inputGroupLabel?: string;
+        inputGroupPosition?: "left" | "right";
+    };
 }
 
 export const attributeTypeMapDynamicFormItem: AttributeTypeMap[] = [
@@ -61,4 +86,5 @@ export const attributeTypeMapDynamicFormItem: AttributeTypeMap[] = [
     { name: "rulerKey", type: "string" },
     { name: "condition", type: "object" },
     { name: "controlType", type: "DynamicFormType" },
+    { name: "controlMetaData", type: "object" },
 ];

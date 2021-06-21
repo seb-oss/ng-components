@@ -1,0 +1,15 @@
+<sebng-modal [toggle]="modalToggle" [centered]="centered" [position]="position" [size]="size" (dismiss)="dismiss()">
+    <ng-container body>
+        <div *ngFor="let item of form.controls | keyvalue: orderForm">
+            <app-dynamic-form-item
+                [control]="item.value"
+                [submitted]="submitted"
+                (controlValueChanged)="controlValueChanged()"
+            ></app-dynamic-form-item>
+        </div>
+    </ng-container>
+    <ng-container footer>
+        <button *ngIf="controlIndex !== null" class="btn btn-danger" (click)="remove()">Delete</button>
+        <button class="btn btn-primary" (click)="save()">Save</button>
+    </ng-container>
+</sebng-modal>

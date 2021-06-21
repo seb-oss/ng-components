@@ -1,30 +1,72 @@
 <form *ngIf="extendedFormGroup" #ngForm="ngForm" [formGroup]="extendedFormGroup">
-    <div class="dynamic-form-section-item" *ngFor="let section of [extendedFormGroup.controls[step]] | keyvalue: orderForm">
-        <h3 *ngIf="$any(section).value.sectionItem.title">{{ $any(section).value.sectionItem.title }}</h3>
+    <div class="dynamic-form-section-item" *ngFor="let section of sectionList | keyvalue: orderForm">
+        <ng-container
+            [ngTemplateOutlet]="sectionTemplate || internalSectionTemplate"
+            [ngTemplateOutletContext]="{ context: section.value.sectionItem }"
+        ></ng-container>
 
-        <div [class]="$any(section).value.sectionItem?.className" *ngIf="!$any(section).value.sectionItem?.multi; else multi">
-            <ng-container *ngFor="let control of $any(section).value.controls | keyvalue: orderForm">
-                <div
-                    [class]="$any(control).value.formItem?.className"
-                    *ngIf="shouldRenderControl(section.key, $any(control).value.formItem)"
-                >
-                    <app-dynamic-form-item
-                        [control]="control.value"
-                        [submitted]="ngForm.submitted"
-                        [sectionId]="$any(section).value.sectionItem.key"
-                        (itemAddedClicked)="addNewItemToFormArrayWithId(section.key, $event)"
-                        (itemRemovedClicked)="removeItemAtIndexFromFormArrayWithId(section.key, $event)"
-                    ></app-dynamic-form-item>
-
-                    <div *ngIf="(shouldRenderFollowUpControls(section.key, $any(control).value.formItem) | keyvalue)?.length">
-                        <div
-                            *ngFor="
-                                let item of shouldRenderFollowUpControls(section.key, $any(control).value.formItem) | keyvalue: orderForm
-                            "
-                        >
-                            <app-dynamic-form-item [control]="item.value"></app-dynamic-form-item>
-                        </div>
-                    </div>
+        <div [class]="section.value.sectionItem?.className" *ngIf="!section.value.sectionItem?.multi; else multi">
+            <ng-container *ngFor="let control of section.value.controls | keyvalue: orderForm">
+                <ng-container
+                    [ngTemplateOutlet]="itemTemplate"
+                    [ngTemplateOutletContext]="{ context: control.value.formItem }"
+                ></ng-container>
+                <div [class]="control.value.formItem?.className" *ngIf="shouldRenderControl(section.key, control.value.formItem)">
+                    <ng-container *ngIf="control.value.formGroup; else singleItem">
+                        <app-dynamic-form-item
+                            [parentFormGroup]="extendedFormGroup"
+                            [control]="control.value"
+                            [submitted]="submitted"
+                            (createFormGroup)="createFormGroup($event)"
+                            (controlValueChanged)="controlValueChanged()"
+                        ></app-dynamic-form-item>
+                        <ng-container [ngSwitch]="shouldRenderFollowUpControlsType(control.value)">
+                            <ng-container *ngSwitchCase="'inline'">
+                                <div *ngFor="let item of control.value.formGroup.controls | keyvalue: orderForm">
+                                    <app-dynamic-form-item
+                                        [parentFormGroup]="extendedFormGroup"
+                                        [control]="item.value"
+                                        [submitted]="submitted"
+                                        (controlValueChanged)="controlValueChanged()"
+                                    ></app-dynamic-form-item>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngSwitchDefault>
+                                <app-dynamic-form-data
+                                    [control]="control"
+                                    (editControl)="editItemFromParent($event)"
+                                    (deleteControl)="removeItemFromParent($event)"
+                                ></app-dynamic-form-data>
+                                <ng-container *ngIf="control.value.value?.followUpItems?.multi">
+                                    <button
+                                        class="btn btn-sm btn-secondary"
+                                        type="button"
+                                        (click)="createFormGroup(control.value.value.followUpItems?.items)"
+                                    >
+                                        + Add new
+                                    </button>
+                                    <ng-container
+                                        [ngTemplateOutlet]="modalTemplate"
+                                        [ngTemplateOutletContext]="{ context: control }"
+                                    ></ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                    <ng-template #singleItem>
+                        <app-dynamic-form-item
+                            [parentFormGroup]="extendedFormGroup"
+                            [control]="control.value"
+                            [sectionId]="section.value.sectionItem.key"
+                            [itemCustomClass]="itemCustomClass"
+                            [submitted]="submitted"
+                            (createFormGroup)="createFormGroup($event)"
+                            (itemAddedClicked)="addNewItemToFormArrayWithId(section.key, $event)"
+                            (itemRemovedClicked)="removeItemAtIndexFromFormArrayWithId(section.key, $event)"
+                            (controlValueChanged)="controlValueChanged()"
+                        ></app-dynamic-form-item>
+                        <ng-container [ngTemplateOutlet]="modalTemplate" [ngTemplateOutletContext]="{ context: control }"></ng-container>
+                    </ng-template>
                 </div>
             </ng-container>
         </div>
@@ -32,49 +74,80 @@
         <ng-template #multi>
             <div
                 class="dynamic-form-section-item"
-                [class]="$any(section).value.sectionItem.className"
+                [class]="section.value.sectionItem.className"
                 *ngFor="let arrayControl of getFormArrayControls(section.value); let i = index"
             >
                 <ng-container *ngFor="let control of arrayControl.controls | keyvalue: orderForm">
                     <div
                         class="form-group"
-                        [class]="$any(control).value.formItem.className"
-                        *ngIf="shouldRenderControl($any(section).value.sectionItem.key, $any(control).value.formItem, i)"
+                        [class]="control.value.formItem.className"
+                        *ngIf="shouldRenderControl(section.value.sectionItem.key, control.value.formItem, i)"
                     >
+                        4
                         <app-dynamic-form-item
+                            [formGroup]="sectionList"
                             [control]="control.value"
-                            [sectionId]="$any(section).value.sectionItem.key + $any(control).key + i"
-                            [submitted]="ngForm.submitted"
+                            [sectionId]="section.value.sectionItem.key + control.key + i"
+                            [submitted]="submitted"
                             (itemAddedClicked)="addNewItemToFormArrayWithId(section.key, $event, i)"
                             (itemRemovedClicked)="removeItemAtIndexFromFormArrayWithId(section.key, $event, i)"
+                            (controlValueChanged)="controlValueChanged()"
                         ></app-dynamic-form-item>
                         <span
-                            *ngIf="getValidationErrorFor($any(section).value.sectionItem.key, $any(control).value.formItem, i)"
+                            *ngIf="getValidationErrorFor(section.value.sectionItem.key, control.value.formItem, i)"
                             class="alert alert-danger"
-                            >{{ getValidationErrorFor($any(section).value.sectionItem.key, $any(control).value.formItem, i) }}</span
+                            >{{ getValidationErrorFor(section.value.sectionItem.key, control.value.formItem, i) }}</span
                         >
                     </div>
                 </ng-container>
 
                 <button
                     *ngIf="getFormArrayControls(section.value).length > 1"
-                    [id]="$any(section).value.sectionItem.key + i + '-remove'"
+                    [id]="section.value.sectionItem.key + i + '-remove'"
                     class="btn btn-sm btn-outline-danger"
                     type="button"
                     (click)="removeItemAtIndexFromFormArrayWithId(section.key, null, i)"
                 >
-                    - Remove {{ $any(section).value.sectionItem.title }}
+                    - Remove {{ section.value.sectionItem.title }}
                 </button>
             </div>
 
             <button
-                [id]="$any(section).value.sectionItem.key + '-add'"
+                [id]="section.value.sectionItem.key + '-add'"
                 class="btn btn-sm btn-secondary"
                 type="button"
-                (click)="addNewItemToFormArrayWithId($any(section).value.sectionItem.key)"
+                (click)="addNewItemToFormArrayWithId(section.value.sectionItem.key)"
             >
-                + Add new {{ $any(section).value.sectionItem.title }}
+                + Add new {{ section.value.sectionItem.title }}
             </button>
         </ng-template>
+
+        <ng-template let-context="context" #modalTemplate>
+            <app-dynamic-form-modal
+                *ngIf="modalShouldBeRendered(context?.value)"
+                [modalToggle]="followUpModalToggle"
+                [control]="context"
+                [form]="newFormGroup.form"
+                [controlIndex]="newFormGroup.index"
+                (saveControl)="saveFollowUpModal($event)"
+                (cancelControl)="dimissFollowUpModal($event)"
+                (deleteControl)="removeItemFromParent($event)"
+            ></app-dynamic-form-modal>
+        </ng-template>
     </div>
+    <ng-container *ngIf="actionsTemplate; else internalActionsTemplate" [ngTemplateOutlet]="actionsTemplate"></ng-container>
+    <ng-template #internalActionsTemplate>
+        <div class="d-flex justify-content-between">
+            <div>
+                <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+                <button class="btn btn-outline-primary" (click)="previous()">Previous</button>
+            </div>
+            <button class="btn btn-primary" (click)="next()">Next</button>
+        </div>
+    </ng-template>
+
+    <ng-template let-context="context" #internalSectionTemplate>
+        <span *ngIf="context?.category">{{ context.category }}</span>
+        <h3 *ngIf="context?.title">{{ context.title }}</h3>
+    </ng-template>
 </form>

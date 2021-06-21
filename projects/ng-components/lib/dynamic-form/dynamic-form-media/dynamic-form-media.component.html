@@ -1,0 +1,9 @@
+<ng-container [ngSwitch]="media.kind">
+    <div class="media-container" *ngSwitchCase="0">
+        <img #img [src]="mediaPath | safe: 'resourceUrl'" [alt]="media.description" [height]="imgHeight" (load)="calculateHeight()" />
+    </div>
+    <div class="media-container" *ngSwitchCase="1">
+        <iframe [src]="mediaPath | safe: 'resourceUrl'" allow="fullscreen" frameBorder="0"></iframe>
+    </div>
+    <span *ngIf="media?.description && media?.url">{{ media.description }}</span>
+</ng-container>

@@ -4,7 +4,7 @@ import { ExtendedFormControl } from "./extended-form-control";
 import { ExtendedFormArray } from "./extended-form-array";
 import { ExtendedFormGroupArray } from "./extended-form-group-array";
 export interface ExtendedFormGroupControls {
-    [key: string]: ExtendedFormGroupControl;
+    [key: string]: ExtendedFormGroupControl | ExtendedFormGroup;
 }
 
 export type ExtendedFormGroupControl = ExtendedFormControl | ExtendedFormArray | ExtendedFormGroup | ExtendedFormGroupArray;

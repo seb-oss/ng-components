@@ -10,6 +10,8 @@ import { TablePageRoutingModule } from "./table-page-routing.module";
 import { PaginationModule } from "@sebgroup/ng-components/pagination";
 import { CodeSnippetModule } from "@common/code-snippet/code-snippet.module";
 import { MyTableComponent } from "./my-table-notes-example.component";
+import { DropdownModule } from "@sebgroup/ng-components/dropdown";
+import { RadioGroupModule } from "@sebgroup/ng-components/radio-group";
 
 @NgModule({
     declarations: [MyTableComponent, TablePageComponent],
@@ -24,6 +26,8 @@ import { MyTableComponent } from "./my-table-notes-example.component";
         StepperModule,
         PaginationModule,
         CodeSnippetModule,
+        DropdownModule,
+        RadioGroupModule,
     ],
 })
 export class TablePageModule {}

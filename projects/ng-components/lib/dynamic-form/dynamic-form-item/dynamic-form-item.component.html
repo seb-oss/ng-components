@@ -1,106 +1,161 @@
 <ng-container [ngSwitch]="control.formItem?.controlType">
     <label *ngIf="control.formItem.label && control.formItem.controlType !== 'Checkbox'">{{ control.formItem.label }}</label>
+    <span *ngIf="control.formItem.descriptionHeader">{{ control.formItem.descriptionHeader }}</span>
     <p class="dynamic-form-item-description" *ngIf="control.formItem.description && control.formItem.controlType !== 'Checkbox'">
         <small>{{ control.formItem.description }}</small>
     </p>
 
-    <ng-container *ngSwitchCase="controlType.Text.toString()">
-        <input [formControl]="control" />
-        <!-- <sebng-textbox
-            *ngIf="!control.formItem.multi; else multi"
-            [id]="makeId()"
-            className="dynamic-form-item"
-            [name]="makeId()"
-            [placeholder]="control.formItem.placeholder"
-            [formControl]="control"
-            [error]="error"
-        >
-        </sebng-textbox> -->
+    <div class="row p-0" *ngIf="control.formItem.media?.length; else formItem">
+        <div class="col-6">
+            <ng-container [ngTemplateOutlet]="formItem"></ng-container>
+        </div>
+        <div class="col-6">
+            <app-dynamic-form-media [media]="control.formItem.media[0]"></app-dynamic-form-media>
+        </div>
+    </div>
 
-        <ng-template #multi>
-            <div *ngFor="let arrayControl of getFormArrayControls(control); let i = index">
-                <div class="input-group dynamic-form-item">
-                    <input
-                        type="text"
-                        class="form-control"
-                        [id]="makeId(null, i)"
-                        [formControl]="arrayControl"
-                        [placeholder]="control.formItem.placeholder ? control.formItem.placeholder : ''"
-                    />
-                    <div *ngIf="getFormArrayControls(control).length > 1" class="input-group-append">
-                        <button
-                            [id]="makeId('multitextbox-remove', i)"
-                            class="btn btn-outline-danger"
-                            type="button"
-                            (click)="itemRemovedClicked.emit({ id: control.formItem.key, index: i })"
-                        >
-                            –
-                        </button>
+    <ng-template #formItem>
+        <div class="item-wrapper" [ngClass]="itemCustomClass">
+            <ng-container
+                [ngTemplateOutlet]="metadata"
+                [ngTemplateOutletContext]="{ context: control.formItem.controlMetaData }"
+            ></ng-container>
+            <ng-container *ngSwitchCase="controlType.Text.toString()">
+                <sebng-textbox
+                    *ngIf="!control.formItem.multi; else multi"
+                    [id]="makeId()"
+                    className="dynamic-form-item"
+                    [name]="makeId()"
+                    [placeholder]="control.formItem.placeholder"
+                    [formControl]="control"
+                    [rightText]="control.formItem?.controlMetaData?.inputGroupLabel"
+                    [error]="error"
+                >
+                </sebng-textbox>
+
+                <ng-template #multi>
+                    <div *ngFor="let arrayControl of formArrayControls; let i = index">
+                        <div class="input-group dynamic-form-item">
+                            <input
+                                type="text"
+                                class="form-control"
+                                [id]="makeId(null, i)"
+                                [formControl]="arrayControl"
+                                [placeholder]="control.formItem.placeholder ? control.formItem.placeholder : ''"
+                            />
+                            <div *ngIf="formArrayControls?.length > 1" class="input-group-append">
+                                <button
+                                    [id]="makeId('multitextbox-remove', i)"
+                                    class="btn btn-outline-danger"
+                                    type="button"
+                                    (click)="itemRemovedClicked.emit({ id: control.formItem.key, index: i })"
+                                >
+                                    –
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <button
-                [id]="makeId('multitextbox-add')"
-                class="btn btn-outline-primary"
-                type="button"
-                (click)="itemAddedClicked.emit(control.formItem.key)"
-            >
-                +
-            </button>
-        </ng-template>
-    </ng-container>
+                    <button
+                        [id]="makeId('multitextbox-add')"
+                        class="btn btn-outline-primary"
+                        type="button"
+                        (click)="itemAddedClicked.emit(control.formItem.key)"
+                    >
+                        +
+                    </button>
+                </ng-template>
+            </ng-container>
 
-    <ng-container *ngSwitchCase="controlType.TextArea.toString()">
-        <sebng-textarea
-            className="dynamic-form-item"
-            [id]="makeId()"
-            [placeholder]="control.formItem.placeholder"
-            [formControl]="control"
-        ></sebng-textarea>
-    </ng-container>
+            <ng-container *ngSwitchCase="controlType.TextArea.toString()">
+                <sebng-textarea
+                    className="dynamic-form-item"
+                    [id]="makeId()"
+                    [placeholder]="control.formItem.placeholder"
+                    [formControl]="control"
+                    [error]="error"
+                ></sebng-textarea>
+            </ng-container>
 
-    <ng-container *ngSwitchCase="controlType.Number?.toString()">
-        <sebng-stepper className="dynamic-form-item" [id]="makeId()" [formControl]="control"></sebng-stepper>
-    </ng-container>
+            <ng-container *ngSwitchCase="controlType.Number?.toString()">
+                <sebng-textbox
+                    className="dynamic-form-item"
+                    pattern="[0-9]*"
+                    inputmode="numeric"
+                    type="text"
+                    digitsOnly
+                    [rightText]="control.formItem?.controlMetaData?.inputGroupLabel"
+                    [formControl]="control"
+                    [error]="error"
+                ></sebng-textbox>
+                <!-- <sebng-stepper className="dynamic-form-item" [id]="makeId()" [formControl]="control"></sebng-stepper> -->
+            </ng-container>
 
-    <ng-container *ngSwitchCase="controlType.Checkbox.toString()">
-        <sebng-checkbox
-            [formControl]="control"
-            [id]="makeId()"
-            [label]="control.formItem.label"
-            [description]="control.formItem.description"
-        ></sebng-checkbox>
-    </ng-container>
+            <ng-container *ngSwitchCase="controlType.Checkbox.toString()">
+                <sebng-checkbox
+                    [formControl]="control"
+                    [id]="makeId()"
+                    [label]="control.formItem.label"
+                    [description]="control.formItem.description"
+                    [error]="error"
+                ></sebng-checkbox>
+            </ng-container>
 
-    <ng-container *ngSwitchCase="controlType.Dropdown.toString()">
-        <sebng-dropdown
-            className="dynamic-form-item"
-            [formControl]="control"
-            [id]="makeId()"
-            [searchable]="true"
-            [multi]="control.formItem.multi"
-            [placeholder]="control.formItem.placeholder"
-            [list]="control.formItem.options"
-        ></sebng-dropdown>
-    </ng-container>
+            <ng-container *ngSwitchCase="controlType.Dropdown.toString()">
+                <sebng-dropdown
+                    className="dynamic-form-item"
+                    [formControl]="control"
+                    [id]="makeId()"
+                    [searchable]="true"
+                    [multi]="control.formItem.multi"
+                    [placeholder]="control.formItem.placeholder"
+                    [list]="control.formItem.options"
+                    [error]="error"
+                ></sebng-dropdown>
+            </ng-container>
 
-    <ng-container *ngSwitchCase="controlType.Datepicker.toString()">
-        <sebng-datepicker
-            className="dynamic-form-item"
-            [formControl]="control"
-            [id]="makeId()"
-            [placeholder]="control.formItem.placeholder || 'yyyy-mm-dd'"
-        ></sebng-datepicker>
-    </ng-container>
+            <ng-container *ngSwitchCase="controlType.Datepicker.toString()">
+                <sebng-datepicker
+                    className="dynamic-form-item"
+                    [formControl]="control"
+                    [id]="makeId()"
+                    [placeholder]="control.formItem.placeholder || 'yyyy-mm-dd'"
+                    [error]="error"
+                ></sebng-datepicker>
+            </ng-container>
 
-    <ng-container *ngSwitchCase="controlType.Radio.toString()">
-        <sebng-radio-group
-            className="dynamic-form-item"
-            [condensed]="true"
-            [inline]="true"
-            [formControl]="control"
-            [id]="makeId()"
-            [list]="control.formItem.options"
-        ></sebng-radio-group>
-    </ng-container>
+            <ng-container *ngSwitchCase="controlType.Radio.toString()">
+                <sebng-radio-group
+                    className="dynamic-form-item"
+                    [condensed]="true"
+                    [inline]="true"
+                    [formControl]="control"
+                    [id]="makeId()"
+                    [list]="control.formItem.options"
+                    [error]="error"
+                ></sebng-radio-group>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="controlType.ToggleSelector.toString()">
+                <sebng-toggle-selector
+                    class="d-flex"
+                    [formControl]="control"
+                    [list]="control.formItem.options"
+                    [error]="error"
+                ></sebng-toggle-selector>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="controlType.Card.toString()">
+                <sebng-toggle-selector [formControl]="control" [list]="control.formItem.options" [error]="error"></sebng-toggle-selector>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="controlType.Disclaimer.toString()"> DISCLAIMER </ng-container>
+        </div>
+    </ng-template>
 </ng-container>
+
+<ng-template let-context="context" #metadata>
+    <span class="d-block font-weight-medium" *ngIf="context?.label">{{ context.label }}</span>
+    <span class="d-block" *ngIf="context?.description">{{ context.description }}</span>
+</ng-template>
+
+<ng-container [ngTemplateOutlet]="metadata"></ng-container>

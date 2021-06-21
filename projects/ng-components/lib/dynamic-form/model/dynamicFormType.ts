@@ -1,4 +1,15 @@
-export type DynamicFormType = "Text" | "TextArea" | "Checkbox" | "Dropdown" | "Datepicker" | "Radio" | "Number" | "Card" | "None";
+export type DynamicFormType =
+    | "Text"
+    | "TextArea"
+    | "Checkbox"
+    | "Dropdown"
+    | "Datepicker"
+    | "Radio"
+    | "Number"
+    | "Card"
+    | "ToggleSelector"
+    | "Disclaimer"
+    | "None";
 
 export const DynamicFormType = {
     Text: "Text" as DynamicFormType,
@@ -9,5 +20,7 @@ export const DynamicFormType = {
     Radio: "Radio" as DynamicFormType,
     Number: "Number" as DynamicFormType,
     Card: "Card" as DynamicFormType,
+    ToggleSelector: "ToggleSelector" as DynamicFormType,
+    Disclaimer: "Disclaimer" as DynamicFormType,
     None: "None" as DynamicFormType,
 };

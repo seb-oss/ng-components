@@ -9,6 +9,7 @@ import { FormsModule } from "@angular/forms";
 import { HighlightModule, HIGHLIGHT_OPTIONS, HighlightOptions } from "ngx-highlightjs";
 import { CodeSnippetModule } from "../../../common/code-snippet/code-snippet.module";
 import { ModalPageRoutingModule } from "./modal-page-routing.module";
+import { DynamicFormModule } from "@sebgroup/ng-components/dynamic-form";
 
 @NgModule({
     declarations: [ModalPageComponent],
@@ -22,6 +23,7 @@ import { ModalPageRoutingModule } from "./modal-page-routing.module";
         DropdownModule,
         HighlightModule,
         CodeSnippetModule,
+        DynamicFormModule,
     ],
     providers: [
         {

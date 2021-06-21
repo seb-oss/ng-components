@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ModalSize, ModalPosition } from "@sebgroup/ng-components/modal";
 import { ExtendedFormGroup } from "@sebgroup/ng-components/dynamic-form/model/custom-classes/extended-form-group";
-import { DynamicFormOption, FormService } from "@sebgroup/ng-components/dynamic-form";
+import { DynamicFormOption, DynamicFormSection, FormService } from "@sebgroup/ng-components/dynamic-form";
 
 @Component({
     selector: "app-modal-page",
@@ -50,6 +50,7 @@ export class ModalPageComponent {
         this.extendedFormGroup = this.formService.dynamicFormSectionsToFormGroup([
             {
                 key: "controls",
+                title: "",
                 items: [
                     {
                         key: "size",
@@ -101,7 +102,7 @@ export class ModalPageComponent {
                     },
                 ],
             },
-        ]);
+        ] as DynamicFormSection[]);
     }
 
     /** Only renders the image when the size is `lg` and the position is aside */

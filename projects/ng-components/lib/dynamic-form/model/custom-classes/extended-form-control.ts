@@ -1,9 +1,12 @@
-import { FormControl, AsyncValidatorFn, Validators, ValidatorFn } from "@angular/forms";
-import { DynamicFormItem, Rule, RuleType, formItemValidation } from "../../model/dynamicFormItem";
+import { FormControl, AsyncValidatorFn, ValidatorFn } from "@angular/forms";
+import { DynamicFormItem } from "../../model/dynamicFormItem";
+import { ExtendedFormGroup } from "./extended-form-group";
+import { ExtendedFormGroupArray } from "./extended-form-group-array";
 
 export class ExtendedFormControl extends FormControl {
     formItem: DynamicFormItem;
     options: DynamicFormItem["options"] = [];
+    formGroup: ExtendedFormGroup | ExtendedFormGroupArray;
 
     constructor(
         formItem: DynamicFormItem,

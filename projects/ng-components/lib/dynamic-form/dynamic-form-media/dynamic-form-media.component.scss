@@ -1,0 +1,23 @@
+@import "~@sebgroup/bootstrap/scss/core";
+
+.media-container {
+    iframe {
+        width: 100%;
+        height: 280px;
+        @include media-breakpoint-down(lg) {
+            height: 230px;
+        }
+        @include media-breakpoint-down(md) {
+            height: 340px;
+        }
+        @include media-breakpoint-down(sm) {
+            height: 285px;
+        }
+        @include media-breakpoint-down(xs) {
+            height: 320px;
+        }
+    }
+    img {
+        width: 100%;
+    }
+}

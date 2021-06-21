@@ -1,9 +1,43 @@
 <app-doc-page [importString]="importString" [centered]="true" [showNotes]="true">
     <ng-container example>
-        <div class="row">
-            <app-dynamic-form [extendedFormGroup]="extendedFormGroup" [step]="step"></app-dynamic-form>
-            <button (click)="validateForm()">Validate Form</button>
+        <app-dynamic-form
+            class="w-100"
+            [extendedFormGroup]="extendedFormGroup"
+            [activeStep]="activeStep"
+            [itemTemplate]="itemTmpl"
+            [sectionTemplate]="sectionTmpl"
+            [itemCustomClass]="'max-width'"
+            (nextEvent)="goToNextStep()"
+            (previousEvent)="goToPreviousStep()"
+        >
+            <!-- [actionsTemplate]="actionsTmpl" -->
+        </app-dynamic-form>
+
+        <ng-template #sectionTmpl let-context="context">
+            <span *ngIf="context?.category">
+                {{ context.category }}
+            </span>
+            <h2 *ngIf="context?.title">
+                {{ context.title }}
+            </h2>
+
+            <h3 *ngIf="context?.text">
+                {{ context.text }}
+            </h3>
+
+            <p *ngIf="context?.description">{{ context.description }}</p>
+        </ng-template>
+
+        <ng-template #itemTmpl let-context="context">
+            <h5 *ngIf="context?.title">
+                {{ context.title }}
+            </h5>
+        </ng-template>
+
+        <ng-template #actionsTmpl>
+            <button class="btn btn-secondary" (click)="validateForm()">Validate Form</button>
+            <button class="btn btn-primary" (click)="goToPreviousStep()">Previous</button>
             <button class="btn btn-primary" (click)="goToNextStep()">Next</button>
-        </div>
+        </ng-template>
     </ng-container>
 </app-doc-page>

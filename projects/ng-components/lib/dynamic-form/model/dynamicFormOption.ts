@@ -1,11 +1,17 @@
 import { AttributeTypeMap } from "./models";
-import { DynamicFormItem } from "./dynamicFormItem";
+import { DynamicFormItem, Media } from "./dynamicFormItem";
 
 export interface ConfirmInformation {
     title?: string;
     message?: string;
     accept?: string;
     deny?: string;
+}
+
+export interface FollowUpItem {
+    type: string;
+    items: DynamicFormItem[];
+    multi?: boolean;
 }
 
 export interface DynamicFormOption<T = any> {
@@ -16,7 +22,8 @@ export interface DynamicFormOption<T = any> {
     category?: string;
     order?: number;
     confirm?: ConfirmInformation;
-    followUpItems?: DynamicFormItem[];
+    media?: Media[];
+    followUpItems?: FollowUpItem;
 }
 
 export const attributeTypeMapDynamicFormOption: AttributeTypeMap[] = [

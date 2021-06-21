@@ -21,7 +21,7 @@ import { ExtendedFormGroup } from "@sebgroup/ng-components/dynamic-form/model/cu
                 ></sebng-textarea>
             </ng-container>
             <ng-container controls>
-                <app-dynamic-form [extendedFormGroup]="extendedFormGroup"></app-dynamic-form>
+                <app-dynamic-form [extendedFormGroup]="extendedFormGroup" [activeStep]="0"></app-dynamic-form>
             </ng-container>
             <ng-container code>{{ snippet }}</ng-container>
         </app-doc-page>

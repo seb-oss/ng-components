@@ -1,0 +1,23 @@
+<table class="table table-hover" *ngIf="control.value.formGroup.value?.length">
+    <thead>
+        <tr>
+            <th *ngFor="let header of control.value.formGroup.value[0] | keyvalue">
+                {{ header.key }}
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of control.value.formGroup.value; let i = index">
+            <td *ngFor="let val of item | keyvalue">
+                {{ val.value }}
+            </td>
+            <td>
+                <button class="btn btn-sm btn-secondary" type="button" (click)="edit(control.value.formGroup, i)">Edit</button>
+            </td>
+            <td>
+                <button class="btn btn-sm btn-secondary btn-danger" type="button" (click)="remove(control.value, i)">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

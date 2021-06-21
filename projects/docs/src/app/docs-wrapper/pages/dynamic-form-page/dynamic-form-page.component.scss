@@ -1,0 +1,9 @@
+::ng-deep {
+    .max-width {
+        > sebng-toggle-selector {
+            > div {
+                max-width: 350px;
+            }
+        }
+    }
+}

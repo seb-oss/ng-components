@@ -1,5 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from "@angular/core";
-import { CommonModule } from "@angular/common";
+import { CommonModule, registerLocaleData } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 // CUSTOM COMPONENTS =========================
@@ -13,9 +13,26 @@ import { DatepickerModule } from "../datepicker";
 import { DropdownModule } from "../dropdown";
 import { TextareaModule } from "../textarea";
 import { StepperModule } from "../stepper";
+import { ModalModule } from "../modal";
+import { DynamicFormModalComponent } from "./dynamic-form-modal/dynamic-form-modal.component";
+import { DynamicFormDataComponent } from "./dynamic-from-data/dynamic-form-data.component";
+import { ToggleSelectorModule } from "../toggle-selector";
+import { DynamicFormMediaComponent } from "./dynamic-form-media/dynamic-form-media.component";
+import { VideoModule } from "../video";
+import { SafePipeModule } from "./safe.pipe";
+import { DigitOnlyModule } from "./digit-only/digit-only.directive";
+import localeSe from "@angular/common/locales/se";
+
+registerLocaleData(localeSe);
 
 @NgModule({
-    declarations: [DynamicFormComponent, DynamicFormItemComponent],
+    declarations: [
+        DynamicFormComponent,
+        DynamicFormItemComponent,
+        DynamicFormModalComponent,
+        DynamicFormDataComponent,
+        DynamicFormMediaComponent,
+    ],
     imports: [
         CommonModule,
         FormsModule,
@@ -27,11 +44,19 @@ import { StepperModule } from "../stepper";
         TextareaModule,
         DatepickerModule,
         StepperModule,
+        ModalModule,
+        ToggleSelectorModule,
+        VideoModule,
+        SafePipeModule,
+        DigitOnlyModule,
     ],
     exports: [
         // COMPONENTS
         DynamicFormComponent,
         DynamicFormItemComponent,
+        DynamicFormModalComponent,
+        DynamicFormDataComponent,
+        DynamicFormMediaComponent,
         // MODULES
         DropdownModule,
         CheckboxModule,
@@ -39,6 +64,10 @@ import { StepperModule } from "../stepper";
         TextareaModule,
         DatepickerModule,
         StepperModule,
+        ModalModule,
+        ToggleSelectorModule,
+        VideoModule,
+        DigitOnlyModule,
     ],
     bootstrap: [DynamicFormItemComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
