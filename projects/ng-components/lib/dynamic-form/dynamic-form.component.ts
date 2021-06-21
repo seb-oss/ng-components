@@ -289,6 +289,10 @@ export class DynamicFormComponent {
         }
     }
 
+    validate(): void {
+      console.log(this.extendedFormGroup)
+    }
+
     cancel(): void {
         this.cancelEvent.emit();
     }

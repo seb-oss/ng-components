@@ -50,7 +50,7 @@ export class DynamicFormPageComponent {
     ];
     extendedFormGroup: ExtendedFormGroup;
     activeStep: number = 0;
-    customDemo: boolean = true;
+    customDemo: boolean = false;
 
     cplFromGroup = [
         {
@@ -996,7 +996,8 @@ export class DynamicFormPageComponent {
                             },
                         ],
                     },
-                ]
+                ],
+                multi: true
             }
         ];
 

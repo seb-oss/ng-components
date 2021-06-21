@@ -83,30 +83,57 @@
                         [class]="control.value.formItem.className"
                         *ngIf="shouldRenderControl(section.value.sectionItem.key, control.value.formItem, i)"
                     >
-                        4
                         <app-dynamic-form-item
-                            [formGroup]="sectionList"
+                            [formGroup]="extendedFormGroup"
                             [control]="control.value"
                             [sectionId]="section.value.sectionItem.key + control.key + i"
                             [submitted]="submitted"
+                            (createFormGroup)="createFormGroup($event)"
                             (itemAddedClicked)="addNewItemToFormArrayWithId(section.key, $event, i)"
                             (itemRemovedClicked)="removeItemAtIndexFromFormArrayWithId(section.key, $event, i)"
                             (controlValueChanged)="controlValueChanged()"
                         ></app-dynamic-form-item>
-                        <span
-                            *ngIf="getValidationErrorFor(section.value.sectionItem.key, control.value.formItem, i)"
-                            class="alert alert-danger"
-                            >{{ getValidationErrorFor(section.value.sectionItem.key, control.value.formItem, i) }}</span
-                        >
+                        <ng-container [ngSwitch]="shouldRenderFollowUpControlsType(control.value)">
+                          <ng-container *ngSwitchCase="'inline'">
+                              <div *ngFor="let item of control.value.formGroup.controls | keyvalue: orderForm">
+                                  <app-dynamic-form-item
+                                      [parentFormGroup]="extendedFormGroup"
+                                      [control]="item.value"
+                                      [submitted]="submitted"
+                                      (createFormGroup)="createFormGroup($event)"
+                                      (controlValueChanged)="controlValueChanged()"
+                                  ></app-dynamic-form-item>
+                              </div>
+                          </ng-container>
+                          <ng-container *ngSwitchDefault>
+                              <app-dynamic-form-data
+                                  [control]="control"
+                                  (editControl)="editItemFromParent($event)"
+                                  (deleteControl)="removeItemFromParent($event)"
+                              ></app-dynamic-form-data>
+                              <ng-container *ngIf="control.value.value?.followUpItems?.multi">
+                                  <button
+                                      class="btn btn-sm btn-secondary"
+                                      type="button"
+                                      (click)="createFormGroup(control.value.value.followUpItems?.items)"
+                                  >
+                                      + Add new
+                                  </button>
+                                  <ng-container
+                                      [ngTemplateOutlet]="modalTemplate"
+                                      [ngTemplateOutletContext]="{ context: control }"
+                                  ></ng-container>
+                              </ng-container>
+                          </ng-container>
+                      </ng-container>
                     </div>
                 </ng-container>
-
                 <button
                     *ngIf="getFormArrayControls(section.value).length > 1"
                     [id]="section.value.sectionItem.key + i + '-remove'"
                     class="btn btn-sm btn-outline-danger"
                     type="button"
-                    (click)="removeItemAtIndexFromFormArrayWithId(section.key, null, i)"
+                    (click)="removeItemAtIndexFromFormArrayWithId(section.value.sectionItem.key, null, i)"
                 >
                     - Remove {{ section.value.sectionItem.title }}
                 </button>
@@ -122,7 +149,9 @@
             </button>
         </ng-template>
 
-        <ng-template let-context="context" #modalTemplate>
+        
+    </div>
+    <ng-template let-context="context" #modalTemplate>
             <app-dynamic-form-modal
                 *ngIf="modalShouldBeRendered(context?.value)"
                 [modalToggle]="followUpModalToggle"
@@ -134,7 +163,6 @@
                 (deleteControl)="removeItemFromParent($event)"
             ></app-dynamic-form-modal>
         </ng-template>
-    </div>
     <ng-container *ngIf="actionsTemplate; else internalActionsTemplate" [ngTemplateOutlet]="actionsTemplate"></ng-container>
     <ng-template #internalActionsTemplate>
         <div class="d-flex justify-content-between">
@@ -143,6 +171,7 @@
                 <button class="btn btn-outline-primary" (click)="previous()">Previous</button>
             </div>
             <button class="btn btn-primary" (click)="next()">Next</button>
+            <button class="btn btn-danger" (click)="validate()">Validate</button>
         </div>
     </ng-template>
 
