@@ -1,4 +1,4 @@
-import { Component, Input, forwardRef, Provider, ViewChildren, QueryList, ElementRef, AfterViewChecked } from "@angular/core";
+import { Component, Input, forwardRef, Provider, ViewChildren, QueryList, ElementRef, AfterViewChecked, TemplateRef } from "@angular/core";
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from "@angular/forms";
 
 export interface RadioGroupItem {
@@ -65,6 +65,8 @@ export class RadioGroupComponent implements ControlValueAccessor, AfterViewCheck
     @Input() condensed?: boolean = false;
     /** Property sets whether radio group is inline */
     @Input() inline?: boolean = false;
+    /** Property to sets error, supported types: `string`, `TemplateRef<HTMLElement>` */
+    @Input() error?: string | TemplateRef<HTMLElement>;
 
     // Placeholders for the callbacks which are later provided
     // by the Control Value Accessor
@@ -179,4 +181,11 @@ export class RadioGroupComponent implements ControlValueAccessor, AfterViewCheck
     registerOnTouched(fn: any): void {
         this.onTouchedCallback = fn;
     }
+
+    /**
+     * Check if input parameter is a string
+     */
+    isString = (input: any): boolean => {
+        return typeof input === "string";
+    };
 }

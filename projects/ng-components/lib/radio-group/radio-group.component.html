@@ -2,7 +2,14 @@
     ><b>{{ label }}</b></label
 >
 
-<div *ngIf="list" class="radio-group" [ngClass]="className" [class.disabled]="disabled">
+<div
+    *ngIf="list"
+    class="radio-group"
+    [ngClass]="className"
+    [class.border]="error"
+    [class.border-danger]="error"
+    [class.disabled]="disabled"
+>
     <div *ngIf="inline; else noninline" class="row">
         <ng-container *ngFor="let item of displayList; index as i">
             <div class="col">
@@ -17,6 +24,7 @@
         </ng-container>
     </ng-template>
 </div>
+<ng-container *ngTemplateOutlet="isString(error) ? stringError : error"></ng-container>
 
 <ng-template #radioItem let-item>
     <div
@@ -48,4 +56,8 @@
         </ng-template>
         <div class="custom-control-description" *ngIf="item.optionItem.description">{{ item.optionItem.description }}</div>
     </div>
+</ng-template>
+
+<ng-template #stringError>
+    <span class="text-danger">{{ error }}</span>
 </ng-template>

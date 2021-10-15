@@ -1,4 +1,4 @@
-import { ViewChild, Component, DebugElement } from "@angular/core";
+import { ViewChild, Component, DebugElement, TemplateRef } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { RadioGroupComponent, RadioGroupItem } from "./radio-group.component";
@@ -8,6 +8,7 @@ import { CommonModule } from "@angular/common";
 @Component({
     selector: "test-sebng-radio-group",
     template: `
+        <ng-template #error><div class="custom-error">Custom error</div></ng-template>
         <sebng-radio-group
             id="myRadioGroup"
             [list]="list"
@@ -17,6 +18,7 @@ import { CommonModule } from "@angular/common";
             [disabled]="disabled"
             [condensed]="condensed"
             [inline]="inline"
+            [error]="error"
         ></sebng-radio-group>
     `,
 })
@@ -115,6 +117,12 @@ describe("RadioGroupComponent", () => {
             // TODO: check to see if .custom-control.custom-radio.selected > input equals 1
         })
     );
+
+    it("should have the expected error", () => {
+        const label: DebugElement = fixture.debugElement.query(By.css(".custom-error"));
+        expect(label).toBeTruthy();
+        expect(label.nativeElement.innerHTML).toContain("Custom error");
+    });
 
     // TODO: check if currently selected element is focused
     // TODO: simulate tab button or arrow buttons and check if element is selected and focused

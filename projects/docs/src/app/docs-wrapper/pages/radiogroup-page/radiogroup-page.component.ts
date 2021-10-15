@@ -6,7 +6,18 @@ import { RadioGroupItem } from "@sebgroup/ng-components/radio-group";
     template: `
         <app-doc-page [importString]="importString">
             <ng-container example>
-                <sebng-radio-group [list]="list" [disabled]="disabled" [condensed]="condensed" [inline]="inline"></sebng-radio-group>
+                <sebng-radio-group
+                    [list]="list"
+                    [disabled]="disabled"
+                    [condensed]="condensed"
+                    [inline]="inline"
+                    [error]="customError ? customErrorTmpl : stringError && 'here is an error'"
+                ></sebng-radio-group>
+                <ng-template #customErrorTmpl>
+                    <div class="text-danger">
+                        Click on the <a href="www.google.com" rel="noopener noreferrer" target="_blank">error link</a>
+                    </div>
+                </ng-template>
             </ng-container>
             <ng-container controls>
                 <sebng-checkbox label="Inline" description="Show radio buttons inlined." [(ngModel)]="inline"></sebng-checkbox>
@@ -20,6 +31,8 @@ import { RadioGroupItem } from "@sebgroup/ng-components/radio-group";
                     description="Disable all elements in the group."
                     [(ngModel)]="disabled"
                 ></sebng-checkbox>
+                <sebng-checkbox label="radio group error" [(ngModel)]="stringError"></sebng-checkbox>
+                <sebng-checkbox label="custom radio group error" [(ngModel)]="customError"></sebng-checkbox>
             </ng-container>
             <ng-container code>{{ snippet }}</ng-container>
         </app-doc-page>
@@ -28,6 +41,8 @@ import { RadioGroupItem } from "@sebgroup/ng-components/radio-group";
 export class RadioGroupPageComponent implements OnInit {
     importString: string = require("!raw-loader!@sebgroup/ng-components/radio-group/radio-group.component");
     snippet: string = `<sebng-radio-group [list]="list"></sebng-radio-group>`;
+    stringError: boolean = false;
+    customError: boolean = false;
 
     // control
     disabled: boolean;
