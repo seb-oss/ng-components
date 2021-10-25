@@ -5,9 +5,8 @@ $notification-width: 300px;
 $wrapper-active-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 1px 2px 11px rgba(0, 0, 0, 0.5);
 
 @mixin apply-theme($bg-color, $close-hover) {
+    background-color: $bg-color;
     .content-wrapper {
-        background-color: $bg-color;
-
         &.clickable {
             &:hover {
                 background-color: lighten($bg-color, 8%);
@@ -50,11 +49,22 @@ $wrapper-active-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 1px 2px 11px rgba(0, 0, 0, 0.5
         min-height: 30px;
         position: relative;
         box-shadow: 0 4px 4px -2px rgba(0, 0, 0, 0.25), 3px 4px 15px rgba(0, 0, 0, 0.5);
-        padding: 8px 13px;
+        padding: 8px 13px 0;
         color: $white;
 
         &.clickable {
             cursor: pointer;
+        }
+        .progress {
+            background-color: transparent;
+            width: auto;
+            margin-right: -13px;
+            margin-left: -13px;
+            height: 4px;
+            .progress-bar {
+                background-color: $black;
+                opacity: 0.2;
+            }
         }
 
         .notification-title {
@@ -71,10 +81,12 @@ $wrapper-active-shadow: 0 0 0 0 rgba(0, 0, 0, 0), 1px 2px 11px rgba(0, 0, 0, 0.5
             padding-right: 18px;
             user-select: none;
             margin: 0;
+            padding-bottom: 10px;
         }
 
         .actions-wrapper {
             margin-top: 10px;
+            padding-bottom: 10px;
 
             .action-wrapper {
                 text-align: center;
