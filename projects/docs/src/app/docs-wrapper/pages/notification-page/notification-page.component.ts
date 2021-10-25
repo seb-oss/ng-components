@@ -51,6 +51,7 @@ export class NotificationPageComponent {
     persist: boolean = false;
     showActions?: boolean = false;
     showTitle?: boolean = true;
+    showProgressbar?: boolean = false;
 
     constructor() {
         document.title = "Notification - SEB Angular Components";

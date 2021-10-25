@@ -1,5 +1,5 @@
 import { EventEmitter } from "@angular/core";
-import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync } from "@angular/core/testing";
+import { ComponentFixture, TestBed, fakeAsync, tick, waitForAsync, discardPeriodicTasks } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
 import { NotificationComponent, NotificationAction, NotificationPosition, NotificationStyle } from "./notification.component";
 
@@ -149,6 +149,64 @@ describe("NotificationComponent", () => {
 
         expect(onClick).toHaveBeenCalled();
     });
+
+    it("Should call mouseenter when mouse enters notification", () => {
+        spyOn(component, "mouseEnter").and.callThrough();
+        spyOn(component, "pauseTimer").and.callThrough();
+        const mouseEnterEvent = new Event("mouseenter");
+        const notification = fixture.debugElement.query(By.css(".custom-notification"));
+        notification.nativeElement.dispatchEvent(mouseEnterEvent);
+        expect(component.mouseEnter).toHaveBeenCalled();
+        expect(component.pauseTimer).toHaveBeenCalled();
+    });
+
+    it("Should call mouseleave when mouse leaves notification", () => {
+        spyOn(component, "mouseLeave").and.callThrough();
+        spyOn(component, "restartTimer").and.callThrough();
+        const mouseEnterEvent = new Event("mouseenter");
+        const mouseLeaveEvent = new Event("mouseleave");
+        const notification = fixture.debugElement.query(By.css(".custom-notification"));
+        notification.nativeElement.dispatchEvent(mouseEnterEvent);
+        notification.nativeElement.dispatchEvent(mouseLeaveEvent);
+        expect(component.mouseLeave).toHaveBeenCalled();
+        expect(component.restartTimer).toHaveBeenCalled();
+    });
+
+    it("Should reset timer when the default timer is done", fakeAsync(() => {
+        spyOn(component, "restartTimer").and.callThrough();
+        spyOn(component, "dismissNotification").and.callThrough();
+        const mouseEnterEvent = new Event("mouseenter");
+        const mouseLeaveEvent = new Event("mouseleave");
+        component.toggle = true;
+        component.persist = false;
+        component.dismissTimeout = 1000;
+
+        component.ngOnInit();
+        fixture.detectChanges();
+
+        expect(fixture.debugElement.query(By.css(".open"))).toBeTruthy();
+
+        tick(300);
+        const notification = fixture.debugElement.query(By.css(".custom-notification"));
+        notification.nativeElement.dispatchEvent(mouseEnterEvent);
+        expect(component.progressValue).toEqual(400);
+        expect(component.progressValuePercentage).toEqual(40);
+
+        tick(300);
+        notification.nativeElement.dispatchEvent(mouseLeaveEvent);
+        expect(component.progressValue).toEqual(400);
+        expect(component.restartTimer).toHaveBeenCalled();
+
+        tick(400);
+        console.log("===>", component.progressValue);
+        expect(component.progressValue).toEqual(900);
+        expect(component.progressValuePercentage).toEqual(90);
+        tick(1000);
+        expect(component.progressValuePercentage).toEqual(0);
+        expect(component.dismissNotification).toHaveBeenCalled();
+
+        discardPeriodicTasks();
+    }));
 
     describe("Should render actions when passed", () => {
         it("Should render one action taking the whole width", () => {

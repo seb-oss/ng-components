@@ -12,6 +12,7 @@
             [position]="style.value === 'bar' ? positionBar.value : position.value"
             [dismissable]="dismissable"
             [persist]="persist"
+            [progress]="showProgressbar"
             [actions]="showActions ? actions : undefined"
         ></sebng-notification>
     </ng-container>
@@ -37,6 +38,7 @@
             ></sebng-dropdown>
         </div>
         <div class="form-group">
+            <sebng-checkbox label="Progress bar" [(ngModel)]="showProgressbar"></sebng-checkbox>
             <sebng-checkbox label="Show/hide title" [(ngModel)]="showTitle"></sebng-checkbox>
             <sebng-checkbox
                 label="Dismissable"
