@@ -13,6 +13,7 @@
             [dismissable]="dismissable"
             [persist]="persist"
             [progress]="showProgressbar"
+            [dismissTimeout]="timeout"
             [actions]="showActions ? actions : undefined"
         ></sebng-notification>
     </ng-container>
@@ -38,6 +39,7 @@
             ></sebng-dropdown>
         </div>
         <div class="form-group">
+            <sebng-textbox label="Dismiss timeout" [(ngModel)]="dismissTimeout"></sebng-textbox>
             <sebng-checkbox label="Progress bar" [(ngModel)]="showProgressbar"></sebng-checkbox>
             <sebng-checkbox label="Show/hide title" [(ngModel)]="showTitle"></sebng-checkbox>
             <sebng-checkbox

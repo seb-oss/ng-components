@@ -52,8 +52,14 @@ export class NotificationPageComponent {
     showActions?: boolean = false;
     showTitle?: boolean = true;
     showProgressbar?: boolean = false;
+    dismissTimeout?: number = 5000;
 
     constructor() {
         document.title = "Notification - SEB Angular Components";
+    }
+
+    get timeout(): number {
+        const time: number = Number(this.dismissTimeout);
+        return time ? time : 5000;
     }
 }
