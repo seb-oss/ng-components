@@ -1,4 +1,6 @@
 import { OnChanges, Component, ViewEncapsulation, Input, Output, EventEmitter, OnInit, SimpleChanges, OnDestroy } from "@angular/core";
+import { Observable, PartialObserver, Subject, timer } from "rxjs";
+import { takeUntil } from "rxjs/operators";
 
 export type NotificationStyle = "slide-in" | "bar";
 export type NotificationPosition = "bottom-left" | "bottom-right" | "top-left" | "top-right" | "top" | "bottom";
@@ -21,8 +23,8 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
     @Input() className?: string;
     /** Property sets whether the notification is dismissable */
     @Input() dismissable?: boolean = true;
-    /** Interval for the notification to be dismissed */
-    @Input() dismissTimeout?: number;
+    /** Interval for the notification to be dismissed, default 5s  */
+    @Input() dismissTimeout?: number = 5000;
     /** Persist notification until dismissed (default: false) */
     @Input() persist?: boolean = false;
     /** Notification position, "bottom-left" | "bottom-right" | "top-left" | "top-right" | "top" | "bottom" */
@@ -39,14 +41,26 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
     @Input() toggle: boolean;
     /** Display action buttons - max: 2 actions */
     @Input() actions?: Array<NotificationAction>;
+    /** Display progress bar based on time */
+    @Input() progress?: boolean;
     /** Callback when notification is clicked */
     @Output() notificationClick?: EventEmitter<MouseEvent> = new EventEmitter();
     /** Callback when notification is dismissed */
     @Output() dismiss?: EventEmitter<void> = new EventEmitter();
 
+    progressValue: number = 0;
     public notificationClassNames: string;
     private timerRef: { current: any } = { current: null };
-    private defaultTimeout: any = 5000;
+
+    isRunning: boolean = true;
+    isPaused: boolean = false;
+    isComplete: boolean = false;
+
+    timer$: Observable<number>;
+    timerObserver: PartialObserver<number>;
+
+    pauseTimer$ = new Subject();
+    stopTimer$ = new Subject();
 
     // helper functions
 
@@ -111,18 +125,59 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
         this.notificationClassNames += " " + positionClass;
     }
 
+    get progressValuePercentage(): number {
+        return (this.progressValue / this.dismissTimeout) * 100;
+    }
+
     /** Start the timer to dismiss the notification */
     startTimer(): void {
-        this.clearTimer();
-        this.timerRef.current = setTimeout(() => {
-            this.dismissNotification();
-        }, this.dismissTimeout || this.defaultTimeout);
+        this.timer$ = timer(0, 100).pipe(takeUntil(this.pauseTimer$), takeUntil(this.stopTimer$));
+
+        this.timerObserver = {
+            next: (_: number) => {
+                if (this.progressValue < this.dismissTimeout) {
+                    this.progressValue += 100;
+                } else {
+                    this.stopTimer$.next();
+                    this.isRunning = false;
+                    this.isComplete = true;
+                    this.dismissNotification();
+                }
+            },
+        };
+        this.timer$.subscribe(this.timerObserver);
+    }
+
+    pauseTimer() {
+        this.pauseTimer$.next();
+        this.isPaused = true;
+        this.isRunning = false;
+    }
+
+    restartTimer(): void {
+        this.isRunning = true;
+        this.isPaused = false;
+        if (this.isComplete) {
+            this.isComplete = false;
+            this.progressValue = 0;
+        }
+
+        this.timer$.subscribe(this.timerObserver);
+    }
+
+    stopTimer(): void {
+        this.stopTimer$.next();
+        this.isRunning = false;
+        this.isPaused = false;
+        this.isComplete = false;
     }
 
     /** Dismiss the notification */
     dismissNotification(): void {
         this.clearTimer();
         this.dismiss.emit();
+        this.stopTimer();
+        this.isRunning = false;
     }
 
     /** Clear the timer that dismisses the notification */
@@ -131,6 +186,7 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
             clearTimeout(this.timerRef.current);
             this.timerRef.current = null;
         }
+        this.progressValue = 0;
     }
 
     setClassNames(): void {
@@ -168,6 +224,20 @@ export class NotificationComponent implements OnChanges, OnInit, OnDestroy {
         if (changes.persist) {
             this.clearTimer();
         }
+    }
+
+    /**
+     * Pause the notification timer when the mouse enters the notification
+     */
+    mouseEnter(): void {
+        this.pauseTimer();
+    }
+
+    /**
+     * Resume the notification timer when the mouse leaves the notification
+     */
+    mouseLeave(): void {
+        this.isPaused && this.restartTimer();
     }
 
     ngOnDestroy(): void {
