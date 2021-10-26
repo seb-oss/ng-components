@@ -57,4 +57,9 @@ export class NotificationPageComponent {
     constructor() {
         document.title = "Notification - SEB Angular Components";
     }
+
+    get timeout(): number {
+        const time: number = Number(this.dismissTimeout);
+        return time ? time : 5000;
+    }
 }
