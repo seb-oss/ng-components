@@ -1,5 +1,5 @@
 @import "~@sebgroup/bootstrap/scss/variables";
-@import "~@angular/cdk/_overlay.scss";
+@import "~@angular/cdk/overlay";
 @at-root {
     @include cdk-overlay();
 }
