@@ -85,8 +85,7 @@
                     "skipTests": true
                 },
                 "@schematics/angular:module": {
-                    "lintFix": true,
-                    "skipTests": true
+                    "lintFix": true
                 },
                 "@schematics/angular:service": {
                     "lintFix": true,
@@ -105,7 +104,6 @@
                         "main": "projects/docs/src/main.ts",
                         "polyfills": "projects/docs/src/polyfills.ts",
                         "tsConfig": "projects/docs/tsconfig.app.json",
-                        "aot": true,
                         "assets": ["projects/docs/src/favicon.ico", "projects/docs/src/assets", "projects/docs/src/404.html"],
                         "stylePreprocessorOptions": {
                             "includePaths": ["projects/docs/src/styles"]
@@ -115,7 +113,13 @@
                             "projects/docs/src/styles/styles.scss",
                             "projects/docs/src/styles/variables.scss"
                         ],
-                        "scripts": []
+                        "scripts": [],
+                        "vendorChunk": true,
+                        "extractLicenses": false,
+                        "buildOptimizer": false,
+                        "sourceMap": true,
+                        "optimization": false,
+                        "namedChunks": true
                     },
                     "configurations": {
                         "production": {
@@ -140,7 +144,8 @@
                                 }
                             ]
                         }
-                    }
+                    },
+                    "defaultConfiguration": ""
                 },
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
