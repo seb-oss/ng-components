@@ -29,7 +29,7 @@ class CustomTestClass {
     constructor() {
         const today: Date = new Date();
         this.dateValue = today;
-        this.startDate = new Date(today.getFullYear(), 0, today.getDate());
+        this.startDate = new Date(today.getFullYear(), -1, today.getDate());
         this.endDate = new Date(today.getFullYear(), 12, today.getDate());
 
         this.id = "my-datepicker";
