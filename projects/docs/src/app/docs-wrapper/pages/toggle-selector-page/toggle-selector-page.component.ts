@@ -16,6 +16,10 @@ import { IToggleSelector } from "@sebgroup/ng-components/toggle-selector";
                 justify-content: center;
                 align-self: stretch;
             }
+
+            .toggle-selector-container {
+                max-width: 26.25rem;
+            }
         `,
     ],
     providers: [FormService],
