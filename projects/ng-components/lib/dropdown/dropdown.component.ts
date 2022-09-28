@@ -400,6 +400,9 @@ export class DropdownComponent implements ControlValueAccessor, OnChanges, OnDes
             this.nativeOnChange && this.nativeOnChange(event);
             this.selectedValue = items;
         }
+
+        this.onChangeCallback && this.onChangeCallback(this.selectedValue);
+        this.onTouchedCallback && this.onTouchedCallback();
     }
 
     /** Function which handles the logic of setting the non-native onChange prop (and sets the internal selected value as well) */
