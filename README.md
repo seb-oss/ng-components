@@ -18,7 +18,7 @@ This is a set of angular components some of which are based on SEB's bootstrap. 
 
 ---
 
-### `@sebgroup/ng-components` support has officially ended as of March 2023.
+### :rotating_light: NOTICE: `@sebgroup/ng-components` support has officially ended as of March 2023.
 
 **What does this mean?**
 
@@ -26,7 +26,7 @@ The code will remain accessible on [GitHub](https://github.com/sebgroup/ng-compo
 
 The project will be in an archived state, meaning that no new development can be made _unless_:
 
--   it is meant for fixing bugs on the existing components
+-   it is meant for fixing critical and common-case bugs on the already existing components
 
 **Where do I go from here?**
 
