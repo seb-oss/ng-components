@@ -126,7 +126,12 @@ export class ToggleSelectorComponent implements ControlValueAccessor, OnInit {
             this.list &&
             this.list.map(e => {
                 if (this.multi) {
-                    let selected: boolean = !!(this.value as Array<IToggleSelector>)?.find((element: any) => element.value === e.value);
+                    let selected: boolean = false;
+
+                    if (Array.isArray(this.value) && this.value.length > 0) {
+                        selected = !!this.value.find((element: IToggleSelector) => element.value === e.value);
+                    }
+
                     return { optionItem: e, selected } as IDisplayToggleSelector;
                 } else {
                     let selected: boolean = (this.value as IToggleSelector)?.value === e.value;

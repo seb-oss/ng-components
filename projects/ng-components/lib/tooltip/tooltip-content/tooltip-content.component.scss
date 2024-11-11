@@ -1,8 +1,5 @@
 @import "~@sebgroup/bootstrap/scss/variables";
-@import "~@angular/cdk/_overlay.scss";
-@at-root {
-    @include cdk-overlay();
-}
+@import "~@angular/cdk/overlay-prebuilt";
 
 @mixin tooltip-arrow($border-remove, $border-highlight, $align-self) {
     .arrow {
