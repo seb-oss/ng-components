@@ -19,7 +19,7 @@
     "bugs": {
         "url": "https://github.com/sebgroup/ng-components/issues"
     },
-    "homepage": "https://sebgroup.github.io/ng-components/",
+    "homepage": "https://seb-oss.github.io/ng-components/",
     "scripts": {
         "ng": "ng",
         "start": "ng serve docs",
