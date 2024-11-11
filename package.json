@@ -42,7 +42,7 @@
         "semantic-release": "semantic-release",
         "build:scully": "npm run scully -- --project=docs --scanRoutes",
         "postbuild:scully": "prettier --write \"projects/docs/src/assets/**/*.json\"",
-        "scully": "scully --projectName=ng-docs",
+        "scully": "scully --projectName=ng-docs"
     },
     "dependencies": {
         "@angular-devkit/core": "^12.2.13",
