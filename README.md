@@ -85,15 +85,3 @@ export class YourModule { }
 
  <sebng-chip (onClose)="onClose($event)">Chip Text</sebng-chip>
 ```
-
-## Contact us
-
-For your feedback please contact us via emails below:
-
-1. mario.subotic@seb.se
-2. omar.boudfoust@seb.se
-3. kherphay.chang@seb.se
-
-## For React Users
-
-For all React users, we are hosting the same version of components [for React](https://github.com/sebgroup/react-components)
