@@ -19,7 +19,7 @@
     "bugs": {
         "url": "https://github.com/sebgroup/ng-components/issues"
     },
-    "homepage": "https://sebgroup.github.io/ng-components/",
+    "homepage": "https://seb-oss.github.io/ng-components/",
     "scripts": {
         "ng": "ng",
         "start": "ng serve docs",
@@ -42,9 +42,7 @@
         "semantic-release": "semantic-release",
         "build:scully": "npm run scully -- --project=docs --scanRoutes",
         "postbuild:scully": "prettier --write \"projects/docs/src/assets/**/*.json\"",
-        "scully": "scully --projectName=ng-docs",
-        "postscully": "npm run copy404",
-        "copy404": "cp dist/docs/404/index.html dist/docs/404.html"
+        "scully": "scully --projectName=ng-docs"
     },
     "dependencies": {
         "@angular-devkit/core": "^12.2.13",
